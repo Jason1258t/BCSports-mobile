@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
