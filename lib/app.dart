@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -16,8 +17,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         fontFamily: 'HN',
       ),
-      home: Text('12341234',
-        style: TextStyle(fontFamily: 'HN'),),
+      home: const ProfileScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
