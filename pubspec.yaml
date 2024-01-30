@@ -1,8 +1,6 @@
 name: bcsports_mobile
 description: "BCSports"
 
-publish_to: 'none'
-
 version: 1.0.0+1
 
 environment:
@@ -27,3 +25,22 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  fonts:
+    - family: HN
+      fonts:
+        - asset: assets/fonts/Helvetica-Neue/base.ttf
+        - asset: assets/fonts/Helvetica-Neue/base-italic.otf
+          style: italic
+          weight: 500
+        - asset: assets/fonts/Helvetica-Neue/zero.otf
+          weight: 300
+        - asset: assets/fonts/Helvetica-Neue/bold-italic.otf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/Helvetica-Neue/bold-x2-italic.otf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/Helvetica-Neue/bold-x3-italic.otf
+          style: italic
+          weight: 900
