@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "626741015",
+    "project_id": "bcsports-mobile",
+    "storage_bucket": "bcsports-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626741015:android:e521a32a674ca4d120b152",
+        "android_client_info": {
+          "package_name": "com.example.bcsports_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkBZ6eRSGvpfH1DJBgRGHlSDwVfViXvAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
