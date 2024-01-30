@@ -10,6 +10,15 @@ class MarketScreen extends StatefulWidget {
 class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(),
+          body: CustomScrollView(
+            slivers: [],
+          ),
+        ),
+      ),
+    );
   }
 }
