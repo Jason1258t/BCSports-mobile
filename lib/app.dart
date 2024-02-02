@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/profile/ui/profile.dart';
+import 'package:bcsports_mobile/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -17,8 +18,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         fontFamily: 'HN',
       ),
-      home: const ProfileScreen(),
-      debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
