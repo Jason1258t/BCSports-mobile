@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class MarketScreen extends StatefulWidget {
@@ -11,11 +12,17 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: AppColors.black_090723,
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(),
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: const Text("market"),
+          ),
           body: CustomScrollView(
-            slivers: [],
+            slivers: [
+              
+            ],
           ),
         ),
       ),
