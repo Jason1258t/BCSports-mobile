@@ -76,11 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 10,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          OnboardingDot(),
-                          OnboardingDot(isBig: true,),
-                          OnboardingDot(),
-                        ],
+                        children: [0, 1, 2].map((e) => OnboardingDot(isBig: e == bloc.currentPageIndex,)).toList(),
                       ),
                     ),
                     const Spacer(),
