@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 color: AppColors.yellow_F3D523,
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 37,
                       height: 10,
                       child: Row(

@@ -1,0 +1,1 @@
+enum EnumProfileTap {Nft, Posts}

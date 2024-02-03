@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,8 @@ class MyRepositoryProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => MarketRepository())
+        RepositoryProvider(create: (context) => MarketRepository()),
+        RepositoryProvider(create: (context) => ProfileRepository()),
       ],
       child: const MyBlocProviders(),
     );
