@@ -1,5 +1,5 @@
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
-import 'package:bcsports_mobile/features/onboarding/onboarding_screen.dart';
+import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {

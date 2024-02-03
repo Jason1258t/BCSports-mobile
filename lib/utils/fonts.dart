@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppFonts {
   static final TextStyle _font = GoogleFonts.geologica(
     color: Colors.white,
-    height: 1.3
+    height: 1
   );
 
   static final font44w800 = _font.copyWith(
