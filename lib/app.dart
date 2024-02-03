@@ -14,10 +14,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BCSports',
-      theme: ThemeData(
-        fontFamily: 'HN',
-      ),
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

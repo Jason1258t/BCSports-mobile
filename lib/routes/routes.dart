@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
+import 'package:bcsports_mobile/features/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -7,6 +8,8 @@ class AppRoutes {
 
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (ctx) => OnboardingScreen());
+      case '/market':
         return MaterialPageRoute(builder: (ctx) => MarketScreen());
       default:
         return MaterialPageRoute(
