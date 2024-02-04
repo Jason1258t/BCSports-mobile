@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 
 class AuthRepository {
   AuthRepository() {
+    checkAuth();
     _listenAuthChanges();
   }
 

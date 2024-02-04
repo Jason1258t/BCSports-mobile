@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
+import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -17,33 +18,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+class PasswordRecoveryScreen extends StatefulWidget {
+  const PasswordRecoveryScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<PasswordRecoveryScreen> createState() => _PasswordRecoveryScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
-
-  bool passwordObscured = true;
-
-  bool agree = false;
   bool buttonActive = false;
 
   void validate() {
-    buttonActive = _formKey.currentState!.validate() && agree;
+    buttonActive = _formKey.currentState!.validate();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        resize: true,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -79,9 +78,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               child: Text(
                 'Please enter your registered email address.',
                 style: AppFonts.font16w400,
+                textAlign: TextAlign.center,
               ),
             ),
-
             const SizedBox(
               height: 40,
             ),
@@ -94,28 +93,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 controller: emailController,
                 validator: Validator.emailValidator,
                 hintText: 'Email',
+                keyboardType: TextInputType.emailAddress,
                 prefixIcon: Container(
                   padding: const EdgeInsets.only(right: 5),
                   child: SvgPicture.asset(
-                    Assets.icons('lock.svg'),
+                    Assets.icons('email.svg'),
                   ),
                 ),
-                suffixIcon: InkWell(
-                  child: SvgPicture.asset(Assets.icons('eye-close.svg')),
-                  onTap: () {
-                    setState(() {
-                      passwordObscured = !passwordObscured;
-                    });
-                  },
-                ),
-                obscured: passwordObscured,
               ),
             ),
             const Spacer(),
             CustomTextButton(
               text: 'Send recovery mail',
               onTap: () {
-
+                context
+                    .read<ResetPasswordCubit>()
+                    .resetPassword(emailController.text.trim());
               },
               isActive: buttonActive,
             ),

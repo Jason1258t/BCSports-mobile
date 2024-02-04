@@ -14,14 +14,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
@@ -41,10 +41,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+        canPop: false,
         body: Column(
           children: [
             const Padding(
-                padding: EdgeInsets.symmetric(vertical: 80), child: LogoWidget()),
+                padding: EdgeInsets.symmetric(vertical: 80),
+                child: LogoWidget()),
             Form(
               key: _formKey,
               child: Column(
@@ -57,6 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     controller: emailController,
                     labelText: 'Email address',
                     hintText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
                     prefixIcon: Container(
                       padding: const EdgeInsets.only(right: 5),
                       height: 20,
@@ -76,6 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     validator: Validator.passwordValidator,
                     labelText: 'Password',
                     hintText: 'Password',
+                    keyboardType: TextInputType.visiblePassword,
                     prefixIcon: Container(
                       padding: const EdgeInsets.only(right: 5),
                       child: SvgPicture.asset(
@@ -93,43 +97,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     obscured: passwordObscured,
                   ),
                   const SizedBox(
-                    height: 28,
+                    height: 8,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      FlutterSwitch(
-                          width: 40,
-                          height: 20,
-                          value: agree,
-                          padding: 3,
-                          toggleSize: 14,
-                          activeColor: AppColors.primary,
-                          inactiveColor: AppColors.black_s2new_1A1A1A,
-                          onToggle: (value) {
-                            setState(() {
-                              agree = value;
-                              validate();
-                            });
-                          }),
-                      const SizedBox(width: 8),
-                      Text.rich(TextSpan(children: [
-                        TextSpan(
-                            text: 'I agree to the ', style: AppFonts.font12w400),
-                        TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                            text: 'terms and conditions',
-                            style: AppFonts.font12w400.copyWith(
-                                decoration: TextDecoration.underline,
-                                decorationThickness: 3,
-                                decorationColor: Colors.white)),
-                      ]))
+                      Text.rich(TextSpan(
+                          text: 'forgot password?',
+                          style: AppFonts.font12w400,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, '/recovery');
+                            }))
                     ],
                   ),
                   const SizedBox(
                     height: 55,
                   ),
                   CustomTextButton(
-                    text: 'Sign up',
+                    text: 'Sign in',
                     onTap: () {
                       context.read<AuthCubit>().signInWithEmailAndPassword(
                           email: emailController.text.trim(),
@@ -142,12 +128,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                        text: 'Already have an account? ',
+                        text: 'Don’t have an account?  ',
                         style: AppFonts.font12w400),
                     TextSpan(
-                        text: 'Sign in',
+                        text: 'Sign up',
                         style: AppFonts.font12w600,
-                        recognizer: TapGestureRecognizer()..onTap = () {}),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, '/register');
+                          }),
                   ])),
                   const SizedBox(
                     height: 20,
@@ -156,25 +145,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
                       Expanded(
                           child: ButtonWithIcon(
-                            height: 40,
-                            text: 'Google',
-                            icon: SvgPicture.asset(Assets.icons('google.svg')),
-                            onTap: () {
-                              context.read<AuthCubit>().signInWithGoogle();
-                            },
-                            isActive: true,
-                          )),
+                        height: 40,
+                        text: 'Google',
+                        icon: SvgPicture.asset(Assets.icons('google.svg')),
+                        onTap: () {
+                          context.read<AuthCubit>().signInWithGoogle();
+                        },
+                        isActive: true,
+                      )),
                       const SizedBox(
                         width: 16,
                       ),
                       Expanded(
                           child: ButtonWithIcon(
-                            height: 40,
-                            text: 'Apple',
-                            icon: SvgPicture.asset(Assets.icons('apple.svg')),
-                            onTap: () {},
-                            isActive: true,
-                          )),
+                        height: 40,
+                        text: 'Apple',
+                        icon: SvgPicture.asset(Assets.icons('apple.svg')),
+                        onTap: () {},
+                        isActive: true,
+                      )),
                     ],
                   )
                 ],

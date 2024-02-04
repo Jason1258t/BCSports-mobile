@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/auth/bloc/app/app_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
+import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
@@ -40,6 +41,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(create: (context) => OnboardingCubit()),
         BlocProvider(create: (context) => AuthCubit(authRepository)),
         BlocProvider(create: (context) => AppCubit(authRepository)),
+        BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MainCubit()),
       ],
       child: const MyApp(),
