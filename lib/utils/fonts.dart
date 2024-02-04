@@ -6,6 +6,17 @@ class AppFonts {
   static final TextStyle _font =
       GoogleFonts.geologica(color: Colors.white, height: 1);
 
+  static final TextStyle _fontAS =
+      GoogleFonts.alumniSans(color: Colors.white, height: 1);
+
+  static final font22w800ItalicAS = _fontAS.copyWith(
+      fontSize: 22, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
+
+  static final font9w600 = _font.copyWith(
+    fontSize: 9,
+    fontWeight: FontWeight.w600
+  );
+
   static final font12w400 =
       _font.copyWith(fontSize: 12, fontWeight: FontWeight.w400);
 
