@@ -19,44 +19,20 @@ class MarketNftCardState extends State<MarketNftCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
-        gradient: AppGradients.orange
-      ),
+          borderRadius: BorderRadius.circular(7),
+          gradient: AppGradients.orange),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Container(
               clipBehavior: Clip.hardEdge,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(11)),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  
-                  Positioned(
-                    bottom: 10,
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      height: 32,
-                      width: 130,
-                      decoration: BoxDecoration(
-                        color: AppColors.black_222232.withOpacity(0.4),
-                        borderRadius: BorderRadius.circular(11),
-                      ),
-                      alignment: Alignment.center,
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: Text(
-                          "Take it",
-                          style: AppFonts.font14w500
-                              .copyWith(color: AppColors.yellow_F3D523),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4)),
+              child: Image.asset(
+                "assets/images/photo.png",
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -64,15 +40,97 @@ class MarketNftCardState extends State<MarketNftCard> {
             height: 13,
           ),
           Text(
-            widget.nft.name,
-            style: AppFonts.font14w400.copyWith(color: AppColors.white),
+            widget.nft.name.toUpperCase(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppFonts.font22w800ItalicAS
+                .copyWith(color: AppColors.yellow_F3D523, letterSpacing: 1),
           ),
           const SizedBox(
-            height: 5,
+            height: 6,
           ),
-          Text(
-            widget.nft.price.toString(),
-            style: AppFonts.font14w500.copyWith(color: AppColors.yellow_F3D523),
+          Container(
+            margin: EdgeInsets.only(bottom: 4),
+            clipBehavior: Clip.hardEdge,
+            height: 26,
+            decoration: BoxDecoration(
+                color: AppColors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8)),
+            alignment: Alignment.center,
+            child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                child: Text(
+                  "goalkeeper".toUpperCase(),
+                  style: AppFonts.font9w600.copyWith(color: AppColors.white),
+                )),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 26,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8)),
+                  alignment: Alignment.center,
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Country",
+                            overflow: TextOverflow.ellipsis,
+                            style: AppFonts.font9w600
+                                .copyWith(color: AppColors.white),
+                          ),
+                          Text(
+                            "Brazil".toUpperCase(),
+                            overflow: TextOverflow.ellipsis,
+                            style: AppFonts.font9w600
+                                .copyWith(color: AppColors.white),
+                          ),
+                        ],
+                      )),
+                ),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 26,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8)),
+                  alignment: Alignment.center,
+                  child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Born",
+                            overflow: TextOverflow.ellipsis,
+                            style: AppFonts.font9w600
+                                .copyWith(color: AppColors.white),
+                          ),
+                          Text(
+                            "21.01.2007".toUpperCase(),
+                            overflow: TextOverflow.ellipsis,
+                            style: AppFonts.font9w600
+                                .copyWith(color: AppColors.white),
+                          ),
+                        ],
+                      )),
+                ),
+              ),
+            ],
           )
         ],
       ),

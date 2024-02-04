@@ -8,6 +8,6 @@ class NftModel {
   static NftModel fish = NftModel(
       imagePath:
           "https://cdn.finam.ru/images/publications/1482315/NFT_obezyana_s_sajta_Sothebys_6b56ec21a7.jpg",
-      name: "nft name",
+      name: "Felipe Emanuel Borges dos Santos",
       price: 133);
 }
