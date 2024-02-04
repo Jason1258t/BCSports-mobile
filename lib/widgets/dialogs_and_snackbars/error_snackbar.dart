@@ -3,10 +3,10 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppSnackBars {
-  static SnackBar errorSnackBar(String text) => SnackBar(
+  static SnackBar snackBar(String text) => SnackBar(
         elevation: 0,
         content: Text(
-          'error $text',
+          text,
           style: AppFonts.font14w400,
         ),
         backgroundColor: AppColors.black_s2new_1A1A1A,

@@ -58,7 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           print(state.e);
           print('Auth error');
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.errorSnackBar('ошибка авторизации'));
+              .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
         }
         if (state is AuthSuccessState) Navigator.pop(context);
       },
