@@ -29,7 +29,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthSuccessState());
     } on Exception catch (e) {
       emit(AuthFailState(e));
-      rethrow;
     }
   }
 
