@@ -1,7 +1,10 @@
+import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   const ProfileSettingScreen({super.key});
@@ -42,28 +45,34 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 ],
               ),
             ),
-            body: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: sizeOf.width * 0.20,
-                    ),
-                    Text(
-                      'Andrian',
-                      style: AppFonts.font20w600,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '@ideasbyandian',
-                      style: AppFonts.font13w100,
-                    ),
-                  ],
+                const SizedBox(width: double.infinity,),
+                CircleAvatar(
+                  radius: sizeOf.width * 0.20,
                 ),
+                Text(
+                  'Andrian',
+                  style: AppFonts.font20w600,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  '@ideasbyandian',
+                  style: AppFonts.font13w100,
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                CustomTextButton(
+                    text: 'Log out',
+                    onTap: () {
+                      context.read<AuthCubit>().signOut();
+                      Navigator.pop(context);
+                    },
+                    isActive: true)
               ],
             ),
           ),

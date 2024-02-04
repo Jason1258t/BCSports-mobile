@@ -8,6 +8,7 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/validator.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_with_icon.dart';
+import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/gestures.dart';
@@ -53,7 +54,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         } else {
           Dialogs.hide(context);
         }
-        if (state is AuthFailState) print(state.e);
+        if (state is AuthFailState) {
+          print(state.e);
+          print('Auth error');
+          ScaffoldMessenger.of(context)
+              .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
+        }
+        if (state is AuthSuccessState) Navigator.pop(context);
       },
       child: CustomScaffold(
           body: Column(
