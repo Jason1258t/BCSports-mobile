@@ -1,8 +1,6 @@
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
-import 'package:bcsports_mobile/features/profile/widgets/Nft_item.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -22,7 +20,9 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   void initState() {
-    context.read<MarketCubit>().getNftCards();
+    if (context.read<MarketRepository>().nftList.isEmpty) {
+      context.read<MarketCubit>().getNftCards();
+    }
     super.initState();
   }
 
