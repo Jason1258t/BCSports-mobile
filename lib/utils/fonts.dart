@@ -6,6 +6,11 @@ class AppFonts {
   static final TextStyle _font =
       GoogleFonts.geologica(color: Colors.white, height: 1);
 
+  static final font8w400 = _font.copyWith(
+    fontSize: 8,
+    fontWeight: FontWeight.normal
+  );
+
   static final font44w800 =
       _font.copyWith(fontWeight: FontWeight.bold, fontSize: 44);
 
@@ -30,8 +35,8 @@ class AppFonts {
   static final font20w600 = _font.copyWith(
       color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600);
 
-  static final font20w600WithColor = (Color color) => _font.copyWith(
-      color: color, fontSize: 20, fontWeight: FontWeight.w600);
+  static final font20w600WithColor = (Color color) =>
+      _font.copyWith(color: color, fontSize: 20, fontWeight: FontWeight.w600);
 
   static final font13w100 = _font.copyWith(
       color: Colors.white, fontSize: 12, fontWeight: FontWeight.w100);

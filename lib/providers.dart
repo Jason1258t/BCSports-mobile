@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/app.dart';
+import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
@@ -28,6 +29,7 @@ class MyBlocProviders extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => OnboardingCubit()),
+        BlocProvider(create: (context) => MainCubit()),
       ],
       child: const MyApp(),
     );
