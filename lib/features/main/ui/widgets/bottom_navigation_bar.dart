@@ -16,7 +16,7 @@ class CustomButtonNavBar extends StatelessWidget {
           
           type: BottomNavigationBarType.fixed,
           elevation: 0,
-          backgroundColor: AppColors.black_222232,
+          backgroundColor: AppColors.black_252525,
           currentIndex: context.read<MainCubit>().currentPageIndex,
           showUnselectedLabels: true,
           unselectedItemColor: AppColors.grey_B4B4B4,
@@ -27,7 +27,7 @@ class CustomButtonNavBar extends StatelessWidget {
             context.read<MainCubit>().changePageIndexTo(newPageIndex);
           },
           items: [
-            NavItem(iconPath: "assets/icons/market.svg", label: "AR"),
+            NavItem(iconPath: "assets/icons/market.svg", label: "Market"),
             NavItem(iconPath: "assets/icons/ar.svg", label: "AR"),
             NavItem(iconPath: "assets/icons/photo.svg", label: "Photo"),
             NavItem(iconPath: "assets/icons/profile.svg", label: "Profile"),

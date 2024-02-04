@@ -24,6 +24,9 @@ dependencies:
   flutter_svg: any
   flutter_switch: ^0.3.2
   pinput: ^3.0.1
+  firebase_database: ^10.4.4
+  firebase_database_platform_interface: ^0.2.5+20
+  cloud_firestore: ^4.15.3
 
 dev_dependencies:
   flutter_test:
