@@ -29,12 +29,7 @@ class MarketNftCardState extends State<MarketNftCard> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Positioned.fill(
-                    child: Image.network(
-                      widget.nft.imagePath,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  
                   Positioned(
                     bottom: 10,
                     child: Container(
