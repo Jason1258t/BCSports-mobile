@@ -6,16 +6,23 @@ class AppFonts {
   static final TextStyle _font =
       GoogleFonts.geologica(color: Colors.white, height: 1);
 
-  static final font8w400 = _font.copyWith(
-    fontSize: 8,
-    fontWeight: FontWeight.normal
-  );
+  static final font8w400 =
+      _font.copyWith(fontSize: 8, fontWeight: FontWeight.normal);
+  
+  static final font10w500 =
+      _font.copyWith(fontSize: 10, fontWeight: FontWeight.w500);
 
   static final font44w800 =
       _font.copyWith(fontWeight: FontWeight.bold, fontSize: 44);
 
+  static final font12w600 =
+      _font.copyWith(fontWeight: FontWeight.w600, fontSize: 12);
+
   static final font14w300 =
       _font.copyWith(fontSize: 14, fontWeight: FontWeight.w300);
+
+  static final font14w400 =
+      _font.copyWith(fontSize: 14, fontWeight: FontWeight.w400);
 
   static final font14w500 = _font.copyWith(
       fontSize: 14, fontWeight: FontWeight.w300, color: AppColors.white);
