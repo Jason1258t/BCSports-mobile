@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "626741015",
+    "firebase_url": "https://bcsports-mobile-default-rtdb.firebaseio.com",
     "project_id": "bcsports-mobile",
     "storage_bucket": "bcsports-mobile.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.bcsports_mobile"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bcsports_mobile",
+            "certificate_hash": "6e5aee6942200ac3035203a06faaa4966a9bc7d4"
+          }
+        },
+        {
+          "client_id": "626741015-u5mnl05m81itfg3vvmbgl8gesed6t5s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAkBZ6eRSGvpfH1DJBgRGHlSDwVfViXvAA"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626741015-u5mnl05m81itfg3vvmbgl8gesed6t5s4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "626741015-d6o63onqsi693vba4nqvrh6e8pus37rq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bcsportsMobile"
+              }
+            }
+          ]
         }
       }
     }

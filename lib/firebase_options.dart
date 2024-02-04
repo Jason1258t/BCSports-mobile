@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
     authDomain: 'bcsports-mobile.firebaseapp.com',
+    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
     storageBucket: 'bcsports-mobile.appspot.com',
     measurementId: 'G-YF4XX6TJBK',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:626741015:android:e521a32a674ca4d120b152',
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
+    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
     storageBucket: 'bcsports-mobile.appspot.com',
   );
 
@@ -66,7 +68,10 @@ class DefaultFirebaseOptions {
     appId: '1:626741015:ios:e0baf9381c21410e20b152',
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
+    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
     storageBucket: 'bcsports-mobile.appspot.com',
+    androidClientId: '626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com',
+    iosClientId: '626741015-d6o63onqsi693vba4nqvrh6e8pus37rq.apps.googleusercontent.com',
     iosBundleId: 'com.example.bcsportsMobile',
   );
 
@@ -75,7 +80,10 @@ class DefaultFirebaseOptions {
     appId: '1:626741015:ios:5ec851ab8f857e8220b152',
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
+    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
     storageBucket: 'bcsports-mobile.appspot.com',
+    androidClientId: '626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com',
+    iosClientId: '626741015-dld51ta1dl5sp6vi2n5ajvil4aeuto1n.apps.googleusercontent.com',
     iosBundleId: 'com.example.bcsportsMobile.RunnerTests',
   );
 }

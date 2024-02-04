@@ -6,6 +6,7 @@ class AppColors {
   static Color black_101119 = const Color(0xff101119);
   static Color black_081131 = const Color(0xff081131);
   static Color black = Colors.black;
+  static Color black_s2new_1A1A1A = const Color(0xff1A1A1A);
 
   static Color yellow_F3D523 = const Color(0xffF3D523);
 
@@ -15,4 +16,6 @@ class AppColors {
   static Color purpure_F4F4F4 = const Color(0xffE7EBFd);
 
   static Color grey_B4B4B4 = const Color(0xffB4B4B4);
+
+  static Color primary = const Color(0xffF3D523);
 }

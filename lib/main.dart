@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/providers.dart';
 import 'package:bcsports_mobile/services/custom_bloc_observer.dart';
 import 'package:flutter/material.dart';
