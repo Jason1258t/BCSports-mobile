@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
+import 'package:bcsports_mobile/features/profile/widgets/Nft_item.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:flutter/material.dart';

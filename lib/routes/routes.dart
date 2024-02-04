@@ -5,6 +5,13 @@ import 'package:bcsports_mobile/features/profile/ui/profile.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
+  static List<Widget> mainPages = [
+    MarketScreen(),
+    Container(),
+    Container(),
+    ProfileScreen()
+  ];
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final pageArgs = settings.arguments;
 
