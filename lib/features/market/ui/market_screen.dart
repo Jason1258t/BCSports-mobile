@@ -24,6 +24,8 @@ class _MarketScreenState extends State<MarketScreen> {
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
+                    titleSpacing: 22,
+                    leadingWidth: 22,
                     backgroundColor: AppColors.black_090723,
                     surfaceTintColor: Colors.transparent,
                     elevation: 0,
@@ -35,7 +37,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           style: AppFonts.font12w600
                               .copyWith(color: AppColors.white),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Container(
                           width: 40,
                           height: 40,
