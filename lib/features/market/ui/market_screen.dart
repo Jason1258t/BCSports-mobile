@@ -14,6 +14,8 @@ class MarketScreen extends StatefulWidget {
 }
 
 class _MarketScreenState extends State<MarketScreen> {
+  String explore = "All Collections";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,51 +33,49 @@ class _MarketScreenState extends State<MarketScreen> {
                     elevation: 0,
                     floating: true,
                     title: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          "Fincher",
-                          style: AppFonts.font12w600
-                              .copyWith(color: AppColors.white),
-                        ),
-                        const Spacer(),
                         Container(
-                          width: 40,
-                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 10),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: AppColors.black_222232,
-                              shape: BoxShape.circle),
-                          child: SvgPicture.asset('assets/icons/bell.svg'),
+                              borderRadius: BorderRadius.circular(31)),
+                          child: Row(
+       
+                            children: [
+                              SvgPicture.asset('assets/icons/bankcard.svg'),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "1231",
+                                style: AppFonts.font14w500
+                                    .copyWith(color: AppColors.white),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text("ETH",
+                                  style: AppFonts.font14w500
+                                      .copyWith(color: AppColors.yellow_F3D523))
+                            ],
+                          ),
                         ),
                       ],
                     )),
-
-                
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 23),
                   sliver: SliverToBoxAdapter(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Trending Bids 🔥",
-                          style: AppFonts.font18w600,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            "See more",
-                            style: AppFonts.font10w500
-                                .copyWith(color: AppColors.yellow_F3D523),
-                          ),
-                        )
-                      ],
+                    child: Text(
+                      explore,
+                      style: AppFonts.font18w600,
                     ),
                   ),
                 ),
-
                 const SliverToBoxAdapter(
-                  child: SizedBox(height: 38),
+                  child: SizedBox(height: 16),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 23),
@@ -85,7 +85,7 @@ class _MarketScreenState extends State<MarketScreen> {
                               mainAxisSpacing: 29,
                               crossAxisSpacing: 8,
                               crossAxisCount: 2,
-                              childAspectRatio: 0.7),
+                              childAspectRatio: 0.59),
                       itemBuilder: (context, index) => MarketNftCard(
                             nft: NftModel.fish,
                           )),
@@ -96,23 +96,3 @@ class _MarketScreenState extends State<MarketScreen> {
     );
   }
 }
-
-
-
-// appBar: AppBar(
-              // backgroundColor: Colors.transparent,
-              // surfaceTintColor: Colors.transparent,
-              // elevation: 0,
-            //   centerTitle: false,
-            //   title: Text("Fincher", style: AppFonts.font12w600.copyWith(color: AppColors.white),),
-            // ),
-
-
-// GridView.builder(
-//                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                     mainAxisSpacing: 29,
-//                     crossAxisSpacing: 8,
-//                       crossAxisCount: 2, childAspectRatio: 0.7),
-//                   itemBuilder: (context, index) => MarketNftCard(
-//                         nft: NftModel.fish,
-//                       )),
