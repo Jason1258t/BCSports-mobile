@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:flutter/material.dart';
 
 class MarketNftCard extends StatefulWidget {
@@ -18,6 +19,10 @@ class MarketNftCardState extends State<MarketNftCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(7),
+        gradient: AppGradients.orange
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

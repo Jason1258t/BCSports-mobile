@@ -19,7 +19,7 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black_090723,
+      color: AppColors.black,
       child: SafeArea(
         child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -28,7 +28,7 @@ class _MarketScreenState extends State<MarketScreen> {
                 SliverAppBar(
                     titleSpacing: 22,
                     leadingWidth: 22,
-                    backgroundColor: AppColors.black_090723,
+                    backgroundColor: AppColors.black,
                     surfaceTintColor: Colors.transparent,
                     elevation: 0,
                     floating: true,
