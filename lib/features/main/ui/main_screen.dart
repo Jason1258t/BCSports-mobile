@@ -15,13 +15,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: BlocBuilder<MainCubit, MainState>(
+    return BlocBuilder<MainCubit, MainState>(
       builder: (context, state) {
         return Scaffold(
           body: AppRoutes.mainPages[context.read<MainCubit>().currentPageIndex],
           bottomNavigationBar: CustomButtonNavBar(),
         );
       },
-    ));
+    );
   }
 }

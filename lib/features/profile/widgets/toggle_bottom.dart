@@ -9,7 +9,7 @@ class ToggleButton extends StatelessWidget {
   const ToggleButton({super.key, required this.width, required this.enumTap, required this.text, required this.onTap});
 
   final double width;
-  final EnumProfileTap enumTap;
+  final EnumProfileTab enumTap;
   final String text;
   final Function() onTap;
 

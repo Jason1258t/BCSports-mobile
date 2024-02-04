@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/profile/ui/profile.dart';
 import 'package:bcsports_mobile/routes/routes.dart';
 import 'package:flutter/material.dart';
 

@@ -40,22 +40,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        CircleAvatar(
-                          backgroundColor: AppColors.black_222232,
-                          radius: 23,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
                         SizedBox(
-                          width: 60,
-                        )
+                          width: 120,
+                        ),
                       ],
                     ),
                     Text(
@@ -79,7 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icons.settings,
                             color: AppColors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/profile_settings');
+                          },
                         ),
                       ],
                     )
@@ -145,19 +136,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ToggleButton(
                       width: sizeof.width * 0.4,
-                      enumTap: EnumProfileTap.Nft,
+                      enumTap: EnumProfileTab.Nft,
                       text: 'NFT',
                       onTap: () {
-                        repository.setProfileActiveTap(EnumProfileTap.Nft);
+                        repository.setProfileActiveTap(EnumProfileTab.Nft);
                         setState(() {});
                       },
                     ),
                     ToggleButton(
                       width: sizeof.width * 0.4,
-                      enumTap: EnumProfileTap.Posts,
+                      enumTap: EnumProfileTab.Posts,
                       text: 'Posts',
                       onTap: () {
-                        repository.setProfileActiveTap(EnumProfileTap.Posts);
+                        repository.setProfileActiveTap(EnumProfileTab.Posts);
                         setState(() {});
                       },
                     ),
@@ -174,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     childAspectRatio: 0.615,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
+                        (BuildContext context, int index) {
                       return NftItemWidget(
                         width: sizeof.width * 0.43,
                         height: sizeof.width * 0.7,
