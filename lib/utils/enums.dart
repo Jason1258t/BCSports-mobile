@@ -1,1 +1,1 @@
-enum EnumProfileTap {Nft, Posts}
+enum EnumProfileTab {Nft, Posts}

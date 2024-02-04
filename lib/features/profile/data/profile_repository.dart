@@ -1,9 +1,9 @@
 import 'package:bcsports_mobile/utils/enums.dart';
 
 class ProfileRepository{
-  EnumProfileTap activeTap = EnumProfileTap.Nft;
+  EnumProfileTab activeTap = EnumProfileTab.Nft;
 
-  void setProfileActiveTap(EnumProfileTap profileTap){
+  void setProfileActiveTap(EnumProfileTab profileTap){
     activeTap = profileTap;
   }
 }
