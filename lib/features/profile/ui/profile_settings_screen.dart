@@ -5,6 +5,9 @@ import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../utils/assets.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   const ProfileSettingScreen({super.key});
@@ -48,10 +51,13 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(width: double.infinity,),
+                const SizedBox(
+                  width: double.infinity,
+                ),
                 CircleAvatar(
                   radius: sizeOf.width * 0.20,
                 ),
+                const SizedBox(height: 25,),
                 Text(
                   'Andrian',
                   style: AppFonts.font20w600,
@@ -66,13 +72,27 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                CustomTextButton(
-                    text: 'Log out',
-                    onTap: () {
-                      context.read<AuthCubit>().signOut();
-                      Navigator.pop(context);
-                    },
-                    isActive: true)
+                TextButton(
+                  onPressed: () {
+                    context.read<AuthCubit>().signOut();
+                    Navigator.pushNamed(context, '');
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(Assets.icons('logout.svg')),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5, left: 10),
+                        child: Text(
+                          'Log out',
+                          style: AppFonts.font16w400
+                              .copyWith(color: AppColors.yellow_F3D523),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

@@ -23,8 +23,8 @@ class AppRoutes {
 
     switch (settings.name) {
       case '/':
-        // return MaterialPageRoute(builder: (ctx) => const MainScreen());
-        return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
+        return MaterialPageRoute(builder: (ctx) => const MainScreen());
+        // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
       case '/profile_settings':
         return MaterialPageRoute(builder: (ctx) => const ProfileSettingScreen());
       case '/onboarding':
