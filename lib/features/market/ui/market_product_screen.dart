@@ -136,7 +136,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                               ],
                             ),
                             Container(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   top: 5, bottom: 8, left: 13, right: 13),
                               decoration: BoxDecoration(
                                   color: AppColors.black_262627,
