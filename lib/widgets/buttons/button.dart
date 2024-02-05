@@ -7,25 +7,29 @@ class CustomTextButton extends StatelessWidget {
       {super.key,
       required this.text,
       required this.onTap,
-      required this.isActive});
+      required this.isActive,
+      this.height,
+      this.width});
 
   final String text;
   final VoidCallback onTap;
   final bool isActive;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: isActive ? onTap : () {},
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             backgroundColor:
-              isActive ? AppColors.primary : AppColors.black_s2new_1A1A1A,
+                isActive ? AppColors.primary : AppColors.black_s2new_1A1A1A,
             foregroundColor:
                 isActive ? AppColors.primary : AppColors.black_s2new_1A1A1A),
         child: Container(
-          height: 67,
-          width: double.infinity,
+          height: height ?? 67,
+          width: width ?? double.infinity,
           alignment: Alignment.center,
           child: Text(
             text,

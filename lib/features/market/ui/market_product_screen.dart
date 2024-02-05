@@ -6,8 +6,8 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
-
 
 class MarketProductScreen extends StatefulWidget {
   final NftModel nft;
@@ -63,7 +63,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                         if (loadingProgress == null) {
                           return child;
                         }
-                        return Center(
+                        return const Center(
                             child: CircularProgressIndicator.adaptive());
                       })),
                       const SizedBox(
@@ -98,7 +98,13 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                         height: 16,
                       ),
                       CustomTextButton(
-                          text: "Place a bit", onTap: () {}, isActive: true),
+                          text: "Place a bit",
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => const PlaceBitPopup());
+                          },
+                          isActive: true),
                       const SizedBox(
                         height: 16,
                       ),

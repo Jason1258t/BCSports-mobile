@@ -33,7 +33,7 @@ class AppStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
       if (state is AppUnAuthState) return const LoginScreen();
-      if (state is AppAuthState) return const OnboardingScreen();
+      if (state is AppAuthState) return const MainScreen();
       if (state is AppInitial) return const SplashScreen();
       return Container();
     });

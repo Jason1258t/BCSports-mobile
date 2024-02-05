@@ -39,7 +39,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                     BoxDecoration(borderRadius: BorderRadius.circular(4)),
                 child: Image.asset(
                   "assets/images/photo.png",
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
             ),
