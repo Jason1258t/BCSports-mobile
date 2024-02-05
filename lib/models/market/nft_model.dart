@@ -10,6 +10,7 @@ class NftModel {
   final String position;
   final String role;
   final int weight;
+  final String previewImagePath;
 
   NftModel({
     required this.birthday,
@@ -23,6 +24,7 @@ class NftModel {
     required this.position,
     required this.role,
     required this.weight,
+    required this.previewImagePath
   });
 
   factory NftModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class NftModel {
       position: json['position'],
       role: json['role'],
       weight: json['weight'],
+      previewImagePath: json['mini_image_path']
     );
   }
 
@@ -74,17 +77,18 @@ class NftModel {
         ' }';
   }
 
-  static NftModel fish = NftModel(
-    birthday: DateTime(2000, 1, 1),
-    citizenship: 'Test Citizenship',
-    club: 'Test Club',
-    country: 'Test Country',
-    height: 180,
-    imagePath: 'gs://example.com/test/photo.png',
-    isRightFoot: true,
-    name: 'Test Player',
-    position: 'Test Position',
-    role: 'Test Role',
-    weight: 70,
-  );
+  // static NftModel fish = NftModel(
+  //   birthday: DateTime(2000, 1, 1),
+  //   citizenship: 'Test Citizenship',
+  //   club: 'Test Club',
+  //   country: 'Test Country',
+  //   height: 180,
+  //   imagePath: 'gs://example.com/test/photo.png',
+  //   isRightFoot: true,
+  //   name: 'Test Player',
+  //   position: 'Test Position',
+  //   role: 'Test Role',
+  //   weight: 70,
+
+  // );
 }
