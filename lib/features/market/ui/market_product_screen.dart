@@ -21,6 +21,8 @@ class MarketProductScreen extends StatefulWidget {
 class _MarketProductScreenState extends State<MarketProductScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     return Container(
       color: AppColors.black,
       child: SafeArea(
@@ -57,15 +59,20 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 22),
                   child: Column(
                     children: [
-                      Image.network(widget.nft.imagePath,
-                          width: double.infinity, fit: BoxFit.fitWidth,
-                          loadingBuilder: ((context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return const Center(
-                            child: CircularProgressIndicator.adaptive());
-                      })),
+                      SizedBox(
+                        height: (size.width - 40) / 0.96,
+                        child: Image.network(widget.nft.imagePath,
+                            fit: BoxFit.fitHeight,
+                            loadingBuilder: ((context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Image.asset(
+                            "assets/images/noname_det.png",
+                            fit: BoxFit.fitHeight,
+                          );
+                        })),
+                      ),
                       const SizedBox(
                         height: 12,
                       ),
@@ -333,6 +340,8 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           PlayerMatchStatsWidget(
                             attr: 'Fouls',
                           ),
+
+                           SizedBox(height: 50,),
                         ],
                       )
                     ],

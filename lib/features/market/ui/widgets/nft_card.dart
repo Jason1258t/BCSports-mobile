@@ -68,6 +68,13 @@ class MarketNftCardState extends State<MarketNftCard> {
                       Image.network(
                         widget.nft.previewImagePath,
                         fit: BoxFit.fitWidth,
+                        width: double.infinity,
+                        loadingBuilder: (context, child, loadingStatus) {
+                          if (loadingStatus == null) {
+                            return child;
+                          }
+                          return Image.asset("assets/images/noname.png", fit: BoxFit.fitWidth);
+                        },
                       ),
                     ],
                   ),
@@ -167,7 +174,9 @@ class MarketNftCardState extends State<MarketNftCard> {
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(
-                                    widget.nft.birthday.toString().toUpperCase(),
+                                    widget.nft.birthday
+                                        .toString()
+                                        .toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
                                     style: AppFonts.font9w600
                                         .copyWith(color: AppColors.white),
