@@ -12,6 +12,8 @@ class AppCubit extends Cubit<AppState> {
       : _authRepository = authRepository,
         super(AppInitial()) {
     _authRepository.appState.stream.listen((event) {
+      print(event);
+
       if (event == AppAuthStateEnum.auth) emit(AppAuthState());
       if (event == AppAuthStateEnum.unAuth) emit(AppUnAuthState());
       if (event == AppAuthStateEnum.wait) emit(AppInitial());

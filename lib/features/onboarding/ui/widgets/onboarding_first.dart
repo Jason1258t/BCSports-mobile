@@ -4,14 +4,14 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingFirstWidget extends StatelessWidget {
-  OnboardingFirstWidget({
+  const OnboardingFirstWidget({
     super.key,
   });
 
-  String mainTitle = "Unlock the future";
-  String description =
+  static const String mainTitle = "Unlock the future";
+  static const String description =
       "Fincher is a over expanding network of many interlinked applications and services for building an ecosystem of decenteralized future.";
-  String exploreMore = 'Explore more';
+  static const String exploreMore = 'Explore more';
 
   @override
   Widget build(BuildContext context) {

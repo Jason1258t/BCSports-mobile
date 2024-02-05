@@ -75,7 +75,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 TextButton(
                   onPressed: () {
                     context.read<AuthCubit>().signOut();
-                    Navigator.pushNamed(context, '');
+                    Navigator.pop(context);
                   },
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

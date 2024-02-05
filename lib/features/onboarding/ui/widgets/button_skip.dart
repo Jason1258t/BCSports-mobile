@@ -16,6 +16,7 @@ class _ButtonSkipState extends State<ButtonSkip> {
 
   void onTap() {
     context.read<OnboardingCubit>().skipAllPages();
+    Navigator.pop(context);
   }
 
   @override
@@ -26,7 +27,7 @@ class _ButtonSkipState extends State<ButtonSkip> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InkWell(
-              onTap: () => onTap(),
+              onTap: onTap,
               child: Text(
                 skip,
                 style: AppFonts.font16w600.copyWith(color: AppColors.white),

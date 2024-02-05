@@ -1,6 +1,5 @@
 import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
-import 'package:bcsports_mobile/features/main/ui/main_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
@@ -23,8 +22,8 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (ctx) => const MainScreen());
-      // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
+        return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
+        // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
       case '/profile_settings':
         return MaterialPageRoute(
             builder: (ctx) => const ProfileSettingScreen());
