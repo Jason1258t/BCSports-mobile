@@ -20,128 +20,167 @@ class MarketNftCard extends StatefulWidget {
 class MarketNftCardState extends State<MarketNftCard> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final cardSize = (size.width - 18 * 2 - 17) / 2;
+    final imgSize = cardSize - 8;
+    final topMargin = imgSize * 0.17;
+
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/market/details', arguments: {'nft' : widget.nft});
+        Navigator.of(context)
+            .pushNamed('/market/details', arguments: {'nft': widget.nft});
       },
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7),
             gradient: AppGradients.orange),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Container(
-                clipBehavior: Clip.hardEdge,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(4)),
-                child: Image.asset(
-                  "assets/images/photo.png",
-                  fit: BoxFit.fitWidth,
+            Stack(
+              children: [
+                Positioned(
+                  left: 3,
+                  top: topMargin + 57,
+                  child: SizedBox(
+                    width: 57,
+                    child: Transform.rotate(
+                      angle: -1.57,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.nft.club,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppFonts.font8w400
+                            .copyWith(color: AppColors.white.withOpacity(0.5)),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Container(
+                  width: double.infinity,
+                  clipBehavior: Clip.hardEdge,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(4)),
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        "assets/images/photo.png",
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 8,
             ),
-            SizedBox(
-              height: 40,
-              child: Text(
-                widget.nft.name.toUpperCase(),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppFonts.font22w800ItalicAS
-                    .copyWith(color: AppColors.yellow_F3D523, letterSpacing: 1),
+            Container(
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Text(
+                      widget.nft.name.toUpperCase(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppFonts.font22w800ItalicAS.copyWith(
+                          color: AppColors.yellow_F3D523, letterSpacing: 1),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 4),
+                    clipBehavior: Clip.hardEdge,
+                    height: 26,
+                    decoration: BoxDecoration(
+                        color: AppColors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8)),
+                    alignment: Alignment.center,
+                    child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child: Text(
+                          widget.nft.position.toUpperCase(),
+                          style: AppFonts.font9w600
+                              .copyWith(color: AppColors.white),
+                        )),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 26,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: AppColors.white.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8)),
+                          alignment: Alignment.center,
+                          child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Country",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFonts.font9w600
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                  Text(
+                                    widget.nft.country.toUpperCase(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFonts.font9w600
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 26,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                              color: AppColors.white.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8)),
+                          alignment: Alignment.center,
+                          child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Born",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFonts.font9w600
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                  Text(
+                                    widget.nft.birthday.toString().toUpperCase(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppFonts.font9w600
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
-            const SizedBox(
-              height: 6,
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 4),
-              clipBehavior: Clip.hardEdge,
-              height: 26,
-              decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8)),
-              alignment: Alignment.center,
-              child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  child: Text(
-                    "goalkeeper".toUpperCase(),
-                    style: AppFonts.font9w600.copyWith(color: AppColors.white),
-                  )),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 26,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8)),
-                    alignment: Alignment.center,
-                    child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Country",
-                              overflow: TextOverflow.ellipsis,
-                              style: AppFonts.font9w600
-                                  .copyWith(color: AppColors.white),
-                            ),
-                            Text(
-                              "Brazil".toUpperCase(),
-                              overflow: TextOverflow.ellipsis,
-                              style: AppFonts.font9w600
-                                  .copyWith(color: AppColors.white),
-                            ),
-                          ],
-                        )),
-                  ),
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: 26,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8)),
-                    alignment: Alignment.center,
-                    child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Born",
-                              overflow: TextOverflow.ellipsis,
-                              style: AppFonts.font9w600
-                                  .copyWith(color: AppColors.white),
-                            ),
-                            Text(
-                              "21.01.2007".toUpperCase(),
-                              overflow: TextOverflow.ellipsis,
-                              style: AppFonts.font9w600
-                                  .copyWith(color: AppColors.white),
-                            ),
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

@@ -45,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void animateToPage() {
     _pageController.animateToPage(bloc.currentPageIndex,
-        duration: const Duration(milliseconds: 200), curve: Curves.bounceIn);
+        duration: const Duration(milliseconds: 200), curve: Curves.fastEaseInToSlowEaseOut);
   }
 
   void nextPage() {
@@ -62,7 +62,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       builder: (context, state) => Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
-          color: AppColors.black,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage(
+                    "assets/images/onboarding/onboarding_bg.png",
+                  ))),
           child: Stack(
             children: [
               Positioned(
