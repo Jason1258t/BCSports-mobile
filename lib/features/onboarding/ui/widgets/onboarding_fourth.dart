@@ -4,20 +4,20 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingFirstWidget extends StatelessWidget {
-  const OnboardingFirstWidget({
+class OnboardingFourthWidget extends StatelessWidget {
+  const OnboardingFourthWidget({
     super.key,
   });
 
-  static const String mainTitle = "Эксклюзивные цифровые колленкции";
+  static const String mainTitle = "The most trusted way";
+  static const String skip = "Skip";
   static const String description =
-      "Первые NFT, которые зависят не от рынка, а от упехов футболистов.";
-  static const String exploreMore = 'Explore more';
+      "Fincher is best and most popular website for selling and your arts and collections in a very easy and hustle free  process.";
+  static const String exploreMore = 'Get Started';
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       child: Stack(
         children: [
           Positioned(
@@ -25,7 +25,7 @@ class OnboardingFirstWidget extends StatelessWidget {
               left: 0,
               bottom: 0,
               child: Image.asset(
-                "assets/images/onboarding/onboarding1.png",
+                "assets/images/onboarding/onboarding2.png",
                 width: double.infinity,
                 fit: BoxFit.fitWidth,
               )),
@@ -53,7 +53,6 @@ class OnboardingFirstWidget extends StatelessWidget {
               ],
             ),
           ),
-          
         ],
       ),
     );

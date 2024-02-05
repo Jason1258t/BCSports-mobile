@@ -7,7 +7,7 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 
 class MarketProductScreen extends StatefulWidget {
   final NftModel nft;
@@ -57,11 +57,15 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 22),
                   child: Column(
                     children: [
-                      Image.asset(
-                        "assets/images/photo_details.png",
-                        width: double.infinity,
-                        fit: BoxFit.fitWidth,
-                      ),
+                      Image.network(widget.nft.imagePath,
+                          width: double.infinity, fit: BoxFit.fitWidth,
+                          loadingBuilder: ((context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                            child: CircularProgressIndicator.adaptive());
+                      })),
                       const SizedBox(
                         height: 12,
                       ),

@@ -16,24 +16,21 @@ class _ButtonSkipState extends State<ButtonSkip> {
 
   void onTap() {
     context.read<OnboardingCubit>().skipAllPages();
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 60, right: 22),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InkWell(
-              onTap: onTap,
-              child: Text(
-                skip,
-                style: AppFonts.font16w600.copyWith(color: AppColors.white),
-              ),
-            )
-          ],
-        ));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: Text(
+            skip,
+            style: AppFonts.font16w600.copyWith(color: AppColors.white),
+          ),
+        )
+      ],
+    );
   }
 }

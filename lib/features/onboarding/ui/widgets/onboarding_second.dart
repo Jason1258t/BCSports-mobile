@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/button_skip.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingSecondWidget extends StatelessWidget {
@@ -17,17 +18,16 @@ class OnboardingSecondWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.black_090723,
       child: Stack(
         children: [
-          
           Positioned(
             top: 0,
             right: 0,
             left: 0,
             child: Image.asset(
-              "assets/images/onboarding/onboarding2.png",
+              "assets/images/onboarding/onboarding4.png",
               fit: BoxFit.fitWidth,
+              width: double.infinity,
             ),
           ),
           Container(
@@ -53,11 +53,9 @@ class OnboardingSecondWidget extends StatelessWidget {
                 const Spacer(
                   flex: 1,
                 ),
-                
               ],
             ),
           ),
-          ButtonSkip(),
         ],
       ),
     );

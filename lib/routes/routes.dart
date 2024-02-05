@@ -34,7 +34,6 @@ class AppRoutes {
         return MaterialPageRoute(builder: (ctx) => const MarketScreen());
       case '/market/details':
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
-
         final NftModel playerNft = pageArgs['nft'];
         return MaterialPageRoute(
             builder: (ctx) => MarketProductScreen(
