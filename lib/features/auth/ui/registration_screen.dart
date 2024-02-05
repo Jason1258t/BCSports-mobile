@@ -60,7 +60,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
         }
-        if (state is AuthSuccessState) Navigator.pop(context);
+        if (state is AuthSuccessState) {
+          Navigator.pushReplacementNamed(context, '/onboarding');
+        }
       },
       child: CustomScaffold(
           body: Column(
@@ -164,21 +166,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                      text: 'Already have an account? ',
-                      style: AppFonts.font12w400),
-                  TextSpan(
-                      text: 'Sign in',
-                      style: AppFonts.font12w600,
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pop(context);
-                        }),
-                ])),
-                const SizedBox(
-                  height: 20,
-                ),
                 Row(
                   children: [
                     Expanded(
@@ -203,7 +190,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       isActive: true,
                     )),
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: 'Already have an account? ',
+                      style: AppFonts.font12w400),
+                  TextSpan(
+                      text: 'Sign in',
+                      style: AppFonts.font12w600,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.pop(context);
+                        }),
+                ])),
               ],
             ),
           )

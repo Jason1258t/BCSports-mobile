@@ -63,6 +63,7 @@ class AuthRepository {
       }
     } catch (e) {
       log(e.toString());
+      rethrow;
     }
     return null;
   }
@@ -74,6 +75,7 @@ class AuthRepository {
           email: email, password: password);
 
       appState.add(AppAuthStateEnum.auth);
+      print('auth state added');
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -81,8 +83,8 @@ class AuthRepository {
       } else if (e.code == 'wrong-password') {
         throw WrongPasswordException();
       }
+      rethrow;
     }
-    return null;
   }
 
   Future<UserCredential> signInWithGoogle() async {

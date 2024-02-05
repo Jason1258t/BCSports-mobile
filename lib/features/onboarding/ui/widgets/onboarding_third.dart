@@ -4,15 +4,15 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingThirdWidget extends StatelessWidget {
-  OnboardingThirdWidget({
+  const OnboardingThirdWidget({
     super.key,
   });
 
-  String mainTitle = "The most trusted way";
-  String skip = "Skip";
-  String description =
+  static const String mainTitle = "The most trusted way";
+  static const String skip = "Skip";
+  static const String description =
       "Fincher is best and most popular website for selling and your arts and collections in a very easy and hustle free  process.";
-  String exploreMore = 'Get Started';
+  static const String exploreMore = 'Get Started';
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class OnboardingThirdWidget extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.fitWidth,
               )),
-          ButtonSkip()
+          const ButtonSkip()
         ],
       ),
     );

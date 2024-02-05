@@ -9,10 +9,9 @@ class MarketRepository {
   Future<void> loadNft() async {
     nftList.clear();
 
-    final collection = await _db.collection("players_NFT");
-    await collection.get().then((sn) => sn.docs.forEach((element) {
-          nftList.add(NftModel.fromJson(element.data()));
-        }));
-
+    final collection = await _db.collection("players_NFT").get();
+    collection.docs.forEach((element) {
+      nftList.add(NftModel.fromJson(element.data()));
+    });
   }
 }

@@ -26,9 +26,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late OnboardingCubit bloc;
 
   List<Widget> pages = [
-    OnboardingFirstWidget(),
-    OnboardingSecondWidget(),
-    OnboardingThirdWidget()
+    const OnboardingFirstWidget(),
+    const OnboardingSecondWidget(),
+    const OnboardingThirdWidget()
   ];
 
   @override
@@ -43,6 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void nextPage() {
+    if (bloc.currentPageIndex == bloc.maxPageIndex) Navigator.pop(context);
     bloc.nextPage();
   }
 
@@ -63,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: pages,
             )),
             InkWell(
-              onTap: () => nextPage(),
+              onTap: nextPage,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
                 width: double.infinity,
@@ -76,7 +77,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 10,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [0, 1, 2].map((e) => OnboardingDot(isBig: e == bloc.currentPageIndex,)).toList(),
+                        children: [0, 1, 2]
+                            .map((e) => OnboardingDot(
+                                  isBig: e == bloc.currentPageIndex,
+                                ))
+                            .toList(),
                       ),
                     ),
                     const Spacer(),
@@ -106,10 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 class OnboardingDot extends StatelessWidget {
   final bool isBig;
 
-  const OnboardingDot({
-    super.key,
-    this.isBig = false
-  });
+  const OnboardingDot({super.key, this.isBig = false});
 
   @override
   Widget build(BuildContext context) {

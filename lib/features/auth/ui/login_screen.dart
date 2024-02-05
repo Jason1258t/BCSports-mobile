@@ -146,6 +146,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: ButtonWithIcon(
+                          height: 40,
+                          text: 'Google',
+                          icon: SvgPicture.asset(Assets.icons('google.svg')),
+                          onTap: () {
+                            context.read<AuthCubit>().signInWithGoogle();
+                          },
+                          isActive: true,
+                        )),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                            child: ButtonWithIcon(
+                          height: 40,
+                          text: 'Apple',
+                          icon: SvgPicture.asset(Assets.icons('apple.svg')),
+                          onTap: () {},
+                          isActive: true,
+                        )),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Text.rich(TextSpan(children: [
                       TextSpan(
                           text: 'Don’t have an account?  ',
@@ -158,35 +186,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.pushNamed(context, '/register');
                             }),
                     ])),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: ButtonWithIcon(
-                              height: 40,
-                              text: 'Google',
-                              icon: SvgPicture.asset(Assets.icons(
-                                  'google.svg')),
-                              onTap: () {
-                                context.read<AuthCubit>().signInWithGoogle();
-                              },
-                              isActive: true,
-                            )),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(
-                            child: ButtonWithIcon(
-                              height: 40,
-                              text: 'Apple',
-                              icon: SvgPicture.asset(Assets.icons('apple.svg')),
-                              onTap: () {},
-                              isActive: true,
-                            )),
-                      ],
-                    )
                   ],
                 ),
               )

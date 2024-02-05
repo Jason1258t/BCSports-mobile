@@ -41,8 +41,8 @@ class MyBlocProviders extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => OnboardingCubit()),
-        BlocProvider(create: (context) => AuthCubit(authRepository)),
-        BlocProvider(create: (context) => AppCubit(authRepository)),
+        BlocProvider(create: (context) => AuthCubit(authRepository), lazy: false,),
+        BlocProvider(create: (context) => AppCubit(authRepository), lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
         BlocProvider(create: (context) => MainCubit()),
