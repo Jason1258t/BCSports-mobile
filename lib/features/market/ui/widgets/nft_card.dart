@@ -22,7 +22,7 @@ class MarketNftCardState extends State<MarketNftCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<MarketRepository>().loadNft();
+        Navigator.of(context).pushNamed('/market/details', arguments: {'nft' : widget.nft});
       },
       child: Container(
         padding: const EdgeInsets.all(8),
