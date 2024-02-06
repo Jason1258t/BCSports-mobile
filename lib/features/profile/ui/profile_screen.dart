@@ -31,12 +31,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     return StreamBuilder(
-        stream: RepositoryProvider.of<ProfileRepository>(context)
+        stream: RepositoryProvider
+            .of<ProfileRepository>(context)
             .profileState
             .stream,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data == LoadingStateEnum.success) {
-            var user = RepositoryProvider.of<ProfileRepository>(context).user;
+            var user = RepositoryProvider
+                .of<ProfileRepository>(context)
+                .user;
 
             return CustomScaffold(
               appBar: AppBar(
@@ -63,8 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Icons.add,
                               color: AppColors.white,
                             ),
-                            onPressed: () => Navigator.pushNamed(
-                                context, AppRouteNames.createPost),
+                            onPressed: () =>
+                                Navigator.pushNamed(
+                                    context, AppRouteNames.createPost),
                           ),
                           const SizedBox(
                             width: 10,
@@ -97,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.amberAccent,
+                            color: user.bannerColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
@@ -108,9 +112,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             backgroundColor: AppColors.black_090723,
                             child: CircleAvatar(
                                 radius: sizeof.width * 0.18,
+                                backgroundColor: user.avatarColor,
+                                backgroundImage: NetworkImage(
+                                    user.avatarUrl ?? ''),
                                 child: user.avatarUrl == null
-                                    ? ColoredBox(color: AppColors.primary)
-                                    : Image.network(user.avatarUrl!)),
+                                    ? Center(
+                                  child: Text(
+                                    (user.displayName ?? user.username)[0]
+                                        .toUpperCase(),
+                                    style: AppFonts.font64w400,
+                                  ),
+                                )
+                                    : Container()),
                           ),
                         ),
                       ],
@@ -122,14 +135,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       Text(
-                        user.username,
+                        user.displayName ?? user.username,
                         style: AppFonts.font20w600,
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        user.displayName ?? '',
+                        '@${ user.username}',
                         style: AppFonts.font13w100,
                       ),
                     ],
@@ -165,14 +178,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 separator,
                 SliverGrid(
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                    const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200.0,
                       mainAxisSpacing: 10.0,
                       crossAxisSpacing: 30.0,
                       childAspectRatio: 0.615,
                     ),
                     delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
+                          (BuildContext context, int index) {
                         return NftItemWidget(
                           width: sizeof.width * 0.43,
                           height: sizeof.width * 0.7,
@@ -185,8 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else {
             return CustomScaffold(
                 body: Center(
-              child: AppAnimations.circleIndicator,
-            ));
+                  child: AppAnimations.circleIndicator,
+                ));
           }
         });
   }
