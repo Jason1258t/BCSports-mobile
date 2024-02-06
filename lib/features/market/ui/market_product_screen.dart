@@ -9,6 +9,7 @@ import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/popups/create_wallet.dart';
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MarketProductScreen extends StatefulWidget {
   final NftModel nft;
@@ -110,7 +111,8 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           onTap: () {
                             showDialog(
                                 context: context,
-                                builder: (context) => const CreateWalletPopup());
+                                builder: (context) =>
+                                    const CreateWalletPopup());
                           },
                           isActive: true),
                       const SizedBox(
@@ -263,7 +265,9 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                       ),
                       PlayerDetailsLineWidget(
                         attr: "Date of birth",
-                        value: widget.nft.birthday.toString(),
+                        value: DateFormat('dd.MM.yyyy')
+                            .format(widget.nft.birthday)
+                            .toString(),
                       ),
                       PlayerDetailsLineWidget(
                         attr: "Club name",
@@ -341,8 +345,9 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           PlayerMatchStatsWidget(
                             attr: 'Fouls',
                           ),
-
-                           SizedBox(height: 50,),
+                          SizedBox(
+                            height: 50,
+                          ),
                         ],
                       )
                     ],
