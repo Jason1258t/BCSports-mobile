@@ -14,7 +14,7 @@ class SocialRepository {
   static final FirebaseStorage storage = FirebaseStorage.instance;
 
   Reference _getPostsImagesStorageReference() {
-    final reference = storage.ref('/feed_post_images');
+    final reference = storage.ref(FirebaseCollectionNames.postsBucket);
     return reference;
   }
 
