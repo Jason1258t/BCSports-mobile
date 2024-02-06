@@ -6,6 +6,7 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/popups/create_wallet.dart';
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
 
@@ -109,7 +110,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           onTap: () {
                             showDialog(
                                 context: context,
-                                builder: (context) => const PlaceBitPopup());
+                                builder: (context) => const CreateWalletPopup());
                           },
                           isActive: true),
                       const SizedBox(

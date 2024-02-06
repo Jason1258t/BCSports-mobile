@@ -18,6 +18,7 @@ abstract class AppColors {
 
   static Color white = Colors.white;
   static Color white_F4F4F4 = const Color(0xffF4F4F4);
+  static Color white_FFF7C7 = const Color(0xffFFF7C7);
 
   static Color purpure_F4F4F4 = const Color(0xffE7EBFd);
 
