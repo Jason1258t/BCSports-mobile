@@ -11,10 +11,15 @@ class ButtonBack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(100),
       onTap: onTap,
-      child: CircleAvatar(
-        backgroundColor: isDark ? AppColors.black_222232 : AppColors.white,
-        radius: 20,
+      child: Ink(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.black_222232 : AppColors.white,
+          borderRadius: BorderRadius.circular(100),
+        ),
         child: Icon(
           Icons.arrow_back,
           color: isDark ? AppColors.white : AppColors.black_252525,

@@ -1,8 +1,11 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
+import 'package:bcsports_mobile/features/profile/ui/widgets/settings_button.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,82 +24,110 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
 
-    return Container(
-      color: AppColors.black_090723,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Scaffold(
-            backgroundColor: AppColors.black_090723,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.transparent,
-              flexibleSpace: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ButtonBack(onTap: () {
-                    Navigator.pop(context);
-                  }),
-                  Text(
-                    'Settings',
-                    style: AppFonts.font18w600,
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                ],
-              ),
+    return CustomScaffold(
+      color: AppColors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            ButtonBack(onTap: () {
+              Navigator.pop(context);
+            }),
+            Text(
+              'Settings',
+              style: AppFonts.font18w600,
             ),
-            body: Column(
+            const SizedBox(
+              width: 50,
+            ),
+          ],
+        ),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: sizeOf.width * 0.05),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: sizeOf.width * 0.20,
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            'Andrian',
+            style: AppFonts.font20w600,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            '@ideasbyandian',
+            style: AppFonts.font13w100,
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          SettingButton(
+              onTap: () {
+                Navigator.pushNamed(context, AppRouteNames.profileEdit);
+              },
+              name: 'Edit profile',
+              width: double.infinity,
+              height: sizeOf.width * 0.16),
+          const SizedBox(
+            height: 20,
+          ),
+          SettingButton(
+              onTap: () {},
+              name: 'Change Password',
+              width: double.infinity,
+              height: sizeOf.width * 0.16),
+          const SizedBox(
+            height: 20,
+          ),
+          SettingButton(
+              onTap: () {},
+              name: 'Favourites',
+              width: double.infinity,
+              height: sizeOf.width * 0.16),
+          const SizedBox(
+            height: 20,
+          ),
+          SettingButton(
+              onTap: () {},
+              name: 'Help',
+              width: double.infinity,
+              height: sizeOf.width * 0.16),
+          const SizedBox(
+            height: 20,
+          ),
+          const Spacer(),
+          TextButton(
+            onPressed: () {
+              context.read<AuthCubit>().signOut();
+              Navigator.pop(context);
+            },
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(
-                  width: double.infinity,
-                ),
-                CircleAvatar(
-                  radius: sizeOf.width * 0.20,
-                ),
-                const SizedBox(height: 25,),
-                Text(
-                  'Andrian',
-                  style: AppFonts.font20w600,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  '@ideasbyandian',
-                  style: AppFonts.font13w100,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                TextButton(
-                  onPressed: () {
-                    context.read<AuthCubit>().signOut();
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(Assets.icons('logout.svg')),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5, left: 10),
-                        child: Text(
-                          'Log out',
-                          style: AppFonts.font16w400
-                              .copyWith(color: AppColors.yellow_F3D523),
-                        ),
-                      )
-                    ],
+                SvgPicture.asset(Assets.icons('logout.svg')),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5, left: 10),
+                  child: Text(
+                    'Log out',
+                    style: AppFonts.font16w400
+                        .copyWith(color: AppColors.yellow_F3D523),
                   ),
                 )
               ],
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

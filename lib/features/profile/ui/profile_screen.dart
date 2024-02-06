@@ -36,6 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             .stream,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data == LoadingStateEnum.success) {
+            var user = RepositoryProvider.of<ProfileRepository>(context).user;
+
             return CustomScaffold(
               appBar: AppBar(
                   backgroundColor: Colors.transparent,
@@ -105,11 +107,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             radius: sizeof.width * 0.20,
                             backgroundColor: AppColors.black_090723,
                             child: CircleAvatar(
-                              radius: sizeof.width * 0.18,
-                              child: const ColoredBox(
-                                color: Colors.black,
-                              ),
-                            ),
+                                radius: sizeof.width * 0.18,
+                                child: user.avatarUrl == null
+                                    ? ColoredBox(color: AppColors.primary)
+                                    : Image.network(user.avatarUrl!)),
                           ),
                         ),
                       ],
@@ -121,14 +122,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       Text(
-                        'Andrian',
+                        user.username,
                         style: AppFonts.font20w600,
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        '@ideasbyandian',
+                        user.displayName ?? '',
                         style: AppFonts.font13w100,
                       ),
                     ],

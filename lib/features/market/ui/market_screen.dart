@@ -51,6 +51,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
   Widget buildMainInfoWidget() {
     return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
             titleSpacing: 22,

@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
+import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
@@ -25,13 +26,12 @@ class AppRoutes {
     switch (settings.name) {
       case AppRouteNames.root:
         return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
-        // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
+      // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
       case AppRouteNames.profileSettings:
         return MaterialPageRoute(
             builder: (ctx) => const ProfileSettingScreen());
       case AppRouteNames.createPost:
-        return MaterialPageRoute(
-            builder: (ctx) => const CreatePostScreen());
+        return MaterialPageRoute(builder: (ctx) => const CreatePostScreen());
       case AppRouteNames.onboarding:
         return MaterialPageRoute(builder: (ctx) => const OnboardingScreen());
       // return MaterialPageRoute(builder: (ctx) => RegistrationScreen());
@@ -51,6 +51,8 @@ class AppRoutes {
       case AppRouteNames.recovery:
         return MaterialPageRoute(
             builder: (ctx) => const PasswordRecoveryScreen());
+      case AppRouteNames.profileEdit:
+        return MaterialPageRoute( builder: (ctx) => const EditProfileScreen());
       default:
         return MaterialPageRoute(
             builder: (ctx) => Container(
