@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class MarketNftCard extends StatefulWidget {
   final NftModel nft;
@@ -174,7 +173,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(
-                                    widget.nft.birthday
+                                    DateFormat('dd.MM.yyyy').format(widget.nft.birthday)
                                         .toString()
                                         .toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
