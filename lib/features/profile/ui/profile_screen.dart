@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       enumTap: EnumProfileTab.nft,
                       text: 'NFT',
                       onTap: () {
-                        repository.setProfileActiveTap(EnumProfileTab.nft);
+                        repository.setProfileActiveTab(EnumProfileTab.nft);
                         setState(() {});
                       },
                     ),
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       enumTap: EnumProfileTab.posts,
                       text: 'Posts',
                       onTap: () {
-                        repository.setProfileActiveTap(EnumProfileTab.posts);
+                        repository.setProfileActiveTab(EnumProfileTab.posts);
                         setState(() {});
                       },
                     ),

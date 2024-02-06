@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+List<Color> userColors = [
+  Colors.red,
+  Colors.blueAccent,
+  Colors.green,
+  Colors.pink,
+  Colors.purple
+];
+
 abstract class AppColors {
   static Color black_090723 = const Color(0xff090723);
   static Color black_222232 = const Color(0xff222232);

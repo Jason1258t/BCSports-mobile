@@ -1,8 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:math';
 
+import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/services/firebase_collections.dart';
+import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/exceptions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
@@ -14,6 +18,8 @@ class AuthRepository {
   }
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firebaseFirestore =
+      FirebaseFirestore.instance;
 
   User? get currentUser => _auth.currentUser;
 
@@ -25,6 +31,21 @@ class AuthRepository {
   void _listenAuthChanges() async {
     authSubscription?.cancel();
     authSubscription = _auth.authStateChanges().listen(_authChangesListener);
+  }
+
+  String _generateTempUserName() {
+    return 'user${DateTime.now().millisecondsSinceEpoch}';
+  }
+
+  void _writeUserDataInDatabase(String userId) async {
+    final collection = _firebaseFirestore.collection(FirebaseCollectionNames.users);
+
+    final res = await collection.doc(userId).get();
+    if (res.exists) return;
+    final user = UserModel.create(userId, _generateTempUserName(),
+        userColors[Random().nextInt(userColors.length)].value);
+
+    await collection.doc(userId).set(user.toJson());
   }
 
   void _authChangesListener(User? user) {
@@ -52,7 +73,7 @@ class AuthRepository {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      _writeUserDataInDatabase(userCredential.user!.uid);
       appState.add(AppAuthStateEnum.auth);
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -62,7 +83,6 @@ class AuthRepository {
         throw AccountAlreadyExistException();
       }
     } catch (e) {
-      log(e.toString());
       rethrow;
     }
     return null;
@@ -73,7 +93,7 @@ class AuthRepository {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-
+      _writeUserDataInDatabase(userCredential.user!.uid);
       appState.add(AppAuthStateEnum.auth);
       print('auth state added');
       return userCredential;
@@ -97,6 +117,7 @@ class AuthRepository {
     );
 
     final userCredential = await _auth.signInWithCredential(credential);
+    _writeUserDataInDatabase(userCredential.user!.uid);
     appState.add(AppAuthStateEnum.auth);
     return userCredential;
   }

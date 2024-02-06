@@ -25,11 +25,11 @@ class ToggleButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
-          color: enumTap == repository.activeTap ? AppColors.yellow_F3D523 : AppColors.black_222232,
+          color: enumTap == repository.activeTab ? AppColors.yellow_F3D523 : AppColors.black_222232,
         ),
         child: Text(
           text,
-          style: AppFonts.font20w600WithColor(enumTap == repository.activeTap ? AppColors.black_222232 : AppColors.grey_B4B4B4),
+          style: AppFonts.font20w600WithColor(enumTap == repository.activeTab ? AppColors.black_222232 : AppColors.grey_B4B4B4),
         ),
       ),
     );
