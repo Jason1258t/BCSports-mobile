@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
       this.labelText,
       this.obscured = false,
       this.suffixIcon,
-      this.keyboardType, this.onChange});
+      this.keyboardType, this.onChange,this.initValue});
 
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -24,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
   final Function(String?)? onChange;
+  final String? initValue;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +53,7 @@ class CustomTextFormField extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             obscureText: obscured,
+            initialValue: initValue,
             style: AppFonts.font16w500,
             decoration: InputDecoration(
                 prefixIcon: prefixIcon,
