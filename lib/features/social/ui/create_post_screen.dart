@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_text_button.dart';
+import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
@@ -36,104 +39,122 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SmallTextButton(
-              text: 'Discard',
-              onTap: () => Navigator.pop(context),
-              type: SmallTextButtonType.withoutBackground,
-            ),
-            Text(
-              'CREATE',
-              style: AppFonts.font14w400,
-            ),
-            SmallTextButton(
-              text: 'Publish',
-              onTap: () {},
-              active: buttonActive,
-            ),
-          ],
-        ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocListener<CreatePostCubit, CreatePostState>(
+      listener: (context, state) {
+        if (state is CreateLoadingState) {
+          Dialogs.showModal(
+              context,
+              Center(
+                child: AppAnimations.circleIndicator,
+              ));
+        } else {
+          Dialogs.hide(context);
+        }
+        if (state is CreateSuccessState) {
+          Navigator.pop(context);
+        }
+      },
+      child: CustomScaffold(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: CircleAvatar(
-                  backgroundColor:
-                      context.read<ProfileRepository>().user.avatarColor,
-                  backgroundImage: NetworkImage(
-                      context.read<ProfileRepository>().user.avatarUrl ?? ''),
-                  radius: 16,
-                ),
+              SmallTextButton(
+                text: 'Discard',
+                onTap: () => Navigator.pop(context),
+                type: SmallTextButtonType.withoutBackground,
               ),
-              const SizedBox(
-                width: 12,
+              Text(
+                'CREATE',
+                style: AppFonts.font14w400,
               ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width - (24 * 2 + 32 + 12),
-                child: TextField(
-                  onChanged: (v) => validate(),
-                  maxLines: 12,
-                  minLines: 1,
-                  maxLength: 300,
-                  controller: textController,
-                  style: AppFonts.font16w400,
-                  decoration: InputDecoration(
-                      hintText: "What's on your mind?",
-                      hintStyle: AppFonts.font16w400
-                          .copyWith(color: AppColors.grey_727477),
-                      border: InputBorder.none),
-                ),
-              )
+              SmallTextButton(
+                text: 'Publish',
+                onTap: () => context
+                    .read<CreatePostCubit>()
+                    .createPost(textController.text, image),
+                active: buttonActive,
+              ),
             ],
           ),
-          const SizedBox(
-            height: 12,
-          ),
-          image == null
-              ? SizedBox(
-                  height: 32,
-                  child: TextButton(
-                    onPressed: pickImage,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.black_s2new_1A1A1A,
-                        foregroundColor: AppColors.black_s2new_1A1A1A,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 6)),
-                    child: SvgPicture.asset(Assets.icons('attachment.svg')),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: CircleAvatar(
+                    backgroundColor:
+                        context.read<ProfileRepository>().user.avatarColor,
+                    backgroundImage: NetworkImage(
+                        context.read<ProfileRepository>().user.avatarUrl ?? ''),
+                    radius: 16,
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width - (24 * 2 + 32 + 12),
+                  child: TextField(
+                    onChanged: (v) => validate(),
+                    maxLines: 12,
+                    minLines: 1,
+                    maxLength: 300,
+                    controller: textController,
+                    style: AppFonts.font16w400,
+                    decoration: InputDecoration(
+                        hintText: "What's on your mind?",
+                        hintStyle: AppFonts.font16w400
+                            .copyWith(color: AppColors.grey_727477),
+                        border: InputBorder.none),
                   ),
                 )
-              : Container(
-                  width: double.infinity,
-                  height: MediaQuery.sizeOf(context).width / 2,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: FileImage(File(image!.path)),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.circular(16)),
-                  padding: const EdgeInsets.all(8),
-                  alignment: Alignment.bottomLeft,
-                  child: SmallTextButton(
-                    type: SmallTextButtonType.withBackgroundReverse,
-                    text: 'Delete',
-                    onTap: () {
-                      image = null;
-                      validate();
-                    },
-                  ),
-                )
-        ],
+              ],
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            image == null
+                ? SizedBox(
+                    height: 32,
+                    child: TextButton(
+                      onPressed: pickImage,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.black_s2new_1A1A1A,
+                          foregroundColor: AppColors.black_s2new_1A1A1A,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 6)),
+                      child: SvgPicture.asset(Assets.icons('attachment.svg')),
+                    ),
+                  )
+                : Container(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).width / 2,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: FileImage(File(image!.path)),
+                            fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(16)),
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.bottomLeft,
+                    child: SmallTextButton(
+                      type: SmallTextButtonType.withBackgroundReverse,
+                      text: 'Delete',
+                      onTap: () {
+                        image = null;
+                        validate();
+                      },
+                    ),
+                  )
+          ],
+        ),
       ),
     );
   }

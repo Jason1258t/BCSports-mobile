@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
+import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class SocialRepository {
   static final FirebaseDatabase database = FirebaseDatabase.instance;
@@ -16,7 +19,7 @@ class SocialRepository {
   }
 
   CollectionReference _getFeedPostsDatabaseReference() {
-    final reference = firestore.collection('posts');
+    final reference = firestore.collection(FirebaseCollectionNames.posts);
     return reference;
   }
 
@@ -37,11 +40,18 @@ class SocialRepository {
     return posts;
   }
 
-  Future<String> uploadPostImage(String filePath) async {
-    File file = File(filePath);
+  Future<String> uploadPostImage({String? filePath, Uint8List? bytes}) async {
+    assert(filePath != null || bytes != null);
     final storageRef = _getPostsImagesStorageReference();
+    final fileRef = storageRef.child(const Uuid().v1());
+    final TaskSnapshot task;
     try {
-      final task = await  storageRef.putFile(file);
+      if (filePath != null) {
+        File file = File(filePath);
+        task = await fileRef.putFile(file);
+      } else {
+        task = await fileRef.putData(bytes!);
+      }
       return task.ref.getDownloadURL();
     } catch (e) {
       rethrow;

@@ -1,9 +1,9 @@
 class PostModel {
   late final String id;
   final String creatorId;
-  final String imageUrl;
-  final String compressedImageUrl;
-  final String text;
+  final String? imageUrl;
+  final String? compressedImageUrl;
+  final String? text;
   final int likesCount;
   final int commentsCount;
   late final int _createdAtMs;
@@ -22,9 +22,9 @@ class PostModel {
 
   PostModel.create(
       {required this.creatorId,
-      required this.text,
-      required this.imageUrl,
-      required this.compressedImageUrl})
+      this.text,
+      this.imageUrl,
+      this.compressedImageUrl})
       : likesCount = 0,
         commentsCount = 0 {
     id = 'new';

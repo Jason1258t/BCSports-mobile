@@ -8,6 +8,8 @@ import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +22,7 @@ class MyRepositoryProviders extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (context) => MarketRepository()),
         RepositoryProvider(create: (context) => ProfileRepository()),
+        RepositoryProvider(create: (context) => SocialRepository()),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,
@@ -38,6 +41,7 @@ class MyBlocProviders extends StatelessWidget {
     final authRepository = RepositoryProvider.of<AuthRepository>(context);
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
+    final socialRepository = RepositoryProvider.of<SocialRepository>(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => OnboardingCubit()),
@@ -51,6 +55,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
         BlocProvider(create: (context) => MainCubit()),
+        BlocProvider(
+            create: (context) =>
+                CreatePostCubit(socialRepository, profileRepository)),
       ],
       child: const MyApp(),
     );
