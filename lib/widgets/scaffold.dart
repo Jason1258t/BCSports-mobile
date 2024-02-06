@@ -31,16 +31,17 @@ class CustomScaffold extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Container(
-            color: color ?? Colors.black,
+            color: color ?? AppColors.background,
             child: SafeArea(
-                child: Padding(
+                child: Scaffold(
+                  resizeToAvoidBottomInset: resize,
+                  backgroundColor: Colors.transparent,
+                  body: Padding(
                     padding: padding ?? const EdgeInsets.all(20),
-                    child: Scaffold(
-                      resizeToAvoidBottomInset: resize,
-                      backgroundColor: Colors.transparent,
-                      body: body,
-                      appBar: appBar,
-                    )))),
+                    child: body,
+                  ),
+                  appBar: appBar,
+                ))),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/profile/widgets/Nft_item.dart';
-import 'package:bcsports_mobile/features/profile/widgets/toggle_bottom.dart';
+import 'package:bcsports_mobile/features/profile/ui/widgets/Nft_item.dart';
+import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -58,7 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icons.add,
                             color: AppColors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () => Navigator.pushNamed(
+                              context, AppRouteNames.createPost),
                         ),
                         const SizedBox(
                           width: 10,
@@ -69,7 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: AppColors.white,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/profile_settings');
+                            Navigator.pushNamed(
+                                context, AppRouteNames.profileSettings);
                           },
                         ),
                       ],
@@ -165,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     childAspectRatio: 0.615,
                   ),
                   delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
+                    (BuildContext context, int index) {
                       return NftItemWidget(
                         width: sizeof.width * 0.43,
                         height: sizeof.width * 0.7,

@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -54,8 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
           Dialogs.hide(context);
         }
         if (state is AuthFailState) {
-          print(state.e);
-          print('Auth error');
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
         }
@@ -127,7 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: AppFonts.font12w400,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(context, '/recovery');
+                                Navigator.pushNamed(
+                                    context, AppRouteNames.recovery);
                               }))
                       ],
                     ),
@@ -183,7 +183,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: AppFonts.font12w600,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.pushNamed(context, '/register');
+                              Navigator.pushNamed(
+                                  context, AppRouteNames.registration);
                             }),
                     ])),
                   ],
