@@ -25,6 +25,7 @@ class ProfileRepository {
           .get();
 
       _userModel = UserModel.fromJson(res.data()!);
+      profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
     }

@@ -2,7 +2,11 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
-enum SmallTextButtonType { withBackground, withoutBackground }
+enum SmallTextButtonType {
+  withBackground,
+  withoutBackground,
+  withBackgroundReverse
+}
 
 class SmallTextButton extends StatelessWidget {
   const SmallTextButton(
@@ -19,15 +23,27 @@ class SmallTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = AppFonts.font14w400.copyWith(
-        color: type == SmallTextButtonType.withBackground
-            ? AppColors.background
-            : AppColors.blueLink);
+    Color textColor;
+
+    if (type == SmallTextButtonType.withBackground) {
+      textColor = AppColors.background;
+    } else if (type == SmallTextButtonType.withoutBackground) {
+      textColor = AppColors.blueLink;
+    } else if (type == SmallTextButtonType.withBackgroundReverse) {
+      textColor = AppColors.primary;
+    } else {
+      textColor = Colors.white;
+    }
+
+    final TextStyle textStyle = AppFonts.font14w400.copyWith(color: textColor);
 
     final Color background;
 
     if (type == SmallTextButtonType.withBackground) {
       background = active ? AppColors.primary : AppColors.black_s2new_1A1A1A;
+    } else if (type == SmallTextButtonType.withBackgroundReverse) {
+      background =
+          active ? AppColors.black_s2new_1A1A1A : AppColors.black_s2new_1A1A1A;
     } else {
       background = Colors.transparent;
     }
@@ -37,10 +53,9 @@ class SmallTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: background,
-          foregroundColor: background,
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12)
-        ),
+            backgroundColor: background,
+            foregroundColor: background,
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12)),
         child: Text(text, style: textStyle),
       ),
     );
