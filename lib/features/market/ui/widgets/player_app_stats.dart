@@ -3,7 +3,6 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class PlayerAppStatsWidget extends StatelessWidget {
   final String iconPath;
   final String statsName;
@@ -21,6 +20,7 @@ class PlayerAppStatsWidget extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
 
     return Container(
+      padding: const EdgeInsets.all(2),
       width: size.width * 0.2,
       height: 56,
       decoration: BoxDecoration(
@@ -43,6 +43,8 @@ class PlayerAppStatsWidget extends StatelessWidget {
               children: [
                 Text(
                   value.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: AppFonts.font16w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
@@ -50,6 +52,8 @@ class PlayerAppStatsWidget extends StatelessWidget {
                 ),
                 Text(
                   statsName.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: AppFonts.font12w400.copyWith(color: AppColors.white),
                 ),
               ],
@@ -60,5 +64,3 @@ class PlayerAppStatsWidget extends StatelessWidget {
     );
   }
 }
-
-
