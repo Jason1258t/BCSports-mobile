@@ -44,6 +44,7 @@ class SocialRepository {
     assert(filePath != null || bytes != null);
     final storageRef = _getPostsImagesStorageReference();
     final fileRef = storageRef.child(const Uuid().v1());
+
     final TaskSnapshot task;
     try {
       if (filePath != null) {

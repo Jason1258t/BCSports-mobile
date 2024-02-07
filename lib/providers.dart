@@ -7,11 +7,14 @@ import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
+import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'features/profile/bloc/edit_user/edit_user_cubit.dart';
 
 class MyRepositoryProviders extends StatelessWidget {
   const MyRepositoryProviders({Key? key}) : super(key: key);
@@ -54,6 +57,8 @@ class MyBlocProviders extends StatelessWidget {
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
+        BlocProvider(create: (context) => EditUserCubit(profileRepository: profileRepository)),
+        BlocProvider(create: (context) => UserCubit(profileRepository: profileRepository)),
         BlocProvider(create: (context) => MainCubit()),
         BlocProvider(
             create: (context) =>
