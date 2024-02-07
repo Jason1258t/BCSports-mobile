@@ -6,7 +6,7 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
-import 'package:bcsports_mobile/widgets/popups/create_wallet.dart';
+import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,6 +36,14 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
         setState(() {});
       }
     }
+  }
+
+  void onBetTap() {
+    showDialog(
+        context: context,
+        builder: (context) => PlaceBitPopup(
+              nft: widget.nft,
+            ));
   }
 
   @override
@@ -119,14 +127,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                         height: 16,
                       ),
                       CustomTextButton(
-                          text: "Place a bit",
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    const CreateWalletPopup());
-                          },
-                          isActive: true),
+                          text: "Place a bit", onTap: onBetTap, isActive: true),
                       const SizedBox(
                         height: 16,
                       ),

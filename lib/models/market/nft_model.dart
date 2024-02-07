@@ -1,4 +1,6 @@
 class NftModel {
+  final String documentId;
+
   final DateTime birthday;
   final String citizenship;
   final String club;
@@ -15,7 +17,9 @@ class NftModel {
   final double currentBit;
 
   NftModel(
-      {required this.birthday,
+      {
+      required this.documentId,
+      required this.birthday,
       required this.citizenship,
       required this.club,
       required this.country,
@@ -30,8 +34,9 @@ class NftModel {
       required this.currentBit,
       required this.previewImagePath});
 
-  factory NftModel.fromJson(Map<String, dynamic> json) {
+  factory NftModel.fromJson(Map<String, dynamic> json, String documentId) {
     return NftModel(
+        documentId: documentId,
         birthday: json['birthday'].toDate(),
         citizenship: json['citizenship'],
         club: json['club'],

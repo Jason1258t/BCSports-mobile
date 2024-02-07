@@ -1,14 +1,20 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 class PlaceBitPopup extends StatefulWidget {
-  const PlaceBitPopup({super.key});
+  final NftModel nft;
+
+  const PlaceBitPopup({super.key, required this.nft});
 
   @override
   State<PlaceBitPopup> createState() => _PlaceBitPopupState();
@@ -16,10 +22,28 @@ class PlaceBitPopup extends StatefulWidget {
 
 class _PlaceBitPopupState extends State<PlaceBitPopup> {
   bool agree = false;
+  double extraBid = 0;
+
+  void onPlaceBidTap() {
+    context.read<PlaceBidCubit>().updateBid(widget.nft, 123123);
+  }
+
+  void increaseBet() {
+    setState(() {
+      extraBid += 10;
+    });
+  }
+
+  bool isActive() =>
+      context.read<ProfileRepository>().user.evmBill + extraBid >=
+          widget.nft.currentBit &&
+      agree;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final ProfileRepository profileRepository =
+        context.read<ProfileRepository>();
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -47,7 +71,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                   height: 30,
                 ),
                 Container(
-                  width: 234,
+                  constraints: const BoxConstraints(minWidth: 200),
                   padding: const EdgeInsets.all(11),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(48),
@@ -55,30 +79,17 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                           Border.all(width: 1, color: AppColors.yellow_F3D523)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Material(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(1000),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000),
-                          onTap: () {},
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 39,
-                            height: 39,
-                            child: Text(
-                              "-",
-                              style: AppFonts.font24w500
-                                  .copyWith(color: AppColors.black),
-                            ),
-                          ),
-                        ),
-                      ),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SvgPicture.asset("assets/icons/eth.svg"),
+                          const SizedBox(
+                            width: 10,
+                          ),
                           Text(
-                            "1.3417 ETH",
+                            "${widget.nft.currentBit + extraBid} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),
@@ -89,7 +100,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                         borderRadius: BorderRadius.circular(1000),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(1000),
-                          onTap: () {},
+                          onTap: increaseBet,
                           child: Container(
                             alignment: Alignment.center,
                             width: 39,
@@ -113,7 +124,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                   style: AppFonts.font12w400.copyWith(color: AppColors.white),
                 ),
                 Text(
-                  "5.2719 ETH",
+                  "${profileRepository.user.evmBill} ETH",
                   style: AppFonts.font12w400
                       .copyWith(color: AppColors.grey_B4B4B4),
                 ),
@@ -155,8 +166,8 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                     width: 170,
                     height: 49,
                     text: "Place a Bid",
-                    onTap: () {},
-                    isActive: agree)
+                    onTap: onPlaceBidTap,
+                    isActive: isActive())
               ],
             ),
           ),
