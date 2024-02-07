@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -9,7 +13,6 @@ import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -20,12 +23,30 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final nameController = TextEditingController();
-  final userNameController = TextEditingController();
+  late final nameController;
+  late final userNameController;
+
+  XFile? image;
+
+  Future<void> pickImage() async {
+    image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    final repository = RepositoryProvider.of<ProfileRepository>(context);
+
+    nameController = TextEditingController(text: repository.user.displayName);
+    userNameController = TextEditingController(text: repository.user.username);
+  }
 
   @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
+
+    final repository = RepositoryProvider.of<ProfileRepository>(context);
 
     return CustomScaffold(
         resize: true,
@@ -33,7 +54,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         padding: EdgeInsets.all(sizeOf.width * 0.05),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.black,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
@@ -51,72 +72,93 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ],
           ),
         ),
-        body: StreamBuilder(
-            stream: RepositoryProvider
-                .of<ProfileRepository>(context)
-                .profileState
-                .stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData &&
-                  snapshot.data == LoadingStateEnum.success) {
-                var user = RepositoryProvider
-                    .of<ProfileRepository>(context)
-                    .user;
+        body: BlocBuilder<EditUserCubit, EditUserState>(
+            builder: (context, state) {
+          if (state is EditUserSuccessState) {
+            var user = RepositoryProvider.of<ProfileRepository>(context).user;
 
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Stack(
                   children: [
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: sizeOf.width * 0.20,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            ImagePicker().pickImage(
-                                source: ImageSource.gallery);
-                          },
-                          borderRadius: BorderRadius.circular(100),
-                          child: Ink(
-                            width: sizeOf.width * 0.40,
-                            height: sizeOf.width * 0.40,
-                            decoration: BoxDecoration(
-                                color: AppColors.blue,
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Icon(
-                              Icons.camera_alt_outlined,
-                              color: AppColors.white,
-                              size: 40,
-                            ),
+                    image == null
+                        ? CircleAvatar(
+                            backgroundColor: user.avatarColor,
+                            radius: sizeOf.width * 0.20,
+                            backgroundImage: user.avatarUrl != null
+                                ? NetworkImage(user.avatarUrl ?? '')
+                                : null,
+                            child: user.avatarUrl == null
+                                ? Center(
+                                    child: Text(
+                                      (user.displayName ?? user.username)[0]
+                                          .toUpperCase(),
+                                      style: AppFonts.font64w400,
+                                    ),
+                                  )
+                                : Container(),
+                          )
+                        : CircleAvatar(
+                            radius: sizeOf.width * 0.20,
+                            child: Image.file(File(image!.path), fit: BoxFit.fill,),
                           ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        CustomTextFormField(
-                          controller: nameController,
-                          labelText: 'Name',
-                          initValue: '123',
+                    InkWell(
+                      onTap: () async {
+                        await pickImage();
+                        setState(() {});
+                      },
+                      borderRadius: BorderRadius.circular(100),
+                      child: Ink(
+                        width: sizeOf.width * 0.40,
+                        height: sizeOf.width * 0.40,
+                        decoration: BoxDecoration(
+                          color: AppColors.blue,
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                        const SizedBox(
-                          height: 20,
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          color: AppColors.grey_B3B3B3,
+                          size: 50,
                         ),
-                        CustomTextFormField(
-                          controller: userNameController,
-                          labelText: 'Username',
-                          initValue: '123',
-                        ),
-                      ],
-                    ),
-                    CustomTextButton(text: 'Save', onTap: () {}, isActive: true)
+                      ),
+                    )
                   ],
-                );
-              }
-              else {
-                return Center(child: AppAnimations.circleIndicator,);
-              }
-            }
-        ));
+                ),
+                Column(
+                  children: [
+                    CustomTextFormField(
+                      controller: nameController,
+                      labelText: 'Name',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFormField(
+                      controller: userNameController,
+                      labelText: 'Username',
+                    ),
+                  ],
+                ),
+                CustomTextButton(
+                    text: 'Save',
+                    onTap: () async {
+                      await BlocProvider.of<EditUserCubit>(context).editProfile(
+                          nameController.text, userNameController.text, image);
+
+                      RepositoryProvider.of<ProfileRepository>(context)
+                          .setUser(user.id);
+
+                      image = null;
+                    },
+                    isActive: true)
+              ],
+            );
+          } else {
+            return Center(
+              child: AppAnimations.circleIndicator,
+            );
+          }
+        }));
   }
 }

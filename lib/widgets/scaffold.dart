@@ -37,7 +37,7 @@ class CustomScaffold extends StatelessWidget {
                   resizeToAvoidBottomInset: resize,
                   backgroundColor: Colors.transparent,
                   body: Padding(
-                    padding: padding ?? const EdgeInsets.all(20),
+                    padding: padding ?? const EdgeInsets.fromLTRB(20,20,20,0),
                     child: body,
                   ),
                   appBar: appBar,

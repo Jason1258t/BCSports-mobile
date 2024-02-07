@@ -6,7 +6,6 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
-import 'package:bcsports_mobile/widgets/popups/create_wallet.dart';
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +20,32 @@ class MarketProductScreen extends StatefulWidget {
 }
 
 class _MarketProductScreenState extends State<MarketProductScreen> {
+  Duration remainingTime = Duration.zero;
+
+  @override
+  void initState() {
+    updateRemainingTime();
+    super.initState();
+  }
+
+  void updateRemainingTime() async {
+    while (true) {
+      remainingTime = widget.nft.auctionStopTime.difference(DateTime.now());
+      await Future.delayed(const Duration(seconds: 3));
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  void onBetTap() {
+    showDialog(
+        context: context,
+        builder: (context) => PlaceBitPopup(
+              nft: widget.nft,
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -92,11 +117,6 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                             iconPath: 'assets/icons/people.svg',
                           ),
                           PlayerAppStatsWidget(
-                            value: 1,
-                            statsName: "Editions",
-                            iconPath: 'assets/icons/edit.svg',
-                          ),
-                          PlayerAppStatsWidget(
                             value: 12,
                             statsName: "Views",
                             iconPath: 'assets/icons/ar.svg',
@@ -107,14 +127,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                         height: 16,
                       ),
                       CustomTextButton(
-                          text: "Place a bit",
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    const CreateWalletPopup());
-                          },
-                          isActive: true),
+                          text: "Place a bit", onTap: onBetTap, isActive: true),
                       const SizedBox(
                         height: 16,
                       ),
@@ -140,7 +153,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "1.261 ETH",
+                                  "${widget.nft.currentBit} ETH",
                                   style: AppFonts.font16w500
                                       .copyWith(color: AppColors.yellow_F3D523),
                                 ),
@@ -174,7 +187,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inDays} days",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),
@@ -186,7 +199,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                             horizontal: 3),
                                       ),
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inHours % 24} Hours",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),
@@ -198,7 +211,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                             horizontal: 3),
                                       ),
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inMinutes % 60} Mins",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),

@@ -1,4 +1,6 @@
 class NftModel {
+  final String documentId;
+
   final DateTime birthday;
   final String citizenship;
   final String club;
@@ -11,37 +13,44 @@ class NftModel {
   final String role;
   final int weight;
   final String previewImagePath;
+  final DateTime auctionStopTime;
+  final double currentBit;
 
-  NftModel({
-    required this.birthday,
-    required this.citizenship,
-    required this.club,
-    required this.country,
-    required this.height,
-    required this.imagePath,
-    required this.isRightFoot,
-    required this.name,
-    required this.position,
-    required this.role,
-    required this.weight,
-    required this.previewImagePath
-  });
+  NftModel(
+      {
+      required this.documentId,
+      required this.birthday,
+      required this.citizenship,
+      required this.club,
+      required this.country,
+      required this.height,
+      required this.imagePath,
+      required this.isRightFoot,
+      required this.name,
+      required this.position,
+      required this.role,
+      required this.weight,
+      required this.auctionStopTime,
+      required this.currentBit,
+      required this.previewImagePath});
 
-  factory NftModel.fromJson(Map<String, dynamic> json) {
+  factory NftModel.fromJson(Map<String, dynamic> json, String documentId) {
     return NftModel(
-      birthday: json['birthday'].toDate(),
-      citizenship: json['citizenship'],
-      club: json['club'],
-      country: json['country'],
-      height: json['height'],
-      imagePath: json['image_path'],
-      isRightFoot: json['is_right_foot'],
-      name: json['name'],
-      position: json['position'],
-      role: json['role'],
-      weight: json['weight'],
-      previewImagePath: json['mini_image_path']
-    );
+        documentId: documentId,
+        birthday: json['birthday'].toDate(),
+        citizenship: json['citizenship'],
+        club: json['club'],
+        country: json['country'],
+        height: json['height'],
+        imagePath: json['image_path'],
+        isRightFoot: json['is_right_foot'],
+        name: json['name'],
+        position: json['position'],
+        role: json['role'],
+        currentBit: double.parse(json['current_bit'].toString()),
+        weight: json['weight'],
+        auctionStopTime: json['auction_stop_time'].toDate(),
+        previewImagePath: json['mini_image_path']);
   }
 
   Map<String, dynamic> toJson() {
@@ -76,19 +85,4 @@ class NftModel {
         ' weight: $weight'
         ' }';
   }
-
-  // static NftModel fish = NftModel(
-  //   birthday: DateTime(2000, 1, 1),
-  //   citizenship: 'Test Citizenship',
-  //   club: 'Test Club',
-  //   country: 'Test Country',
-  //   height: 180,
-  //   imagePath: 'gs://example.com/test/photo.png',
-  //   isRightFoot: true,
-  //   name: 'Test Player',
-  //   position: 'Test Position',
-  //   role: 'Test Role',
-  //   weight: 70,
-
-  // );
 }

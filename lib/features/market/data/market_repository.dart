@@ -11,7 +11,11 @@ class MarketRepository {
 
     final collection = await _db.collection("players_NFT").get();
     collection.docs.forEach((element) {
-      nftList.add(NftModel.fromJson(element.data()));
+      nftList.add(NftModel.fromJson(element.data(), element.id));
     });
+  }
+
+  Future<void> updateNftAuctionPrice(double newPrice, NftModel nft) async {
+    print(nft.documentId);
   }
 }
