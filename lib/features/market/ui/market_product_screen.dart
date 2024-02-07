@@ -7,7 +7,6 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/popups/create_wallet.dart';
-import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -21,6 +20,24 @@ class MarketProductScreen extends StatefulWidget {
 }
 
 class _MarketProductScreenState extends State<MarketProductScreen> {
+  Duration remainingTime = Duration.zero;
+
+  @override
+  void initState() {
+    updateRemainingTime();
+    super.initState();
+  }
+
+  void updateRemainingTime() async {
+    while (true) {
+      remainingTime = widget.nft.auctionStopTime.difference(DateTime.now());
+      await Future.delayed(const Duration(seconds: 3));
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -90,11 +107,6 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                             value: 1,
                             statsName: "Owners",
                             iconPath: 'assets/icons/people.svg',
-                          ),
-                          PlayerAppStatsWidget(
-                            value: 1,
-                            statsName: "Editions",
-                            iconPath: 'assets/icons/edit.svg',
                           ),
                           PlayerAppStatsWidget(
                             value: 12,
@@ -174,7 +186,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inDays} days",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),
@@ -186,7 +198,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                             horizontal: 3),
                                       ),
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inHours % 24} Hours",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),
@@ -198,7 +210,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                             horizontal: 3),
                                       ),
                                       Text(
-                                        "26 days",
+                                        "${remainingTime.inMinutes % 60} Mins",
                                         style: AppFonts.font12w400
                                             .copyWith(color: AppColors.white),
                                       ),
