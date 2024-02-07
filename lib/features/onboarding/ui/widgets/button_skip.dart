@@ -16,6 +16,7 @@ class _ButtonSkipState extends State<ButtonSkip> {
 
   void onTap() {
     context.read<OnboardingCubit>().skipAllPages();
+    Navigator.pop(context);
   }
 
   @override
