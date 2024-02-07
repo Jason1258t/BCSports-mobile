@@ -6,7 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ToggleButton extends StatelessWidget {
-  const ToggleButton({super.key, required this.width, required this.enumTap, required this.text, required this.onTap});
+  const ToggleButton(
+      {super.key,
+      required this.width,
+      required this.enumTap,
+      required this.text,
+      required this.onTap});
 
   final double width;
   final EnumProfileTab enumTap;
@@ -19,17 +24,24 @@ class ToggleButton extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(9),
       child: Container(
         height: 50,
         width: width,
-        alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
-          color: enumTap == repository.activeTab ? AppColors.yellow_F3D523 : AppColors.black_222232,
+          color: enumTap == repository.activeTab
+              ? AppColors.yellow_F3D523
+              : AppColors.black_222232,
         ),
-        child: Text(
-          text,
-          style: AppFonts.font20w600WithColor(enumTap == repository.activeTab ? AppColors.black_222232 : AppColors.grey_B4B4B4),
+        child: Center(
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: AppFonts.font20w600WithColor(enumTap == repository.activeTab
+                ? AppColors.black_222232
+                : AppColors.grey_B4B4B4),
+          ),
         ),
       ),
     );
