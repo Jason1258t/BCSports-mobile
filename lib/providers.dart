@@ -13,6 +13,8 @@ import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/social/bloc/home/home_social_cubit.dart';
+
 class MyRepositoryProviders extends StatelessWidget {
   const MyRepositoryProviders({Key? key}) : super(key: key);
 
@@ -50,7 +52,8 @@ class MyBlocProviders extends StatelessWidget {
           lazy: false,
         ),
         BlocProvider(
-            create: (context) => AppCubit(authRepository, profileRepository),
+            create: (context) =>
+                AppCubit(authRepository, profileRepository, socialRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
@@ -58,6 +61,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CreatePostCubit(socialRepository, profileRepository)),
+        BlocProvider(create: (context) => HomeSocialCubit(socialRepository)),
       ],
       child: const MyApp(),
     );

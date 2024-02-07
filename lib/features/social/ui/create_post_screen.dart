@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_text_button.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
@@ -88,15 +89,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: CircleAvatar(
-                    backgroundColor:
-                        context.read<ProfileRepository>().user.avatarColor,
-                    backgroundImage: NetworkImage(
-                        context.read<ProfileRepository>().user.avatarUrl ?? ''),
-                    radius: 16,
-                  ),
-                ),
+                    padding: const EdgeInsets.only(top: 8),
+                    child: SmallAvatarWidget(
+                      user: context.read<ProfileRepository>().user,
+                    )),
                 const SizedBox(
                   width: 12,
                 ),

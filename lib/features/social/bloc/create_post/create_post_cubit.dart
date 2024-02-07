@@ -20,34 +20,54 @@ class CreatePostCubit extends Cubit<CreatePostState> {
         _profileRepository = profileRepository,
         super(CreatePostInitial());
 
-  Future<Uint8List> _compressImage(Uint8List list) async =>
-      await FlutterImageCompress.compressWithList(
-        list,
-        minWidth: 400,
-        quality: 96,
-      );
-
   void createPost(String? text, [XFile? image]) async {
     emit(CreateLoadingState());
     try {
-      String? imageUrl;
-      String? compressedImageUrl;
-      if (image != null) {
-        imageUrl =
-            await _socialRepository.uploadPostImage(filePath: image.path);
-        final compressedImage = await _compressImage(await image.readAsBytes());
-        compressedImageUrl =
-            await _socialRepository.uploadPostImage(bytes: compressedImage);
-      }
+      PostImageDTO? imageDTO;
+      if (image != null) imageDTO = await _uploadImages(image);
 
       await _socialRepository.createPost(PostModel.create(
-          creatorId: _profileRepository.user.id,
-          text: text,
-          imageUrl: imageUrl,
-          compressedImageUrl: compressedImageUrl));
+          creatorId: _profileRepository.user.id, text: text, image: imageDTO));
+
       emit(CreateSuccessState());
     } catch (e) {
       emit(CreateFailState(e as Exception));
     }
   }
+
+  Future<PostImageDTO> _uploadImages(XFile image) async {
+    String imageUrl;
+    String compressedImageUrl;
+
+    final List<Future> waitFor = [];
+    waitFor.add(_socialRepository.uploadPostImage(filePath: image.path));
+    waitFor.add(_compressImageAndUpload(image));
+
+    final results = await Future.wait(waitFor);
+
+    imageUrl = results[0];
+    compressedImageUrl = results[1];
+
+    return PostImageDTO(
+        imageUrl: imageUrl, compressedImageUrl: compressedImageUrl);
+  }
+
+  Future<String> _compressImageAndUpload(XFile image) async {
+    final compressedImage = await _compressImage(await image.readAsBytes());
+    return _socialRepository.uploadPostImage(bytes: compressedImage);
+  }
+
+  Future<Uint8List> _compressImage(Uint8List list) =>
+      FlutterImageCompress.compressWithList(
+        list,
+        minWidth: 120,
+        minHeight: 60,
+      );
+}
+
+class PostImageDTO {
+  final String? imageUrl;
+  final String? compressedImageUrl;
+
+  PostImageDTO({required this.imageUrl, required this.compressedImageUrl});
 }

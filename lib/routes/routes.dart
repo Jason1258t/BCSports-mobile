@@ -8,6 +8,7 @@ import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
+import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,10 @@ import '../features/auth/ui/recovery_enter_email_screen.dart';
 
 class AppRoutes {
   static List<Widget> mainPages = [
-    MarketScreen(),
+    const MarketScreen(),
     Container(),
-    Container(),
-    ProfileScreen()
+    const FeedScreen(),
+    const ProfileScreen()
   ];
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -52,7 +53,7 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: (ctx) => const PasswordRecoveryScreen());
       case AppRouteNames.profileEdit:
-        return MaterialPageRoute( builder: (ctx) => const EditProfileScreen());
+        return MaterialPageRoute(builder: (ctx) => const EditProfileScreen());
       default:
         return MaterialPageRoute(
             builder: (ctx) => Container(

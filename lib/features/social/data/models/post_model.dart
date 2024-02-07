@@ -1,3 +1,5 @@
+import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+
 class PostModel {
   late final String id;
   final String creatorId;
@@ -10,9 +12,8 @@ class PostModel {
 
   DateTime get createdAt => DateTime.fromMillisecondsSinceEpoch(_createdAtMs);
 
-  PostModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        creatorId = json['creatorId'],
+  PostModel.fromJson(Map<String, dynamic> json, this.id)
+      : creatorId = json['creatorId'],
         imageUrl = json['imageUrl'],
         compressedImageUrl = json['compressedImageUrl'],
         text = json['text'],
@@ -20,19 +21,17 @@ class PostModel {
         commentsCount = json['commentsCount'],
         _createdAtMs = json['createdAtMs'];
 
-  PostModel.create(
-      {required this.creatorId,
-      this.text,
-      this.imageUrl,
-      this.compressedImageUrl})
-      : likesCount = 0,
-        commentsCount = 0 {
-    id = 'new';
-    _createdAtMs = DateTime.now().millisecondsSinceEpoch;
-  }
+  PostModel.create({
+    required this.creatorId,
+    this.text,
+    PostImageDTO? image,
+  })  : likesCount = 0,
+        commentsCount = 0,
+        imageUrl = image?.imageUrl,
+        compressedImageUrl = image?.compressedImageUrl,
+        _createdAtMs = DateTime.now().millisecondsSinceEpoch;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'creatorId': creatorId,
         'imageUrl': imageUrl,
         'compressedImageUrl': compressedImageUrl,
