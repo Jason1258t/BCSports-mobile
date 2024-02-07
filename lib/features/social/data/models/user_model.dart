@@ -21,7 +21,7 @@ class UserModel {
         displayName = json['displayName'],
         username = json['username'],
         avatarUrl = json['avatarUrl'],
-        evmBill = json['evmBill'],
+        evmBill = double.parse('${json['evmBill']}'),
         banner = BannerModel.fromJson(json['banner']);
 
   UserModel.create(this.id, this.username, int color)

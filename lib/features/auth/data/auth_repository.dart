@@ -37,7 +37,7 @@ class AuthRepository {
     return 'user${DateTime.now().millisecondsSinceEpoch}';
   }
 
-  void _writeUserDataInDatabase(String userId) async {
+  Future _writeUserDataInDatabase(String userId) async {
     final collection = _firebaseFirestore.collection(FirebaseCollectionNames.users);
 
     final res = await collection.doc(userId).get();
@@ -73,7 +73,7 @@ class AuthRepository {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      _writeUserDataInDatabase(userCredential.user!.uid);
+      await _writeUserDataInDatabase(userCredential.user!.uid);
       appState.add(AppAuthStateEnum.auth);
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -93,7 +93,7 @@ class AuthRepository {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      _writeUserDataInDatabase(userCredential.user!.uid);
+      await _writeUserDataInDatabase(userCredential.user!.uid);
       appState.add(AppAuthStateEnum.auth);
       print('auth state added');
       return userCredential;
@@ -117,7 +117,7 @@ class AuthRepository {
     );
 
     final userCredential = await _auth.signInWithCredential(credential);
-    _writeUserDataInDatabase(userCredential.user!.uid);
+    await _writeUserDataInDatabase(userCredential.user!.uid);
     appState.add(AppAuthStateEnum.auth);
     return userCredential;
   }
