@@ -17,7 +17,7 @@ class NftItemWidget extends StatelessWidget {
         children: [
           Container(
             width: width,
-            height: height * 0.8,
+            height: height * 0.8 - 20,
             decoration: BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(11)),

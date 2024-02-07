@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           (BuildContext context, int index) {
                         return NftItemWidget(
                           width: sizeof.width * 0.43,
-                          height: sizeof.width * 0.7,
+                          height: sizeof.width * 0.7 ,
                         );
                       },
                       childCount: 20,

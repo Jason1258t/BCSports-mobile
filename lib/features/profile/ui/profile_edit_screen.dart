@@ -9,7 +9,6 @@ import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -20,12 +19,24 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final nameController = TextEditingController();
-  final userNameController = TextEditingController();
+  late final nameController;
+  late final userNameController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final repository = RepositoryProvider.of<ProfileRepository>(context);
+
+    nameController = TextEditingController(text: repository.user.displayName);
+    userNameController = TextEditingController(text: repository.user.username);
+  }
 
   @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
+
+    final repository = RepositoryProvider.of<ProfileRepository>(context);
 
     return CustomScaffold(
         resize: true,
@@ -52,16 +63,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
         body: StreamBuilder(
-            stream: RepositoryProvider
-                .of<ProfileRepository>(context)
+            stream: RepositoryProvider.of<ProfileRepository>(context)
                 .profileState
                 .stream,
             builder: (context, snapshot) {
               if (snapshot.hasData &&
                   snapshot.data == LoadingStateEnum.success) {
-                var user = RepositoryProvider
-                    .of<ProfileRepository>(context)
-                    .user;
+                var user =
+                    RepositoryProvider.of<ProfileRepository>(context).user;
 
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -73,8 +82,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            ImagePicker().pickImage(
-                                source: ImageSource.gallery);
+                            ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
                           },
                           borderRadius: BorderRadius.circular(100),
                           child: Ink(
@@ -97,7 +106,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         CustomTextFormField(
                           controller: nameController,
                           labelText: 'Name',
-                          initValue: '123',
                         ),
                         const SizedBox(
                           height: 20,
@@ -105,18 +113,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         CustomTextFormField(
                           controller: userNameController,
                           labelText: 'Username',
-                          initValue: '123',
                         ),
                       ],
                     ),
                     CustomTextButton(text: 'Save', onTap: () {}, isActive: true)
                   ],
                 );
+              } else {
+                return Center(
+                  child: AppAnimations.circleIndicator,
+                );
               }
-              else {
-                return Center(child: AppAnimations.circleIndicator,);
-              }
-            }
-        ));
+            }));
   }
 }
