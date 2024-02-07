@@ -21,7 +21,7 @@ class PlayerAppStatsWidget extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(2),
-      width: size.width * 0.2,
+      width: size.width * 0.28,
       height: 56,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

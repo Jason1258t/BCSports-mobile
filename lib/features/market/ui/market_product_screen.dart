@@ -152,7 +152,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                   height: 8,
                                 ),
                                 Text(
-                                  "1.261 ETH",
+                                  "${widget.nft.currentBit} ETH",
                                   style: AppFonts.font16w500
                                       .copyWith(color: AppColors.yellow_F3D523),
                                 ),

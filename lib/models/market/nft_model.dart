@@ -12,6 +12,7 @@ class NftModel {
   final int weight;
   final String previewImagePath;
   final DateTime auctionStopTime;
+  final double currentBit;
 
   NftModel(
       {required this.birthday,
@@ -26,6 +27,7 @@ class NftModel {
       required this.role,
       required this.weight,
       required this.auctionStopTime,
+      required this.currentBit,
       required this.previewImagePath});
 
   factory NftModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class NftModel {
         name: json['name'],
         position: json['position'],
         role: json['role'],
+        currentBit: double.parse(json['current_bit'].toString()),
         weight: json['weight'],
         auctionStopTime: json['auction_stop_time'].toDate(),
         previewImagePath: json['mini_image_path']);
@@ -77,5 +80,4 @@ class NftModel {
         ' weight: $weight'
         ' }';
   }
-
 }
