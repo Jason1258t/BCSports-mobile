@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
+import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
@@ -45,6 +46,8 @@ class AppRoutes {
             builder: (ctx) => MarketProductScreen(
                   nft: playerNft,
                 ));
+      case AppRouteNames.favourites:
+        return MaterialPageRoute(builder: (ctx) => MarketFavouritesScreen());
       case AppRouteNames.login:
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:

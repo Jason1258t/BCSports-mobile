@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.d
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -26,6 +27,10 @@ class _MarketScreenState extends State<MarketScreen> {
       context.read<MarketCubit>().getNftCards();
     }
     super.initState();
+  }
+
+  void onFavouritesTap() {
+    Navigator.of(context).pushNamed(AppRouteNames.favourites);
   }
 
   @override
@@ -63,8 +68,19 @@ class _MarketScreenState extends State<MarketScreen> {
             elevation: 0,
             floating: true,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                InkWell(
+                  onTap: onFavouritesTap,
+                  borderRadius: BorderRadius.circular(10000),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      "assets/icons/like.svg",
+                      width: 20,
+                    ),
+                  ),
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 10),

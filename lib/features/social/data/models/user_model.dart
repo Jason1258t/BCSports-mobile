@@ -8,13 +8,14 @@ class UserModel {
   final BannerModel banner;
   final String? avatarUrl;
   double evmBill;
+  List<dynamic> favouritesNftList;
 
   Color get avatarColor => Color(banner.color);
 
   Color get bannerColor => Color(banner.color);
 
-  UserModel(
-      this.id, this.displayName, this.username, this.banner, this.avatarUrl, this.evmBill);
+  UserModel(this.id, this.displayName, this.username, this.banner,
+      this.avatarUrl, this.evmBill, this.favouritesNftList);
 
   UserModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -22,18 +23,20 @@ class UserModel {
         username = json['username'],
         avatarUrl = json['avatarUrl'],
         evmBill = double.parse('${json['evmBill']}'),
+        favouritesNftList = json['favourites_list'],
         banner = BannerModel.fromJson(json['banner']);
 
   UserModel.create(this.id, this.username, int color)
       : displayName = null,
         evmBill = 1000,
         banner = BannerModel.create(color),
+        favouritesNftList = [],
         avatarUrl = null;
 
   UserModel copyWith(
       String? newUsername, String? newDisplayName, String? newAvatarUrl) {
     return UserModel(id, newDisplayName ?? displayName, newUsername ?? username,
-        banner, newAvatarUrl ?? avatarUrl, evmBill);
+        banner, newAvatarUrl ?? avatarUrl, evmBill, favouritesNftList);
   }
 
   Map<String, dynamic> toJson() => {
