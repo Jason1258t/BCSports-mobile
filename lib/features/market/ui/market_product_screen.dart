@@ -93,25 +93,32 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
             backgroundColor: Colors.transparent,
             body: CustomScrollView(
               slivers: [
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
-                  sliver: SliverAppBar(
-                      floating: true,
-                      elevation: 0,
-                      surfaceTintColor: Colors.transparent,
-                      backgroundColor: AppColors.black,
-                      centerTitle: true,
-                      leading: ButtonBack(
-                        onTap: () => Navigator.pop(context),
-                        isDark: false,
-                      ),
-                      title: Text(
-                        "Details",
-                        style: AppFonts.font18w500.copyWith(
-                          color: AppColors.white,
+                SliverAppBar(
+                    backgroundColor: AppColors.black,
+                    surfaceTintColor: Colors.transparent,
+                    elevation: 0,
+                    automaticallyImplyLeading: false,
+                    floating: true,
+                    title: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: ButtonBack(
+                            onTap: () => Navigator.pop(context),
+                          ),
                         ),
-                      )),
-                ),
+                        Center(
+                          child: Text(
+                            "Details",
+                            style: AppFonts.font18w500.copyWith(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                        
+                      ],
+                    )),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 18,
