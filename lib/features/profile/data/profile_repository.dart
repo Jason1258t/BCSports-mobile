@@ -1,6 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
@@ -8,26 +12,42 @@ import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:uuid/uuid.dart';
 
-class ProfileRepository {
+class ProfileRepository implements PostSource {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   static final CollectionReference _users =
       _firestore.collection(FirebaseCollectionNames.users);
+  static final CollectionReference _postsCollection =
+      _firestore.collection(FirebaseCollectionNames.posts);
+
+  final LikesManager likesManager;
+
+  ProfileRepository(this.likesManager);
 
   BehaviorSubject<LoadingStateEnum> profileState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
-  BehaviorSubject<LoadingStateEnum> editProfileState =
+  BehaviorSubject<LoadingStateEnum> userPostsState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
   ProfileTabsEnum activeTab = ProfileTabsEnum.nft;
 
+  final List<PostViewModel> posts = [];
+
   UserModel? _userModel;
 
   UserModel get user => _userModel!;
+
+  @override
+  PostViewModel? getCachedPost(String postId) {
+    for (var i in posts) {
+      if (i.postModel.id == postId) return i;
+    }
+
+    return null;
+  }
 
   void setUser(String userId) async {
     profileState.add(LoadingStateEnum.loading);
@@ -35,6 +55,7 @@ class ProfileRepository {
       final res = await _users.doc(userId).get();
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
+      getUserPosts();
       profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
@@ -42,20 +63,44 @@ class ProfileRepository {
     }
   }
 
+  Future<List> getUserPostLikes(String userId) async {
+    return likesManager.getUserPostLikes(userId);
+  }
+
+  void getUserPosts() async {
+    userPostsState.add(LoadingStateEnum.loading);
+    posts.clear();
+    try {
+      final querySnapshot = await _postsCollection
+          .orderBy('createdAtMs', descending: true)
+          .where('creatorId', isEqualTo: user.id)
+          .get();
+
+      final newPosts = <PostViewModel>[];
+      for (var doc in querySnapshot.docs) {
+        final post =
+            PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+        final user = _userModel!;
+        newPosts.add(PostViewModel(user, post));
+      }
+
+      posts.addAll(newPosts);
+      mergeWithLikes(await getUserPostLikes(user.id));
+      userPostsState.add(LoadingStateEnum.success);
+    } catch (e) {
+      userPostsState.add(LoadingStateEnum.fail);
+      rethrow;
+    }
+  }
+
   Future<void> editUser(
       String? newUserName, String? newDisplayName, String? newAvatar) async {
-    editProfileState.add(LoadingStateEnum.loading);
     try {
       final editedUser =
           _userModel?.copyWith(newUserName, newDisplayName, newAvatar);
 
-      await _users
-          .doc(_userModel!.id)
-          .set(editedUser!.toJson());
-
-      editProfileState.add(LoadingStateEnum.success);
+      await _users.doc(_userModel!.id).set(editedUser!.toJson());
     } catch (e) {
-      editProfileState.add(LoadingStateEnum.fail);
       rethrow;
     }
   }
@@ -117,5 +162,25 @@ class ProfileRepository {
 
   void setProfileActiveTab(ProfileTabsEnum tab) {
     activeTab = tab;
+  }
+
+  @override
+  Future likePost(String postId, String userId) async {
+    await likesManager.likePost(postId, userId, posts);
+  }
+
+  @override
+  void setPostLiked(String postId, bool value) {
+    likesManager.setPostLiked(postId, value, posts);
+  }
+
+  @override
+  Future unlikePost(String postId, String userId) async {
+    await likesManager.unlikePost(postId, userId, posts);
+  }
+
+  @override
+  List<PostViewModel> mergeWithLikes(List likes) {
+    return likesManager.mergeWithLikes(likes, posts);
   }
 }

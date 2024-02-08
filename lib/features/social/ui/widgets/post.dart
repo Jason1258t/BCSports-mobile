@@ -1,6 +1,9 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
@@ -16,10 +19,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FeedPostWidget extends StatefulWidget {
-  const FeedPostWidget({super.key, required this.post, required this.user});
+  const FeedPostWidget({super.key, required this.postId, required this.source, });
 
-  final PostModel post;
-  final UserModel user;
+  final String postId;
+  final PostSource source;
 
   @override
   State<FeedPostWidget> createState() => _FeedPostWidgetState();
@@ -27,24 +30,24 @@ class FeedPostWidget extends StatefulWidget {
 
 class _FeedPostWidgetState extends State<FeedPostWidget> {
   void onLikeTapped() async {
-    final bloc = context.read<HomeSocialCubit>();
+    final bloc = context.read<LikeCubit>();
+    final post = widget.source.getCachedPost(widget.postId)!;
     // widget.post.setLike(!widget.post.like);
-    bool like = widget.post.like;
-    bloc.changePostLiked(widget.post.id, !widget.post.like);
+    bool like = post.postModel.like;
+    bloc.changePostLiked(post.postModel.id, !post.postModel.like, widget.source);
     setState(() {});
 
     if (like) {
-      await bloc.unlikePost(widget.post.id);
+      await bloc.unlikePost(post.postModel.id, widget.source);
     } else {
-      await bloc.likePost(widget.post.id);
+      await bloc.likePost(post.postModel.id, widget.source);
     }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final repository = context.read<SocialRepository>();
-    final post = repository.getCachedPost(widget.post.id)!;
+    final post = widget.source.getCachedPost(widget.postId)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -53,7 +56,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
           height: 32,
           child: Row(
             children: [
-              SmallAvatarWidget(user: widget.user),
+              SmallAvatarWidget(user: post.userModel),
               const SizedBox(
                 width: 8,
               ),
@@ -62,13 +65,13 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 children: [
                   Expanded(
                       child: Text(
-                    widget.user.displayName ?? widget.user.username,
+                    post.userModel.displayName ?? post.userModel.username,
                     style: AppFonts.font14w400
                         .copyWith(color: AppColors.white_F4F4F4),
                   )),
                   Text(
                     DateTimeDifferenceConverter.diffToString(
-                        widget.post.createdAt),
+                        post.postModel.createdAt),
                     style: AppFonts.font12w400
                         .copyWith(color: const Color(0xFF717477)),
                   )
@@ -80,27 +83,27 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         const SizedBox(
           height: 16,
         ),
-        if (widget.post.text != null) ...[
+        if (post.postModel.text != null) ...[
           Text(
-            widget.post.text!,
+            post.postModel.text!,
             style: AppFonts.font16w400.copyWith(color: AppColors.white_F4F4F4),
           )
         ],
-        if (widget.post.imageUrl != null && widget.post.text != null) ...[
+        if (post.postModel.imageUrl != null && post.postModel.text != null) ...[
           const SizedBox(
             height: 16,
           ),
         ],
-        if (widget.post.imageUrl != null) ...[
+        if (post.postModel.imageUrl != null) ...[
           InkWell(
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        PhotoViewScreen(url: widget.post.imageUrl!))),
+                        PhotoViewScreen(url: post.postModel.imageUrl!))),
             child: CustomNetworkImage(
-              url: widget.post.compressedImageUrl!,
-              child: CustomNetworkImage(url: widget.post.imageUrl!),
+              url: post.postModel.compressedImageUrl!,
+              child: CustomNetworkImage(url: post.postModel.imageUrl!),
             ),
           )
         ],
@@ -122,7 +125,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
               width: 8,
             ),
             Text(
-              widget.post.likesCount.toString(),
+              post.postModel.likesCount.toString(),
               style: AppFonts.font12w400,
             ),
             const SizedBox(
@@ -137,7 +140,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
               width: 8,
             ),
             Text(
-              widget.post.commentsCount.toString(),
+              post.postModel.commentsCount.toString(),
               style: AppFonts.font12w400,
             ),
           ],

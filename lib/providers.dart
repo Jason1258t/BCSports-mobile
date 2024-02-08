@@ -12,6 +12,9 @@ import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
+import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
+import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +28,15 @@ class MyRepositoryProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final likes = LikesManager();
+
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => MarketRepository()),
-        RepositoryProvider(create: (context) => ProfileRepository()),
-        RepositoryProvider(create: (context) => SocialRepository()),
+        RepositoryProvider(create: (context) => ProfileRepository(likes)),
+        RepositoryProvider(create: (context) => SocialRepository(likes)),
+        RepositoryProvider(
+            create: (context) => FavouritePostsRepository(likes)),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,
@@ -49,6 +56,8 @@ class MyBlocProviders extends StatelessWidget {
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
     final socialRepository = RepositoryProvider.of<SocialRepository>(context);
+    final favouritesRepository =
+        RepositoryProvider.of<FavouritePostsRepository>(context);
 
     return MultiBlocProvider(
       providers: [
@@ -73,15 +82,16 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 PlaceBidCubit(marketRepository, profileRepository)),
-        BlocProvider(
-            create: (context) =>
-                FavouriteCubit(profileRepository)),
+        BlocProvider(create: (context) => FavouriteCubit(profileRepository)),
         BlocProvider(
             create: (context) =>
                 CreatePostCubit(socialRepository, profileRepository)),
         BlocProvider(
             create: (context) =>
                 HomeSocialCubit(socialRepository, profileRepository)),
+        BlocProvider(
+            create: (context) =>
+                LikeCubit(profileRepository, favouritesRepository)),
       ],
       child: const MyApp(),
     );

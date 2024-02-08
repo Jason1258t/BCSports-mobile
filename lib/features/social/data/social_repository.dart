@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
@@ -12,7 +14,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
-class SocialRepository {
+class SocialRepository implements PostSource {
   static final FirebaseDatabase database = FirebaseDatabase.instance;
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
   static final FirebaseStorage storage = FirebaseStorage.instance;
@@ -22,7 +24,9 @@ class SocialRepository {
   static final CollectionReference _postsCollection =
       firestore.collection(FirebaseCollectionNames.posts);
 
-  final List _postLikes = [];
+  final LikesManager likesManager;
+
+  SocialRepository(this.likesManager);
 
   BehaviorSubject<LoadingStateEnum> homeScreenState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
@@ -51,12 +55,10 @@ class SocialRepository {
   }
 
   Future<List> getUserPostLikes(String userId) async {
-    final user = await _users.doc(userId).get();
-    _postLikes.clear();
-    _postLikes.addAll((user['postLikes'] ?? []) as List);
-    return _postLikes;
+    return likesManager.getUserPostLikes(userId);
   }
 
+  @override
   PostViewModel? getCachedPost(String id) {
     for (var i in posts) {
       if (i.postModel.id == id) return i;
@@ -64,54 +66,19 @@ class SocialRepository {
     return null;
   }
 
+  @override
   void setPostLiked(postId, value) async {
-    for (var i in posts) {
-      if (i.postModel.id == postId) {
-        i.postModel.setLike(value);
-        if (value) {
-          i.postModel.likesCount += 1;
-        } else {
-          i.postModel.likesCount -= 1;
-        }
-        return;
-      }
-    }
+    likesManager.setPostLiked(postId, value, posts);
   }
 
-  Future<bool> likePost(String postId, String userId) async {
-    if (_postLikes.contains(postId)) return true;
-
-    _postLikes.add(postId);
-    try {
-      await _users
-          .doc(userId)
-          .set({'postLikes': _postLikes}, SetOptions(merge: true));
-      await _postsCollection.doc(postId).set(
-          {'likesCount': getCachedPost(postId)!.postModel.likesCount},
-          SetOptions(merge: true));
-    } catch (e) {
-      _postLikes.remove(postId);
-      rethrow;
-    }
-    mergeWithLikes(_postLikes);
-    return _postLikes.contains(postId);
+  @override
+  Future likePost(String postId, String userId) async {
+    await likesManager.likePost(postId, userId, posts);
   }
 
-  Future<bool> unlikePost(String postId, String userId) async {
-    if (!_postLikes.contains(postId)) return false;
-    _postLikes.remove(postId);
-    try {
-      await _users
-          .doc(userId)
-          .set({'postLikes': _postLikes}, SetOptions(merge: true));
-      await _postsCollection.doc(postId).set(
-          {'likesCount': getCachedPost(postId)!.postModel.likesCount},
-          SetOptions(merge: true));
-    } catch (e) {
-      _postLikes.remove(postId);
-    }
-    mergeWithLikes(_postLikes);
-    return _postLikes.contains(postId);
+  @override
+  Future unlikePost(String postId, String userId) async {
+    await likesManager.unlikePost(postId, userId, posts);
   }
 
   Future<UserModel> _getUserById(String userId) async {
@@ -134,15 +101,9 @@ class SocialRepository {
     return posts;
   }
 
-  Future<List<PostViewModel>> mergeWithLikes(List likes) async {
-    for (var i in posts) {
-      if (likes.contains(i.postModel.id)) {
-        i.postModel.setLike(true);
-      } else {
-        i.postModel.setLike(false);
-      }
-    }
-
+  @override
+  List<PostViewModel> mergeWithLikes(List likes) {
+    likesManager.mergeWithLikes(likes, posts);
     return posts;
   }
 

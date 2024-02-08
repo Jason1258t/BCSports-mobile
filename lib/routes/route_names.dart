@@ -10,4 +10,5 @@ abstract class AppRouteNames {
   static const String registration = '/register';
   static const String recovery = '/recovery';
   static const String favourites = '/favs';
+  static const String favouritesPost = '/favouritesPost';
 }
