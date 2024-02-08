@@ -6,9 +6,15 @@ class PostModel {
   final String? imageUrl;
   final String? compressedImageUrl;
   final String? text;
-  final int likesCount;
-  final int commentsCount;
+  int likesCount;
+  int commentsCount;
+
   late final int _createdAtMs;
+  bool _liked = false;
+
+  bool get like => _liked;
+
+  void setLike(bool value) => _liked = value;
 
   DateTime get createdAt => DateTime.fromMillisecondsSinceEpoch(_createdAtMs);
 

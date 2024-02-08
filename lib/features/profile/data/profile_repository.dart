@@ -11,8 +11,11 @@ import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
 class ProfileRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  static final CollectionReference _users =
+      _firestore.collection(FirebaseCollectionNames.users);
 
   BehaviorSubject<LoadingStateEnum> profileState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
@@ -20,7 +23,7 @@ class ProfileRepository {
   BehaviorSubject<LoadingStateEnum> editProfileState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
-  EnumProfileTab activeTab = EnumProfileTab.nft;
+  ProfileTabsEnum activeTab = ProfileTabsEnum.nft;
 
   UserModel? _userModel;
 
@@ -29,13 +32,9 @@ class ProfileRepository {
   void setUser(String userId) async {
     profileState.add(LoadingStateEnum.loading);
     try {
-      final res = await _firestore
-          .collection(FirebaseCollectionNames.users)
-          .doc(userId)
-          .get();
+      final res = await _users.doc(userId).get();
 
-      _userModel = UserModel.fromJson(res.data()!);
-
+      _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
       profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
@@ -50,8 +49,7 @@ class ProfileRepository {
       final editedUser =
           _userModel?.copyWith(newUserName, newDisplayName, newAvatar);
 
-      await _firestore
-          .collection(FirebaseCollectionNames.users)
+      await _users
           .doc(_userModel!.id)
           .set(editedUser!.toJson());
 
@@ -74,7 +72,7 @@ class ProfileRepository {
     }
   }
 
-  Future<String> uploadPostImage(String filePath) async {
+  Future<String> uploadAvatar(String filePath) async {
     final storageRef = _storage.ref(FirebaseCollectionNames.userAvatar);
     final fileRef = storageRef.child(_userModel!.id.toString());
 
@@ -117,7 +115,7 @@ class ProfileRepository {
     log("**Removed** fav-s item for ${user.id}");
   }
 
-  void setProfileActiveTab(EnumProfileTab profileTap) {
-    activeTab = profileTap;
+  void setProfileActiveTab(ProfileTabsEnum tab) {
+    activeTab = tab;
   }
 }

@@ -26,7 +26,7 @@ class EditUserCubit extends Cubit<EditUserState> {
 
       String? imageUrl;
       if (image != null) {
-        imageUrl = await _profileRepository.uploadPostImage(image.path);
+        imageUrl = await _profileRepository.uploadAvatar(image.path);
       }
 
       await _profileRepository.editUser(userName, displayName, imageUrl);

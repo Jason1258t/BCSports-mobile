@@ -1,5 +1,8 @@
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -8,17 +11,40 @@ import 'package:bcsports_mobile/utils/time_difference.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
 
-class FeedPostWidget extends StatelessWidget {
+class FeedPostWidget extends StatefulWidget {
   const FeedPostWidget({super.key, required this.post, required this.user});
 
   final PostModel post;
   final UserModel user;
 
   @override
+  State<FeedPostWidget> createState() => _FeedPostWidgetState();
+}
+
+class _FeedPostWidgetState extends State<FeedPostWidget> {
+  void onLikeTapped() async {
+    final bloc = context.read<HomeSocialCubit>();
+    // widget.post.setLike(!widget.post.like);
+    bool like = widget.post.like;
+    bloc.changePostLiked(widget.post.id, !widget.post.like);
+    setState(() {});
+
+    if (like) {
+      await bloc.unlikePost(widget.post.id);
+    } else {
+      await bloc.likePost(widget.post.id);
+    }
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final repository = context.read<SocialRepository>();
+    final post = repository.getCachedPost(widget.post.id)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -27,7 +53,7 @@ class FeedPostWidget extends StatelessWidget {
           height: 32,
           child: Row(
             children: [
-              SmallAvatarWidget(user: user),
+              SmallAvatarWidget(user: widget.user),
               const SizedBox(
                 width: 8,
               ),
@@ -36,12 +62,13 @@ class FeedPostWidget extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    user.displayName ?? user.username,
+                    widget.user.displayName ?? widget.user.username,
                     style: AppFonts.font14w400
                         .copyWith(color: AppColors.white_F4F4F4),
                   )),
                   Text(
-                    DateTimeDifferenceConverter.diffToString(post.createdAt),
+                    DateTimeDifferenceConverter.diffToString(
+                        widget.post.createdAt),
                     style: AppFonts.font12w400
                         .copyWith(color: const Color(0xFF717477)),
                   )
@@ -53,27 +80,27 @@ class FeedPostWidget extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        if (post.text != null) ...[
+        if (widget.post.text != null) ...[
           Text(
-            post.text!,
+            widget.post.text!,
             style: AppFonts.font16w400.copyWith(color: AppColors.white_F4F4F4),
           )
         ],
-        if (post.imageUrl != null && post.text != null) ...[
+        if (widget.post.imageUrl != null && widget.post.text != null) ...[
           const SizedBox(
             height: 16,
           ),
         ],
-        if (post.imageUrl != null) ...[
+        if (widget.post.imageUrl != null) ...[
           InkWell(
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        PhotoViewScreen(url: post.imageUrl!))),
+                        PhotoViewScreen(url: widget.post.imageUrl!))),
             child: CustomNetworkImage(
-              url: post.compressedImageUrl!,
-              child: CustomNetworkImage(url: post.imageUrl!),
+              url: widget.post.compressedImageUrl!,
+              child: CustomNetworkImage(url: widget.post.imageUrl!),
             ),
           )
         ],
@@ -82,16 +109,20 @@ class FeedPostWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            SvgPicture.asset(
-              Assets.icons('heart.svg'),
-              width: 16,
-              height: 16,
+            InkWell(
+              onTap: onLikeTapped,
+              child: SvgPicture.asset(
+                Assets.icons(
+                    post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
+                width: 16,
+                height: 16,
+              ),
             ),
             const SizedBox(
               width: 8,
             ),
             Text(
-              post.likesCount.toString(),
+              widget.post.likesCount.toString(),
               style: AppFonts.font12w400,
             ),
             const SizedBox(
@@ -106,7 +137,7 @@ class FeedPostWidget extends StatelessWidget {
               width: 8,
             ),
             Text(
-              post.commentsCount.toString(),
+              widget.post.commentsCount.toString(),
               style: AppFonts.font12w400,
             ),
           ],
@@ -165,11 +196,10 @@ class PhotoViewScreen extends StatelessWidget {
             },
           ),
         ),
+
         body: PhotoView(
           maxScale: 0.4,
           minScale: PhotoViewComputedScale.contained,
-          backgroundDecoration:
-              BoxDecoration(color: AppColors.background.withOpacity(0.4)),
           imageProvider: NetworkImage(url),
         ));
   }

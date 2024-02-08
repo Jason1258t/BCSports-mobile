@@ -153,19 +153,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ToggleButton(
                       width: sizeof.width * 0.4,
-                      enumTap: EnumProfileTab.nft,
+                      enumTap: ProfileTabsEnum.nft,
                       text: 'NFT',
                       onTap: () {
-                        repository.setProfileActiveTab(EnumProfileTab.nft);
+                        repository.setProfileActiveTab(ProfileTabsEnum.nft);
                         setState(() {});
                       },
                     ),
                     ToggleButton(
                       width: sizeof.width * 0.4,
-                      enumTap: EnumProfileTab.posts,
+                      enumTap: ProfileTabsEnum.posts,
                       text: 'Posts',
                       onTap: () {
-                        repository.setProfileActiveTab(EnumProfileTab.posts);
+                        repository.setProfileActiveTab(ProfileTabsEnum.posts);
                         setState(() {});
                       },
                     ),

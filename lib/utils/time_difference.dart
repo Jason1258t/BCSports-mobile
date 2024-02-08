@@ -14,10 +14,10 @@ class DateTimeDifferenceConverter {
   static String differenceMoreThenDay(DateTime otherDate) {
     final now = DateTime.now();
     final difference = now.difference(otherDate);
-    if (now.subtract(const Duration(hours: 24)) == now.subtract(difference)) {
-      return 'yesterday ${DateFormat('hh.mm').format(otherDate)}';
+    if (dateEqual(now.subtract(const Duration(hours: 24)), now.subtract(difference))) {
+      return 'yesterday ${DateFormat('hh:mm').format(otherDate)}';
     } else {
-      return '${DateFormat('yyyy.MM.dd').format(otherDate)} ${DateFormat('hh.mm').format(otherDate)}';
+      return '${DateFormat('yyyy.MM.dd').format(otherDate)} ${DateFormat('hh:mm').format(otherDate)}';
     }
   }
 

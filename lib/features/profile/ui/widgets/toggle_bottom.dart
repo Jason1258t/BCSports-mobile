@@ -14,7 +14,7 @@ class ToggleButton extends StatelessWidget {
       required this.onTap});
 
   final double width;
-  final EnumProfileTab enumTap;
+  final ProfileTabsEnum enumTap;
   final String text;
   final Function() onTap;
 
