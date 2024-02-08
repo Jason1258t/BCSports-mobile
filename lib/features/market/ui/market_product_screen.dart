@@ -1,7 +1,9 @@
+import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_details_article.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_details_line.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -13,6 +15,7 @@ import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dar
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class MarketProductScreen extends StatefulWidget {
@@ -49,6 +52,14 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
         builder: (context) => PlaceBitPopup(
               nft: widget.nft,
             ));
+  }
+
+  void onLikeTap(bool isLiked) {
+    if (isLiked) {
+      context.read<FavouriteCubit>().removeFromFavourites(widget.nft);
+    } else {
+      context.read<FavouriteCubit>().markAsFavourite(widget.nft);
+    }
   }
 
   @override
@@ -113,11 +124,51 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                       children: [
                         SizedBox(
                           height: (size.width - 40) / 0.96,
-                          child: FadeInImage(
-                              fit: BoxFit.fitHeight,
-                              placeholder: const AssetImage(
-                                  "assets/images/noname_det.png"),
-                              image: NetworkImage(widget.nft.imagePath)),
+                          child: Stack(
+                            children: [
+                              FadeInImage(
+                                  fit: BoxFit.fitHeight,
+                                  placeholder: const AssetImage(
+                                      "assets/images/noname_det.png"),
+                                  image: NetworkImage(widget.nft.imagePath)),
+                              Positioned(
+                                top: 20,
+                                right: 20,
+                                child:
+                                    BlocBuilder<FavouriteCubit, FavouriteState>(
+                                  builder: (context, state) {
+                                    final user =
+                                        context.read<ProfileRepository>().user;
+                                    final userNfts = user.favouritesNftList;
+                                    final bool isLiked = userNfts
+                                        .contains(widget.nft.documentId);
+
+                                    if (state is FavouriteLoading) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: AppAnimations.circleIndicator,
+                                      );
+                                    }
+
+                                    return InkWell(
+                                      onTap: () => onLikeTap(isLiked),
+                                      borderRadius:
+                                          BorderRadius.circular(10000),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(10),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
+                                          color: AppColors.primary,
+                                          width: 20,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 12,

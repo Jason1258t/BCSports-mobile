@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,14 +62,14 @@ class ProfileRepository {
     }
   }
 
-  Future<void> deleteOldUserAvatar()async {
-    try{
+  Future<void> deleteOldUserAvatar() async {
+    try {
       final storageRef = _storage.ref(FirebaseCollectionNames.userAvatar);
 
-      if(_userModel!.avatarUrl != null){
+      if (_userModel!.avatarUrl != null) {
         await storageRef.child(_userModel!.id.toString()).delete();
       }
-    }catch (e){
+    } catch (e) {
       rethrow;
     }
   }
@@ -94,6 +95,26 @@ class ProfileRepository {
     _userModel!.evmBill = _userModel!.evmBill - price;
 
     log("You paid for a bid! user: ${user.id}");
+  }
+
+  Future<void> markFavourite(NftModel nft) async {
+    final dbUser = _firestore.collection("users").doc(_userModel!.id);
+    await dbUser.update({
+      'favourites_list': FieldValue.arrayUnion([nft.documentId])
+    });
+    _userModel!.favouritesNftList.add(nft.documentId);
+
+    log("New fav-s item for ${user.id}");
+  }
+
+  Future<void> removeFromFavourites(NftModel nft) async {
+    final dbUser = _firestore.collection("users").doc(_userModel!.id);
+    await dbUser.update({
+      'favourites_list': FieldValue.arrayRemove([nft.documentId])
+    });
+    _userModel!.favouritesNftList.remove(nft.documentId);
+
+    log("**Removed** fav-s item for ${user.id}");
   }
 
   void setProfileActiveTab(EnumProfileTab profileTap) {
