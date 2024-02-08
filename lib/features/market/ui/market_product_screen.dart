@@ -7,12 +7,12 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -116,7 +116,6 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                             ),
                           ),
                         ),
-                        
                       ],
                     )),
                 const SliverToBoxAdapter(
@@ -124,6 +123,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                     height: 18,
                   ),
                 ),
+             
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -240,7 +240,9 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                     height: 2,
                                   ),
                                   Text(
-                                    "4517.2",
+                                    widget.nft.lastBidderName.length != ""
+                                        ? "${widget.nft.lastBidderName.substring(0, 2)}****${widget.nft.lastBidderName.substring(widget.nft.lastBidderName.length - 3, widget.nft.lastBidderName.length)}"
+                                        : "Noname",
                                     textAlign: TextAlign.start,
                                     style: AppFonts.font10w500
                                         .copyWith(color: AppColors.grey_B3B3B3),

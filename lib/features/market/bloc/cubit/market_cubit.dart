@@ -9,7 +9,7 @@ class MarketCubit extends Cubit<MarketState> {
 
   MarketCubit(this.marketRepository) : super(MarketInitial());
 
-  void getNftCards() async {
+  Future<void> getNftCards() async {
     emit(MarketLoading());
     try {
       await marketRepository.loadNft();
