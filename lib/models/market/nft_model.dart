@@ -14,7 +14,7 @@ class NftModel {
   final int weight;
   final String previewImagePath;
   final DateTime auctionStopTime;
-  final double currentBit;
+  double currentBit;
 
   NftModel(
       {

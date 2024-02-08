@@ -132,7 +132,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                                   Text(
                                     "Country",
                                     overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w600
+                                    style: AppFonts.font9w300
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(

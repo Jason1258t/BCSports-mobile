@@ -7,7 +7,7 @@ class UserModel {
   final String username;
   final BannerModel banner;
   final String? avatarUrl;
-  final double evmBill;
+  double evmBill;
 
   Color get avatarColor => Color(banner.color);
 

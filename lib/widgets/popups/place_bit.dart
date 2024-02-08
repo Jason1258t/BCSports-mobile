@@ -25,7 +25,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
   double extraBid = 0;
 
   void onPlaceBidTap() {
-    context.read<PlaceBidCubit>().updateBid(widget.nft, 123123);
+    context.read<PlaceBidCubit>().updateBid(widget.nft, extraBid + widget.nft.currentBit);
   }
 
   void increaseBet() {

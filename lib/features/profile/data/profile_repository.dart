@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
@@ -74,6 +75,14 @@ class ProfileRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> payForBid({required double price}) async {
+    final user = _firestore.collection("users").doc(_userModel!.id);
+    await user.update({"evmBill": _userModel!.evmBill - price});
+    _userModel!.evmBill = _userModel!.evmBill - price;
+
+    log("You paid for a bid! user: ${user.id}");
   }
 
   void setProfileActiveTab(EnumProfileTab profileTap) {

@@ -1,6 +1,8 @@
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -76,10 +78,18 @@ class _MarketScreenState extends State<MarketScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        "1231",
-                        style: AppFonts.font14w500
-                            .copyWith(color: AppColors.white),
+                      BlocBuilder<PlaceBidCubit, PlaceBidState>(
+                        builder: (context, state) {
+                          return Text(
+                            context
+                                .read<ProfileRepository>()
+                                .user
+                                .evmBill
+                                .toString(),
+                            style: AppFonts.font14w500
+                                .copyWith(color: AppColors.white),
+                          );
+                        },
                       ),
                       const SizedBox(
                         width: 5,
