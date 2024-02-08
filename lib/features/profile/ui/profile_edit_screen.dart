@@ -99,9 +99,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   )
                                 : Container(),
                           )
-                        : CircleAvatar(
-                            radius: sizeOf.width * 0.20,
-                            child: Image.file(File(image!.path), fit: BoxFit.fill,),
+                        : Container(
+                            width: sizeOf.width * 0.4,
+                            height: sizeOf.width * 0.4,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(1000),
+                                child: Image.file(
+                                  File(image!.path),
+                                  fit: BoxFit.cover,
+                                )),
                           ),
                     InkWell(
                       onTap: () async {

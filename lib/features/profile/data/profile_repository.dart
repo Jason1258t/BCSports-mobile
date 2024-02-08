@@ -6,7 +6,6 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
@@ -62,9 +61,21 @@ class ProfileRepository {
     }
   }
 
+  Future<void> deleteOldUserAvatar()async {
+    try{
+      final storageRef = _storage.ref(FirebaseCollectionNames.userAvatar);
+
+      if(_userModel!.avatarUrl != null){
+        await storageRef.child(_userModel!.id.toString()).delete();
+      }
+    }catch (e){
+      rethrow;
+    }
+  }
+
   Future<String> uploadPostImage(String filePath) async {
     final storageRef = _storage.ref(FirebaseCollectionNames.userAvatar);
-    final fileRef = storageRef.child(const Uuid().v1());
+    final fileRef = storageRef.child(_userModel!.id.toString());
 
     final TaskSnapshot task;
     try {
