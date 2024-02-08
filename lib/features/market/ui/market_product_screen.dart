@@ -88,17 +88,11 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                     children: [
                       SizedBox(
                         height: (size.width - 40) / 0.96,
-                        child: Image.network(widget.nft.imagePath,
+                        child: FadeInImage(
                             fit: BoxFit.fitHeight,
-                            loadingBuilder: ((context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Image.asset(
-                            "assets/images/noname_det.png",
-                            fit: BoxFit.fitHeight,
-                          );
-                        })),
+                            placeholder:
+                                AssetImage("assets/images/noname_det.png"),
+                            image: NetworkImage(widget.nft.imagePath)),
                       ),
                       const SizedBox(
                         height: 12,

@@ -64,17 +64,13 @@ class MarketNftCardState extends State<MarketNftCard> {
                       BoxDecoration(borderRadius: BorderRadius.circular(4)),
                   child: Stack(
                     children: [
-                      Image.network(
-                        widget.nft.previewImagePath,
-                        fit: BoxFit.fitWidth,
-                        width: double.infinity,
-                        loadingBuilder: (context, child, loadingStatus) {
-                          if (loadingStatus == null) {
-                            return child;
-                          }
-                          return Image.asset("assets/images/noname.png", fit: BoxFit.fitWidth);
-                        },
-                      ),
+                      FadeInImage(
+                          fit: BoxFit.fitWidth,
+                          width: double.infinity,
+                          placeholder: const AssetImage(
+                            "assets/images/noname.png",
+                          ),
+                          image: NetworkImage(widget.nft.previewImagePath)),
                     ],
                   ),
                 ),
@@ -173,7 +169,8 @@ class MarketNftCardState extends State<MarketNftCard> {
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(
-                                    DateFormat('dd.MM.yyyy').format(widget.nft.birthday)
+                                    DateFormat('dd.MM.yyyy')
+                                        .format(widget.nft.birthday)
                                         .toString()
                                         .toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
