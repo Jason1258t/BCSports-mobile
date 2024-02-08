@@ -103,7 +103,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               ),
               SettingButton(
                   onTap: () {
-                    // BlocProvider.of<ResetPasswordCubit>(context).resetPassword(user.);
+                    Navigator.pushNamed(context, AppRouteNames.recovery);
                   },
                   name: 'Change Password',
                   width: double.infinity,

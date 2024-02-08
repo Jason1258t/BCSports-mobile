@@ -22,6 +22,8 @@ class EditUserCubit extends Cubit<EditUserState> {
   Future<void> editProfile(String? displayName, String? userName, XFile? image) async {
     emit(EditUserLoadingState());
     try {
+      _profileRepository.deleteOldUserAvatar();
+
       String? imageUrl;
       if (image != null) {
         imageUrl = await _profileRepository.uploadPostImage(image.path);
