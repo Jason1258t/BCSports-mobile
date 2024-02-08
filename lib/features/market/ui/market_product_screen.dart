@@ -123,7 +123,6 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                     height: 18,
                   ),
                 ),
-             
                 SliverToBoxAdapter(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 22),

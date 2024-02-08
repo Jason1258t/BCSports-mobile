@@ -8,6 +8,7 @@ abstract class AppRouteNames {
   static const String marketDetails = '/market/details';
   static const String login = '/login';
   static const String registration = '/register';
+  static const String wallet = '/wallet';
   static const String recovery = '/recovery';
   static const String favourites = '/favs';
   static const String favouritesPost = '/favouritesPost';

@@ -86,39 +86,45 @@ class _MarketScreenState extends State<MarketScreen> {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.black_222232,
-                        borderRadius: BorderRadius.circular(31)),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/bankcard.svg'),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        BlocBuilder<PlaceBidCubit, PlaceBidState>(
-                          builder: (context, state) {
-                            return Text(
-                              context
-                                  .read<ProfileRepository>()
-                                  .user
-                                  .evmBill
-                                  .toString(),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRouteNames.wallet);
+                    },
+                    borderRadius: BorderRadius.circular(31),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.black_222232,
+                          borderRadius: BorderRadius.circular(31)),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/icons/bankcard.svg'),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          BlocBuilder<PlaceBidCubit, PlaceBidState>(
+                            builder: (context, state) {
+                              return Text(
+                                context
+                                    .read<ProfileRepository>()
+                                    .user
+                                    .evmBill
+                                    .toString(),
+                                style: AppFonts.font14w500
+                                    .copyWith(color: AppColors.white),
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text("ETH",
                               style: AppFonts.font14w500
-                                  .copyWith(color: AppColors.white),
-                            );
-                          },
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text("ETH",
-                            style: AppFonts.font14w500
-                                .copyWith(color: AppColors.yellow_F3D523))
-                      ],
+                                  .copyWith(color: AppColors.yellow_F3D523))
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -150,7 +156,6 @@ class _MarketScreenState extends State<MarketScreen> {
                     childCount:
                         context.read<MarketRepository>().nftList.length)),
           ),
-          
         ],
       ),
     );

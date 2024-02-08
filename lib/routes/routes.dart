@@ -11,6 +11,7 @@ import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart
 import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/favourites_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
+import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:
         return MaterialPageRoute(builder: (ctx) => const RegistrationScreen());
+      case AppRouteNames.wallet:
+        return MaterialPageRoute(builder: (ctx) => const WalletScreen());
       case AppRouteNames.recovery:
         return MaterialPageRoute(
             builder: (ctx) => const PasswordRecoveryScreen());
