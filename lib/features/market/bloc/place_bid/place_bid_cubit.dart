@@ -17,7 +17,7 @@ class PlaceBidCubit extends Cubit<PlaceBidState> {
     emit(PlaceBidLoading());
 
     try {
-      await _marketRepository.updateNftAuctionPrice(newPrice, nft);
+      await _marketRepository.updateNftAuctionPrice(newPrice, nft, _profileRepository.user);
       await _profileRepository.payForBid(price: newPrice);
       emit(PlaceBidSuccess());
     } catch (e) {

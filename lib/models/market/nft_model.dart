@@ -14,11 +14,11 @@ class NftModel {
   final int weight;
   final String previewImagePath;
   final DateTime auctionStopTime;
+  String lastBidderName;
   double currentBit;
 
   NftModel(
-      {
-      required this.documentId,
+      {required this.documentId,
       required this.birthday,
       required this.citizenship,
       required this.club,
@@ -32,6 +32,7 @@ class NftModel {
       required this.weight,
       required this.auctionStopTime,
       required this.currentBit,
+      required this.lastBidderName,
       required this.previewImagePath});
 
   factory NftModel.fromJson(Map<String, dynamic> json, String documentId) {
@@ -47,6 +48,7 @@ class NftModel {
         name: json['name'],
         position: json['position'],
         role: json['role'],
+        lastBidderName: json['last_bidder'],
         currentBit: double.parse(json['current_bit'].toString()),
         weight: json['weight'],
         auctionStopTime: json['auction_stop_time'].toDate(),
