@@ -1,22 +1,21 @@
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
-import 'package:bcsports_mobile/features/market/ui/widgets/player_details_article.dart';
-import 'package:bcsports_mobile/features/market/ui/widgets/player_details_line.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
-import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 class MarketProductScreen extends StatefulWidget {
   final NftModel nft;
@@ -29,11 +28,21 @@ class MarketProductScreen extends StatefulWidget {
 
 class _MarketProductScreenState extends State<MarketProductScreen> {
   Duration remainingTime = Duration.zero;
+  late final NftDetailsCubit nftCubit;
+  late final MarketRepository marketRepository;
 
   @override
   void initState() {
+    initProviders();
+    nftCubit.getNftDetails(widget.nft);
+
     updateRemainingTime();
     super.initState();
+  }
+
+  void initProviders() {
+    nftCubit = context.read<NftDetailsCubit>();
+    marketRepository = context.read<MarketRepository>();
   }
 
   void updateRemainingTime() async {
@@ -50,22 +59,24 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
     showDialog(
         context: context,
         builder: (context) => PlaceBitPopup(
-              nft: widget.nft,
+              nft: marketRepository.lastOpenedNft,
             ));
   }
 
   void onLikeTap(bool isLiked) {
     if (isLiked) {
-      context.read<FavouriteCubit>().removeFromFavourites(widget.nft);
+      context
+          .read<FavouriteCubit>()
+          .removeFromFavourites(marketRepository.lastOpenedNft);
     } else {
-      context.read<FavouriteCubit>().markAsFavourite(widget.nft);
+      context
+          .read<FavouriteCubit>()
+          .markAsFavourite(marketRepository.lastOpenedNft);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
     return BlocConsumer<PlaceBidCubit, PlaceBidState>(
       listener: (context, state) {
         if (state is PlaceBidSuccess || state is PlaceBidFail) {
@@ -90,410 +101,221 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
         color: AppColors.black,
         child: SafeArea(
           child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                    backgroundColor: AppColors.black,
-                    surfaceTintColor: Colors.transparent,
-                    elevation: 0,
-                    automaticallyImplyLeading: false,
-                    floating: true,
-                    title: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: ButtonBack(
-                            onTap: () => Navigator.pop(context),
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            "Details",
-                            style: AppFonts.font18w500.copyWith(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 18,
-                  ),
-                ),
-             
-                SliverToBoxAdapter(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: (size.width - 40) / 0.96,
-                          child: Stack(
-                            children: [
-                              FadeInImage(
-                                  fit: BoxFit.fitHeight,
-                                  placeholder: const AssetImage(
-                                      "assets/images/noname_det.png"),
-                                  image: NetworkImage(widget.nft.imagePath)),
-                              Positioned(
-                                top: 20,
-                                right: 20,
-                                child:
-                                    BlocBuilder<FavouriteCubit, FavouriteState>(
-                                  builder: (context, state) {
-                                    final user =
-                                        context.read<ProfileRepository>().user;
-                                    final userNfts = user.favouritesNftList;
-                                    final bool isLiked = userNfts
-                                        .contains(widget.nft.documentId);
+              backgroundColor: Colors.transparent,
+              body: BlocBuilder<NftDetailsCubit, NftDetailsState>(
+                builder: (context, state) {
+                  if (state is NftDetailsLoading) {
+                    return AppAnimations.circleIndicator;
+                  } else if (state is NftDetailsSuccess) {
+                    return buildNftCardWidget();
+                  }
 
-                                    if (state is FavouriteLoading) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: AppAnimations.circleIndicator,
-                                      );
-                                    }
-
-                                    return InkWell(
-                                      onTap: () => onLikeTap(isLiked),
-                                      borderRadius:
-                                          BorderRadius.circular(10000),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.all(10),
-                                        child: SvgPicture.asset(
-                                          "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
-                                          color: AppColors.primary,
-                                          width: 20,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PlayerAppStatsWidget(
-                              value: 0,
-                              statsName: "Favorites",
-                              iconPath: 'assets/icons/like.svg',
-                            ),
-                            PlayerAppStatsWidget(
-                              value: 1,
-                              statsName: "Owners",
-                              iconPath: 'assets/icons/people.svg',
-                            ),
-                            PlayerAppStatsWidget(
-                              value: 12,
-                              statsName: "Views",
-                              iconPath: 'assets/icons/ar.svg',
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        CustomTextButton(
-                            text: "Place a bit",
-                            onTap: onBetTap,
-                            isActive: true),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(
-                              bottom: 9, top: 12, right: 14, left: 25),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            color: AppColors.black_1A1A1A,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Current Bid",
-                                    style: AppFonts.font14w400
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "${widget.nft.currentBit} ETH",
-                                    style: AppFonts.font16w500.copyWith(
-                                        color: AppColors.yellow_F3D523),
-                                  ),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    widget.nft.lastBidderName.length != ""
-                                        ? "${widget.nft.lastBidderName.substring(0, 2)}****${widget.nft.lastBidderName.substring(widget.nft.lastBidderName.length - 3, widget.nft.lastBidderName.length)}"
-                                        : "Noname",
-                                    textAlign: TextAlign.start,
-                                    style: AppFonts.font10w500
-                                        .copyWith(color: AppColors.grey_B3B3B3),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top: 5, bottom: 8, left: 13, right: 13),
-                                decoration: BoxDecoration(
-                                    color: AppColors.black_262627,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text("Ending in",
-                                        style: AppFonts.font16w500.copyWith(
-                                            color: AppColors.yellow_F3D523)),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "${remainingTime.inDays} days",
-                                          style: AppFonts.font12w400
-                                              .copyWith(color: AppColors.white),
-                                        ),
-                                        Container(
-                                          width: 1,
-                                          height: 12,
-                                          color: AppColors.black,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 3),
-                                        ),
-                                        Text(
-                                          "${remainingTime.inHours % 24} Hours",
-                                          style: AppFonts.font12w400
-                                              .copyWith(color: AppColors.white),
-                                        ),
-                                        Container(
-                                          width: 1,
-                                          height: 12,
-                                          color: AppColors.black,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 3),
-                                        ),
-                                        Text(
-                                          "${remainingTime.inMinutes % 60} Mins",
-                                          style: AppFonts.font12w400
-                                              .copyWith(color: AppColors.white),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 28,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(16)),
-                      color: AppColors.black_1A1A1A,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 22)
-                        .copyWith(top: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Description",
-                          style: AppFonts.font24w600
-                              .copyWith(color: AppColors.white),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        const PlayerDetailsArticleWidget(
-                          title: "About player",
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.",
-                          style: AppFonts.font12w400
-                              .copyWith(color: AppColors.grey_B3B3B3),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        const PlayerDetailsArticleWidget(
-                          title: "Player detailis",
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Name",
-                          value: widget.nft.name,
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Date of birth",
-                          value: DateFormat('dd.MM.yyyy')
-                              .format(widget.nft.birthday)
-                              .toString(),
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Club name",
-                          value: widget.nft.club,
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Citizenship",
-                          value: widget.nft.citizenship,
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Height",
-                          value: widget.nft.height.toString(),
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Position",
-                          value: widget.nft.position,
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Weight",
-                          value: widget.nft.weight.toString(),
-                        ),
-                        PlayerDetailsLineWidget(
-                          attr: "Foot",
-                          value: widget.nft.isRightFoot
-                              ? "Right foot"
-                              : "Left foot",
-                        ),
-                        const SizedBox(
-                          height: 36,
-                        ),
-                        const PlayerDetailsArticleWidget(
-                          title: "Statistic",
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Wrap(
-                          direction: Axis.horizontal,
-                          alignment: WrapAlignment.spaceEvenly,
-                          runSpacing: 8,
-                          spacing: 7,
-                          children: [
-                            PlayerMatchStatsWidget(
-                              attr: 'Quantity of matches',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Minutes played',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Goals',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Assists',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Penalties',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Duel air',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Dribbling suffered',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Duel tackle',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Ball recovery',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Killer passes',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Duel lost',
-                            ),
-                            PlayerMatchStatsWidget(
-                              attr: 'Fouls',
-                            ),
-                            SizedBox(
-                              height: 50,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+                  return Container();
+                },
+              )),
         ),
       ),
     );
   }
-}
 
-class PlayerMatchStatsWidget extends StatelessWidget {
-  // final String value;
-  final String attr;
-
-  const PlayerMatchStatsWidget({
-    super.key,
-    // required this.value,
-    required this.attr,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      height: 68,
-      width: (size.width - 44 - 8) / 2,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: AppColors.black_262627,
-          border: Border.all(width: 1, color: AppColors.grey_393939)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "TBA",
-            style: AppFonts.font16w500.copyWith(color: AppColors.white),
+    return CustomScrollView(
+      slivers: [
+        const MarketDetailsAppBar(),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 18,
           ),
-          Text(
-            attr,
-            style: AppFonts.font12w300.copyWith(color: AppColors.white),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: (size.width - 40) / 0.96,
+                  child: Stack(
+                    children: [
+                      FadeInImage(
+                          fit: BoxFit.fitHeight,
+                          placeholder:
+                              const AssetImage("assets/images/noname_det.png"),
+                          image: NetworkImage(
+                              marketRepository.lastOpenedNft.imagePath)),
+                      Positioned(
+                        top: 20,
+                        right: 20,
+                        child: BlocBuilder<FavouriteCubit, FavouriteState>(
+                          builder: (context, state) {
+                            final user = context.read<ProfileRepository>().user;
+                            final userNfts = user.favouritesNftList;
+                            final bool isLiked = userNfts.contains(
+                                marketRepository.lastOpenedNft.documentId);
+
+                            if (state is FavouriteLoading) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: AppAnimations.circleIndicator,
+                              );
+                            }
+
+                            return InkWell(
+                              onTap: () => onLikeTap(isLiked),
+                              borderRadius: BorderRadius.circular(10000),
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(10),
+                                child: SvgPicture.asset(
+                                  "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
+                                  color: AppColors.primary,
+                                  width: 20,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PlayerAppStatsWidget(
+                      value: 0,
+                      statsName: "Favorites",
+                      iconPath: 'assets/icons/like.svg',
+                    ),
+                    PlayerAppStatsWidget(
+                      value: 1,
+                      statsName: "Owners",
+                      iconPath: 'assets/icons/people.svg',
+                    ),
+                    PlayerAppStatsWidget(
+                      value: 12,
+                      statsName: "Views",
+                      iconPath: 'assets/icons/ar.svg',
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                CustomTextButton(
+                    text: "Place a bit", onTap: onBetTap, isActive: true),
+                const SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      bottom: 9, top: 12, right: 14, left: 25),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: AppColors.black_1A1A1A,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Current Bid",
+                            style: AppFonts.font14w400
+                                .copyWith(color: AppColors.white),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            "${marketRepository.lastOpenedNft.currentBit} ETH",
+                            style: AppFonts.font16w500
+                                .copyWith(color: AppColors.yellow_F3D523),
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            widget.nft.lastBidderName.length != ""
+                                ? "${marketRepository.lastOpenedNft.lastBidderName.substring(0, 2)}****${marketRepository.lastOpenedNft.lastBidderName.substring(marketRepository.lastOpenedNft.lastBidderName.length - 3, marketRepository.lastOpenedNft.lastBidderName.length)}"
+                                : "Noname",
+                            textAlign: TextAlign.start,
+                            style: AppFonts.font10w500
+                                .copyWith(color: AppColors.grey_B3B3B3),
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 5, bottom: 8, left: 13, right: 13),
+                        decoration: BoxDecoration(
+                            color: AppColors.black_262627,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Ending in",
+                                style: AppFonts.font16w500
+                                    .copyWith(color: AppColors.yellow_F3D523)),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "${remainingTime.inDays} days",
+                                  style: AppFonts.font12w400
+                                      .copyWith(color: AppColors.white),
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 12,
+                                  color: AppColors.black,
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                ),
+                                Text(
+                                  "${remainingTime.inHours % 24} Hours",
+                                  style: AppFonts.font12w400
+                                      .copyWith(color: AppColors.white),
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 12,
+                                  color: AppColors.black,
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                ),
+                                Text(
+                                  "${remainingTime.inMinutes % 60} Mins",
+                                  style: AppFonts.font12w400
+                                      .copyWith(color: AppColors.white),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 28,
+          ),
+        ),
+        GeneralStatistics(nft: marketRepository.lastOpenedNft)
+      ],
     );
   }
 }

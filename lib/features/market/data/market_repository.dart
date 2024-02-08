@@ -9,6 +9,7 @@ class MarketRepository {
   final String _nftCollectionName = 'players_NFT';
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  late NftModel lastOpenedNft;
 
   Future<void> loadNft() async {
     nftList.clear();
@@ -19,6 +20,14 @@ class MarketRepository {
     });
   }
 
+  Future<void> getNftById(String id) async {
+    final nftDoc = _db.collection(_nftCollectionName).doc(id);
+    final nftDocInst = await nftDoc.get();
+    final NftModel nftModel = NftModel.fromJson(nftDocInst.data()!, nftDoc.id);
+
+    lastOpenedNft = nftModel;
+  }
+
   Future<void> updateNftAuctionPrice(
       double newPrice, NftModel nft, UserModel lastBidder) async {
     final docInst =
@@ -27,11 +36,8 @@ class MarketRepository {
     await docInst
         .update({"current_bit": newPrice, "last_bidder": lastBidder.username});
 
-    final NftModel prevNft =
-        nftList.where((element) => element.documentId == nft.documentId).first;
-
-    prevNft.currentBit = newPrice;
-    prevNft.lastBidderName = lastBidder.username;
+    lastOpenedNft.currentBit = newPrice;
+    lastOpenedNft.lastBidderName = lastBidder.username;
 
     log("New price for ${nft.documentId}");
   }

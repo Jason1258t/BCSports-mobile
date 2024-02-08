@@ -23,7 +23,7 @@ class UserModel {
         username = json['username'],
         avatarUrl = json['avatarUrl'],
         evmBill = double.parse('${json['evmBill']}'),
-        favouritesNftList = json['favourites_list'],
+        favouritesNftList = json['favourites_list'] ?? [],
         banner = BannerModel.fromJson(json['banner']);
 
   UserModel.create(this.id, this.username, int color)
