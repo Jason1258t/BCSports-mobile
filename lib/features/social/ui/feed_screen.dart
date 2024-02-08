@@ -1,6 +1,8 @@
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -27,6 +29,10 @@ class FeedScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
+                  onTap: () {
+                    BlocProvider.of<LikeCubit>(context).getFavourites();
+                    Navigator.pushNamed(context, AppRouteNames.favouritesPost);
+                  },
                   child: SvgPicture.asset(
                     Assets.icons('heart.svg'),
                     width: 24,
@@ -60,8 +66,9 @@ class FeedScreen extends StatelessWidget {
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
-                            post: repository.posts[index].postModel,
-                            user: repository.posts[index].userModel),
+                          postId: repository.posts[index].postModel.id,
+                          source: repository,
+                        ),
                         childCount: repository.posts.length,
                       ))
                     ],

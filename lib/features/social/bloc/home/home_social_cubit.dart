@@ -30,17 +30,4 @@ class HomeSocialCubit extends Cubit<HomeSocialState> {
       if (event == LoadingStateEnum.fail) emit(HomeSocialFailState());
     });
   }
-
-  void changePostLiked(String postId, bool value) =>
-      _socialRepository.setPostLiked(postId, value);
-
-  Future<bool> likePost(String postId) async {
-    final user = _profileRepository.user;
-    return _socialRepository.likePost(postId, user.id);
-  }
-
-  Future<bool> unlikePost(String postId) async {
-    final user = _profileRepository.user;
-    return _socialRepository.unlikePost(postId, user.id);
-  }
 }

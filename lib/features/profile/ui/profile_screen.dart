@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/Nft_item.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -35,9 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state is UserSuccessState) {
-          var user = RepositoryProvider
-              .of<ProfileRepository>(context)
-              .user;
+          var user = RepositoryProvider.of<ProfileRepository>(context).user;
 
           return CustomScaffold(
             appBar: AppBar(
@@ -64,9 +63,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icons.add,
                             color: AppColors.white,
                           ),
-                          onPressed: () =>
-                              Navigator.pushNamed(
-                                  context, AppRouteNames.createPost),
+                          onPressed: () => Navigator.pushNamed(
+                              context, AppRouteNames.createPost),
                         ),
                         const SizedBox(
                           width: 10,
@@ -111,16 +109,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: CircleAvatar(
                               radius: sizeof.width * 0.18,
                               backgroundColor: user.avatarColor,
-                              backgroundImage: NetworkImage(
-                                  user.avatarUrl ?? ''),
+                              backgroundImage: user.avatarUrl != null
+                                  ? NetworkImage(user.avatarUrl ?? '')
+                                  : null,
                               child: user.avatarUrl == null
                                   ? Center(
-                                child: Text(
-                                  (user.displayName ?? user.username)[0]
-                                      .toUpperCase(),
-                                  style: AppFonts.font64w400,
-                                ),
-                              )
+                                      child: Text(
+                                        (user.displayName ?? user.username)[0]
+                                            .toUpperCase(),
+                                        style: AppFonts.font64w400,
+                                      ),
+                                    )
                                   : Container()),
                         ),
                       ),
@@ -140,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 5,
                     ),
                     Text(
-                      '@${ user.username}',
+                      '@${user.username}',
                       style: AppFonts.font13w100,
                     ),
                   ],
@@ -174,30 +173,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               separator,
               separator,
-              SliverGrid(
-                  gridDelegate:
-                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200.0,
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 30.0,
-                    childAspectRatio: 0.615,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
+              repository.activeTab == ProfileTabsEnum.nft
+                  ? SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200.0,
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 30.0,
+                        childAspectRatio: 0.615,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return NftItemWidget(
-                        width: sizeof.width * 0.43,
-                        height: sizeof.width * 0.7 ,
-                      );
-                    },
-                    childCount: 20,
-                  ))
+                          return NftItemWidget(
+                            width: sizeof.width * 0.43,
+                            height: sizeof.width * 0.7,
+                          );
+                        },
+                        childCount: 20,
+                      ))
+                  : StreamBuilder(
+                      stream: repository.userPostsState.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.data == LoadingStateEnum.success) {
+                          return SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                            (context, index) => FeedPostWidget(
+                              postId: repository.posts[index].postModel.id,
+                              source: repository,
+                            ),
+                            childCount: repository.posts.length,
+                          ));
+                        } else {
+                          return SliverToBoxAdapter(
+                            child: Center(
+                              child: AppAnimations.circleIndicator,
+                            ),
+                          );
+                        }
+                      })
             ]),
           );
         } else {
           return CustomScaffold(
               body: Center(
-                child: AppAnimations.circleIndicator,
-              ));
+            child: AppAnimations.circleIndicator,
+          ));
         }
       },
     );

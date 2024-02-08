@@ -9,7 +9,9 @@ import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
+import 'package:bcsports_mobile/features/social/ui/favourites_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
+import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:flutter/material.dart';
@@ -47,16 +49,20 @@ class AppRoutes {
                   nft: playerNft,
                 ));
       case AppRouteNames.favourites:
-        return MaterialPageRoute(builder: (ctx) => MarketFavouritesScreen());
+        return MaterialPageRoute(builder: (ctx) => const MarketFavouritesScreen());
       case AppRouteNames.login:
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:
         return MaterialPageRoute(builder: (ctx) => const RegistrationScreen());
+      case AppRouteNames.wallet:
+        return MaterialPageRoute(builder: (ctx) => const WalletScreen());
       case AppRouteNames.recovery:
         return MaterialPageRoute(
             builder: (ctx) => const PasswordRecoveryScreen());
       case AppRouteNames.profileEdit:
         return MaterialPageRoute(builder: (ctx) => const EditProfileScreen());
+      case AppRouteNames.favouritesPost:
+        return MaterialPageRoute(builder: (ctx) => const FavouritesScreen());
       default:
         return MaterialPageRoute(
             builder: (ctx) => Container(
