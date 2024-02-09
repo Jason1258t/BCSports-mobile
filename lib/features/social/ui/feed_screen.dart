@@ -23,7 +23,7 @@ class FeedScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24),
         appBar: EmptyAppBar(
           title: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(24.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

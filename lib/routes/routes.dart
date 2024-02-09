@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/app.dart';
+import 'package:bcsports_mobile/features/ar/ui/ar_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
@@ -21,7 +22,7 @@ import '../features/auth/ui/recovery_enter_email_screen.dart';
 class AppRoutes {
   static List<Widget> mainPages = [
     const MarketScreen(),
-    Container(),
+    const ArScreen(),
     const FeedScreen(),
     const ProfileScreen()
   ];

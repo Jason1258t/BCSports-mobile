@@ -104,16 +104,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           maxHeight: sizeof.width * 0.50,
                         ),
                         width: double.infinity,
-                        decoration: user.banner.url == null ? BoxDecoration(
-                          color: user.bannerColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ) : BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: AssetImage(user.banner.url!),
-                            fit: BoxFit.cover
-                          ),
-                        ),
+                        decoration: user.banner.url == null
+                            ? BoxDecoration(
+                                color: user.bannerColor,
+                                borderRadius: BorderRadius.circular(15),
+                              )
+                            : BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(user.banner.url!),
+                                    fit: BoxFit.cover),
+                              ),
                       ),
                       Container(
                         alignment: Alignment.bottomCenter,
@@ -189,26 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               separator,
               repository.activeTab == ProfileTabsEnum.nft
                   ? buildNftTab()
-                  : StreamBuilder(
-                      stream: repository.userPostsState.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.data == LoadingStateEnum.success) {
-                          return SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                            (context, index) => FeedPostWidget(
-                              postId: repository.posts[index].postModel.id,
-                              source: repository,
-                            ),
-                            childCount: repository.posts.length,
-                          ));
-                        } else {
-                          return SliverToBoxAdapter(
-                            child: Center(
-                              child: AppAnimations.circleIndicator,
-                            ),
-                          );
-                        }
-                      }),
+                  : buildPostsTab(repository),
               separator
             ]),
           );
@@ -231,7 +213,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: AppAnimations.circleIndicator,
             ),
           );
-        } else if (state is UserNftSuccess) {
+        } else if (state is UserNftSuccess &&
+            context.read<ProfileRepository>().userNftList.isNotEmpty) {
           return SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 29,
@@ -248,8 +231,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context.read<ProfileRepository>().userNftList.length));
         }
 
-        return SliverToBoxAdapter(child: Container());
+        return SliverToBoxAdapter(
+            child: Center(
+                child: Text(
+          'К сожалению у вас нету NFT',
+          style: AppFonts.font20w600,
+        )));
       },
     );
+  }
+
+  Widget buildPostsTab(ProfileRepository repository) {
+    return StreamBuilder(
+        stream: repository.userPostsState.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data == LoadingStateEnum.success &&
+              repository.posts.isNotEmpty) {
+            return SliverList(
+                delegate: SliverChildBuilderDelegate(
+              (context, index) => FeedPostWidget(
+                postId: repository.posts[index].postModel.id,
+                source: repository,
+              ),
+              childCount: repository.posts.length,
+            ));
+          } else if (repository.posts.isEmpty) {
+            return SliverToBoxAdapter(
+                child: Center(
+                    child: Text(
+              'К сожалению у вас нету постов',
+              style: AppFonts.font20w600,
+            )));
+          } else {
+            return SliverToBoxAdapter(
+              child: Center(
+                child: AppAnimations.circleIndicator,
+              ),
+            );
+          }
+        });
   }
 }

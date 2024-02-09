@@ -94,7 +94,8 @@ class CommentsScreen extends StatelessWidget {
                               CommentWidget(bloc.comments[index]),
                           childCount: bloc.comments.length,
                         ))
-                      ] else ...[
+                      ] else if(!(state is PostCommentsSuccessState ||
+                          state is CommentCreateSuccess) && state is! CreatingComment)...[
                         SliverToBoxAdapter(
                           child: Center(
                             child: AppAnimations.circleIndicator,

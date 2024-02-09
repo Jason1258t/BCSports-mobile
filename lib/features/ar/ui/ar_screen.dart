@@ -1,0 +1,25 @@
+import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:flutter/material.dart';
+
+class ArScreen extends StatefulWidget {
+  const ArScreen({super.key});
+
+  @override
+  State<ArScreen> createState() => _ArScreenState();
+}
+
+class _ArScreenState extends State<ArScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomScaffold(
+        body: Center(
+      child: FittedBox(
+          child: Text(
+        'в разработке',
+        style: AppFonts.font36w800.copyWith(color: AppColors.white),
+      )),
+    ));
+  }
+}
