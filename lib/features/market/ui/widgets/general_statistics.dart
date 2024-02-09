@@ -22,7 +22,7 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
     return SliverToBoxAdapter(
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          borderRadius: BorderRadius.circular(16),
           color: AppColors.black_1A1A1A,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 22).copyWith(top: 24),
