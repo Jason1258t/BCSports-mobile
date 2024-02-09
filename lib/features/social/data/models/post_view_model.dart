@@ -3,7 +3,7 @@ import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 
 class PostViewModel {
   final PostModel postModel;
-  final UserModel userModel;
+  final UserModel user;
 
-  PostViewModel(this.userModel, this.postModel);
+  PostViewModel(this.user, this.postModel);
 }

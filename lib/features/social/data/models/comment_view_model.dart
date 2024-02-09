@@ -15,5 +15,7 @@ class CommentViewModel {
 
   String get commentId => _comment.id;
 
+  DateTime get createdAt => _comment.createdAt;
+
   UserModel get user => _user;
 }

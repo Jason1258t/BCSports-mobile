@@ -1,6 +1,6 @@
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/cupertino.dart';
