@@ -30,6 +30,7 @@ class PostCommentsCubit extends Cubit<PostCommentsState> {
   }
 
   Future sendComment(String text) async {
+    emit(CreatingComment());
     final comment = CommentModel.create(
         text, _profileRepository.user.id, post!.postModel.id);
     final createdComment = await _socialRepository.createComment(comment);
