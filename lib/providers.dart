@@ -15,9 +15,11 @@ import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.da
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
+import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,6 +98,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 LikeCubit(profileRepository, favouritesRepository)),
+        BlocProvider(
+            create: (context) =>
+                PostCommentsCubit(socialRepository, profileRepository)),
       ],
       child: const MyApp(),
     );

@@ -4,3 +4,14 @@ part of 'post_comments_cubit.dart';
 abstract class PostCommentsState {}
 
 class PostCommentsInitial extends PostCommentsState {}
+
+
+class PostCommentsLoadingState extends PostCommentsState {}
+
+class PostCommentsSuccessState extends PostCommentsState {}
+
+class PostCommentsFailState extends PostCommentsState {}
+
+class CommentCreatingState extends PostCommentsState {}
+
+class CommentCreateSuccess extends PostCommentsState {}

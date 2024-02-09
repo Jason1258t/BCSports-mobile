@@ -83,8 +83,7 @@ class ProfileRepository implements PostSource {
 
       final newPosts = <PostViewModel>[];
       for (var doc in querySnapshot.docs) {
-        final post =
-            PostModel.fromJson(doc.data());
+        final post = PostModel.fromJson(doc.data());
         final user = _userModel!;
         newPosts.add(PostViewModel(user, post));
       }
@@ -206,7 +205,5 @@ class ProfileRepository implements PostSource {
   }
 
   @override
-  // TODO: implement likeChanges
-  BehaviorSubject<LikeChangesData> get likeChanges =>
-      throw UnimplementedError();
+  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
 }

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/comment_model.dart';
+import 'package:bcsports_mobile/features/social/data/models/comment_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
@@ -120,7 +121,26 @@ class SocialRepository implements PostSource {
     }
   }
 
-  Future createComment(CommentModel commentModel) async {
-    await _comments.add(commentModel.toJson());
+  Future<CommentViewModel> createComment(CommentModel commentModel) async {
+    final doc = await _comments.add(commentModel.toJson());
+
+    final comment = CommentModel.fromJson(commentModel.toJson(), doc.id);
+    final user = await _getUserById(commentModel.creatorId);
+
+    return CommentViewModel(comment, user);
+  }
+
+  Future<List<CommentViewModel>> getPostComments(String postId) async {
+    final comments = <CommentViewModel>[];
+
+    final res = await _comments.where('postId', isEqualTo: postId).get();
+
+    for (var doc in res.docs) {
+      final comment = CommentModel.fromJson(doc.data(), doc.id);
+      final user = await _getUserById(comment.creatorId);
+      comments.add(CommentViewModel(comment, user));
+    }
+
+    return comments;
   }
 }
