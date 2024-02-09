@@ -11,6 +11,9 @@ class CommentViewModel {
 
   bool get liked => _comment.liked;
 
+  void setLike(bool value) => _comment.liked = value;
+  void setLikesCount(int value) => _comment.likesCount = value;
+
   String get text => _comment.text;
 
   String get commentId => _comment.id;

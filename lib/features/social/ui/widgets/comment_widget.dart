@@ -1,9 +1,11 @@
+import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/comment_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/time_difference.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentWidget extends StatefulWidget {
@@ -33,8 +35,10 @@ class _CommentWidgetState extends State<CommentWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  widget.comment.user.displayName ?? widget.comment.user.username,
-                  style: AppFonts.font12w400.copyWith(color: const Color(0xffEBEAEC)),
+                  widget.comment.user.displayName ??
+                      widget.comment.user.username,
+                  style: AppFonts.font12w400
+                      .copyWith(color: const Color(0xffEBEAEC)),
                 ),
                 const SizedBox(
                   height: 4,
@@ -57,9 +61,11 @@ class _CommentWidgetState extends State<CommentWidget> {
           const SizedBox(
             width: 8,
           ),
-        InkWell(
-          child: SvgPicture.asset(Assets.icons('heart.svg')),
-        )
+          InkWell(
+            onTap: () =>
+                context.read<PostCommentsCubit>().likeComment(widget.comment),
+            child: SvgPicture.asset(Assets.icons(widget.comment.liked ? 'red_heart.svg': 'heart.svg')),
+          )
         ],
       ),
     );

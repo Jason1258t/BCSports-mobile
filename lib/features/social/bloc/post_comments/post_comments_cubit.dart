@@ -13,8 +13,8 @@ class PostCommentsCubit extends Cubit<PostCommentsState> {
   final SocialRepository _socialRepository;
   final ProfileRepository _profileRepository;
 
-  PostCommentsCubit(SocialRepository socialRepository,
-      ProfileRepository profileRepository)
+  PostCommentsCubit(
+      SocialRepository socialRepository, ProfileRepository profileRepository)
       : _socialRepository = socialRepository,
         _profileRepository = profileRepository,
         super(PostCommentsInitial());
@@ -35,6 +35,26 @@ class PostCommentsCubit extends Cubit<PostCommentsState> {
         text, _profileRepository.user.id, post!.postModel.id);
     final createdComment = await _socialRepository.createComment(comment);
     comments.insert(0, createdComment);
+
+    emit(CommentCreateSuccess());
+  }
+
+  Future likeComment(CommentViewModel commentViewModel) async {
+    commentViewModel.setLike(!commentViewModel.liked);
+    commentViewModel.setLikesCount(commentViewModel.likesCount + (commentViewModel.liked ? 1 : -1));
+    emit(CommentCreateSuccess());
+    if (commentViewModel.liked) {
+      _profileRepository.commentLikes.add(commentViewModel.commentId);
+    } else {
+      _profileRepository.commentLikes.remove(commentViewModel.commentId);
+    }
+
+    await _socialRepository.updateUserCommentsLikes(
+        commentViewModel.liked,
+        commentViewModel.commentId,
+        _profileRepository.user.id,
+        _profileRepository.commentLikes);
+
     emit(CommentCreateSuccess());
   }
 
@@ -45,6 +65,13 @@ class PostCommentsCubit extends Cubit<PostCommentsState> {
     try {
       comments.addAll(
           await _socialRepository.getPostComments(newPost.postModel.id));
+
+      print(_profileRepository.commentLikes);
+
+      for (var i in comments) {
+        i.setLike(_profileRepository.commentLikes.contains(i.commentId));
+      }
+
       emit(PostCommentsSuccessState());
     } catch (e) {
       emit(PostCommentsFailState());

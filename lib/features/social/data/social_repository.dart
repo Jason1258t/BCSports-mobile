@@ -138,10 +138,22 @@ class SocialRepository implements PostSource {
     return CommentViewModel(comment, user);
   }
 
+  Future updateUserCommentsLikes(
+      bool value, String commentId, String userId, List userLikes) async {
+    await _users
+        .doc(userId)
+        .set({'commentLikes': userLikes}, SetOptions(merge: true));
+    final comment = await _comments.doc(commentId).get();
+
+    await _comments.doc(commentId).set(
+        {'likesCount': comment.data()!['likesCount'] + (value ? 1 : -1)},
+        SetOptions(merge: true));
+  }
+
   Future<List<CommentViewModel>> getPostComments(String postId) async {
     final comments = <CommentViewModel>[];
 
-    final res = await _comments.where('postId', isEqualTo: postId).get();
+    final res = await _comments.where('postId', isEqualTo: postId).orderBy('likesCount', descending: true).get();
 
     for (var doc in res.docs) {
       final comment = CommentModel.fromJson(doc.data(), doc.id);
