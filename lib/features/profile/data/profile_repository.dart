@@ -162,6 +162,8 @@ class ProfileRepository implements PostSource {
   }
 
   Future<void> loadUserNftList() async {
+    userNftList.clear();
+
     final playersCollection =
         await _firestore.collection(FirebaseCollectionNames.playersNft).get();
     playersCollection.docs.forEach((doc) {

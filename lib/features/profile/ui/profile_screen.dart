@@ -219,8 +219,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocBuilder<UserNftCubit, UserNftState>(
       builder: (context, state) {
         if (state is UserNftLoading) {
-          return Center(
-            child: AppAnimations.circleIndicator,
+          return SliverToBoxAdapter(
+            child: Center(
+              child: AppAnimations.circleIndicator,
+            ),
           );
         } else if (state is UserNftSuccess) {
           return SliverGrid(
@@ -231,12 +233,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   childAspectRatio: 0.59),
               delegate: SliverChildBuilderDelegate(
                   (context, index) => MarketNftCard(
-                        nft: context.read<ProfileRepository>().userNftList[index],
+                        nft: context
+                            .read<ProfileRepository>()
+                            .userNftList[index],
                       ),
-                  childCount: context.read<ProfileRepository>().userNftList.length));
+                  childCount:
+                      context.read<ProfileRepository>().userNftList.length));
         }
 
-        return Container();
+        return SliverToBoxAdapter(child: Container());
       },
     );
   }
