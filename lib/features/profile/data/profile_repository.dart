@@ -35,6 +35,7 @@ class ProfileRepository implements PostSource {
   ProfileTabsEnum activeTab = ProfileTabsEnum.nft;
 
   final List<PostViewModel> posts = [];
+  List<NftModel> userNftList = [];
 
   UserModel? _userModel;
 
@@ -158,6 +159,19 @@ class ProfileRepository implements PostSource {
     _userModel!.favouritesNftList.remove(nft.documentId);
 
     log("**Removed** fav-s item for ${user.id}");
+  }
+
+  Future<void> loadUserNftList() async {
+    final playersCollection =
+        await _firestore.collection(FirebaseCollectionNames.playersNft).get();
+    playersCollection.docs.forEach((doc) {
+      if (_userModel!.ownUserNftList.contains(doc.id)) {
+        final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
+        userNftList.add(nft);
+      }
+    });
+
+    log("Loaded user nft list: ${userNftList}");
   }
 
   void setProfileActiveTab(ProfileTabsEnum tab) {

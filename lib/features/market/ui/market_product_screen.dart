@@ -241,7 +241,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                             height: 2,
                           ),
                           Text(
-                            widget.nft.lastBidderName.length != ""
+                            widget.nft.lastBidderName != ""
                                 ? "${marketRepository.lastOpenedNft.lastBidderName.substring(0, 2)}****${marketRepository.lastOpenedNft.lastBidderName.substring(marketRepository.lastOpenedNft.lastBidderName.length - 3, marketRepository.lastOpenedNft.lastBidderName.length)}"
                                 : "Noname",
                             textAlign: TextAlign.start,
