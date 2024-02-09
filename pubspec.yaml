@@ -36,6 +36,8 @@ dependencies:
 
   intl: ^0.19.0
 
+  flutter_native_splash: ^2.3.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,22 +54,3 @@ flutter:
     - assets/images/profile/
     - assets/images/
     - assets/icons/
-
-  # fonts:
-  #   - family: HN
-  #     fonts:
-  #       - asset: assets/fonts/Helvetica-Neue/base.ttf
-  #       - asset: assets/fonts/Helvetica-Neue/base-italic.otf
-  #         style: italic
-  #         weight: 500
-  #       - asset: assets/fonts/Helvetica-Neue/zero.otf
-  #         weight: 300
-  #       - asset: assets/fonts/Helvetica-Neue/bold-italic.otf
-  #         style: italic
-  #         weight: 600
-  #       - asset: assets/fonts/Helvetica-Neue/bold-x2-italic.otf
-  #         style: italic
-  #         weight: 700
-  #       - asset: assets/fonts/Helvetica-Neue/bold-x3-italic.otf
-  #         style: italic
-  #         weight: 900
