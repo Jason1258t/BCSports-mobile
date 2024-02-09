@@ -61,8 +61,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                     builder: (context, state) {
                                       if (state is UserSuccessState) {
                                         return Text(
-                                          repository.user.evmBill.toString() +
-                                              ' ETH',
+                                          '${repository.user.evmBill} ETH',
                                           style: AppFonts.font36w800,
                                         );
                                       } else {

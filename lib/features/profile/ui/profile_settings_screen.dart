@@ -111,22 +111,6 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               const SizedBox(
                 height: 20,
               ),
-              SettingButton(
-                  onTap: () {},
-                  name: 'Favourites',
-                  width: double.infinity,
-                  height: sizeOf.width * 0.16),
-              const SizedBox(
-                height: 20,
-              ),
-              SettingButton(
-                  onTap: () {},
-                  name: 'Help',
-                  width: double.infinity,
-                  height: sizeOf.width * 0.16),
-              const SizedBox(
-                height: 20,
-              ),
               const Spacer(),
               TextButton(
                 onPressed: () {
