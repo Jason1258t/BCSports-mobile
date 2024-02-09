@@ -28,10 +28,10 @@ class UserModel {
         ownUserNftList = json['user_nft'] ?? [],
         banner = BannerModel.fromJson(json['banner']);
 
-  UserModel.create(this.id, this.username, int color)
+  UserModel.create(this.id, this.username, BannerModel bannerModel)
       : displayName = null,
         evmBill = 1000,
-        banner = BannerModel.create(color),
+        banner = bannerModel,
         favouritesNftList = [],
         ownUserNftList = [],
         avatarUrl = null;

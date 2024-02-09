@@ -6,7 +6,7 @@ class BannerModel {
       : url = json['url'],
         color = json['color'];
 
-  BannerModel.create(this.color) : url = null;
+  BannerModel.create(this.color, this.url);
 
   Map<String, dynamic> toJson() => {'url': url, 'color': color};
 }

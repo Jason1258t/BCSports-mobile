@@ -23,5 +23,11 @@ class AppStrings {
 
   static const String nullText = 'null';
 
+  static List<String> listBannerImages = [
+    'assets/images/profile/profile_photo1.jpg',
+    'assets/images/profile/profile_photo2.jpg',
+    'assets/images/profile/profile_photo3.jpg',
+  ];
+
 // static const Map<int, String> gender = {0: 'Мужчина', 1: "Женищина"};
 }

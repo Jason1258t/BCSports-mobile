@@ -58,6 +58,7 @@ class ProfileRepository implements PostSource {
     profileState.add(LoadingStateEnum.loading);
     try {
       final res = await _users.doc(userId).get();
+      print(res.data());
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
       getUserPosts();

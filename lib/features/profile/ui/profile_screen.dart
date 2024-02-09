@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (state is UserSuccessState) {
           var user = RepositoryProvider.of<ProfileRepository>(context).user;
 
+          print(user.banner.url);
           return CustomScaffold(
             appBar: AppBar(
                 backgroundColor: Colors.transparent,
@@ -103,9 +104,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           maxHeight: sizeof.width * 0.50,
                         ),
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: user.banner.url == null ? BoxDecoration(
                           color: user.bannerColor,
                           borderRadius: BorderRadius.circular(15),
+                        ) : BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: AssetImage(user.banner.url!),
+                            fit: BoxFit.cover
+                          ),
                         ),
                       ),
                       Container(

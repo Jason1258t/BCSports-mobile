@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bcsports_mobile/features/social/data/models/banner_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/exceptions.dart';
+import 'package:bcsports_mobile/utils/strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -38,12 +40,18 @@ class AuthRepository {
   }
 
   Future _writeUserDataInDatabase(String userId) async {
-    final collection = _firebaseFirestore.collection(FirebaseCollectionNames.users);
+    final collection =
+        _firebaseFirestore.collection(FirebaseCollectionNames.users);
 
     final res = await collection.doc(userId).get();
     if (res.exists) return;
-    final user = UserModel.create(userId, _generateTempUserName(),
-        userColors[Random().nextInt(userColors.length)].value);
+    final user = UserModel.create(
+        userId,
+        _generateTempUserName(),
+        BannerModel.create(
+            userColors[Random().nextInt(userColors.length)].value,
+            AppStrings.listBannerImages[
+                Random().nextInt(AppStrings.listBannerImages.length)]));
 
     await collection.doc(userId).set(user.toJson());
   }
