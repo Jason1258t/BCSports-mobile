@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -24,30 +25,33 @@ class FavouritesScreen extends StatelessWidget {
             onTap: () => Navigator.pop(context),
           ),
         ),
-        body: CustomScrollView(
-          slivers: [
-            StreamBuilder(
-                stream: repository.postsState.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.data == LoadingStateEnum.success) {
-                    print('success loaded');
-                    return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                      (context, index) => FeedPostWidget(
-                        postId: repository.posts[index].postModel.id,
-                        source: repository,
-                      ),
-                      childCount: repository.posts.length,
-                    ));
-                  } else {
-                    return SliverToBoxAdapter(
-                      child: Center(
-                        child: AppAnimations.circleIndicator,
-                      ),
-                    );
-                  }
-                })
-          ],
+        body: RefreshIndicator(
+          onRefresh: () async => context.read<LikeCubit>().refreshFavourites(),
+          child: CustomScrollView(
+            slivers: [
+              StreamBuilder(
+                  stream: repository.postsState.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == LoadingStateEnum.success) {
+                      print('success loaded');
+                      return SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                        (context, index) => FeedPostWidget(
+                          postId: repository.posts[index].postModel.id,
+                          source: repository,
+                        ),
+                        childCount: repository.posts.length,
+                      ));
+                    } else {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: AppAnimations.circleIndicator,
+                        ),
+                      );
+                    }
+                  })
+            ],
+          ),
         ));
   }
 }

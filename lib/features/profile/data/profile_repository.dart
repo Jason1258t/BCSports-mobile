@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
@@ -22,9 +23,12 @@ class ProfileRepository implements PostSource {
   static final CollectionReference _postsCollection =
       _firestore.collection(FirebaseCollectionNames.posts);
 
+  @override
   final LikesManager likesManager;
 
-  ProfileRepository(this.likesManager);
+  ProfileRepository(this.likesManager){
+    likesManager.addSource(this);
+  }
 
   BehaviorSubject<LoadingStateEnum> profileState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
@@ -85,7 +89,7 @@ class ProfileRepository implements PostSource {
       }
 
       posts.addAll(newPosts);
-      mergeWithLikes(await getUserPostLikes(user.id));
+      mergeWithLikes();
       userPostsState.add(LoadingStateEnum.success);
     } catch (e) {
       userPostsState.add(LoadingStateEnum.fail);
@@ -180,7 +184,11 @@ class ProfileRepository implements PostSource {
   }
 
   @override
-  List<PostViewModel> mergeWithLikes(List likes) {
-    return likesManager.mergeWithLikes(likes, posts);
+  List<PostViewModel> mergeWithLikes() {
+    return likesManager.mergeWithLikes(posts);
   }
+
+  @override
+  // TODO: implement likeChanges
+  BehaviorSubject<LikeChangesData> get likeChanges => throw UnimplementedError();
 }

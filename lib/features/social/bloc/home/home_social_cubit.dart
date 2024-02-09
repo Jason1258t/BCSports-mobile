@@ -21,9 +21,8 @@ class HomeSocialCubit extends Cubit<HomeSocialState> {
   _addListener() {
     _socialRepository.homeScreenState.stream.listen((event) async {
       if (event == LoadingStateEnum.success) {
-        final likes = await _socialRepository
-            .getUserPostLikes(_profileRepository.user.id);
-        _socialRepository.mergeWithLikes(likes);
+        await _socialRepository.getUserPostLikes(_profileRepository.user.id);
+        _socialRepository.mergeWithLikes();
         emit(HomeSocialSuccessState());
       }
       if (event == LoadingStateEnum.loading) emit(HomeSocialLoadingState());

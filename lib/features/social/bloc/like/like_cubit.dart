@@ -16,6 +16,9 @@ class LikeCubit extends Cubit<LikeState> {
   void getFavourites() {
     favouritePostsRepository.getPosts(profileRepository.user.id);
   }
+  void refreshFavourites() {
+    favouritePostsRepository.reloadPosts(profileRepository.user.id);
+  }
 
   void changePostLiked(String postId, bool value, PostSource source) =>
       source.setPostLiked(postId, value);

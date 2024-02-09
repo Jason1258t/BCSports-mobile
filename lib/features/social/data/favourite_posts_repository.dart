@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
@@ -16,15 +17,30 @@ class FavouritePostsRepository implements PostSource {
       _firestore.collection(FirebaseCollectionNames.users);
 
   final List<PostViewModel> posts = [];
+
+  @override
+  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
+
+  @override
   final LikesManager likesManager;
 
-  FavouritePostsRepository(this.likesManager);
+  FavouritePostsRepository(
+    this.likesManager,
+  ) {
+    likesManager.addSource(this);
+  }
 
   BehaviorSubject<LoadingStateEnum> postsState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
+  Future reloadPosts(String userId) async {
+    posts.clear();
+    return getPosts(userId);
+  }
 
   Future<List<PostViewModel>> getPosts(userId) async {
+    if (posts.isNotEmpty) return [];
+
     postsState.add(LoadingStateEnum.loading);
     List<DocumentSnapshot> response = [];
 
@@ -34,15 +50,15 @@ class FavouritePostsRepository implements PostSource {
       response.add(await _postsCollection.doc(i).get());
     }
     posts.clear();
-    // final posts = <PostViewModel>[];
+
     for (var doc in response) {
-      final post = PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      final post =
+          PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
       final user = await _getUserById(post.creatorId);
       posts.add(PostViewModel(user, post));
     }
-    mergeWithLikes(likes);
+    mergeWithLikes();
     postsState.add(LoadingStateEnum.success);
-    print(posts.length);
     return posts;
   }
 
@@ -70,8 +86,8 @@ class FavouritePostsRepository implements PostSource {
   }
 
   @override
-  List<PostViewModel> mergeWithLikes(List likes) {
-    return likesManager.mergeWithLikes(likes, posts);
+  List<PostViewModel> mergeWithLikes() {
+    return likesManager.mergeWithLikes(posts);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
@@ -24,9 +25,15 @@ class SocialRepository implements PostSource {
   static final CollectionReference _postsCollection =
       firestore.collection(FirebaseCollectionNames.posts);
 
+  @override
+  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
+
+  @override
   final LikesManager likesManager;
 
-  SocialRepository(this.likesManager);
+  SocialRepository(this.likesManager){
+    likesManager.addSource(this);
+  }
 
   BehaviorSubject<LoadingStateEnum> homeScreenState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
@@ -102,8 +109,8 @@ class SocialRepository implements PostSource {
   }
 
   @override
-  List<PostViewModel> mergeWithLikes(List likes) {
-    likesManager.mergeWithLikes(likes, posts);
+  List<PostViewModel> mergeWithLikes() {
+    likesManager.mergeWithLikes(posts);
     return posts;
   }
 

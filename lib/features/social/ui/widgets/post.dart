@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
@@ -19,7 +21,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FeedPostWidget extends StatefulWidget {
-  const FeedPostWidget({super.key, required this.postId, required this.source, });
+  const FeedPostWidget({
+    super.key,
+    required this.postId,
+    required this.source,
+  });
 
   final String postId;
   final PostSource source;
@@ -29,12 +35,21 @@ class FeedPostWidget extends StatefulWidget {
 }
 
 class _FeedPostWidgetState extends State<FeedPostWidget> {
+  bool needUpdate = false;
+
+  @override
+  void initState() {
+    subscribeChanges();
+    super.initState();
+  }
+
   void onLikeTapped() async {
     final bloc = context.read<LikeCubit>();
     final post = widget.source.getCachedPost(widget.postId)!;
-    // widget.post.setLike(!widget.post.like);
+
     bool like = post.postModel.like;
-    bloc.changePostLiked(post.postModel.id, !post.postModel.like, widget.source);
+    bloc.changePostLiked(
+        post.postModel.id, !post.postModel.like, widget.source);
     setState(() {});
 
     if (like) {
@@ -43,6 +58,19 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
       await bloc.likePost(post.postModel.id, widget.source);
     }
     setState(() {});
+  }
+
+  void subscribeChanges() async {
+    widget.source.likeChanges.stream.listen((event) async {
+      if (event.postId == widget.postId) {
+        needUpdate = true;
+        try {
+          setState(() {});
+        } catch (e) {
+          log('setState error');
+        }
+      }
+    });
   }
 
   @override
@@ -199,7 +227,6 @@ class PhotoViewScreen extends StatelessWidget {
             },
           ),
         ),
-
         body: PhotoView(
           maxScale: 0.4,
           minScale: PhotoViewComputedScale.contained,

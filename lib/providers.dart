@@ -69,7 +69,7 @@ class MyBlocProviders extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) =>
-                AppCubit(authRepository, profileRepository, socialRepository),
+                AppCubit(authRepository, profileRepository, socialRepository, favouritesRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
@@ -93,6 +93,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 NftDetailsCubit(marketRepository)),
+        BlocProvider(
+            create: (context) =>
+                LikeCubit(profileRepository, favouritesRepository)),
       ],
       child: const MyApp(),
     );
