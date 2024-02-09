@@ -1,7 +1,8 @@
-import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
+import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
+import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/profile/ui/widgets/Nft_item.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
@@ -21,6 +22,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    context.read<UserNftCubit>().loadUserNft();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final sizeof = MediaQuery.sizeOf(context);
@@ -174,23 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               separator,
               separator,
               repository.activeTab == ProfileTabsEnum.nft
-                  ? SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200.0,
-                        mainAxisSpacing: 10.0,
-                        crossAxisSpacing: 30.0,
-                        childAspectRatio: 0.615,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return NftItemWidget(
-                            width: sizeof.width * 0.43,
-                            height: sizeof.width * 0.7,
-                          );
-                        },
-                        childCount: 20,
-                      ))
+                  ? buildNftTab()
                   : StreamBuilder(
                       stream: repository.userPostsState.stream,
                       builder: (context, snapshot) {
@@ -210,7 +201,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           );
                         }
-                      })
+                      }),
+              separator
             ]),
           );
         } else {
@@ -219,6 +211,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: AppAnimations.circleIndicator,
           ));
         }
+      },
+    );
+  }
+
+  Widget buildNftTab() {
+    return BlocBuilder<UserNftCubit, UserNftState>(
+      builder: (context, state) {
+        if (state is UserNftLoading) {
+          return SliverToBoxAdapter(
+            child: Center(
+              child: AppAnimations.circleIndicator,
+            ),
+          );
+        } else if (state is UserNftSuccess) {
+          return SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 29,
+                  crossAxisSpacing: 8,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.59),
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => MarketNftCard(
+                        nft: context
+                            .read<ProfileRepository>()
+                            .userNftList[index],
+                      ),
+                  childCount:
+                      context.read<ProfileRepository>().userNftList.length));
+        }
+
+        return SliverToBoxAdapter(child: Container());
       },
     );
   }
