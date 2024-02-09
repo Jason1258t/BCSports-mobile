@@ -24,7 +24,8 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   void initState() {
-    if (context.read<MarketRepository>().nftList.isEmpty) {
+    if (context.read<MarketRepository>().nftList.isEmpty &&
+        (context.read<MarketCubit>().state is MarketLoading) == false) {
       context.read<MarketCubit>().getNftCards();
     }
     super.initState();

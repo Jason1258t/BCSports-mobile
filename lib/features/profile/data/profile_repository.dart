@@ -165,6 +165,7 @@ class ProfileRepository implements PostSource {
     final playersCollection =
         await _firestore.collection(FirebaseCollectionNames.playersNft).get();
     playersCollection.docs.forEach((doc) {
+      print(doc);
       if (_userModel!.ownUserNftList.contains(doc.id)) {
         final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
         userNftList.add(nft);
