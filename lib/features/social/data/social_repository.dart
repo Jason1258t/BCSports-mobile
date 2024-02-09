@@ -21,7 +21,8 @@ class SocialRepository implements PostSource {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   static final _users = _firestore.collection(FirebaseCollectionNames.users);
-  static final _comments = _firestore.collection(FirebaseCollectionNames.comments);
+  static final _comments =
+      _firestore.collection(FirebaseCollectionNames.comments);
   static final _postsCollection =
       _firestore.collection(FirebaseCollectionNames.posts);
 
@@ -100,8 +101,10 @@ class SocialRepository implements PostSource {
   }
 
   Future createPost(PostModel postModel) async {
-    final post  = await _postsCollection.add(postModel.toJson());
-    await _postsCollection.doc(post.id).set({'id': post.id}, SetOptions(merge: true));
+    final post = await _postsCollection.add(postModel.toJson());
+    await _postsCollection
+        .doc(post.id)
+        .set({'id': post.id}, SetOptions(merge: true));
   }
 
   Future<String> uploadPostImage({String? filePath, Uint8List? bytes}) async {
@@ -123,6 +126,11 @@ class SocialRepository implements PostSource {
 
   Future<CommentViewModel> createComment(CommentModel commentModel) async {
     final doc = await _comments.add(commentModel.toJson());
+
+    final post = await _postsCollection.doc(commentModel.postId).get();
+
+    await _postsCollection.doc(post.id).set(
+        {'commentsCount': post['commentsCount'] + 1}, SetOptions(merge: true));
 
     final comment = CommentModel.fromJson(commentModel.toJson(), doc.id);
     final user = await _getUserById(commentModel.creatorId);

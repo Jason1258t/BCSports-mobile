@@ -12,6 +12,8 @@ class PostCommentsSuccessState extends PostCommentsState {}
 
 class PostCommentsFailState extends PostCommentsState {}
 
+class CreatingComment extends PostCommentsState {}
+
 class CommentCreatingState extends PostCommentsState {}
 
 class CommentCreateSuccess extends PostCommentsState {}

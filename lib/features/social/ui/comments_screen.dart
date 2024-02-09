@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -22,6 +23,7 @@ class CommentsScreen extends StatelessWidget {
     final bloc = BlocProvider.of<PostCommentsCubit>(context);
     final post = bloc.source!.getCachedPost(bloc.post!.postModel.id)!;
     return CustomScaffold(
+      padding: EdgeInsets.zero,
       resize: true,
       appBar: EmptyAppBar(
         title: Padding(
@@ -44,96 +46,126 @@ class CommentsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<PostCommentsCubit, PostCommentsState>(
-        builder: (context, state) {
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: FeedPostWidget(
-                  postId: bloc.post!.postModel.id,
-                  source: bloc.source!,
-                  commentsActive: false,
-                ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: BlocConsumer<PostCommentsCubit, PostCommentsState>(
+                listener: (context, state) {
+                  if (state is CreatingComment) {
+                    Dialogs.showModal(
+                        context,
+                        Center(
+                          child: AppAnimations.circleIndicator,
+                        ));
+                  } else {
+                    Dialogs.hide(context);
+                  }
+                },
+                builder: (context, state) {
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: FeedPostWidget(
+                          postId: bloc.post!.postModel.id,
+                          source: bloc.source!,
+                          commentsActive: false,
+                        ),
+                      ),
+                      if (state is PostCommentsSuccessState ||
+                          state is CommentCreateSuccess) ...[
+                        SliverToBoxAdapter(
+                          child: Center(
+                            child: Text(
+                              'COMMENTS (${bloc.comments.length})',
+                              style: AppFonts.font12w400,
+                            ),
+                          ),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 16,
+                          ),
+                        ),
+                        SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                          (context, index) =>
+                              CommentWidget(bloc.comments[index]),
+                          childCount: bloc.comments.length,
+                        ))
+                      ] else ...[
+                        SliverToBoxAdapter(
+                          child: Center(
+                            child: AppAnimations.circleIndicator,
+                          ),
+                        )
+                      ]
+                    ],
+                  );
+                },
               ),
-              if (state is PostCommentsSuccessState || state is CommentCreateSuccess) ...[
-                SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(
-                      'COMMENTS (${bloc.comments.length})',
-                      style: AppFonts.font12w400,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border(
+                    top: BorderSide(
+              width: 1,
+              color: AppColors.grey_727477,
+            ))),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.grey_393939,
+                  borderRadius: BorderRadius.circular(20)),
+              padding: const EdgeInsets.all(4),
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 290 / 375,
+                    child: TextField(
+                      minLines: 1,
+                      maxLines: 4,
+                      maxLength: 250,
+                      controller: messageController,
+                      style: AppFonts.font14w400,
+                      decoration: InputDecoration(
+                          counter: Container(),
+                          isDense: true,
+                          hintStyle: AppFonts.font14w400,
+                          hintText: 'Type your comment here...',
+                          border: InputBorder.none),
                     ),
                   ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 16,
-                  ),
-                ),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                  (context, index) => CommentWidget(bloc.comments[index]),
-                  childCount: bloc.comments.length,
-                ))
-              ] else ...[
-                SliverToBoxAdapter(
-                  child: Center(
-                    child: AppAnimations.circleIndicator,
-                  ),
-                )
-              ]
-            ],
-          );
-        },
-      ),
-      floatingButton: Container(
-        height: 90,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            border: Border(
-                top: BorderSide(
-          width: 1,
-          color: AppColors.grey_727477,
-        ))),
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 38),
-        child: Container(
-          decoration: BoxDecoration(
-              color: AppColors.grey_393939,
-              borderRadius: BorderRadius.circular(20)),
-          padding: const EdgeInsets.all(4),
-          child: Row(
-            children: [
-              const SizedBox(width: 16,),
-              Expanded(
-                child: TextField(
-                                  controller: messageController,
-                                  style: AppFonts.font14w400,
-                                  decoration: InputDecoration(
-                    hintStyle: AppFonts.font14w400,
-                    hintText: 'Type your comment here...',
-                    border: InputBorder.none),
-                                ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        if (messageController.text.isNotEmpty) {
+                          bloc.sendComment(messageController.text);
+                          messageController.text = '';
+                        }
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(16)),
+                        padding: const EdgeInsets.all(6),
+                        child:
+                            SvgPicture.asset(Assets.icons('send_comment.svg')),
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () async {
-                    if (messageController.text.isNotEmpty) {
-                        bloc.sendComment(messageController.text);
-                        messageController.text = '';
-                    }
-                  },
-                  child: Ink(
-                    decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(16)),
-                    padding: const EdgeInsets.all(6),
-                    child: SvgPicture.asset(Assets.icons('send_comment.svg')),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
