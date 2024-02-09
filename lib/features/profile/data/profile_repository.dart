@@ -44,6 +44,8 @@ class ProfileRepository implements PostSource {
 
   UserModel get user => _userModel!;
 
+  final List commentLikes = [];
+
   @override
   PostViewModel? getCachedPost(String postId) {
     for (var i in posts) {
@@ -61,11 +63,18 @@ class ProfileRepository implements PostSource {
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
       getUserPosts();
+      getUserCommentLikes();
       profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
       rethrow;
     }
+  }
+
+  void getUserCommentLikes() async {
+    final res = await _users.doc(user.id).get();
+    commentLikes.clear();
+    commentLikes.addAll(((res.data() as Map)['commentLikes'] ?? []) as List);
   }
 
   Future<List> getUserPostLikes(String userId) async {
