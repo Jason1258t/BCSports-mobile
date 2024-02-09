@@ -1,6 +1,6 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 

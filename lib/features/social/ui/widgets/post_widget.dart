@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
+import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -25,10 +27,12 @@ class FeedPostWidget extends StatefulWidget {
     super.key,
     required this.postId,
     required this.source,
+    this.commentsActive = true,
   });
 
   final String postId;
   final PostSource source;
+  final bool commentsActive;
 
   @override
   State<FeedPostWidget> createState() => _FeedPostWidgetState();
@@ -84,7 +88,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
           height: 32,
           child: Row(
             children: [
-              SmallAvatarWidget(user: post.userModel),
+              SmallAvatarWidget(user: post.user),
               const SizedBox(
                 width: 8,
               ),
@@ -93,7 +97,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 children: [
                   Expanded(
                       child: Text(
-                    post.userModel.displayName ?? post.userModel.username,
+                    post.user.displayName ?? post.user.username,
                     style: AppFonts.font14w400
                         .copyWith(color: AppColors.white_F4F4F4),
                   )),
@@ -159,10 +163,23 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
             const SizedBox(
               width: 20,
             ),
-            SvgPicture.asset(
-              Assets.icons('comment.svg'),
-              width: 16,
-              height: 16,
+            InkWell(
+              onTap: () {
+                if (widget.commentsActive) {
+                  context
+                      .read<PostCommentsCubit>()
+                      .setPost(post, widget.source);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => CommentsScreen()));
+                }
+              },
+              child: SvgPicture.asset(
+                Assets.icons('comment.svg'),
+                width: 16,
+                height: 16,
+              ),
             ),
             const SizedBox(
               width: 8,

@@ -8,6 +8,8 @@ class CustomScaffold extends StatelessWidget {
       this.color,
       this.padding,
       this.appBar,
+      this.bottomNavBar,
+      this.floatingButton,
       this.canPop = true,
       this.resize = false,
       this.onPopInvoked,
@@ -15,6 +17,8 @@ class CustomScaffold extends StatelessWidget {
 
   final Widget body;
   final PreferredSizeWidget? appBar;
+  final Widget? bottomNavBar;
+  final Widget? floatingButton;
   final bool canPop;
   final bool resize;
   final bool isSafeArea;
@@ -28,11 +32,13 @@ class CustomScaffold extends StatelessWidget {
     final child = Scaffold(
       resizeToAvoidBottomInset: resize,
       backgroundColor: Colors.transparent,
+      floatingActionButton: floatingButton,
       body: Padding(
         padding: padding ?? const EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: body,
       ),
       appBar: appBar,
+      bottomNavigationBar: bottomNavBar,
     );
 
     return PopScope(

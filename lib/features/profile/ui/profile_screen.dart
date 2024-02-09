@@ -3,7 +3,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/Nft_item.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';

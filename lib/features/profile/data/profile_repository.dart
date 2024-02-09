@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
@@ -18,15 +18,14 @@ class ProfileRepository implements PostSource {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  static final CollectionReference _users =
-      _firestore.collection(FirebaseCollectionNames.users);
-  static final CollectionReference _postsCollection =
+  static final _users = _firestore.collection(FirebaseCollectionNames.users);
+  static final _postsCollection =
       _firestore.collection(FirebaseCollectionNames.posts);
 
   @override
   final LikesManager likesManager;
 
-  ProfileRepository(this.likesManager){
+  ProfileRepository(this.likesManager) {
     likesManager.addSource(this);
   }
 
@@ -44,6 +43,8 @@ class ProfileRepository implements PostSource {
 
   UserModel get user => _userModel!;
 
+  final List commentLikes = [];
+
   @override
   PostViewModel? getCachedPost(String postId) {
     for (var i in posts) {
@@ -60,11 +61,18 @@ class ProfileRepository implements PostSource {
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
       getUserPosts();
+      getUserCommentLikes();
       profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
       rethrow;
     }
+  }
+
+  void getUserCommentLikes() async {
+    final res = await _users.doc(user.id).get();
+    commentLikes.clear();
+    commentLikes.addAll(((res.data() as Map)['commentLikes'] ?? []) as List);
   }
 
   Future<List> getUserPostLikes(String userId) async {
@@ -82,8 +90,7 @@ class ProfileRepository implements PostSource {
 
       final newPosts = <PostViewModel>[];
       for (var doc in querySnapshot.docs) {
-        final post =
-            PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+        final post = PostModel.fromJson(doc.data());
         final user = _userModel!;
         newPosts.add(PostViewModel(user, post));
       }
@@ -189,6 +196,5 @@ class ProfileRepository implements PostSource {
   }
 
   @override
-  // TODO: implement likeChanges
-  BehaviorSubject<LikeChangesData> get likeChanges => throw UnimplementedError();
+  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
 }

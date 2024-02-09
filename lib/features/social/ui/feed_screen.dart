@@ -1,11 +1,12 @@
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/post.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,9 +21,7 @@ class FeedScreen extends StatelessWidget {
 
     return CustomScaffold(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+        appBar: EmptyAppBar(
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -57,7 +56,7 @@ class FeedScreen extends StatelessWidget {
                 color: AppColors.primary,
                 backgroundColor: AppColors.black_s2new_1A1A1A,
                 onRefresh: () async {
-                  repository.reloadPosts();
+                  repository.refreshPosts();
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 18.0),
