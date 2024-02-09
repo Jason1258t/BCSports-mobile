@@ -1,7 +1,7 @@
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
@@ -46,14 +46,12 @@ class FavouritePostsRepository implements PostSource {
 
     final likes = await getUserPostLikes(userId);
 
-    for (var i in likes) {
-      response.add(await _postsCollection.doc(i).get());
-    }
+    final gotPosts = await _postsCollection.where('id', whereIn: likes).get();
+    response.addAll(gotPosts.docs);
     posts.clear();
 
     for (var doc in response) {
-      final post =
-          PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      final post = PostModel.fromJson(doc.data() as Map<String, dynamic>);
       final user = await _getUserById(post.creatorId);
       posts.add(PostViewModel(user, post));
     }

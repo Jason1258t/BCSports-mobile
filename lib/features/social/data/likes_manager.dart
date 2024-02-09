@@ -1,5 +1,5 @@
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

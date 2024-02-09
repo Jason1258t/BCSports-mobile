@@ -57,7 +57,7 @@ class FeedScreen extends StatelessWidget {
                 color: AppColors.primary,
                 backgroundColor: AppColors.black_s2new_1A1A1A,
                 onRefresh: () async {
-                  repository.reloadPosts();
+                  repository.refreshPosts();
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 18.0),

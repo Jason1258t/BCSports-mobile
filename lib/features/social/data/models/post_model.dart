@@ -18,9 +18,10 @@ class PostModel {
 
   DateTime get createdAt => DateTime.fromMillisecondsSinceEpoch(_createdAtMs);
 
-  PostModel.fromJson(Map<String, dynamic> json, this.id)
+  PostModel.fromJson(Map<String, dynamic> json)
       : creatorId = json['creatorId'],
         imageUrl = json['imageUrl'],
+        id = json['id'],
         compressedImageUrl = json['compressedImageUrl'],
         text = json['text'],
         likesCount = json['likesCount'],
