@@ -45,7 +45,7 @@ class WalletToken extends StatelessWidget {
                           // color: AppColors.backgroundSecondary,
                           borderRadius: BorderRadius.circular(32),
                           image: DecorationImage(
-                              image: NetworkImage(imageUrl),
+                              image: AssetImage(imageUrl),
                               fit: BoxFit.cover)),
                     ),
                     const SizedBox(

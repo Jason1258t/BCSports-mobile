@@ -10,12 +10,14 @@ class CustomScaffold extends StatelessWidget {
       this.appBar,
       this.canPop = true,
       this.resize = false,
-      this.onPopInvoked});
+      this.onPopInvoked,
+      this.isSafeArea = true});
 
   final Widget body;
   final PreferredSizeWidget? appBar;
   final bool canPop;
   final bool resize;
+  final bool isSafeArea;
   final void Function(bool)? onPopInvoked;
 
   final Color? color;
@@ -23,6 +25,16 @@ class CustomScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final child = Scaffold(
+      resizeToAvoidBottomInset: resize,
+      backgroundColor: Colors.transparent,
+      body: Padding(
+        padding: padding ?? const EdgeInsets.fromLTRB(20, 20, 20, 0),
+        child: body,
+      ),
+      appBar: appBar,
+    );
+
     return PopScope(
       canPop: canPop,
       onPopInvoked: onPopInvoked,
@@ -32,16 +44,7 @@ class CustomScaffold extends StatelessWidget {
         },
         child: Container(
             color: color ?? AppColors.background,
-            child: SafeArea(
-                child: Scaffold(
-                  resizeToAvoidBottomInset: resize,
-                  backgroundColor: Colors.transparent,
-                  body: Padding(
-                    padding: padding ?? const EdgeInsets.fromLTRB(20,20,20,0),
-                    child: body,
-                  ),
-                  appBar: appBar,
-                ))),
+            child: isSafeArea ? SafeArea(child: child) : child),
       ),
     );
   }

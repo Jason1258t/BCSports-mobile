@@ -1,3 +1,5 @@
+import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
+import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
@@ -61,6 +63,9 @@ class _MarketScreenState extends State<MarketScreen> {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         await context.read<MarketCubit>().getNftCards();
+        context
+            .read<ProfileRepository>()
+            .setUser(context.read<AuthRepository>().currentUser!.uid);
       },
       child: CustomScrollView(
         // physics: const BouncingScrollPhysics(),

@@ -90,6 +90,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 HomeSocialCubit(socialRepository, profileRepository)),
+        BlocProvider(
+            create: (context) =>
+                NftDetailsCubit(marketRepository)),
       ],
       child: const MyApp(),
     );

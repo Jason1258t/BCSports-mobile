@@ -105,7 +105,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
               body: BlocBuilder<NftDetailsCubit, NftDetailsState>(
                 builder: (context, state) {
                   if (state is NftDetailsLoading) {
-                    return AppAnimations.circleIndicator;
+                    return Center(child: AppAnimations.circleIndicator);
                   } else if (state is NftDetailsSuccess) {
                     return buildNftCardWidget();
                   }
