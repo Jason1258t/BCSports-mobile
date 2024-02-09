@@ -145,6 +145,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         Row(
           children: [
             InkWell(
+              borderRadius: BorderRadius.circular(100),
               onTap: onLikeTapped,
               child: SvgPicture.asset(
                 Assets.icons(
@@ -164,15 +165,14 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
               width: 20,
             ),
             InkWell(
+              borderRadius: BorderRadius.circular(100),
               onTap: () {
                 if (widget.commentsActive) {
                   context
                       .read<PostCommentsCubit>()
                       .setPost(post, widget.source);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => CommentsScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => CommentsScreen()));
                 }
               },
               child: SvgPicture.asset(
