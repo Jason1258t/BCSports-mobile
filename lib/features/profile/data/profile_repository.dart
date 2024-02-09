@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
@@ -18,15 +18,14 @@ class ProfileRepository implements PostSource {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  static final CollectionReference _users =
-      _firestore.collection(FirebaseCollectionNames.users);
-  static final CollectionReference _postsCollection =
+  static final _users = _firestore.collection(FirebaseCollectionNames.users);
+  static final _postsCollection =
       _firestore.collection(FirebaseCollectionNames.posts);
 
   @override
   final LikesManager likesManager;
 
-  ProfileRepository(this.likesManager){
+  ProfileRepository(this.likesManager) {
     likesManager.addSource(this);
   }
 
@@ -85,7 +84,7 @@ class ProfileRepository implements PostSource {
       final newPosts = <PostViewModel>[];
       for (var doc in querySnapshot.docs) {
         final post =
-            PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+            PostModel.fromJson(doc.data());
         final user = _userModel!;
         newPosts.add(PostViewModel(user, post));
       }
@@ -208,5 +207,6 @@ class ProfileRepository implements PostSource {
 
   @override
   // TODO: implement likeChanges
-  BehaviorSubject<LikeChangesData> get likeChanges => throw UnimplementedError();
+  BehaviorSubject<LikeChangesData> get likeChanges =>
+      throw UnimplementedError();
 }

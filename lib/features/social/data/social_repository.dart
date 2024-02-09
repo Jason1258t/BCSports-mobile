@@ -2,28 +2,29 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/models/comment_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_source.dart';
+import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
 class SocialRepository implements PostSource {
-  static final FirebaseDatabase database = FirebaseDatabase.instance;
-  static final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  static final FirebaseStorage storage = FirebaseStorage.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  static final CollectionReference _users =
-      firestore.collection(FirebaseCollectionNames.users);
-  static final CollectionReference _postsCollection =
-      firestore.collection(FirebaseCollectionNames.posts);
+  static final _users = _firestore.collection(FirebaseCollectionNames.users);
+  static final _comments = _firestore.collection(FirebaseCollectionNames.comments);
+  static final _postsCollection =
+      _firestore.collection(FirebaseCollectionNames.posts);
+
+  static final _postsBucket = _storage.ref(FirebaseCollectionNames.postsBucket);
 
   @override
   final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
@@ -31,7 +32,7 @@ class SocialRepository implements PostSource {
   @override
   final LikesManager likesManager;
 
-  SocialRepository(this.likesManager){
+  SocialRepository(this.likesManager) {
     likesManager.addSource(this);
   }
 
@@ -40,11 +41,7 @@ class SocialRepository implements PostSource {
 
   final List<PostViewModel> posts = [];
 
-  Future createPost(PostModel postModel) async {
-    await _postsCollection.add(postModel.toJson());
-  }
-
-  void reloadPosts() async {
+  void refreshPosts() async {
     posts.clear();
     initial();
   }
@@ -52,8 +49,7 @@ class SocialRepository implements PostSource {
   void initial() async {
     homeScreenState.add(LoadingStateEnum.loading);
     try {
-      final newPosts = await getPosts();
-      posts.addAll(newPosts);
+      posts.addAll(await getPosts());
       homeScreenState.add(LoadingStateEnum.success);
     } catch (e) {
       homeScreenState.add(LoadingStateEnum.fail);
@@ -61,37 +57,27 @@ class SocialRepository implements PostSource {
     }
   }
 
-  Future<List> getUserPostLikes(String userId) async {
-    return likesManager.getUserPostLikes(userId);
-  }
+  Future<List> getUserPostLikes(String userId) =>
+      likesManager.getUserPostLikes(userId);
 
   @override
-  PostViewModel? getCachedPost(String id) {
-    for (var i in posts) {
-      if (i.postModel.id == id) return i;
-    }
-    return null;
-  }
+  PostViewModel? getCachedPost(String id) =>
+      likesManager.getCachedPost(id, posts);
 
   @override
-  void setPostLiked(postId, value) async {
-    likesManager.setPostLiked(postId, value, posts);
-  }
+  void setPostLiked(postId, value) =>
+      likesManager.setPostLiked(postId, value, posts);
 
   @override
-  Future likePost(String postId, String userId) async {
-    await likesManager.likePost(postId, userId, posts);
-  }
+  Future likePost(String postId, String userId) =>
+      likesManager.likePost(postId, userId, posts);
 
   @override
-  Future unlikePost(String postId, String userId) async {
-    await likesManager.unlikePost(postId, userId, posts);
-  }
+  Future unlikePost(String postId, String userId) =>
+      likesManager.unlikePost(postId, userId, posts);
 
-  Future<UserModel> _getUserById(String userId) async {
-    final res = await _users.doc(userId).get();
-    return UserModel.fromJson(res.data() as Map<String, dynamic>);
-  }
+  @override
+  List<PostViewModel> mergeWithLikes() => likesManager.mergeWithLikes(posts);
 
   Future<List<PostViewModel>> getPosts() async {
     final querySnapshot =
@@ -99,8 +85,7 @@ class SocialRepository implements PostSource {
 
     final posts = <PostViewModel>[];
     for (var doc in querySnapshot.docs) {
-      final post =
-          PostModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      final post = PostModel.fromJson(doc.data());
       final user = await _getUserById(post.creatorId);
       posts.add(PostViewModel(user, post));
     }
@@ -108,16 +93,19 @@ class SocialRepository implements PostSource {
     return posts;
   }
 
-  @override
-  List<PostViewModel> mergeWithLikes() {
-    likesManager.mergeWithLikes(posts);
-    return posts;
+  Future<UserModel> _getUserById(String userId) async {
+    final res = await _users.doc(userId).get();
+    return UserModel.fromJson(res.data() as Map<String, dynamic>);
+  }
+
+  Future createPost(PostModel postModel) async {
+    final post  = await _postsCollection.add(postModel.toJson());
+    await _postsCollection.doc(post.id).set({'id': post.id}, SetOptions(merge: true));
   }
 
   Future<String> uploadPostImage({String? filePath, Uint8List? bytes}) async {
     assert(filePath != null || bytes != null);
-    final storageRef = _getPostsImagesStorageReference();
-    final fileRef = storageRef.child('${const Uuid().v1()}.jpeg');
+    final fileRef = _postsBucket.child('${const Uuid().v1()}.jpeg');
     final TaskSnapshot task;
     try {
       if (filePath != null) {
@@ -132,8 +120,7 @@ class SocialRepository implements PostSource {
     }
   }
 
-  Reference _getPostsImagesStorageReference() {
-    final reference = storage.ref(FirebaseCollectionNames.postsBucket);
-    return reference;
+  Future createComment(CommentModel commentModel) async {
+    await _comments.add(commentModel.toJson());
   }
 }

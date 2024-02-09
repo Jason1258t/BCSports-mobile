@@ -29,6 +29,8 @@ class CreatePostCubit extends Cubit<CreatePostState> {
       await _socialRepository.createPost(PostModel.create(
           creatorId: _profileRepository.user.id, text: text, image: imageDTO));
 
+      _profileRepository.getUserPosts();
+
       emit(CreateSuccessState());
     } catch (e) {
       emit(CreateFailState(e as Exception));
