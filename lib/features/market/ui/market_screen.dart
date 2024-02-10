@@ -69,7 +69,6 @@ class _MarketScreenState extends State<MarketScreen> {
             .setUser(context.read<AuthRepository>().currentUser!.uid);
       },
       child: CustomScrollView(
-        // physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
               titleSpacing: 22,
@@ -102,7 +101,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           horizontal: 14, vertical: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: AppColors.black_222232,
+                          color: AppColors.black_s2new_1A1A1A,
                           borderRadius: BorderRadius.circular(31)),
                       child: Row(
                         children: [

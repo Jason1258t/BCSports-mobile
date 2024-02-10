@@ -276,7 +276,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                 Container(
                                   width: 1,
                                   height: 12,
-                                  color: AppColors.black,
+                                  color: AppColors.grey_797979,
                                   margin:
                                       const EdgeInsets.symmetric(horizontal: 3),
                                 ),
@@ -288,7 +288,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                                 Container(
                                   width: 1,
                                   height: 12,
-                                  color: AppColors.black,
+                                  color: AppColors.grey_797979,
                                   margin:
                                       const EdgeInsets.symmetric(horizontal: 3),
                                 ),
