@@ -17,6 +17,7 @@ class ChatRepository {
     socialUserList = ((await _users.get()).docs)
         .map((doc) => UserModel.fromJson(doc.data()))
         .toList();
+    print(socialUserList);
   }
 
   void filterUserByInputText(String name){

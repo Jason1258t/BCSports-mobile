@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/auth/bloc/app/app_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
+import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
@@ -111,6 +112,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 ProfileViewCubit(profileRepository: profileViewRepository)),
+        BlocProvider(
+            create: (context) =>
+                UserSearchCubit(chatRepository: chatRepository)),
       ],
       child: const MyApp(),
     );

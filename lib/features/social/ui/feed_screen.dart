@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
@@ -40,7 +41,8 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
+                    await context.read<UserSearchCubit>().init();
                     Navigator.pushNamed(context, AppRouteNames.chatContacts);
                   },
                   child: SvgPicture.asset(
