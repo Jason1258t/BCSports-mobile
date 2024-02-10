@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/auth/bloc/app/app_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
+import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
@@ -38,6 +39,7 @@ class MyRepositoryProviders extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => MarketRepository()),
+        RepositoryProvider(create: (context) => ChatRepository()),
         RepositoryProvider(create: (context) => ProfileRepository(likes)),
         RepositoryProvider(create: (context) => SocialRepository(likes)),
         RepositoryProvider(create: (context) => ProfileViewRepository(likes)),
@@ -61,10 +63,12 @@ class MyBlocProviders extends StatelessWidget {
     final authRepository = RepositoryProvider.of<AuthRepository>(context);
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
-    final profileViewRepository = RepositoryProvider.of<ProfileViewRepository>(context);
+    final profileViewRepository =
+        RepositoryProvider.of<ProfileViewRepository>(context);
     final socialRepository = RepositoryProvider.of<SocialRepository>(context);
     final favouritesRepository =
         RepositoryProvider.of<FavouritePostsRepository>(context);
+    final chatRepository = RepositoryProvider.of<ChatRepository>(context);
 
     return MultiBlocProvider(
       providers: [
@@ -74,8 +78,8 @@ class MyBlocProviders extends StatelessWidget {
           lazy: false,
         ),
         BlocProvider(
-            create: (context) =>
-                AppCubit(authRepository, profileRepository, socialRepository, favouritesRepository),
+            create: (context) => AppCubit(authRepository, profileRepository,
+                socialRepository, favouritesRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(create: (context) => MarketCubit(marketRepository)),
