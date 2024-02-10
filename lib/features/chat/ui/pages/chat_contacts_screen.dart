@@ -1,7 +1,9 @@
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
@@ -13,6 +15,8 @@ class ChatContactsScreen extends StatefulWidget {
 }
 
 class _ChatContactsScreenState extends State<ChatContactsScreen> {
+  final TextEditingController searchController = TextEditingController();
+
   final String title = "Contacts";
 
   @override
@@ -25,6 +29,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               backgroundColor: AppColors.black,
               surfaceTintColor: Colors.transparent,
               elevation: 0,
+              titleSpacing: 0,
               automaticallyImplyLeading: false,
               floating: true,
               title: Stack(
@@ -46,7 +51,20 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   ),
                 ],
               )),
-
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 18,
+            ),
+          ),
+          SliverToBoxAdapter(
+              child: CustomTextFormField(
+                  prefixIcon: Icon(Icons.search),
+                  controller: searchController)),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 18,
+            ),
+          ),
           ChatCardPreviewWidget(),
           ChatCardPreviewWidget(),
           ChatCardPreviewWidget(),
@@ -64,36 +82,41 @@ class ChatCardPreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          children: [
-            Container(
-              decoration:  BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.primary),
-              width: 48,
-              height: 48,
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Name",
-                  style: AppFonts.font14w500.copyWith(color: AppColors.white),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Last message",
-                  style: AppFonts.font12w400.copyWith(color: AppColors.white),
-                ),
-              ],
-            )
-          ],
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, AppRouteNames.chatMessages);
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: AppColors.primary),
+                width: 48,
+                height: 48,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Name",
+                    style: AppFonts.font14w500.copyWith(color: AppColors.white),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    "Last message",
+                    style: AppFonts.font12w400.copyWith(color: AppColors.white),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
