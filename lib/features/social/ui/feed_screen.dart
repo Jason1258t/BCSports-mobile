@@ -40,6 +40,9 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouteNames.chatContacts);
+                  },
                   child: SvgPicture.asset(
                     Assets.icons('message.svg'),
                     width: 24,
