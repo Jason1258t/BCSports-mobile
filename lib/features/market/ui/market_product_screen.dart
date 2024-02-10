@@ -216,7 +216,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                       bottom: 9, top: 12, right: 14, left: 25),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
-                    color: AppColors.black_1A1A1A,
+                    color: AppColors.black_s2new_1A1A1A,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,7 +235,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           Text(
                             "${marketRepository.lastOpenedNft.currentBit} ETH",
                             style: AppFonts.font16w500
-                                .copyWith(color: AppColors.yellow_F3D523),
+                                .copyWith(color: AppColors.primary),
                           ),
                           const SizedBox(
                             height: 2,
@@ -262,7 +262,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           children: [
                             Text("Ending in",
                                 style: AppFonts.font16w500
-                                    .copyWith(color: AppColors.yellow_F3D523)),
+                                    .copyWith(color: AppColors.primary)),
                             const SizedBox(
                               height: 5,
                             ),

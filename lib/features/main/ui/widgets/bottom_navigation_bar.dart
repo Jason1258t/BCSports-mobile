@@ -12,17 +12,15 @@ class CustomButtonNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         backgroundColor: AppColors.black_252525,
         currentIndex: context.read<MainCubit>().currentPageIndex,
         showUnselectedLabels: true,
         unselectedItemColor: AppColors.grey_B4B4B4,
-        selectedItemColor: AppColors.yellow_F3D523,
+        selectedItemColor: AppColors.primary,
         selectedLabelStyle: AppFonts.font11w300,
         unselectedLabelStyle: AppFonts.font11w300,
-
         onTap: (newPageIndex) {
           context.read<MainCubit>().changePageIndexTo(newPageIndex);
         },
@@ -37,20 +35,18 @@ class CustomButtonNavBar extends StatelessWidget {
 
 class NavItem extends BottomNavigationBarItem {
   final String iconPath;
-  final String label;
 
-  NavItem({required this.iconPath, required this.label})
+  NavItem({required this.iconPath, super.label})
       : super(
             icon: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child:
                     SvgPicture.asset(iconPath, color: AppColors.white_F4F4F4)),
-            label: label,
             activeIcon: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: SvgPicture.asset(
                 iconPath,
-                color: AppColors.yellow_F3D523,
+                color: AppColors.primary,
               ),
             ));
 }

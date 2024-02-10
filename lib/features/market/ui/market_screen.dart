@@ -128,7 +128,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           ),
                           Text("ETH",
                               style: AppFonts.font14w500
-                                  .copyWith(color: AppColors.yellow_F3D523))
+                                  .copyWith(color: AppColors.primary))
                         ],
                       ),
                     ),

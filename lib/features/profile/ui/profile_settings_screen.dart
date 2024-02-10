@@ -128,7 +128,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       child: Text(
                         'Log out',
                         style: AppFonts.font16w400
-                            .copyWith(color: AppColors.yellow_F3D523),
+                            .copyWith(color: AppColors.primary),
                       ),
                     )
                   ],

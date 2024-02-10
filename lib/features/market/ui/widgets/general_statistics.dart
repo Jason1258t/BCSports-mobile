@@ -23,7 +23,7 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: AppColors.black_1A1A1A,
+          color: AppColors.black_s2new_1A1A1A,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 22).copyWith(top: 24),
         child: Column(

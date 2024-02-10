@@ -90,7 +90,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppFonts.font22w800ItalicAS.copyWith(
-                          color: AppColors.yellow_F3D523, letterSpacing: 1),
+                          color: AppColors.primary, letterSpacing: 1),
                     ),
                   ),
                   const SizedBox(

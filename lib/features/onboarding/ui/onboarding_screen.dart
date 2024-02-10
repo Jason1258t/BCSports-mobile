@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 //                 padding: const EdgeInsets.symmetric(horizontal: 22),
 //                 width: double.infinity,
 //                 height: 83,
-//                 color: AppColors.yellow_F3D523,
+//                 color: AppColors.primary,
 //                 child: Row(
 //                   children: [
 //                     SizedBox(
@@ -171,7 +171,7 @@ class OnboardingDot extends StatelessWidget {
         width: isBig ? 20 : 5,
         height: 5,
         decoration: BoxDecoration(
-            color: isBig ? AppColors.yellow_F3D523 : Colors.white,
+            color: isBig ? AppColors.primary : Colors.white,
             borderRadius: BorderRadius.circular(100)));
   }
 }

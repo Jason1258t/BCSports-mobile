@@ -39,7 +39,7 @@ class NftItemWidget extends StatelessWidget {
               Text(
                 '1.261 ETH',
                 style: AppFonts.font14w500
-                    .copyWith(color: AppColors.yellow_F3D523),
+                    .copyWith(color: AppColors.primary),
               ),
             ],
           )

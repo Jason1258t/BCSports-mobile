@@ -55,7 +55,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
           backgroundColor: Colors.transparent,
           child: Container(
             decoration: BoxDecoration(
-                color: AppColors.black_1A1A1A,
+                color: AppColors.black_s2new_1A1A1A,
                 borderRadius: BorderRadius.circular(22)),
             padding: const EdgeInsets.all(23),
             width: size.width - 44,
@@ -76,7 +76,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(48),
                       border:
-                          Border.all(width: 1, color: AppColors.yellow_F3D523)),
+                          Border.all(width: 1, color: AppColors.primary)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
@@ -96,7 +96,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                         ],
                       ),
                       Material(
-                        color: AppColors.yellow_F3D523,
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(1000),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(1000),

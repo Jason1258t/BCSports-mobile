@@ -31,7 +31,7 @@ class ToggleButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
           color: enumTap == repository.activeTab
-              ? AppColors.yellow_F3D523
+              ? AppColors.primary
               : AppColors.black_222232,
         ),
         child: Center(

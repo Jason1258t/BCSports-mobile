@@ -38,7 +38,7 @@ class _CreateWalletPopupState extends State<CreateWalletPopup> {
           backgroundColor: Colors.transparent,
           child: Container(
             decoration: BoxDecoration(
-                color: AppColors.black_1A1A1A,
+                color: AppColors.black_s2new_1A1A1A,
                 borderRadius: BorderRadius.circular(22)),
             padding: const EdgeInsets.all(23),
             width: size.width - 44,

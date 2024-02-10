@@ -31,7 +31,7 @@ class MarketRepository {
   Future<void> updateNftAuctionPrice(
       double newPrice, NftModel nft, UserModel lastBidder) async {
     final docInst =
-        await _db.collection(_nftCollectionName).doc(nft.documentId);
+         _db.collection(_nftCollectionName).doc(nft.documentId);
 
     await docInst
         .update({"current_bit": newPrice, "last_bidder": lastBidder.username});
