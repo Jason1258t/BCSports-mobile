@@ -6,7 +6,6 @@ import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 
 class FavouritePostsRepository extends PostSource {

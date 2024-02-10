@@ -1,7 +1,8 @@
 abstract class AppRouteNames {
   static const String root = '/';
-  static const String profileSettings = '/profile_settings';
-  static const String profileEdit = '/profile_edit';
+  static const String profileSettings = '/profile/settings';
+  static const String profileEdit = '/profile/edit';
+  static const String profileView = '/profile/view';
   static const String createPost = '/create_post';
   static const String onboarding = '/onboarding';
   static const String market = '/market';

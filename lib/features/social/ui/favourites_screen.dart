@@ -1,6 +1,8 @@
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +39,7 @@ class FavouritesScreen extends StatelessWidget {
                       return SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
+                          userId: repository.posts[index].user.id,
                           postId: repository.posts[index].postModel.id,
                           source: repository,
                         ),

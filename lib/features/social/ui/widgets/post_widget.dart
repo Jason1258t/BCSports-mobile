@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
@@ -11,6 +13,7 @@ import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -28,11 +31,14 @@ class FeedPostWidget extends StatefulWidget {
     required this.postId,
     required this.source,
     this.commentsActive = true,
+    this.userId,
   });
 
   final String postId;
   final PostSource source;
   final bool commentsActive;
+  final String? userId;
+  final
 
   @override
   State<FeedPostWidget> createState() => _FeedPostWidgetState();
@@ -80,36 +86,49 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
   @override
   Widget build(BuildContext context) {
     final post = widget.source.getCachedPost(widget.postId)!;
+    final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           height: 32,
-          child: Row(
-            children: [
-              SmallAvatarWidget(user: post.user),
-              const SizedBox(
-                width: 8,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Text(
-                    post.user.displayName ?? post.user.username,
-                    style: AppFonts.font14w400
-                        .copyWith(color: AppColors.white_F4F4F4),
-                  )),
-                  Text(
-                    DateTimeDifferenceConverter.diffToString(
-                        post.postModel.createdAt),
-                    style: AppFonts.font12w400
-                        .copyWith(color: const Color(0xFF717477)),
-                  )
-                ],
-              )
-            ],
+          child: InkWell(
+            onTap: (){
+              if(widget.userId != profileRepository.user.id && widget.userId != null){
+                context.read<ProfileViewRepository>().setUser(widget.userId!);
+                Navigator.pushNamed(context, AppRouteNames.profileView);
+              }
+              else if(widget.userId == profileRepository.user.id){
+                context.read<MainCubit>().changePageIndexTo(3);
+              }
+            },
+            child: Row(
+              children: [
+                SmallAvatarWidget(user: post.user),
+                const SizedBox(
+                  width: 8,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      post.user.displayName ?? post.user.username,
+                      style: AppFonts.font14w400
+                          .copyWith(color: AppColors.white_F4F4F4),
+                    )),
+                    Text(
+                      DateTimeDifferenceConverter.diffToString(
+                          post.postModel.createdAt),
+                      style: AppFonts.font12w400
+                          .copyWith(color: const Color(0xFF717477)),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
         const SizedBox(

@@ -91,108 +91,116 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     )
                   ],
                 )),
-            body: CustomScrollView(slivers: [
-              separator,
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: sizeof.width * 0.70,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Container(
-                        constraints: BoxConstraints(
-                          maxHeight: sizeof.width * 0.50,
+            body: RefreshIndicator.adaptive(
+              onRefresh: () async{
+                repository.setUser(user.id);
+              },
+              child: CustomScrollView(
+              slivers: [
+                separator,
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: sizeof.width * 0.70,
+                    width: double.infinity,
+                    child: Stack(
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(
+                            maxHeight: sizeof.width * 0.50,
+                          ),
+                          width: double.infinity,
+                          decoration: user.banner.url == null
+                              ? BoxDecoration(
+                                  color: user.bannerColor,
+                                  borderRadius: BorderRadius.circular(15),
+                                )
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  image: DecorationImage(
+                                      image: AssetImage(user.banner.url!),
+                                      fit: BoxFit.cover),
+                                ),
                         ),
-                        width: double.infinity,
-                        decoration: user.banner.url == null
-                            ? BoxDecoration(
-                                color: user.bannerColor,
-                                borderRadius: BorderRadius.circular(15),
-                              )
-                            : BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    image: AssetImage(user.banner.url!),
-                                    fit: BoxFit.cover),
-                              ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: CircleAvatar(
-                          radius: sizeof.width * 0.20,
-                          backgroundColor: AppColors.black_090723,
+                        Container(
+                          alignment: Alignment.bottomCenter,
                           child: CircleAvatar(
-                              radius: sizeof.width * 0.18,
-                              backgroundColor: user.avatarColor,
-                              backgroundImage: user.avatarUrl != null
-                                  ? NetworkImage(user.avatarUrl ?? '')
-                                  : null,
-                              child: user.avatarUrl == null
-                                  ? Center(
-                                      child: Text(
-                                        (user.displayName ?? user.username)[0]
-                                            .toUpperCase(),
-                                        style: AppFonts.font64w400,
-                                      ),
-                                    )
-                                  : Container()),
+                            radius: sizeof.width * 0.20,
+                            backgroundColor: AppColors.black_090723,
+                            child: CircleAvatar(
+                                radius: sizeof.width * 0.18,
+                                backgroundColor: user.avatarColor,
+                                backgroundImage: user.avatarUrl != null
+                                    ? NetworkImage(user.avatarUrl ?? '')
+                                    : null,
+                                child: user.avatarUrl == null
+                                    ? Center(
+                                        child: Text(
+                                          (user.displayName ?? user.username)[0]
+                                              .toUpperCase(),
+                                          style: AppFonts.font64w400,
+                                        ),
+                                      )
+                                    : Container()),
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+                separator,
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      Text(
+                        user.displayName ?? user.username,
+                        style: AppFonts.font20w600,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '@${user.username}',
+                        style: AppFonts.font13w100,
                       ),
                     ],
                   ),
                 ),
-              ),
-              separator,
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Text(
-                      user.displayName ?? user.username,
-                      style: AppFonts.font20w600,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      '@${user.username}',
-                      style: AppFonts.font13w100,
-                    ),
-                  ],
+                separator,
+                SliverToBoxAdapter(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ToggleButton(
+                        activeTap: repository.activeTab,
+                        width: sizeof.width * 0.4,
+                        enumTap: ProfileTabsEnum.nft,
+                        text: 'NFT',
+                        onTap: () {
+                          repository.setProfileActiveTab(ProfileTabsEnum.nft);
+                          setState(() {});
+                        },
+                      ),
+                      ToggleButton(
+                        activeTap: repository.activeTab,
+                        width: sizeof.width * 0.4,
+                        enumTap: ProfileTabsEnum.posts,
+                        text: 'Posts',
+                        onTap: () {
+                          repository.setProfileActiveTab(ProfileTabsEnum.posts);
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              separator,
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ToggleButton(
-                      width: sizeof.width * 0.4,
-                      enumTap: ProfileTabsEnum.nft,
-                      text: 'NFT',
-                      onTap: () {
-                        repository.setProfileActiveTab(ProfileTabsEnum.nft);
-                        setState(() {});
-                      },
-                    ),
-                    ToggleButton(
-                      width: sizeof.width * 0.4,
-                      enumTap: ProfileTabsEnum.posts,
-                      text: 'Posts',
-                      onTap: () {
-                        repository.setProfileActiveTab(ProfileTabsEnum.posts);
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              separator,
-              separator,
-              repository.activeTab == ProfileTabsEnum.nft
-                  ? buildNftTab()
-                  : buildPostsTab(repository),
-              separator
-            ]),
+                separator,
+                separator,
+                repository.activeTab == ProfileTabsEnum.nft
+                    ? buildNftTab()
+                    : buildPostsTab(repository),
+                separator
+              ]),
+            ),
           );
         } else {
           return CustomScaffold(
@@ -234,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return SliverToBoxAdapter(
             child: Center(
                 child: Text(
-          'К сожалению у вас нету NFT',
+          'Sorry, you don\'t have NFTs.',
           style: AppFonts.font20w600,
         )));
       },
@@ -259,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              'К сожалению у вас нету постов',
+              'Sorry, you don\'t have Posts.',
               style: AppFonts.font20w600,
             )));
           } else {

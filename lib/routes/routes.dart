@@ -9,6 +9,7 @@ import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart';
+import 'package:bcsports_mobile/features/profile/ui/profile_view_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/favourites_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
@@ -50,7 +51,8 @@ class AppRoutes {
                   nft: playerNft,
                 ));
       case AppRouteNames.favourites:
-        return MaterialPageRoute(builder: (ctx) => const MarketFavouritesScreen());
+        return MaterialPageRoute(
+            builder: (ctx) => const MarketFavouritesScreen());
       case AppRouteNames.login:
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:
@@ -62,6 +64,8 @@ class AppRoutes {
             builder: (ctx) => const PasswordRecoveryScreen());
       case AppRouteNames.profileEdit:
         return MaterialPageRoute(builder: (ctx) => const EditProfileScreen());
+      case AppRouteNames.profileView:
+        return MaterialPageRoute(builder: (ctx) => const ProfileViewScreen());
       case AppRouteNames.favouritesPost:
         return MaterialPageRoute(builder: (ctx) => const FavouritesScreen());
       default:

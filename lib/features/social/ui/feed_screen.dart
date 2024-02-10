@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
@@ -65,6 +66,7 @@ class FeedScreen extends StatelessWidget {
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
+                          userId: repository.posts[index].user.id,
                           postId: repository.posts[index].postModel.id,
                           source: repository,
                         ),

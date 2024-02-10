@@ -10,16 +10,17 @@ import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cub
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
+import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
-import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,6 +40,7 @@ class MyRepositoryProviders extends StatelessWidget {
         RepositoryProvider(create: (context) => MarketRepository()),
         RepositoryProvider(create: (context) => ProfileRepository(likes)),
         RepositoryProvider(create: (context) => SocialRepository(likes)),
+        RepositoryProvider(create: (context) => ProfileViewRepository(likes)),
         RepositoryProvider(
             create: (context) => FavouritePostsRepository(likes)),
         RepositoryProvider(
@@ -59,6 +61,7 @@ class MyBlocProviders extends StatelessWidget {
     final authRepository = RepositoryProvider.of<AuthRepository>(context);
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
+    final profileViewRepository = RepositoryProvider.of<ProfileViewRepository>(context);
     final socialRepository = RepositoryProvider.of<SocialRepository>(context);
     final favouritesRepository =
         RepositoryProvider.of<FavouritePostsRepository>(context);
@@ -101,6 +104,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 PostCommentsCubit(socialRepository, profileRepository)),
+        BlocProvider(
+            create: (context) =>
+                ProfileViewCubit(profileRepository: profileViewRepository)),
       ],
       child: const MyApp(),
     );

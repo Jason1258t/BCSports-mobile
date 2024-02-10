@@ -50,7 +50,6 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
 
   Widget buildMainInfoWidget() {
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
       slivers: [
         SliverAppBar(
             backgroundColor: AppColors.black,

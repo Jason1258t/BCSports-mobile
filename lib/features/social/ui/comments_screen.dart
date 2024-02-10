@@ -1,6 +1,8 @@
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/comment_widget.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -68,6 +70,7 @@ class CommentsScreen extends StatelessWidget {
                     slivers: [
                       SliverToBoxAdapter(
                         child: FeedPostWidget(
+                          userId: bloc.post!.user.id,
                           postId: bloc.post!.postModel.id,
                           source: bloc.source!,
                           commentsActive: false,
@@ -94,8 +97,9 @@ class CommentsScreen extends StatelessWidget {
                               CommentWidget(bloc.comments[index]),
                           childCount: bloc.comments.length,
                         ))
-                      ] else if(!(state is PostCommentsSuccessState ||
-                          state is CommentCreateSuccess) && state is! CreatingComment)...[
+                      ] else if (!(state is PostCommentsSuccessState ||
+                              state is CommentCreateSuccess) &&
+                          state is! CreatingComment) ...[
                         SliverToBoxAdapter(
                           child: Center(
                             child: AppAnimations.circleIndicator,

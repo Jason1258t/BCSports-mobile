@@ -138,7 +138,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     onTap: () {},
                     imageUrl: 'assets/images/ethereum_image.png',
                   ),
-                      WalletToken(
+                  WalletToken(
                     title: 'BNB',
                     prise: '100.0',
                     onTap: () {},

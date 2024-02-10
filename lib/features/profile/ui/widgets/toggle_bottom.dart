@@ -11,17 +11,17 @@ class ToggleButton extends StatelessWidget {
       required this.width,
       required this.enumTap,
       required this.text,
-      required this.onTap});
+      required this.onTap,
+        required this.activeTap});
 
   final double width;
   final ProfileTabsEnum enumTap;
   final String text;
   final Function() onTap;
+  final ProfileTabsEnum activeTap;
 
   @override
   Widget build(BuildContext context) {
-    final repository = RepositoryProvider.of<ProfileRepository>(context);
-
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(9),
@@ -30,7 +30,7 @@ class ToggleButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
-          color: enumTap == repository.activeTab
+          color: enumTap == activeTap
               ? AppColors.primary
               : AppColors.black_222232,
         ),
@@ -38,7 +38,7 @@ class ToggleButton extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: AppFonts.font20w600WithColor(enumTap == repository.activeTab
+            style: AppFonts.font20w600WithColor(enumTap == activeTap
                 ? AppColors.black_222232
                 : AppColors.grey_B4B4B4),
           ),

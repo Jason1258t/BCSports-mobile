@@ -97,16 +97,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   )
                                 : Container(),
                           )
-                        : Container(
+                        : SizedBox(
                             width: sizeOf.width * 0.4,
                             height: sizeOf.width * 0.4,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(1000),
-                                child: Image.file(
-                                  File(image!.path),
-                                  fit: BoxFit.cover,
-                                )),
+                                child: Image.file(File(image!.path))),
                           ),
+                    Container(
+                      width: sizeOf.width * 0.40,
+                      height: sizeOf.width * 0.40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(1000),
+                        color: Colors.black45,
+                      ),
+                    ),
                     InkWell(
                       onTap: () async {
                         await pickImage();
@@ -122,11 +127,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         child: Icon(
                           Icons.camera_alt_outlined,
-                          color: AppColors.grey_B3B3B3,
+                          color: AppColors.white,
                           size: 50,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Column(
