@@ -67,7 +67,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
           ),
           SliverToBoxAdapter(
               child: CustomTextFormField(
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   controller: searchController)),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -89,7 +89,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   });
                 }
 
-                return Center(
+                return const Center(
                   child: Text("Sorry smth went wrong"),
                 );
               },
