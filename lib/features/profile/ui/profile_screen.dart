@@ -49,46 +49,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return CustomScaffold(
             appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
+                title: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    const Row(
-                      children: [
-                        SizedBox(
-                          width: 120,
-                        ),
-                      ],
-                    ),
                     Text(
                       'Profile',
                       style: AppFonts.font18w600,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.add,
-                            color: AppColors.white,
-                          ),
-                          onPressed: () => Navigator.pushNamed(
-                              context, AppRouteNames.createPost),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                            color: AppColors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, AppRouteNames.profileSettings);
-                          },
-                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                color: AppColors.white,
+                              ),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, AppRouteNames.createPost),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                                color: AppColors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, AppRouteNames.profileSettings);
+                              },
+                            ),
+                          ],
+                        )
                       ],
-                    )
+                    ),
                   ],
                 )),
             body: RefreshIndicator.adaptive(
