@@ -8,13 +8,26 @@ abstract class PostSource {
 
   BehaviorSubject<LikeChangesData> get likeChanges;
 
-  PostViewModel? getCachedPost(String postId);
+  List<PostViewModel> get posts;
 
-  Future likePost(String postId, String userId);
+  PostViewModel? getCachedPost(String postId) {
+    for (var i in posts) {
+      if (i.postModel.id == postId) return i;
+    }
+    return null;
+  }
 
-  Future unlikePost(String postId, String userId);
+  Future likePost(String postId, String userId) =>
+      likesManager.likePost(LikeActionData(postId, userId, posts));
 
-  void setPostLiked(String postId, bool value);
+  Future unlikePost(String postId, String userId) =>
+      likesManager.unlikePost(LikeActionData(postId, userId, posts));
 
-  List<PostViewModel> mergeWithLikes();
+  Future getUserPostLikes(String userId) =>
+      likesManager.getUserPostLikes(userId);
+
+  void setPostLiked(String postId, bool value) =>
+      likesManager.setPostLiked(postId, value, posts);
+
+  List<PostViewModel> mergeWithLikes() => likesManager.mergeWithLikes(posts);
 }

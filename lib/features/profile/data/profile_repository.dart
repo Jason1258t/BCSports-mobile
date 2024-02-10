@@ -14,16 +14,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
-class ProfileRepository implements PostSource {
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class ProfileRepository extends PostSource {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  static final _users = _firestore.collection(FirebaseCollectionNames.users);
-  static final _postsCollection =
-      _firestore.collection(FirebaseCollectionNames.posts);
+  static final _users = FirebaseCollections.usersCollection;
+  static final _postsCollection = FirebaseCollections.postsCollection;
+  static final _playersCollection = FirebaseCollections.playersNftCollection;
 
   @override
   final LikesManager likesManager;
+
+  @override
+  final List<PostViewModel> posts = [];
+
+  @override
+  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
 
   ProfileRepository(this.likesManager) {
     likesManager.addSource(this);
@@ -37,29 +42,16 @@ class ProfileRepository implements PostSource {
 
   ProfileTabsEnum activeTab = ProfileTabsEnum.nft;
 
-  final List<PostViewModel> posts = [];
   List<NftModel> userNftList = [];
 
   UserModel? _userModel;
 
   UserModel get user => _userModel!;
 
-  final List commentLikes = [];
-
-  @override
-  PostViewModel? getCachedPost(String postId) {
-    for (var i in posts) {
-      if (i.postModel.id == postId) return i;
-    }
-
-    return null;
-  }
-
   void setUser(String userId) async {
     profileState.add(LoadingStateEnum.loading);
     try {
       final res = await _users.doc(userId).get();
-      print(res.data());
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
       getUserPosts();
@@ -71,14 +63,12 @@ class ProfileRepository implements PostSource {
     }
   }
 
+  final List commentLikes = [];
+
   void getUserCommentLikes() async {
     final res = await _users.doc(user.id).get();
     commentLikes.clear();
     commentLikes.addAll(((res.data() as Map)['commentLikes'] ?? []) as List);
-  }
-
-  Future<List> getUserPostLikes(String userId) async {
-    return likesManager.getUserPostLikes(userId);
   }
 
   void getUserPosts() async {
@@ -90,14 +80,12 @@ class ProfileRepository implements PostSource {
           .where('creatorId', isEqualTo: user.id)
           .get();
 
-      final newPosts = <PostViewModel>[];
       for (var doc in querySnapshot.docs) {
         final post = PostModel.fromJson(doc.data());
         final user = _userModel!;
-        newPosts.add(PostViewModel(user, post));
+        posts.add(PostViewModel(user, post));
       }
 
-      posts.addAll(newPosts);
       mergeWithLikes();
       userPostsState.add(LoadingStateEnum.success);
     } catch (e) {
@@ -146,7 +134,7 @@ class ProfileRepository implements PostSource {
   }
 
   Future<void> payForBid({required double price}) async {
-    final user = _firestore.collection("users").doc(_userModel!.id);
+    final user = _users.doc(_userModel!.id);
     await user.update({"evmBill": _userModel!.evmBill - price});
     _userModel!.evmBill = _userModel!.evmBill - price;
 
@@ -154,7 +142,7 @@ class ProfileRepository implements PostSource {
   }
 
   Future<void> markFavourite(NftModel nft) async {
-    final dbUser = _firestore.collection("users").doc(_userModel!.id);
+    final dbUser = _users.doc(_userModel!.id);
     await dbUser.update({
       'favourites_list': FieldValue.arrayUnion([nft.documentId])
     });
@@ -164,7 +152,7 @@ class ProfileRepository implements PostSource {
   }
 
   Future<void> removeFromFavourites(NftModel nft) async {
-    final dbUser = _firestore.collection("users").doc(_userModel!.id);
+    final dbUser = _users.doc(_userModel!.id);
     await dbUser.update({
       'favourites_list': FieldValue.arrayRemove([nft.documentId])
     });
@@ -176,8 +164,7 @@ class ProfileRepository implements PostSource {
   Future<void> loadUserNftList() async {
     userNftList.clear();
 
-    final playersCollection =
-        await _firestore.collection(FirebaseCollectionNames.playersNft).get();
+    final playersCollection = await _playersCollection.get();
     playersCollection.docs.forEach((doc) {
       print(doc);
       if (_userModel!.ownUserNftList.contains(doc.id)) {
@@ -186,33 +173,10 @@ class ProfileRepository implements PostSource {
       }
     });
 
-    log("Loaded user nft list: ${userNftList}");
+    log("Loaded user nft list: $userNftList");
   }
 
   void setProfileActiveTab(ProfileTabsEnum tab) {
     activeTab = tab;
   }
-
-  @override
-  Future likePost(String postId, String userId) async {
-    await likesManager.likePost(postId, userId, posts);
-  }
-
-  @override
-  void setPostLiked(String postId, bool value) {
-    likesManager.setPostLiked(postId, value, posts);
-  }
-
-  @override
-  Future unlikePost(String postId, String userId) async {
-    await likesManager.unlikePost(postId, userId, posts);
-  }
-
-  @override
-  List<PostViewModel> mergeWithLikes() {
-    return likesManager.mergeWithLikes(posts);
-  }
-
-  @override
-  final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
 }

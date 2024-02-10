@@ -16,7 +16,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
       debugShowCheckedModeBanner: false,
       title: 'BCSports',
       onGenerateRoute: AppRoutes.generateRoute,

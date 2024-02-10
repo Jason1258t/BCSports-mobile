@@ -16,15 +16,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
-class SocialRepository implements PostSource {
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class SocialRepository extends PostSource {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  static final _users = _firestore.collection(FirebaseCollectionNames.users);
-  static final _comments =
-      _firestore.collection(FirebaseCollectionNames.comments);
-  static final _postsCollection =
-      _firestore.collection(FirebaseCollectionNames.posts);
+  static final _users = FirebaseCollections.usersCollection;
+  static final _comments = FirebaseCollections.commentsCollection;
+  static final _postsCollection = FirebaseCollections.postsCollection;
 
   static final _postsBucket = _storage.ref(FirebaseCollectionNames.postsBucket);
 
@@ -38,10 +35,11 @@ class SocialRepository implements PostSource {
     likesManager.addSource(this);
   }
 
+  @override
+  final List<PostViewModel> posts = [];
+
   BehaviorSubject<LoadingStateEnum> homeScreenState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
-
-  final List<PostViewModel> posts = [];
 
   void refreshPosts() async {
     posts.clear();
@@ -51,7 +49,7 @@ class SocialRepository implements PostSource {
   void initial() async {
     homeScreenState.add(LoadingStateEnum.loading);
     try {
-      posts.addAll(await getPosts());
+      posts.addAll(await _getPosts());
       homeScreenState.add(LoadingStateEnum.success);
     } catch (e) {
       homeScreenState.add(LoadingStateEnum.fail);
@@ -59,29 +57,7 @@ class SocialRepository implements PostSource {
     }
   }
 
-  Future<List> getUserPostLikes(String userId) =>
-      likesManager.getUserPostLikes(userId);
-
-  @override
-  PostViewModel? getCachedPost(String id) =>
-      likesManager.getCachedPost(id, posts);
-
-  @override
-  void setPostLiked(postId, value) =>
-      likesManager.setPostLiked(postId, value, posts);
-
-  @override
-  Future likePost(String postId, String userId) =>
-      likesManager.likePost(postId, userId, posts);
-
-  @override
-  Future unlikePost(String postId, String userId) =>
-      likesManager.unlikePost(postId, userId, posts);
-
-  @override
-  List<PostViewModel> mergeWithLikes() => likesManager.mergeWithLikes(posts);
-
-  Future<List<PostViewModel>> getPosts() async {
+  Future<List<PostViewModel>> _getPosts() async {
     final querySnapshot =
         await _postsCollection.orderBy('createdAtMs', descending: true).get();
 
@@ -153,7 +129,10 @@ class SocialRepository implements PostSource {
   Future<List<CommentViewModel>> getPostComments(String postId) async {
     final comments = <CommentViewModel>[];
 
-    final res = await _comments.where('postId', isEqualTo: postId).orderBy('likesCount', descending: true).get();
+    final res = await _comments
+        .where('postId', isEqualTo: postId)
+        .orderBy('likesCount', descending: true)
+        .get();
 
     for (var doc in res.docs) {
       final comment = CommentModel.fromJson(doc.data(), doc.id);

@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
+import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,15 @@ class CustomButtonNavBar extends StatelessWidget {
         selectedItemColor: AppColors.yellow_F3D523,
         selectedLabelStyle: AppFonts.font11w300,
         unselectedLabelStyle: AppFonts.font11w300,
+
         onTap: (newPageIndex) {
           context.read<MainCubit>().changePageIndexTo(newPageIndex);
         },
         items: [
-          NavItem(iconPath: "assets/icons/market.svg", label: "Market"),
-          NavItem(iconPath: "assets/icons/ar.svg", label: "AR"),
-          NavItem(iconPath: "assets/icons/photo.svg", label: "Photo"),
-          NavItem(iconPath: "assets/icons/profile.svg", label: "Profile"),
+          NavItem(iconPath: Assets.icons('market.svg'), label: "Market"),
+          NavItem(iconPath: Assets.icons('ar.svg'), label: "AR"),
+          NavItem(iconPath: Assets.icons('photo.svg'), label: "Photo"),
+          NavItem(iconPath: Assets.icons('profile.svg'), label: "Profile"),
         ]);
   }
 }

@@ -3,16 +3,10 @@ import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class LikesManager {
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final FirebaseStorage _storage = FirebaseStorage.instance;
-
-  static final CollectionReference _users =
-      _firestore.collection(FirebaseCollectionNames.users);
-  static final CollectionReference _postsCollection =
-      _firestore.collection(FirebaseCollectionNames.posts);
+  static final _users = FirebaseCollections.usersCollection;
+  static final _postsCollection = FirebaseCollections.postsCollection;
 
   final List _postLikes = [];
 
@@ -49,17 +43,13 @@ class LikesManager {
     for (var i in posts) {
       if (i.postModel.id == postId) {
         i.postModel.setLike(value);
-        if (value) {
-          i.postModel.likesCount += 1;
-        } else {
-          i.postModel.likesCount -= 1;
-        }
+        i.postModel.likesCount += value ? 1 : -1;
         return;
       }
     }
   }
 
-  Future<void> _setLikes(
+  Future<void> _saveToDatabase(
       String postId, String userId, List likes, int count) async {
     await _users
         .doc(userId)
@@ -69,44 +59,42 @@ class LikesManager {
         .set({'likesCount': count}, SetOptions(merge: true));
   }
 
-  Future<bool> likePost(
-      String postId, String userId, List<PostViewModel> cachedPosts) async {
-    if (_postLikes.contains(postId)) return true;
+  Future<void> _updateChanges(LikeActionData data) async {
+    final likesCount =
+        getCachedPost(data.postId, data.cachedPosts)!.postModel.likesCount;
 
-    _postLikes.add(postId);
-    try {
-      final likesCount =
-          getCachedPost(postId, cachedPosts)!.postModel.likesCount;
+    await _saveToDatabase(data.postId, data.userId, _postLikes, likesCount);
 
-      await _setLikes(postId, userId, _postLikes, likesCount);
-
-      notifySources(LikeChangesData(true, postId, likesCount));
-    } catch (e) {
-      _postLikes.remove(postId);
-      rethrow;
-    }
-    mergeWithLikes(cachedPosts);
-
-    return _postLikes.contains(postId);
+    notifySources(LikeChangesData(true, data.postId, likesCount));
   }
 
-  Future<bool> unlikePost(
-      String postId, String userId, List<PostViewModel> cachedPosts) async {
-    if (!_postLikes.contains(postId)) return false;
+  Future<bool> likePost(LikeActionData data) async {
+    if (_postLikes.contains(data.postId)) return true;
 
-    _postLikes.remove(postId);
+    _postLikes.add(data.postId);
     try {
-      final likesCount =
-          getCachedPost(postId, cachedPosts)!.postModel.likesCount;
-
-      await _setLikes(postId, userId, _postLikes, likesCount);
-
-      notifySources(LikeChangesData(false, postId, likesCount));
+      await _updateChanges(data);
     } catch (e) {
-      _postLikes.remove(postId);
+      _postLikes.remove(data.postId);
+      rethrow;
     }
-    mergeWithLikes(cachedPosts);
-    return _postLikes.contains(postId);
+
+    mergeWithLikes(data.cachedPosts);
+    return _postLikes.contains(data.postId);
+  }
+
+  Future<bool> unlikePost(LikeActionData data) async {
+    if (!_postLikes.contains(data.postId)) return false;
+
+    _postLikes.remove(data.postId);
+    try {
+      await _updateChanges(data);
+    } catch (e) {
+      _postLikes.add(data.postId);
+    }
+
+    mergeWithLikes(data.cachedPosts);
+    return _postLikes.contains(data.postId);
   }
 
   List<PostViewModel> mergeWithLikes(List<PostViewModel> posts) {
@@ -120,4 +108,12 @@ class LikesManager {
 
     return posts;
   }
+}
+
+class LikeActionData {
+  final String postId;
+  final String userId;
+  final List<PostViewModel> cachedPosts;
+
+  LikeActionData(this.postId, this.userId, this.cachedPosts);
 }
