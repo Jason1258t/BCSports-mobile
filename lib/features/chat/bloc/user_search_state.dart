@@ -7,6 +7,6 @@ class UserSearchInitial extends UserSearchState {}
 
 class UserSearchLoadingState extends UserSearchState {}
 
-class UserSearchSuccess extends UserSearchState {}
+class UserSearchSuccessState extends UserSearchState {}
 
-class UserSearchFail extends UserSearchState {}
+class UserSearchFailState extends UserSearchState {}

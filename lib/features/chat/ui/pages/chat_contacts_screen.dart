@@ -82,7 +82,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   return Center(
                     child: AppAnimations.circleIndicator,
                   );
-                } else if (state is UserSearchSuccess) {
+                } else if (state is UserSearchSuccessState) {
                   return SliverList.builder(itemBuilder: (context, index) {
                     return ChatCardPreviewWidget(
                         user: chatRepository.socialUserList[index]);
