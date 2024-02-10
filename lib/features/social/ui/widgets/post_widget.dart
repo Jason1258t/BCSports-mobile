@@ -38,7 +38,6 @@ class FeedPostWidget extends StatefulWidget {
   final PostSource source;
   final bool commentsActive;
   final String? userId;
-  final
 
   @override
   State<FeedPostWidget> createState() => _FeedPostWidgetState();
