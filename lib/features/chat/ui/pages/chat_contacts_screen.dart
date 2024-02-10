@@ -1,8 +1,10 @@
 import 'dart:html';
 
+import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -73,11 +75,27 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
             ),
           ),
 
-          SliverList.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-            return Container();
-          })
+          SliverToBoxAdapter(
+            child: BlocBuilder<UserSearchCubit, UserSearchState>(
+              builder: (context, state) {
+                if (state is UserSearchLoadingState) {
+                  return Center(
+                    child: AppAnimations.circleIndicator,
+                  );
+                } else if (state is UserSearchSuccess) {
+                  return SliverList.builder(itemBuilder: (context, index) {
+                    return ChatCardPreviewWidget(
+                        user: chatRepository.socialUserList[index]);
+                  });
+                }
+
+                return Center(
+                  child: Text("Sorry smth went wrong"),
+                );
+              },
+            ),
+          ),
+
           // SliverList.builder(itemBuilder: itemBuilder)
         ],
       ),
