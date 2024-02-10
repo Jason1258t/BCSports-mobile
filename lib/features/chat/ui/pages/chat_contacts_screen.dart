@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
+import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -5,6 +9,7 @@ import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
 class ChatContactsScreen extends StatefulWidget {
@@ -21,6 +26,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ChatRepository chatRepository = context.read<ChatRepository>();
+
     return CustomScaffold(
       color: AppColors.background,
       body: CustomScrollView(
@@ -65,10 +72,12 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               height: 18,
             ),
           ),
-          ChatCardPreviewWidget(),
-          ChatCardPreviewWidget(),
-          ChatCardPreviewWidget(),
-          ChatCardPreviewWidget(),
+
+          SliverList.builder(
+            itemCount: 5,
+            itemBuilder: (context, index) {
+            return Container();
+          })
           // SliverList.builder(itemBuilder: itemBuilder)
         ],
       ),
@@ -77,7 +86,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 }
 
 class ChatCardPreviewWidget extends StatelessWidget {
-  const ChatCardPreviewWidget({super.key});
+  final UserModel user;
+
+  const ChatCardPreviewWidget({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
