@@ -13,4 +13,6 @@ abstract class AppRouteNames {
   static const String recovery = '/recovery';
   static const String favourites = '/favs';
   static const String favouritesPost = '/favouritesPost';
+  static const String chatContacts = '/chat/contacts';
+  static const String chatMessages = '/chat/messages';
 }
