@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class FirebaseCollectionNames {
-  static const String users = 'users';
+  static const String users = 'Users';
   static const String posts = 'posts';
   static const String comments = 'comments';
   static const String postsBucket = '/feed_post_images';
