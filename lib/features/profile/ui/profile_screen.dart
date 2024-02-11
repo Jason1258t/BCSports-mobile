@@ -240,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Center(
                 child: Text(
           'Sorry, you don\'t have NFTs.',
-          style: AppFonts.font20w600,
+          style: AppFonts.font18w400,
         )));
       },
     );
@@ -265,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Center(
                     child: Text(
               'Sorry, you don\'t have Posts.',
-              style: AppFonts.font20w600,
+              style: AppFonts.font18w400,
             )));
           } else {
             return SliverToBoxAdapter(

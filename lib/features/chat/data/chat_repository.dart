@@ -13,10 +13,23 @@ class ChatRepository {
 
   final Stream<List<Room>> roomsStream = chatCore.rooms();
 
+  List<UserModel> socialUserList = [];
+
+  BehaviorSubject<LoadingStateEnum> socialUserListState =
+  BehaviorSubject.seeded(LoadingStateEnum.wait);
+
+  List<UserModel> filteredUserList = [];
+
+  UserModel? activeUser;
+
   ChatRepository() {
     FirebaseChatCore.instance
         .setConfig(const FirebaseChatCoreConfig(null, 'rooms', 'chat_users'));
     subscribeRoomsUpdates();
+  }
+
+  void setActiveUser(UserModel user){
+    activeUser = user;
   }
 
   void subscribeRoomsUpdates() {
@@ -57,13 +70,6 @@ class ChatRepository {
     }
     return null;
   }
-
-  List<UserModel> socialUserList = [];
-
-  BehaviorSubject<LoadingStateEnum> socialUserListState =
-      BehaviorSubject.seeded(LoadingStateEnum.wait);
-
-  List<UserModel> filteredUserList = [];
 
   Future<void> getAllUsers() async {
     final res = (await _users.get()).docs;

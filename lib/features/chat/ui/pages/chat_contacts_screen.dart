@@ -76,47 +76,63 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                 });
               },
               onTap: () {
+                context.read<UserSearchCubit>().searchByString(
+                    searchController.text == ''
+                        ? '123123123'
+                        : searchController.text);
+
                 setState(() {
                   isOpenSearch = true;
                 });
               },
               prefixIcon: const Icon(Icons.search),
               controller: searchController),
-          AnimatedContainer(
-            margin: const EdgeInsets.only(top: 20),
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            duration: const Duration(milliseconds: 100),
-            width: double.infinity,
-            height: isOpenSearch ? sizeOf.height * 0.5 : 0,
-            decoration: BoxDecoration(
-                color: AppColors.black_s2new_1A1A1A,
-                borderRadius: BorderRadius.circular(10)),
-            child: BlocBuilder<UserSearchCubit, UserSearchState>(
-              builder: (context, state) {
-                if (state is UserSearchSuccessState &&
-                    chatRepository.filteredUserList.isNotEmpty) {
-                  return Column(children: generateFoundUsers());
-                } else if (state is UserSearchSuccessState &&
-                    chatRepository.filteredUserList.isEmpty) {
-                  return const Text('Тo result');
-                } else {
-                  return Center(
-                    child: AppAnimations.circleIndicator,
-                  );
-                }
-              },
-            ),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: SingleChildScrollView(
+                    child: StreamBuilder<List<Room>>(
+                        stream: chatRepository.roomsStream,
+                        builder: (context, snapshot) {
+                          return Column(
+                            children: [
+                              if (snapshot.hasData) ...generateChats(snapshot)
+                            ],
+                          );
+                        })),
+              ),
+              Container(
+                color: AppColors.black,
+                child: AnimatedContainer(
+                  margin: const EdgeInsets.only(top: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  duration: const Duration(milliseconds: 100),
+                  width: double.infinity,
+                  height: isOpenSearch ? sizeOf.height * 0.5 : 0,
+                  decoration: BoxDecoration(
+                      color: AppColors.black_s2new_1A1A1A,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: BlocBuilder<UserSearchCubit, UserSearchState>(
+                    builder: (context, state) {
+                      if (state is UserSearchSuccessState &&
+                          chatRepository.filteredUserList.isNotEmpty) {
+                        return Column(children: generateFoundUsers());
+                      } else if (state is UserSearchSuccessState &&
+                          chatRepository.filteredUserList.isEmpty) {
+                        return const Text('Тo result');
+                      } else {
+                        return Center(
+                          child: AppAnimations.circleIndicator,
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-          SingleChildScrollView(
-              child: StreamBuilder<List<Room>>(
-                  stream: chatRepository.roomsStream,
-                  builder: (context, snapshot) {
-                    return Column(
-                      children: [
-                        if (snapshot.hasData) ...generateChats(snapshot)
-                      ],
-                    );
-                  })),
         ],
       ),
     );
@@ -142,6 +158,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   if (e.id != currentUserId) {
                     Room? room = await chatRepository.roomWithUserExists(e.id);
                     room ??= await chatRepository.createRoomWithUser(e);
+
+                    chatRepository.setActiveUser(e);
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -162,12 +181,13 @@ class ChatCardPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.read<ProfileRepository>();
+    final chatRepository = context.read<ChatRepository>();
+
     Widget getUserAvatar() {
-      final profile = context.read<ProfileRepository>();
-      final chat = context.read<ChatRepository>();
       for (var i in room.users) {
         if (i.id != profile.user.id) {
-          final user = chat.getUserById(i.id)!;
+          final user = chatRepository.getUserById(i.id)!;
 
           return Container(
             decoration: BoxDecoration(
@@ -220,9 +240,16 @@ class ChatCardPreviewWidget extends StatelessWidget {
       return '';
     }
 
+    final charRepository = RepositoryProvider.of<ChatRepository>(context);
+
     return InkWell(
       onTap: () {
-        // Navigator.pushNamed(context, AppRouteNames.chatMessages);
+        for (var i in room.users) {
+          if (i.id != profile.user.id) {
+            charRepository.setActiveUser(chatRepository.getUserById(i.id)!);
+          }
+        }
+
         Navigator.push(context,
             MaterialPageRoute(builder: (_) => ChatMessagesScreen(room: room)));
       },
@@ -238,7 +265,7 @@ class ChatCardPreviewWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  room.name ?? getOtherUserName() ?? '',
+                  getOtherUserName() ?? '',
                   style: AppFonts.font14w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(

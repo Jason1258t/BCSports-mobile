@@ -40,7 +40,12 @@ class FavouritePostsRepository extends PostSource {
 
     postsState.add(LoadingStateEnum.loading);
 
-    final likes = await getUserPostLikes(userId);
+    final likes = (await getUserPostLikes(userId)) as List;
+    if(likes.isEmpty){
+      postsState.add(LoadingStateEnum.success);
+      return [];
+    }
+
     final response = await _postsCollection.where('id', whereIn: likes).get();
 
     posts.clear();

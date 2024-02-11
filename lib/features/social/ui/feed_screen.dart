@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,13 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
               );
-            } else {
+            }
+            else if (state is HomeSocialSuccessState && repository.posts.isEmpty){
+              return Center(
+                child: Text('There is no post yet',style: AppFonts.font36w800,),
+              );
+            }
+            else {
               return CustomScaffold(
                   body: Center(
                 child: AppAnimations.circleIndicator,

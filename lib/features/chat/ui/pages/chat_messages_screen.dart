@@ -1,6 +1,9 @@
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -23,19 +26,61 @@ class ChatMessagesScreen extends StatefulWidget {
 class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
   final chatCore = FirebaseChatCore.instance;
 
-  final ChatTheme them = const DarkChatTheme();
+  final ChatTheme them = const DarkChatTheme(backgroundColor: Colors.black);
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<ProfileRepository>().user.toChatUser();
+    final user = context
+        .read<ChatRepository>()
+        .activeUser!;
+
+    final userChatUser = context
+        .read<ProfileRepository>()
+        .user
+        .toChatUser();
+    final sizeOf = MediaQuery.sizeOf(context);
+
+    final repository = RepositoryProvider.of<ProfileViewRepository>(context);
 
     return CustomScaffold(
       padding: EdgeInsets.zero,
       appBar: EmptyAppBar(
         title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ButtonBack(
-            onTap: () => Navigator.pop(context),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: InkWell(
+            onTap: () {
+              repository.setUser(user.id);
+              Navigator.pushNamed(context, AppRouteNames.profileView);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ButtonBack(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Text(
+                  user.username,
+                  style: AppFonts.font16w500,
+                ),
+                CircleAvatar(
+                  backgroundColor: user.avatarColor,
+                  radius: sizeOf.width * 0.05,
+                  backgroundImage: user.avatarUrl == null
+                      ? null
+                      : NetworkImage(user.avatarUrl!),
+                  child: user.avatarUrl == null
+                      ? Center(
+                          child: Text(
+                            (user.displayName ?? user.username)[0].toUpperCase(),
+                            style: AppFonts.font12w400,
+                          ),
+                        )
+                      : Container(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -48,10 +93,11 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                 initialData: widget.room.lastMessages ?? [],
                 builder: (context, snapshot) {
                   return Chat(
-                      messages: snapshot.data ?? [],
-                      onSendPressed: send,
-                      user: user,
-                      theme: them);
+                    messages: snapshot.data ?? [],
+                    onSendPressed: send,
+                    user: userChatUser,
+                    theme: them,
+                  );
                 });
           }),
     );
