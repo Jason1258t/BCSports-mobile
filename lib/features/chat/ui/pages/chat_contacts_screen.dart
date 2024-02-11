@@ -13,6 +13,7 @@ import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class ChatContactsScreen extends StatefulWidget {
   const ChatContactsScreen({super.key});
@@ -224,9 +225,7 @@ class ChatCardPreviewWidget extends StatelessWidget {
       return null;
     }
 
-    String getLastMessage() {
-      final messages = room.lastMessages ?? [];
-
+    String getLastMessage(List<Message> messages) {
       if (messages.isNotEmpty) {
         final lastMessage = messages.last;
 
@@ -271,9 +270,14 @@ class ChatCardPreviewWidget extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  getLastMessage(),
-                  style: AppFonts.font12w400.copyWith(color: AppColors.white),
+                StreamBuilder<List<Message>>(
+                  stream: FirebaseChatCore.instance.messages(room),
+                  builder: (context, snapshot) {
+                    return Text(
+                      getLastMessage(snapshot.data ?? []),
+                      style: AppFonts.font12w400.copyWith(color: AppColors.white),
+                    );
+                  }
                 ),
               ],
             )
