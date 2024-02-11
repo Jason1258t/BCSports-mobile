@@ -166,7 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 40,
                           text: 'Apple',
                           icon: SvgPicture.asset(Assets.icons('apple.svg')),
-                          onTap: () {},
+                          onTap: () {
+                            context.read<AuthCubit>().signInWithApple();
+                          },
                           isActive: true,
                         )),
                       ],

@@ -32,6 +32,16 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void signInWithApple() async {
+    emit(AuthInProcess());
+    try {
+      await _authRepository.signInWithApple();
+      emit(AuthSuccessState());
+    } on Exception catch (e) {
+      emit(AuthFailState(e));
+    }
+  }
+
   void signUpWithEmailAndPassword(
       {required String email, required String password}) async {
     emit(AuthInProcess());
