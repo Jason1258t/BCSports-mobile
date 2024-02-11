@@ -1,7 +1,5 @@
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
-import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -57,9 +55,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
           child: Column(
         children: [
           CustomTextFormField(
-            onChange: (v) {
-              context.read<UserSearchCubit>().searchByString(v ?? '123412dfasdaf');
-            },
+              onChange: (v) {
+                context.read<UserSearchCubit>().searchByString(v ?? '');
+              },
               prefixIcon: const Icon(Icons.search),
               controller: searchController),
           const SizedBox(
@@ -69,11 +67,16 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
             builder: (context, state) {
               if (state is UserSearchSuccessState) {
                 return Column(
-                  children: chatRepository.filteredUserList.map((e) => Text(e.username ?? '', style: AppFonts.font12w400,)).toList()
+                    children: chatRepository.filteredUserList
+                        .map((e) => Text(
+                              e.username,
+                              style: AppFonts.font12w400,
+                            ))
+                        .toList());
+              } else {
+                return Center(
+                  child: AppAnimations.circleIndicator,
                 );
-              }
-              else{
-                return Center(child: AppAnimations.circleIndicator,);
               }
             },
           ),
