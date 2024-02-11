@@ -22,11 +22,11 @@ class UserSearchCubit extends Cubit<UserSearchState> {
     }
   }
 
-  void searchByString(String query) {
+  void searchByString(String query, String youId) {
     emit(UserSearchLoadingState());
 
     try{
-      chatRepository.filterUserByInputText(query);
+      chatRepository.filterUserByInputText(query, youId);
       emit(UserSearchSuccessState());
     }
     catch (e){

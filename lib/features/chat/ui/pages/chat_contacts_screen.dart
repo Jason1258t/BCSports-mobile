@@ -32,6 +32,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
   @override
   Widget build(BuildContext context) {
     final ChatRepository chatRepository = context.read<ChatRepository>();
+    final ProfileRepository profileRepository =
+        context.read<ProfileRepository>();
 
     final sizeOf = MediaQuery.sizeOf(context);
 
@@ -69,9 +71,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
         children: [
           CustomTextFormField(
               onChange: (v) {
-                context
-                    .read<UserSearchCubit>()
-                    .searchByString(v == '' ? '123412dfasdaf' : v!);
+                context.read<UserSearchCubit>().searchByString(
+                    v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
                 setState(() {
                   isOpenSearch = MediaQuery.of(context).viewInsets.bottom != 0;
                 });
@@ -80,7 +81,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                 context.read<UserSearchCubit>().searchByString(
                     searchController.text == ''
                         ? '123123123'
-                        : searchController.text);
+                        : searchController.text,
+                    profileRepository.user.id);
 
                 setState(() {
                   isOpenSearch = true;
@@ -271,14 +273,14 @@ class ChatCardPreviewWidget extends StatelessWidget {
                   height: 5,
                 ),
                 StreamBuilder<List<Message>>(
-                  stream: FirebaseChatCore.instance.messages(room),
-                  builder: (context, snapshot) {
-                    return Text(
-                      getLastMessage(snapshot.data ?? []),
-                      style: AppFonts.font12w400.copyWith(color: AppColors.white),
-                    );
-                  }
-                ),
+                    stream: FirebaseChatCore.instance.messages(room),
+                    builder: (context, snapshot) {
+                      return Text(
+                        getLastMessage(snapshot.data ?? []),
+                        style: AppFonts.font12w400
+                            .copyWith(color: AppColors.white),
+                      );
+                    }),
               ],
             )
           ],

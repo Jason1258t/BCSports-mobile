@@ -81,8 +81,8 @@ class ChatRepository {
     socialUserList = res.map((doc) => UserModel.fromJson(doc.data())).toList();
   }
 
-  void filterUserByInputText(String name) {
+  void filterUserByInputText(String name, String youId) {
     filteredUserList =
-        socialUserList.where((user) => (user.username).contains(name)).toList();
+        socialUserList.where((user) => (user.username).contains(name) && user.id != youId).toList();
   }
 }
