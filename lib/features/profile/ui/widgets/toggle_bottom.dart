@@ -1,9 +1,7 @@
-import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ToggleButton extends StatelessWidget {
   const ToggleButton(

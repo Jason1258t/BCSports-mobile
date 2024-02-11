@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/button_skip.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_first.dart';
@@ -7,7 +5,6 @@ import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_fourth
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_second.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_third.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             .toList(),
                       ),
                     ),
-                    ButtonSkip()
+                    const ButtonSkip()
                   ],
                 ),
               ),

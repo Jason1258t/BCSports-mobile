@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/social/data/models/banner_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
@@ -8,7 +9,6 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/exceptions.dart';
 import 'package:bcsports_mobile/utils/strings.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
@@ -20,8 +20,6 @@ class AuthRepository {
   }
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final FirebaseFirestore _firebaseFirestore =
-      FirebaseFirestore.instance;
 
   User? get currentUser => _auth.currentUser;
 
@@ -40,11 +38,11 @@ class AuthRepository {
   }
 
   Future _writeUserDataInDatabase(String userId) async {
-    final collection =
-        _firebaseFirestore.collection(FirebaseCollectionNames.users);
-
+    final collection = FirebaseCollections.usersCollection;
     final res = await collection.doc(userId).get();
+
     if (res.exists) return;
+
     final user = UserModel.create(
         userId,
         _generateTempUserName(),
@@ -54,6 +52,7 @@ class AuthRepository {
                 Random().nextInt(AppStrings.listBannerImages.length)]));
 
     await collection.doc(userId).set(user.toJson());
+    await ChatRepository.createUserInFirestore(user);
   }
 
   void _authChangesListener(User? user) {

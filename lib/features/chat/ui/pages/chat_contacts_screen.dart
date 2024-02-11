@@ -1,8 +1,8 @@
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
-import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
+import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/widgets/small_user_card.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -12,6 +12,7 @@ import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
 
 class ChatContactsScreen extends StatefulWidget {
   const ChatContactsScreen({super.key});
@@ -94,16 +95,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               builder: (context, state) {
                 if (state is UserSearchSuccessState &&
                     chatRepository.filteredUserList.isNotEmpty) {
-                  return Column(
-                      children: chatRepository.filteredUserList
-                          .map((e) => Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SmallUserCard(
-                                  onTap: () {},
-                                  userModel: e,
-                                ),
-                          ))
-                          .toList());
+                  return Column(children: generateFoundUsers());
                 } else if (state is UserSearchSuccessState &&
                     chatRepository.filteredUserList.isEmpty) {
                   return const Text('Тo result');
@@ -115,39 +107,130 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               },
             ),
           ),
-          const SingleChildScrollView(
-              child: Column(
-            children: [
-              SizedBox(
-                height: 18,
-              ),
-            ],
-          )),
+          SingleChildScrollView(
+              child: StreamBuilder<List<Room>>(
+                  stream: chatRepository.roomsStream,
+                  builder: (context, snapshot) {
+                    return Column(
+                      children: [
+                        if (snapshot.hasData) ...generateChats(snapshot)
+                      ],
+                    );
+                  })),
         ],
       ),
     );
   }
+
+  List<Widget> generateChats(AsyncSnapshot<List<Room>> snapshot) {
+    return snapshot.data!
+        .map((e) => ChatCardPreviewWidget(
+              room: e,
+            ))
+        .toList();
+  }
+
+  List<Widget> generateFoundUsers() {
+    final chatRepository = context.read<ChatRepository>();
+    final currentUserId = context.read<ProfileRepository>().user.id;
+
+    return chatRepository.filteredUserList
+        .map((e) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: SmallUserCard(
+                onTap: () async {
+                  if (e.id != currentUserId) {
+                    Room? room = await chatRepository.roomWithUserExists(e.id);
+                    room ??= await chatRepository.createRoomWithUser(e);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ChatMessagesScreen(room: room!)));
+                  }
+                },
+                userModel: e,
+              ),
+            ))
+        .toList();
+  }
 }
 
 class ChatCardPreviewWidget extends StatelessWidget {
-  const ChatCardPreviewWidget({super.key});
+  const ChatCardPreviewWidget({super.key, required this.room});
+
+  final Room room;
 
   @override
   Widget build(BuildContext context) {
+    Widget getUserAvatar() {
+      final profile = context.read<ProfileRepository>();
+      final chat = context.read<ChatRepository>();
+      for (var i in room.users) {
+        if (i.id != profile.user.id) {
+          final user = chat.getUserById(i.id)!;
+
+          return Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: user.avatarColor,
+                image: user.avatarUrl != null
+                    ? DecorationImage(image: NetworkImage(user.avatarUrl!))
+                    : null),
+            width: 48,
+            height: 48,
+            child: user.avatarUrl == null
+                ? Center(
+                    child: Text(
+                      (user.displayName ?? user.username)[0].toUpperCase(),
+                      style: AppFonts.font16w400,
+                    ),
+                  )
+                : Container(),
+          );
+        }
+      }
+      return Container();
+    }
+
+    String? getOtherUserName() {
+      final profile = context.read<ProfileRepository>();
+      final chat = context.read<ChatRepository>();
+      for (var i in room.users) {
+        if (i.id != profile.user.id) {
+          final user = chat.getUserById(i.id)!;
+          return user.displayName ?? user.username;
+        }
+      }
+      return null;
+    }
+
+    String getLastMessage() {
+      final messages = room.lastMessages ?? [];
+
+      if (messages.isNotEmpty) {
+        final lastMessage = messages.last;
+
+        if (lastMessage.type == MessageType.text) {
+          return (lastMessage as TextMessage).text;
+        }
+
+        return 'attachment';
+      }
+
+      return '';
+    }
+
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRouteNames.chatMessages);
+        // Navigator.pushNamed(context, AppRouteNames.chatMessages);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) => ChatMessagesScreen(room: room)));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.primary),
-              width: 48,
-              height: 48,
-            ),
+            getUserAvatar(),
             const SizedBox(
               width: 15,
             ),
@@ -155,14 +238,14 @@ class ChatCardPreviewWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Name",
+                  room.name ?? getOtherUserName() ?? '',
                   style: AppFonts.font14w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  "Last message",
+                  getLastMessage(),
                   style: AppFonts.font12w400.copyWith(color: AppColors.white),
                 ),
               ],

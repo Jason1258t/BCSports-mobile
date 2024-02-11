@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
@@ -9,7 +8,6 @@ import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';

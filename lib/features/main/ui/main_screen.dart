@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
       builder: (context, state) {
         return Scaffold(
           body: AppRoutes.mainPages[context.read<MainCubit>().currentPageIndex],
-          bottomNavigationBar: CustomButtonNavBar(),
+          bottomNavigationBar: const CustomButtonNavBar(),
         );
       },
     );

@@ -12,6 +12,7 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProfileRepository extends PostSource {

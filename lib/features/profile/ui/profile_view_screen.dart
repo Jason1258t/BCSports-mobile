@@ -1,13 +1,9 @@
-import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_cubit.dart';
-import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
-import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
-import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';

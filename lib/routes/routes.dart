@@ -73,8 +73,8 @@ class AppRoutes {
 
       case AppRouteNames.chatContacts:
         return MaterialPageRoute(builder: (ctx) => const ChatContactsScreen());
-      case AppRouteNames.chatMessages:
-        return MaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
+      // case AppRouteNames.chatMessages:
+      //   return MaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
       default:
         return MaterialPageRoute(

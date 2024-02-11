@@ -1,5 +1,4 @@
 import 'package:bcsports_mobile/utils/assets.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

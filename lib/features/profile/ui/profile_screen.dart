@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';

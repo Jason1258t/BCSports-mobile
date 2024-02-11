@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
