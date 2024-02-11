@@ -7,7 +7,6 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/custom_sliver_app_bar.dart';
 import 'package:bcsports_mobile/widgets/appBar/sliver_app_bar_delegate.dart';
-import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

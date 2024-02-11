@@ -97,7 +97,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                     height: 6,
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 4),
+                    margin: const EdgeInsets.only(bottom: 4),
                     clipBehavior: Clip.hardEdge,
                     height: 26,
                     decoration: BoxDecoration(

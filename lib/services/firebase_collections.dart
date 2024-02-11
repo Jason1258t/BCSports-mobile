@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class FirebaseCollectionNames {
   static const String users = 'users';
@@ -8,11 +7,11 @@ abstract class FirebaseCollectionNames {
   static const String postsBucket = '/feed_post_images';
   static const String userAvatar = '/user_avatar';
   static const String playersNft = 'players_NFT';
+  static const String chatUsers = 'chat_users';
 }
 
 abstract class FirebaseCollections {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   static final usersCollection =
       _firestore.collection(FirebaseCollectionNames.users);

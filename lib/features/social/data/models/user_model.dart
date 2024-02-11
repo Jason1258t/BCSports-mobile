@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/social/data/models/banner_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart';
 
 class UserModel {
   final String id;
@@ -51,4 +52,6 @@ class UserModel {
         "evmBill": evmBill,
         'banner': banner.toJson(),
       };
+
+  User toChatUser() => User(id: id, firstName: displayName ?? username, imageUrl: avatarUrl);
 }

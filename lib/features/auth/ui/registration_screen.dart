@@ -55,10 +55,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Dialogs.hide(context);
         }
         if (state is AuthFailState) {
-          print(state.e);
-          print('Auth error');
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
+              .showSnackBar(AppSnackBars.snackBar(state.e.toString()));
         }
         if (state is AuthSuccessState) {
           Navigator.pushReplacementNamed(context, '/onboarding');

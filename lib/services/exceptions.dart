@@ -5,7 +5,7 @@ class UserNotFoundException implements Exception {
 
 class WrongPasswordException implements Exception {
   @override
-  toString() => 'Wrong password provided for that user.';
+  toString() => 'Wrong password for that user.';
 }
 class WeekPasswordException implements Exception {
   @override

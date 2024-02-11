@@ -1,8 +1,6 @@
-import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/comment_widget.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
-import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -23,7 +21,6 @@ class CommentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<PostCommentsCubit>(context);
-    final post = bloc.source!.getCachedPost(bloc.post!.postModel.id)!;
     return CustomScaffold(
       padding: EdgeInsets.zero,
       resize: true,

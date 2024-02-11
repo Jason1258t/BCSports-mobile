@@ -45,7 +45,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
 
-    final repository = RepositoryProvider.of<ProfileRepository>(context);
 
     return CustomScaffold(
         resize: true,

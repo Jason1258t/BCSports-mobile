@@ -3,7 +3,6 @@ import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/validator.dart';
@@ -16,7 +15,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -56,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state is AuthFailState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar('ошибка авторизации'));
+              .showSnackBar(AppSnackBars.snackBar(state.e.toString()));
         }
       },
       child: CustomScaffold(

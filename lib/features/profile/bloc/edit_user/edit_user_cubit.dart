@@ -17,10 +17,11 @@ class EditUserCubit extends Cubit<EditUserState> {
       String displayName, String username, XFile? image) async {
     emit(EditUserLoadingState());
     try {
-      _profileRepository.deleteOldUserAvatar();
+
 
       String? imageUrl;
       if (image != null) {
+        _profileRepository.deleteOldUserAvatar();
         imageUrl = await _profileRepository.uploadAvatar(image.path);
       }
 

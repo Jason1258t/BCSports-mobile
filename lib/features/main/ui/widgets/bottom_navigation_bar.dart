@@ -15,7 +15,7 @@ class CustomButtonNavBar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         backgroundColor: AppColors.black_252525,
-        currentIndex: context.read<MainCubit>().currentPageIndex,
+        currentIndex: context.watch<MainCubit>().currentPageIndex,
         showUnselectedLabels: true,
         unselectedItemColor: AppColors.grey_B4B4B4,
         selectedItemColor: AppColors.primary,

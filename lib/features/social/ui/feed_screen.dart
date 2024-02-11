@@ -1,4 +1,4 @@
-import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
+import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,10 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+                  onTap: () async{
+                    await context.read<UserSearchCubit>().init();
+                    Navigator.pushNamed(context, AppRouteNames.chatContacts);
+                  },
                   child: SvgPicture.asset(
                     Assets.icons('message.svg'),
                     width: 24,
@@ -76,7 +81,13 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
               );
-            } else {
+            }
+            else if (state is HomeSocialSuccessState && repository.posts.isEmpty){
+              return Center(
+                child: Text('There is no post yet',style: AppFonts.font36w800,),
+              );
+            }
+            else {
               return CustomScaffold(
                   body: Center(
                 child: AppAnimations.circleIndicator,

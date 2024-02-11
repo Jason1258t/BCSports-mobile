@@ -6,13 +6,11 @@ import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../../../utils/enums.dart';
 
 class ProfileViewRepository extends PostSource{
-  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   static final _users = FirebaseCollections.usersCollection;
   static final _postsCollection = FirebaseCollections.postsCollection;

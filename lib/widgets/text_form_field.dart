@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
       this.labelText,
       this.obscured = false,
       this.suffixIcon,
-      this.keyboardType, this.onChange,this.initValue});
+      this.keyboardType, this.onChange,this.initValue, this.onTap, this.showCursor});
 
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -25,6 +25,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final Function(String?)? onChange;
   final String? initValue;
+  final Function()? onTap;
+  final bool? showCursor;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,8 @@ class CustomTextFormField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           alignment: Alignment.center,
           child: TextFormField(
+            showCursor: showCursor,
+            onTap: onTap,
             onChanged: onChange,
             validator: validator,
             controller: controller,

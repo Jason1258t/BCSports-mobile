@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
@@ -48,46 +47,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return CustomScaffold(
             appBar: AppBar(
                 backgroundColor: Colors.transparent,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
+                title: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    const Row(
-                      children: [
-                        SizedBox(
-                          width: 120,
-                        ),
-                      ],
-                    ),
                     Text(
                       'Profile',
                       style: AppFonts.font18w600,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.add,
-                            color: AppColors.white,
-                          ),
-                          onPressed: () => Navigator.pushNamed(
-                              context, AppRouteNames.createPost),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                            color: AppColors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, AppRouteNames.profileSettings);
-                          },
-                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                color: AppColors.white,
+                              ),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, AppRouteNames.createPost),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.settings,
+                                color: AppColors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, AppRouteNames.profileSettings);
+                              },
+                            ),
+                          ],
+                        )
                       ],
-                    )
+                    ),
                   ],
                 )),
             body: RefreshIndicator.adaptive(
@@ -242,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Center(
                 child: Text(
           'Sorry, you don\'t have NFTs.',
-          style: AppFonts.font20w600,
+          style: AppFonts.font18w400,
         )));
       },
     );
@@ -267,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Center(
                     child: Text(
               'Sorry, you don\'t have Posts.',
-              style: AppFonts.font20w600,
+              style: AppFonts.font18w400,
             )));
           } else {
             return SliverToBoxAdapter(

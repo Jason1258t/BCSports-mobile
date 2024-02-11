@@ -16,10 +16,6 @@ class ButtonBack extends StatelessWidget {
       child: Ink(
         height: 40,
         width: 40,
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.black_222232 : AppColors.white,
-          borderRadius: BorderRadius.circular(100),
-        ),
         child: Icon(
           Icons.arrow_back,
           color: isDark ? AppColors.white : AppColors.black_252525,

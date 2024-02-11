@@ -1,8 +1,7 @@
-import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
-import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,8 +33,7 @@ class FavouritesScreen extends StatelessWidget {
               StreamBuilder(
                   stream: repository.postsState.stream,
                   builder: (context, snapshot) {
-                    if (snapshot.data == LoadingStateEnum.success) {
-                      print('success loaded');
+                    if (snapshot.data == LoadingStateEnum.success && repository.posts.isNotEmpty) {
                       return SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
@@ -45,7 +43,15 @@ class FavouritesScreen extends StatelessWidget {
                         ),
                         childCount: repository.posts.length,
                       ));
-                    } else {
+                    }
+                    else if(snapshot.data == LoadingStateEnum.success && repository.posts.isEmpty){
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Text('You haven\'t favorites', style: AppFonts.font18w400,),
+                        ),
+                      );
+                    }
+                    else {
                       return SliverToBoxAdapter(
                         child: Center(
                           child: AppAnimations.circleIndicator,
