@@ -18,6 +18,7 @@ class UserSearchCubit extends Cubit<UserSearchState> {
     }
     catch (e){
       emit(UserSearchFailState());
+      rethrow;
     }
   }
 

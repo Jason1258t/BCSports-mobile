@@ -64,7 +64,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               CircleAvatar(
                 backgroundColor: user.avatarColor,
                 radius: sizeOf.width * 0.20,
-                backgroundImage: NetworkImage(user.avatarUrl ?? ''),
+                backgroundImage: NetworkImage(user.avatarUrl == null ? '' : user.avatarUrl!),
                 child: user.avatarUrl == null
                     ? Center(
                         child: Text(

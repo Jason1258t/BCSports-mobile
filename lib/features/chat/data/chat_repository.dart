@@ -14,15 +14,17 @@ class ChatRepository {
    List<UserModel> filteredUserList = [];
 
   Future<void> getAllUsers() async {
-    socialUserList = ((await _users.get()).docs)
-        .map((doc) => UserModel.fromJson(doc.data()))
+    final res = (await _users.get()).docs;
+    print(res);
+    res.forEach((element) {print(element.data());});
+
+    socialUserList = res.map((doc) => UserModel.fromJson(doc.data()))
         .toList();
-    print(socialUserList);
   }
 
   void filterUserByInputText(String name){
     filteredUserList = socialUserList
-        .where((user) => (user.displayName ?? "").startsWith(name))
+        .where((user) => (user.username ?? "").startsWith(name))
         .toList();
   }
 }

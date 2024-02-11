@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
+import 'package:bcsports_mobile/features/chat/ui/widgets/small_user_card.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
@@ -24,11 +25,20 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
   final String title = "Contacts";
 
+  bool isOpenSearch = false;
+
   @override
   Widget build(BuildContext context) {
     final ChatRepository chatRepository = context.read<ChatRepository>();
 
+    final sizeOf = MediaQuery.sizeOf(context);
+
     return CustomScaffold(
+      onTap: () {
+        setState(() {
+          isOpenSearch = false;
+        });
+      },
       appBar: AppBar(
         backgroundColor: AppColors.black,
         automaticallyImplyLeading: false,
@@ -53,35 +63,68 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
         ),
       ),
       color: AppColors.background,
-      body: SingleChildScrollView(
-          child: Column(
+      body: Column(
         children: [
           CustomTextFormField(
-            onChange: (v) {
-              context.read<UserSearchCubit>().searchByString(v ?? '123412dfasdaf');
-            },
+              onChange: (v) {
+                context
+                    .read<UserSearchCubit>()
+                    .searchByString(v == '' ? '123412dfasdaf' : v!);
+                setState(() {
+                  isOpenSearch = MediaQuery.of(context).viewInsets.bottom != 0;
+                });
+              },
+              onTap: () {
+                setState(() {
+                  isOpenSearch = true;
+                });
+              },
               prefixIcon: const Icon(Icons.search),
               controller: searchController),
-          const SizedBox(
-            height: 18,
+          AnimatedContainer(
+            margin: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            duration: const Duration(milliseconds: 100),
+            width: double.infinity,
+            height: isOpenSearch ? sizeOf.height * 0.5 : 0,
+            decoration: BoxDecoration(
+                color: AppColors.black_s2new_1A1A1A,
+                borderRadius: BorderRadius.circular(10)),
+            child: BlocBuilder<UserSearchCubit, UserSearchState>(
+              builder: (context, state) {
+                if (state is UserSearchSuccessState &&
+                    chatRepository.filteredUserList.isNotEmpty) {
+                  return Column(
+                      children: chatRepository.filteredUserList
+                          .map((e) => Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: SmallUserCard(
+                                  onTap: () {},
+                                  userModel: e,
+                                ),
+                          ))
+                          .toList());
+                } else if (state is UserSearchSuccessState &&
+                    chatRepository.filteredUserList.isEmpty) {
+                  return const Text('Тo result');
+                } else {
+                  return Center(
+                    child: AppAnimations.circleIndicator,
+                  );
+                }
+              },
+            ),
           ),
-          BlocBuilder<UserSearchCubit, UserSearchState>(
-            builder: (context, state) {
-              if (state is UserSearchSuccessState) {
-                return Column(
-                  children: chatRepository.filteredUserList.map((e) => Text(e.username ?? '', style: AppFonts.font12w400,)).toList()
-                );
-              }
-              else{
-                return Center(child: AppAnimations.circleIndicator,);
-              }
-            },
-          ),
-          const SizedBox(
-            height: 18,
-          ),
+          const SingleChildScrollView(
+              child: Column(
+            children: [
+              SizedBox(
+                height: 18,
+              ),
+            ],
+          )),
         ],
-      )),
+      ),
     );
   }
 }

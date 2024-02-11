@@ -85,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             backgroundColor: user.avatarColor,
                             radius: sizeOf.width * 0.20,
                             backgroundImage: user.avatarUrl != null
-                                ? NetworkImage(user.avatarUrl ?? '')
+                                ? NetworkImage(user.avatarUrl == null ? '' : user.avatarUrl!)
                                 : null,
                             child: user.avatarUrl == null
                                 ? Center(

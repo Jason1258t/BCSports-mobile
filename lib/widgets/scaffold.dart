@@ -13,7 +13,7 @@ class CustomScaffold extends StatelessWidget {
       this.canPop = true,
       this.resize = false,
       this.onPopInvoked,
-      this.isSafeArea = true});
+      this.isSafeArea = true, this.onTap});
 
   final Widget body;
   final PreferredSizeWidget? appBar;
@@ -23,6 +23,7 @@ class CustomScaffold extends StatelessWidget {
   final bool resize;
   final bool isSafeArea;
   final void Function(bool)? onPopInvoked;
+  final Function()? onTap;
 
   final Color? color;
   final EdgeInsets? padding;
@@ -47,6 +48,9 @@ class CustomScaffold extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
+          if (onTap != null) {
+            onTap!();
+          }
         },
         child: Container(
             color: color ?? AppColors.background,
