@@ -102,7 +102,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                               radius: sizeof.width * 0.18,
                               backgroundColor: user.avatarColor,
                               backgroundImage: user.avatarUrl != null
-                                  ? NetworkImage(user.avatarUrl ?? '')
+                                  ? NetworkImage(user.avatarUrl!)
                                   : null,
                               child: user.avatarUrl == null
                                   ? Center(
