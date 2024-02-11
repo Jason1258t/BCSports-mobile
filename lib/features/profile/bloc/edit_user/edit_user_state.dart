@@ -9,4 +9,8 @@ class EditUserLoadingState extends EditUserState {}
 
 class EditUserSuccessState extends EditUserState {}
 
-class EditUserFailState extends EditUserState {}
+class EditUserFailState extends EditUserState {
+  final Exception e;
+
+  EditUserFailState(this.e);
+}

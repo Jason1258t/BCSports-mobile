@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,8 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late final nameController;
-  late final userNameController;
+  late final TextEditingController nameController;
+  late final TextEditingController userNameController;
 
   XFile? image;
 
@@ -70,10 +71,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ],
           ),
         ),
-        body: BlocBuilder<EditUserCubit, EditUserState>(
-            builder: (context, state) {
+        body: BlocConsumer<EditUserCubit, EditUserState>(
+            listener: (context, state) {
           if (state is EditUserSuccessState) {
-            var user = RepositoryProvider.of<ProfileRepository>(context).user;
+            repository.setUser(repository.user.id);
+            image = null;
+          }
+          if (state is EditUserFailState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(AppSnackBars.snackBar(state.e.toString()));
+          }
+        }, builder: (context, state) {
+          if (state is! EditUserLoadingState) {
+            var user = repository.user;
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             backgroundColor: user.avatarColor,
                             radius: sizeOf.width * 0.20,
                             backgroundImage: user.avatarUrl != null
-                                ? NetworkImage(user.avatarUrl ?? '')
+                                ? NetworkImage(user.avatarUrl!)
                                 : null,
                             child: user.avatarUrl == null
                                 ? Center(
@@ -151,14 +161,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 CustomTextButton(
                     text: 'Save',
-                    onTap: () async {
-                      await BlocProvider.of<EditUserCubit>(context).editProfile(
+                    onTap: () {
+                      BlocProvider.of<EditUserCubit>(context).editProfile(
                           nameController.text, userNameController.text, image);
-
-                      RepositoryProvider.of<ProfileRepository>(context)
-                          .setUser(user.id);
-
-                      image = null;
                     },
                     isActive: true)
               ],

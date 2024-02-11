@@ -6,7 +6,7 @@ import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
-import 'package:bcsports_mobile/utils/exceptions.dart';
+import 'package:bcsports_mobile/services/exceptions.dart';
 import 'package:bcsports_mobile/utils/strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

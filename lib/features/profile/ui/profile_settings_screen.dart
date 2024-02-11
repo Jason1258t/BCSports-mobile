@@ -1,16 +1,11 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
-import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
-import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/settings_button.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
-import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +59,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               CircleAvatar(
                 backgroundColor: user.avatarColor,
                 radius: sizeOf.width * 0.20,
-                backgroundImage: NetworkImage(user.avatarUrl ?? ''),
+                backgroundImage: user.avatarUrl != null
+                    ? NetworkImage(user.avatarUrl!)
+                    : null,
                 child: user.avatarUrl == null
                     ? Center(
                         child: Text(
@@ -85,7 +82,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                 height: 5,
               ),
               Text(
-                user.displayName == null ? '' : user.username,
+                '@${user.username}',
                 style: AppFonts.font13w100,
               ),
               const SizedBox(

@@ -8,6 +8,7 @@ import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/services/exceptions.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -95,15 +96,26 @@ class ProfileRepository extends PostSource {
   }
 
   Future<void> editUser(
-      String? newUserName, String? newDisplayName, String? newAvatar) async {
+      String username, String displayName, String? avatar) async {
     try {
-      final editedUser =
-          _userModel?.copyWith(newUserName, newDisplayName, newAvatar);
+      final usernameValid = await isUsernameValid(username);
+      if (!usernameValid) throw UsernameAlreadyUsed();
 
-      await _users.doc(_userModel!.id).set(editedUser!.toJson());
+      final editedUser = user.copyWith(username, displayName, avatar);
+
+      await _users.doc(user.id).set(editedUser.toJson());
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<bool> isUsernameValid(String username) async {
+    if (user.username != username) {
+      final res = await _users.where('username', isEqualTo: username).get();
+
+      if (res.docs.isEmpty) return true;
+    }
+    return false;
   }
 
   Future<void> deleteOldUserAvatar() async {

@@ -23,3 +23,7 @@ abstract class FirebaseCollections {
   static final playersNftCollection =
       _firestore.collection(FirebaseCollectionNames.playersNft);
 }
+
+abstract class CustomFilters {
+
+}

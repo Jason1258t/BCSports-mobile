@@ -11,15 +11,10 @@ class EditUserCubit extends Cubit<EditUserState> {
 
   EditUserCubit({required ProfileRepository profileRepository})
       : _profileRepository = profileRepository,
-        super(EditUserInitial()){
-    _profileRepository.profileState.listen((event) {
-      if(event == LoadingStateEnum.loading) emit(EditUserLoadingState());
-      if(event == LoadingStateEnum.fail) emit(EditUserFailState());
-      if(event == LoadingStateEnum.success) emit(EditUserSuccessState());
-    });
-  }
+        super(EditUserInitial());
 
-  Future<void> editProfile(String? displayName, String? userName, XFile? image) async {
+  Future<void> editProfile(
+      String displayName, String username, XFile? image) async {
     emit(EditUserLoadingState());
     try {
       _profileRepository.deleteOldUserAvatar();
@@ -29,10 +24,10 @@ class EditUserCubit extends Cubit<EditUserState> {
         imageUrl = await _profileRepository.uploadAvatar(image.path);
       }
 
-      await _profileRepository.editUser(userName, displayName, imageUrl);
+      await _profileRepository.editUser(username, displayName, imageUrl);
       emit(EditUserSuccessState());
     } catch (e) {
-      emit(EditUserFailState());
+      emit(EditUserFailState(e as Exception));
     }
   }
 }
