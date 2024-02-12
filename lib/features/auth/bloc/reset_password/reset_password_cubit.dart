@@ -18,6 +18,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       emit(ResetPasswordSuccess());
     } catch (e) {
       emit(ResetPasswordFail());
+      rethrow;
     }
   }
 }

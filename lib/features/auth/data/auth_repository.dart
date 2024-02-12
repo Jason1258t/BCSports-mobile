@@ -79,6 +79,27 @@ class AuthRepository {
   Future resetPassword(String email) =>
       _auth.sendPasswordResetEmail(email: email);
 
+  _handleAuthErrors(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'weak-password':
+        throw WeekPasswordException();
+      case 'email-already-in-use':
+        throw AccountAlreadyExistException();
+      case 'user-not-found':
+        throw UserNotFoundException();
+      case 'wrong-password':
+        throw WrongPasswordException();
+      case 'invalid-credential':
+        throw InvalidCredentials();
+      case 'network-request-failed':
+        throw NetworkFail();
+      case 'channel-error':
+        throw ChannelConnectionError();
+    }
+    print('Error code: ${e.code}');
+    print('Error: $e');
+  }
+
   Future<UserCredential?> registerWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -88,12 +109,11 @@ class AuthRepository {
       appState.add(AppAuthStateEnum.auth);
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        throw WeekPasswordException();
-      } else if (e.code == 'email-already-in-use') {
-        throw AccountAlreadyExistException();
-      }
+      _handleAuthErrors(e);
     } catch (e) {
+      print('Error: $e');
+
+
       rethrow;
     }
     return null;
@@ -106,14 +126,19 @@ class AuthRepository {
           email: email, password: password);
       await _writeUserDataInDatabase(userCredential.user!.uid);
       appState.add(AppAuthStateEnum.auth);
-      print('auth state added');
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw UserNotFoundException();
       } else if (e.code == 'wrong-password') {
         throw WrongPasswordException();
+      } if (e.code == 'invalid-credential') {
+        throw InvalidCredentials();
       }
+
+      print('Error code: ${e.code}');
+      print('Error: $e');
+
       rethrow;
     }
   }
