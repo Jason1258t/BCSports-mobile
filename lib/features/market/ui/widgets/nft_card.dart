@@ -9,14 +9,19 @@ import 'package:intl/intl.dart';
 
 class MarketNftCard extends StatefulWidget {
   final NftModel nft;
+  final Function onTap;
 
-  const MarketNftCard({super.key, required this.nft});
+  const MarketNftCard({super.key, required this.nft, required this.onTap});
 
   @override
   State<MarketNftCard> createState() => MarketNftCardState();
 }
 
 class MarketNftCardState extends State<MarketNftCard> {
+  void _onTap() {
+    widget.onTap();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -25,10 +30,7 @@ class MarketNftCardState extends State<MarketNftCard> {
     final topMargin = imgSize * 0.17;
 
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed('/market/details', arguments: {'nft': widget.nft});
-      },
+      onTap: _onTap,
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(

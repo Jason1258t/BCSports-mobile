@@ -6,6 +6,7 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ class MarketFavouritesScreen extends StatefulWidget {
 
 class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   String text = "Favourites";
+
+  void onNftCardTap(NftModel nft) {
+    Navigator.of(context).pushNamed('/market/details',
+        arguments: {'nft': nft, "target": ProductTarget.buy});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +104,9 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                   delegate: SliverChildBuilderDelegate(
                       (context, index) => MarketNftCard(
                             nft: favouriteNftList[index],
+                            onTap: () {
+                              onNftCardTap(favouriteNftList[index]);
+                            },
                           ),
                       childCount: favouriteNftList.length),
                 );

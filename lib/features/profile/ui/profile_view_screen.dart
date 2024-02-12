@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.da
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
@@ -25,6 +26,11 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
   void initState() {
     context.read<UserNftCubit>().loadUserNft();
     super.initState();
+  }
+
+  void onNftCardTap(NftModel nft) {
+    Navigator.of(context).pushNamed('/market/details',
+        arguments: {'nft': nft, "target": ProductTarget.sell});
   }
 
   @override
@@ -198,6 +204,9 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                   childAspectRatio: 0.59),
               delegate: SliverChildBuilderDelegate(
                   (context, index) => MarketNftCard(
+                        onTap: () {
+                          onNftCardTap(repository.userNftList[index]);
+                        },
                         nft: repository.userNftList[index],
                       ),
                   childCount: repository.userNftList.length));
@@ -213,34 +222,34 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
     );
   }
 
-Widget buildPostsTab(ProfileViewRepository repository) {
-  return StreamBuilder(
-      stream: repository.userPostsState.stream,
-      builder: (context, snapshot) {
-        if (snapshot.data == LoadingStateEnum.success &&
-            repository.posts.isNotEmpty) {
-          return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                    (context, index) => FeedPostWidget(
-                  postId: repository.posts[index].postModel.id,
-                  source: repository,
-                ),
-                childCount: repository.posts.length,
-              ));
-        } else if (repository.posts.isEmpty) {
-          return SliverToBoxAdapter(
+  Widget buildPostsTab(ProfileViewRepository repository) {
+    return StreamBuilder(
+        stream: repository.userPostsState.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data == LoadingStateEnum.success &&
+              repository.posts.isNotEmpty) {
+            return SliverList(
+                delegate: SliverChildBuilderDelegate(
+              (context, index) => FeedPostWidget(
+                postId: repository.posts[index].postModel.id,
+                source: repository,
+              ),
+              childCount: repository.posts.length,
+            ));
+          } else if (repository.posts.isEmpty) {
+            return SliverToBoxAdapter(
+                child: Center(
+                    child: Text(
+              'This user does not have Posts',
+              style: AppFonts.font20w600,
+            )));
+          } else {
+            return SliverToBoxAdapter(
               child: Center(
-                  child: Text(
-                    'This user does not have Posts',
-                    style: AppFonts.font20w600,
-                  )));
-        } else {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: AppAnimations.circleIndicator,
-            ),
-          );
-        }
-      });
-}
+                child: AppAnimations.circleIndicator,
+              ),
+            );
+          }
+        });
+  }
 }
