@@ -9,18 +9,21 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
-import 'package:bcsports_mobile/widgets/popups/place_bit.dart';
+import 'package:bcsports_mobile/widgets/popups/buy.dart';
+import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MarketProductScreen extends StatefulWidget {
+  final ProductTarget target;
   final NftModel nft;
 
-  const MarketProductScreen({super.key, required this.nft});
+  const MarketProductScreen(
+      {super.key, required this.nft, required this.target});
 
   @override
   State<MarketProductScreen> createState() => _MarketProductScreenState();
@@ -36,7 +39,6 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
     initProviders();
     nftCubit.getNftDetails(widget.nft);
 
-    updateRemainingTime();
     super.initState();
   }
 
@@ -45,22 +47,20 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
     marketRepository = context.read<MarketRepository>();
   }
 
-  void updateRemainingTime() async {
-    while (true) {
-      remainingTime = widget.nft.auctionStopTime.difference(DateTime.now());
-      await Future.delayed(const Duration(seconds: 3));
-      if (mounted) {
-        setState(() {});
-      }
+  void onBuyTap() {
+    if (widget.target == ProductTarget.buy) {
+      showDialog(
+          context: context,
+          builder: (context) => BuyNftPopup(
+                nft: marketRepository.lastOpenedNft,
+              ));
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) => SellNftPopup(
+                nft: marketRepository.lastOpenedNft,
+              ));
     }
-  }
-
-  void onBetTap() {
-    showDialog(
-        context: context,
-        builder: (context) => PlaceBitPopup(
-              nft: marketRepository.lastOpenedNft,
-            ));
   }
 
   void onLikeTap(bool isLiked) {
@@ -94,25 +94,36 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
         } else if (state is PlaceBidSuccess) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar("Success bid!"));
+              .showSnackBar(AppSnackBars.snackBar("Success buy!"));
         }
       },
       builder: (context, state) => Container(
         color: AppColors.black,
         child: SafeArea(
-          child: Scaffold(
-              backgroundColor: Colors.transparent,
-              body: BlocBuilder<NftDetailsCubit, NftDetailsState>(
-                builder: (context, state) {
-                  if (state is NftDetailsLoading) {
-                    return Center(child: AppAnimations.circleIndicator);
-                  } else if (state is NftDetailsSuccess) {
-                    return buildNftCardWidget();
-                  }
+          child: BlocBuilder<NftDetailsCubit, NftDetailsState>(
+            builder: (context, state) {
+              if (state is NftDetailsLoading) {
+                return Center(child: AppAnimations.circleIndicator);
+              } else if (state is NftDetailsSuccess) {
+                return Scaffold(
+                    floatingActionButton: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomTextButton(
+                          text: widget.target == ProductTarget.buy
+                              ? "Buy"
+                              : "Sell",
+                          onTap: onBuyTap,
+                          isActive: true),
+                    ),
+                    floatingActionButtonLocation:
+                        FloatingActionButtonLocation.centerDocked,
+                    backgroundColor: Colors.transparent,
+                    body: buildNftCardWidget());
+              }
 
-                  return Container();
-                },
-              )),
+              return Container();
+            },
+          ),
         ),
       ),
     );
@@ -206,112 +217,8 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                CustomTextButton(
-                    text: "Place a bit", onTap: onBetTap, isActive: true),
-                const SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      bottom: 9, top: 12, right: 14, left: 25),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: AppColors.black_s2new_1A1A1A,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Current Bid",
-                            style: AppFonts.font14w400
-                                .copyWith(color: AppColors.white),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "${marketRepository.lastOpenedNft.currentBit} ETH",
-                            style: AppFonts.font16w500
-                                .copyWith(color: AppColors.primary),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            widget.nft.lastBidderName != ""
-                                ? "${marketRepository.lastOpenedNft.lastBidderName.substring(0, 2)}****${marketRepository.lastOpenedNft.lastBidderName.substring(marketRepository.lastOpenedNft.lastBidderName.length - 3, marketRepository.lastOpenedNft.lastBidderName.length)}"
-                                : "Noname",
-                            textAlign: TextAlign.start,
-                            style: AppFonts.font10w500
-                                .copyWith(color: AppColors.grey_B3B3B3),
-                          )
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 5, bottom: 8, left: 13, right: 13),
-                        decoration: BoxDecoration(
-                            color: AppColors.black_262627,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("Ending in",
-                                style: AppFonts.font16w500
-                                    .copyWith(color: AppColors.primary)),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "${remainingTime.inDays} days",
-                                  style: AppFonts.font12w400
-                                      .copyWith(color: AppColors.white),
-                                ),
-                                Container(
-                                  width: 1,
-                                  height: 12,
-                                  color: AppColors.grey_797979,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                ),
-                                Text(
-                                  "${remainingTime.inHours % 24} Hours",
-                                  style: AppFonts.font12w400
-                                      .copyWith(color: AppColors.white),
-                                ),
-                                Container(
-                                  width: 1,
-                                  height: 12,
-                                  color: AppColors.grey_797979,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 3),
-                                ),
-                                Text(
-                                  "${remainingTime.inMinutes % 60} Mins",
-                                  style: AppFonts.font12w400
-                                      .copyWith(color: AppColors.white),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
               ],
             ),
-          ),
-        ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 28,
           ),
         ),
         GeneralStatistics(nft: marketRepository.lastOpenedNft)

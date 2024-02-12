@@ -4,9 +4,11 @@ import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.d
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +35,11 @@ class _MarketScreenState extends State<MarketScreen> {
 
   void onFavouritesTap() {
     Navigator.of(context).pushNamed(AppRouteNames.favourites);
+  }
+
+  void onNftCardTap(NftModel nft) {
+    Navigator.of(context).pushNamed('/market/details',
+        arguments: {'nft': nft, "target": ProductTarget.sell});
   }
 
   @override
@@ -155,6 +162,11 @@ class _MarketScreenState extends State<MarketScreen> {
                 delegate: SliverChildBuilderDelegate(
                     (context, index) => MarketNftCard(
                           nft: context.read<MarketRepository>().nftList[index],
+                          onTap: () {
+                            onNftCardTap(context
+                                .read<MarketRepository>()
+                                .nftList[index]);
+                          },
                         ),
                     childCount:
                         context.read<MarketRepository>().nftList.length)),

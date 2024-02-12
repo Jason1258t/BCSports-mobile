@@ -11,21 +11,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-class PlaceBitPopup extends StatefulWidget {
+class BuyNftPopup extends StatefulWidget {
   final NftModel nft;
 
-  const PlaceBitPopup({super.key, required this.nft});
+  const BuyNftPopup({super.key, required this.nft});
 
   @override
-  State<PlaceBitPopup> createState() => _PlaceBitPopupState();
+  State<BuyNftPopup> createState() => _BuyNftPopupState();
 }
 
-class _PlaceBitPopupState extends State<PlaceBitPopup> {
+class _BuyNftPopupState extends State<BuyNftPopup> {
   bool agree = false;
   double extraBid = 0;
 
   void onPlaceBidTap() {
-    context.read<PlaceBidCubit>().updateBid(widget.nft, extraBid + widget.nft.currentBit);
+    context
+        .read<PlaceBidCubit>()
+        .updateBid(widget.nft, extraBid + widget.nft.currentBit);
   }
 
   void increaseBet() {
@@ -64,19 +66,18 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Place a bid",
+                  "Buy",
                   style: AppFonts.font24w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
                 Container(
-                  constraints: const BoxConstraints(minWidth: 200),
-                  padding: const EdgeInsets.all(11),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(48),
-                      border:
-                          Border.all(width: 1, color: AppColors.primary)),
+                      border: Border.all(width: 1, color: AppColors.primary)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
@@ -95,24 +96,24 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                           ),
                         ],
                       ),
-                      Material(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(1000),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000),
-                          onTap: increaseBet,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 39,
-                            height: 39,
-                            child: Text(
-                              "+",
-                              style: AppFonts.font24w500
-                                  .copyWith(color: AppColors.black),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Material(
+                      //   color: AppColors.primary,
+                      //   borderRadius: BorderRadius.circular(1000),
+                      //   child: InkWell(
+                      //     borderRadius: BorderRadius.circular(1000),
+                      //     onTap: increaseBet,
+                      //     child: Container(
+                      //       alignment: Alignment.center,
+                      //       width: 39,
+                      //       height: 39,
+                      //       child: Text(
+                      //         "+",
+                      //         style: AppFonts.font24w500
+                      //             .copyWith(color: AppColors.black),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

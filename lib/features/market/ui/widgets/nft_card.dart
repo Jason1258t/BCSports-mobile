@@ -9,14 +9,19 @@ import 'package:intl/intl.dart';
 
 class MarketNftCard extends StatefulWidget {
   final NftModel nft;
+  final Function onTap;
 
-  const MarketNftCard({super.key, required this.nft});
+  const MarketNftCard({super.key, required this.nft, required this.onTap});
 
   @override
   State<MarketNftCard> createState() => MarketNftCardState();
 }
 
 class MarketNftCardState extends State<MarketNftCard> {
+  void _onTap() {
+    widget.onTap();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -25,10 +30,7 @@ class MarketNftCardState extends State<MarketNftCard> {
     final topMargin = imgSize * 0.17;
 
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed('/market/details', arguments: {'nft': widget.nft});
-      },
+      onTap: _onTap,
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
@@ -76,9 +78,6 @@ class MarketNftCardState extends State<MarketNftCard> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
             Container(
               padding: const EdgeInsets.all(4),
               child: Column(
@@ -89,12 +88,12 @@ class MarketNftCardState extends State<MarketNftCard> {
                       widget.nft.name.toUpperCase(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppFonts.font22w800ItalicAS.copyWith(
-                          color: AppColors.primary, letterSpacing: 1),
+                      style: AppFonts.font22w800ItalicAS
+                          .copyWith(color: AppColors.primary, letterSpacing: 1),
                     ),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 5,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 4),
@@ -165,7 +164,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                                   Text(
                                     "Born",
                                     overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w600
+                                    style: AppFonts.font9w300
                                         .copyWith(color: AppColors.white),
                                   ),
                                   Text(

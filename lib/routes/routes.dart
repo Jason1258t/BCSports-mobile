@@ -18,6 +18,7 @@ import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
 import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/recovery_enter_email_screen.dart';
@@ -48,9 +49,11 @@ class AppRoutes {
       case AppRouteNames.marketDetails:
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
         final NftModel playerNft = pageArgs['nft'];
+        final ProductTarget target = pageArgs['target'];
         return MaterialPageRoute(
             builder: (ctx) => MarketProductScreen(
                   nft: playerNft,
+                  target: target,
                 ));
       case AppRouteNames.favourites:
         return MaterialPageRoute(
