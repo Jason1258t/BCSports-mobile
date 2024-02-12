@@ -26,18 +26,14 @@ class ChatMessagesScreen extends StatefulWidget {
 class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
   final chatCore = FirebaseChatCore.instance;
 
-  final ChatTheme them = const DarkChatTheme(backgroundColor: Colors.black);
+  final ChatTheme them = const DarkChatTheme(
+      backgroundColor: Colors.black, inputBorderRadius: BorderRadius.zero, );
 
   @override
   Widget build(BuildContext context) {
-    final user = context
-        .read<ChatRepository>()
-        .activeUser!;
+    final user = context.read<ChatRepository>().activeUser!;
 
-    final userChatUser = context
-        .read<ProfileRepository>()
-        .user
-        .toChatUser();
+    final userChatUser = context.read<ProfileRepository>().user.toChatUser();
     final sizeOf = MediaQuery.sizeOf(context);
 
     final repository = RepositoryProvider.of<ProfileViewRepository>(context);
@@ -73,7 +69,8 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                   child: user.avatarUrl == null
                       ? Center(
                           child: Text(
-                            (user.displayName ?? user.username)[0].toUpperCase(),
+                            (user.displayName ?? user.username)[0]
+                                .toUpperCase(),
                             style: AppFonts.font12w400,
                           ),
                         )

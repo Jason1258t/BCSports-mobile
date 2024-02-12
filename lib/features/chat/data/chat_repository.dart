@@ -35,6 +35,7 @@ class ChatRepository {
   void subscribeRoomsUpdates() {
     chatCore.rooms().listen((event) {
       rooms = event;
+      print('Rooms update. New length: ${rooms.length}');
     });
   }
 

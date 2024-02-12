@@ -123,6 +123,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 },
                 isActive: buttonActive,
               ),
+              const SizedBox(height: 20,)
             ],
           )),
     );
