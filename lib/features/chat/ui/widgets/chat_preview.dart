@@ -85,7 +85,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
           shape: BoxShape.circle,
           color: user.avatarColor,
           image: user.avatarUrl != null
-              ? DecorationImage(image: NetworkImage(user.avatarUrl!))
+              ? DecorationImage(image: NetworkImage(user.avatarUrl!), fit: BoxFit.cover)
               : null),
       width: 48,
       height: 48,
