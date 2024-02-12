@@ -3,6 +3,19 @@ class UserNotFoundException implements Exception {
   toString() => 'No user found for that email.';
 }
 
+class InvalidCredentials implements Exception {
+  @override
+  toString() => 'Wrong email or password';
+}
+class NetworkFail implements Exception {
+  @override
+  toString() => 'Network error';
+}
+class ChannelConnectionError implements Exception {
+  @override
+  toString() => 'Unable to establish connection';
+}
+
 class WrongPasswordException implements Exception {
   @override
   toString() => 'Wrong password for that user.';
