@@ -115,6 +115,8 @@ class ProfileRepository extends PostSource {
       final res = await _users.where('username', isEqualTo: username).get();
 
       if (res.docs.isEmpty) return true;
+    } else {
+      return true;
     }
     return false;
   }

@@ -32,5 +32,5 @@ class AccountAlreadyExistException implements Exception {
 
 class UsernameAlreadyUsed implements Exception {
   @override
-  toString() => 'This username already in user';
+  toString() => 'This username is already taken';
 }

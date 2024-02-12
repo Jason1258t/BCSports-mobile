@@ -106,12 +106,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   )
                                 : Container(),
                           )
-                        : SizedBox(
+                        : Container(
                             width: sizeOf.width * 0.4,
                             height: sizeOf.width * 0.4,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(1000),
-                                child: Image.file(File(image!.path))),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                                image: DecorationImage(
+                                    image: FileImage(File(image!.path)),
+                                  fit: BoxFit.cover
+                                )
+                            ),
+                            // child: ClipRRect(
+                            //     borderRadius: BorderRadius.circular(1000),
+                            //     child: Image.file(File(image!.path))),
                           ),
                     Container(
                       width: sizeOf.width * 0.40,
