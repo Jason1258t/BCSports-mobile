@@ -76,9 +76,6 @@ class MarketNftCardState extends State<MarketNftCard> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
             Container(
               padding: const EdgeInsets.all(4),
               child: Column(
@@ -89,12 +86,12 @@ class MarketNftCardState extends State<MarketNftCard> {
                       widget.nft.name.toUpperCase(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppFonts.font22w800ItalicAS.copyWith(
-                          color: AppColors.primary, letterSpacing: 1),
+                      style: AppFonts.font22w800ItalicAS
+                          .copyWith(color: AppColors.primary, letterSpacing: 1),
                     ),
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 5,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 4),
