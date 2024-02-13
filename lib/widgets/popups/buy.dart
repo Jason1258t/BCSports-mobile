@@ -29,9 +29,8 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
         );
   }
 
-  bool isActive() =>
-      context.read<ProfileRepository>().user.evmBill >= widget.nft.currentBit &&
-      agree;
+  bool isActive() => agree;
+  // context.read<ProfileRepository>().user.evmBill >= 0 &&agree;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                             width: 10,
                           ),
                           Text(
-                            "${widget.nft.currentBit} ETH",
+                            "${0} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),

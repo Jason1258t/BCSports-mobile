@@ -9,11 +9,9 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/buy.dart';
-import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,7 +46,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
     showDialog(
         context: context,
         builder: (context) => BuyNftPopup(
-              nft: marketRepository.lastOpenedNft,
+              nft: marketRepository.nftService.lastLoadedNft,
             ));
   }
 
@@ -56,11 +54,11 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
     if (isLiked) {
       context
           .read<FavouriteCubit>()
-          .removeFromFavourites(marketRepository.lastOpenedNft);
+          .removeFromFavourites(marketRepository.nftService.lastLoadedNft);
     } else {
       context
           .read<FavouriteCubit>()
-          .markAsFavourite(marketRepository.lastOpenedNft);
+          .markAsFavourite(marketRepository.nftService.lastLoadedNft);
     }
   }
 
@@ -96,9 +94,10 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
               } else if (state is NftDetailsSuccess) {
                 return Scaffold(
                     floatingActionButton: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: CustomTextButton(
-                          text: "Buy", onTap: onBuyTap, isActive: true),
+                      
+                          text: "Buy", onTap: onBuyTap, isActive: true, height: 52,),
                     ),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.centerDocked,
@@ -116,6 +115,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
 
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
+    final nft = marketRepository.nftService.lastLoadedNft;
 
     return CustomScrollView(
       slivers: [
@@ -139,7 +139,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                           placeholder:
                               const AssetImage("assets/images/noname_det.png"),
                           image: NetworkImage(
-                              marketRepository.lastOpenedNft.imagePath)),
+                              nft.imagePath)),
                       Positioned(
                         top: 20,
                         right: 20,
@@ -148,7 +148,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                             final user = context.read<ProfileRepository>().user;
                             final userNfts = user.favouritesNftList;
                             final bool isLiked = userNfts.contains(
-                                marketRepository.lastOpenedNft.documentId);
+                                nft.documentId);
 
                             if (state is FavouriteLoading) {
                               return Padding(
@@ -193,7 +193,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                       iconPath: 'assets/icons/people.svg',
                     ),
                     PlayerAppStatsWidget(
-                      value: marketRepository.lastOpenedNft.views,
+                      value: nft.views,
                       statsName: "Views",
                       iconPath: 'assets/icons/ar.svg',
                     ),
@@ -206,7 +206,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
             ),
           ),
         ),
-        GeneralStatistics(nft: marketRepository.lastOpenedNft)
+        GeneralStatistics(nft: nft)
       ],
     );
   }

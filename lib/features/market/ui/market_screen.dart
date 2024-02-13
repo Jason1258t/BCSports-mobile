@@ -1,12 +1,10 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
-import 'package:bcsports_mobile/features/market/bloc/market/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
-import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -23,14 +21,17 @@ class MarketScreen extends StatefulWidget {
 
 class _MarketScreenState extends State<MarketScreen> {
   String explore = "All Collections";
+  late final MarketRepository marketRepository;
 
   @override
   void initState() {
-    if (context.read<MarketRepository>().nftList.isEmpty &&
-        (context.read<MarketCubit>().state is MarketLoading) == false) {
-      context.read<MarketCubit>().getNftCards();
-    }
+    initProviders();
+
     super.initState();
+  }
+
+  initProviders() {
+    marketRepository = RepositoryProvider.of<MarketRepository>(context);
   }
 
   void onFavouritesTap() {
@@ -38,8 +39,13 @@ class _MarketScreenState extends State<MarketScreen> {
   }
 
   void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/details',
-        arguments: {'nft': nft, "target": ProductTarget.buy});
+    Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': nft});
+  }
+
+  Future<void> updateUser() async {
+    await context
+        .read<ProfileRepository>()
+        .setUser(context.read<AuthRepository>().currentUser!.uid);
   }
 
   @override
@@ -48,19 +54,7 @@ class _MarketScreenState extends State<MarketScreen> {
       color: AppColors.black,
       child: SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: BlocBuilder<MarketCubit, MarketState>(
-              builder: (context, state) {
-                if (state is MarketLoading) {
-                  return Center(
-                    child: AppAnimations.circleIndicator,
-                  );
-                } else if (state is MarketSuccess) {
-                  return buildMainInfoWidget();
-                }
-                return Container();
-              },
-            )),
+            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
       ),
     );
   }
@@ -68,10 +62,7 @@ class _MarketScreenState extends State<MarketScreen> {
   Widget buildMainInfoWidget() {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        await context.read<MarketCubit>().getNftCards();
-        context
-            .read<ProfileRepository>()
-            .setUser(context.read<AuthRepository>().currentUser!.uid);
+        await updateUser();
       },
       child: CustomScrollView(
         slivers: [
@@ -153,23 +144,26 @@ class _MarketScreenState extends State<MarketScreen> {
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 23),
-            sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 29,
-                    crossAxisSpacing: 8,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.59),
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) => MarketNftCard(
-                          nft: context.read<MarketRepository>().nftList[index],
-                          onTap: () {
-                            onNftCardTap(context
-                                .read<MarketRepository>()
-                                .nftList[index]);
-                          },
-                        ),
-                    childCount:
-                        context.read<MarketRepository>().nftList.length)),
+            sliver: StreamBuilder(
+                stream: context.read<MarketRepository>().marketStream,
+                builder: (context, snapshot) {
+                  return SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 29,
+                              crossAxisSpacing: 8,
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.59),
+                      delegate: SliverChildBuilderDelegate(
+                          (context, index) => MarketNftCard(
+                                nft: marketRepository.productList[index].nft,
+                                onTap: () {
+                                  onNftCardTap(
+                                      marketRepository.productList[index].nft);
+                                },
+                              ),
+                          childCount: marketRepository.productList.length));
+                }),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 50),

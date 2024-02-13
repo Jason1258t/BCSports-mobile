@@ -49,7 +49,7 @@ class ProfileRepository extends PostSource {
 
   UserModel get user => _userModel!;
 
-  void setUser(String userId) async {
+  Future<void> setUser(String userId) async {
     profileState.add(LoadingStateEnum.loading);
     try {
       final res = await _users.doc(userId).get();
@@ -157,12 +157,12 @@ class ProfileRepository extends PostSource {
       updatedCollection[nftForBuy.documentId] = 1;
     }
 
-    await user.update({
-      "evmBill": _userModel!.evmBill - nftForBuy.currentBit,
-      "user_nft": updatedCollection
-    });
+    // await user.update({
+    //   "evmBill": _userModel!.evmBill - nftForBuy.currentBit,
+    //   "user_nft": updatedCollection
+    // });
 
-    _userModel!.evmBill = _userModel!.evmBill - nftForBuy.currentBit;
+    // _userModel!.evmBill = _userModel!.evmBill - nftForBuy.currentBit;
     _userModel!.userNftList = updatedCollection;
   }
 
