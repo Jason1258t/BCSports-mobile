@@ -1,5 +1,5 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
-import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/market/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
@@ -39,7 +39,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
   void onNftCardTap(NftModel nft) {
     Navigator.of(context).pushNamed('/market/details',
-        arguments: {'nft': nft, "target": ProductTarget.sell});
+        arguments: {'nft': nft, "target": ProductTarget.buy});
   }
 
   @override
@@ -114,7 +114,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           const SizedBox(
                             width: 10,
                           ),
-                          BlocBuilder<PlaceBidCubit, PlaceBidState>(
+                          BlocBuilder<BuyNftCubit, BuyNftState>(
                             builder: (context, state) {
                               return Text(
                                 context
@@ -171,6 +171,9 @@ class _MarketScreenState extends State<MarketScreen> {
                     childCount:
                         context.read<MarketRepository>().nftList.length)),
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 50),
+          )
         ],
       ),
     );

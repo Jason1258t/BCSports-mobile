@@ -1,12 +1,12 @@
 part of 'place_bid_cubit.dart';
 
 @immutable
-sealed class PlaceBidState {}
+sealed class BuyNftState {}
 
-final class PlaceBidInitial extends PlaceBidState {}
+final class BuyNftInitial extends BuyNftState {}
 
-final class PlaceBidLoading extends PlaceBidState {}
+final class BuyNftLoading extends BuyNftState {}
 
-final class PlaceBidFail extends PlaceBidState {}
+final class BuyNftFail extends BuyNftState {}
 
-final class PlaceBidSuccess extends PlaceBidState {}
+final class BuyNftSuccess extends BuyNftState {}

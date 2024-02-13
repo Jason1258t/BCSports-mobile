@@ -22,23 +22,15 @@ class BuyNftPopup extends StatefulWidget {
 
 class _BuyNftPopupState extends State<BuyNftPopup> {
   bool agree = false;
-  double extraBid = 0;
 
-  void onPlaceBidTap() {
-    context
-        .read<PlaceBidCubit>()
-        .updateBid(widget.nft, extraBid + widget.nft.currentBit);
-  }
-
-  void increaseBet() {
-    setState(() {
-      extraBid += 10;
-    });
+  void onBuyTap() {
+    context.read<BuyNftCubit>().buyNft(
+          widget.nft,
+        );
   }
 
   bool isActive() =>
-      context.read<ProfileRepository>().user.evmBill + extraBid >=
-          widget.nft.currentBit &&
+      context.read<ProfileRepository>().user.evmBill >= widget.nft.currentBit &&
       agree;
 
   @override
@@ -90,7 +82,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                             width: 10,
                           ),
                           Text(
-                            "${widget.nft.currentBit + extraBid} ETH",
+                            "${widget.nft.currentBit} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),
@@ -167,7 +159,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                     width: 170,
                     height: 49,
                     text: "Place a Bid",
-                    onTap: onPlaceBidTap,
+                    onTap: onBuyTap,
                     isActive: isActive())
               ],
             ),

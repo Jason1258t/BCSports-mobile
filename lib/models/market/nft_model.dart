@@ -14,6 +14,7 @@ class NftModel {
   final int weight;
   final String previewImagePath;
   final DateTime auctionStopTime;
+  final int views;
   String lastBidderName;
   double currentBit;
 
@@ -31,6 +32,7 @@ class NftModel {
       required this.role,
       required this.weight,
       required this.auctionStopTime,
+      required this.views,
       required this.currentBit,
       required this.lastBidderName,
       required this.previewImagePath});
@@ -47,6 +49,7 @@ class NftModel {
         isRightFoot: json['is_right_foot'],
         name: json['name'],
         position: json['position'],
+        views: json['views'],
         role: json['role'],
         lastBidderName: json['last_bidder'],
         currentBit: double.parse(json['current_bit'].toString()),

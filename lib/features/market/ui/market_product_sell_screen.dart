@@ -9,25 +9,23 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
-import 'package:bcsports_mobile/widgets/popups/buy.dart';
 import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MarketProductBuyScreen extends StatefulWidget {
+class MarketProductSellScreen extends StatefulWidget {
   final NftModel nft;
 
-  const MarketProductBuyScreen({super.key, required this.nft});
+  const MarketProductSellScreen({super.key, required this.nft});
 
   @override
-  State<MarketProductBuyScreen> createState() => _MarketProductBuyScreenState();
+  State<MarketProductSellScreen> createState() => _MarketProductSellScreenState();
 }
 
-class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
+class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
   late final NftDetailsCubit nftCubit;
   late final MarketRepository marketRepository;
 
@@ -47,7 +45,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   void onBuyTap() {
     showDialog(
         context: context,
-        builder: (context) => BuyNftPopup(
+        builder: (context) => SellNftPopup(
               nft: marketRepository.lastOpenedNft,
             ));
   }
@@ -98,7 +96,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                     floatingActionButton: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextButton(
-                          text: "Buy", onTap: onBuyTap, isActive: true),
+                          text: "Sell", onTap: onBuyTap, isActive: true),
                     ),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.centerDocked,

@@ -14,6 +14,7 @@ class NftDetailsCubit extends Cubit<NftDetailsState> {
   Future<void> getNftDetails(NftModel nft) async {
     emit(NftDetailsLoading());
     try {
+      await marketRepository.updateNftViewsCounter(nft.documentId);
       await marketRepository.getNftById(nft.documentId);
       emit(NftDetailsSuccess());
     } catch (e) {

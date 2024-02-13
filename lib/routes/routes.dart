@@ -6,6 +6,7 @@ import 'package:bcsports_mobile/features/chat/ui/pages/chat_contacts_screen.dart
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
+import 'package:bcsports_mobile/features/market/ui/market_product_sell_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
@@ -46,14 +47,19 @@ class AppRoutes {
       // return MaterialPageRoute(builder: (ctx) => RegistrationScreen());
       case AppRouteNames.market:
         return MaterialPageRoute(builder: (ctx) => const MarketScreen());
-      case AppRouteNames.marketDetails:
+      case AppRouteNames.marketBuy:
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
         final NftModel playerNft = pageArgs['nft'];
-        final ProductTarget target = pageArgs['target'];
         return MaterialPageRoute(
-            builder: (ctx) => MarketProductScreen(
+            builder: (ctx) => MarketProductBuyScreen(
                   nft: playerNft,
-                  target: target,
+                ));
+      case AppRouteNames.marketSell:
+        final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
+        final NftModel playerNft = pageArgs['nft'];
+        return MaterialPageRoute(
+            builder: (ctx) => MarketProductSellScreen(
+                  nft: playerNft,
                 ));
       case AppRouteNames.favourites:
         return MaterialPageRoute(

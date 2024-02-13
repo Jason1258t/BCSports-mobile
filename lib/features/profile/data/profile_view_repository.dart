@@ -91,14 +91,14 @@ class ProfileViewRepository extends PostSource{
     try {
       userNftList.clear();
 
-      final playersCollection = await _playersCollection.get();
-      playersCollection.docs.forEach((doc) {
-        print(doc);
-        if (_userModel!.ownUserNftList.contains(doc.id)) {
-          final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
-          userNftList.add(nft);
-        }
-      });
+      // final playersCollection = await _playersCollection.get();
+      // playersCollection.docs.forEach((doc) {
+      //   print(doc);
+      //   if (_userModel!.ownUserNftList.contains(doc.id)) {
+      //     final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
+      //     userNftList.add(nft);
+      //   }
+      // });
 
       profileViewState.add(LoadingStateEnum.success);
     }

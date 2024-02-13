@@ -13,7 +13,6 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProfileRepository extends PostSource {
@@ -148,12 +147,23 @@ class ProfileRepository extends PostSource {
     }
   }
 
-  Future<void> payForBid({required double price}) async {
+  Future<void> buyNft({required NftModel nftForBuy}) async {
     final user = _users.doc(_userModel!.id);
-    await user.update({"evmBill": _userModel!.evmBill - price});
-    _userModel!.evmBill = _userModel!.evmBill - price;
 
-    log("You paid for a bid! user: ${user.id}");
+    Map updatedCollection = _userModel!.userNftList;
+    if (updatedCollection.keys.contains(nftForBuy.documentId)) {
+      updatedCollection[nftForBuy.documentId] += 1;
+    } else {
+      updatedCollection[nftForBuy.documentId] = 1;
+    }
+
+    await user.update({
+      "evmBill": _userModel!.evmBill - nftForBuy.currentBit,
+      "user_nft": updatedCollection
+    });
+
+    _userModel!.evmBill = _userModel!.evmBill - nftForBuy.currentBit;
+    _userModel!.userNftList = updatedCollection;
   }
 
   Future<void> markFavourite(NftModel nft) async {
@@ -176,19 +186,40 @@ class ProfileRepository extends PostSource {
     log("**Removed** fav-s item for ${user.id}");
   }
 
+  Future<void> sellNft(String id) async {
+    final userDoc = _users.doc(_userModel!.id);
+    final userData = await userDoc.get();
+    Map nftCollection = userData.data()!['user_nft'];
+    if (nftCollection[id] == 1) {
+      nftCollection.remove(id);
+    } else {
+      nftCollection[id] -= 1;
+    }
+
+    await userDoc.update({'user_nft': nftCollection});
+  }
+
   Future<void> loadUserNftList() async {
     userNftList.clear();
+    final dbUser = _users.doc(_userModel!.id);
+    final snapshot = await dbUser.get();
 
-    final playersCollection = await _playersCollection.get();
-    playersCollection.docs.forEach((doc) {
-      print(doc);
-      if (_userModel!.ownUserNftList.contains(doc.id)) {
-        final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
-        userNftList.add(nft);
+    Map<dynamic, dynamic> user = snapshot.data() ?? {};
+    Map<dynamic, dynamic> nftData = user['user_nft'];
+    for (var item in nftData.entries) {
+      final nftModel = await loadNftData(item.key);
+      for (int i = 0; i < item.value; i++) {
+        userNftList.add(nftModel);
       }
-    });
+    }
 
     log("Loaded user nft list: $userNftList");
+  }
+
+  Future<NftModel> loadNftData(String docId) async {
+    final nftDb = _playersCollection.doc(docId);
+    final nft = await nftDb.get();
+    return NftModel.fromJson(nft.data()!, nft.id);
   }
 
   void setProfileActiveTab(ProfileTabsEnum tab) {

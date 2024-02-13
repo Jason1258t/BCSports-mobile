@@ -26,10 +26,10 @@ class _SellNftPopupState extends State<SellNftPopup> {
 
   bool agree = false;
 
-  // void onPlaceBidTap() {
+  // void onBuyNftTap() {
   //   context
-  //       .read<PlaceBidCubit>()
-  //       .updateBid(widget.nft, extraBid + widget.nft.currentBit);
+  //       .read<BuyNftCubit>()
+  //       .buyNft(widget.nft, extraBid + widget.nft.currentBit);
   // }
 
   bool isActive() => agree;
