@@ -44,7 +44,7 @@ class MarketNftCardState extends State<MarketNftCard> {
               children: [
                 Positioned(
                   left: 3,
-                  top: topMargin + 57,
+                  top: topMargin + 52,
                   child: SizedBox(
                     width: 57,
                     child: Transform.rotate(
@@ -100,7 +100,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                     clipBehavior: Clip.hardEdge,
                     height: 26,
                     decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.1),
+                        color: AppColors.greyStrange,
                         borderRadius: BorderRadius.circular(8)),
                     alignment: Alignment.center,
                     child: BackdropFilter(
@@ -120,7 +120,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                           height: 26,
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              color: AppColors.white.withOpacity(0.1),
+                              color: AppColors.greyStrange,
                               borderRadius: BorderRadius.circular(8)),
                           alignment: Alignment.center,
                           child: BackdropFilter(
@@ -153,7 +153,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                           height: 26,
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              color: AppColors.white.withOpacity(0.1),
+                              color: AppColors.greyStrange,
                               borderRadius: BorderRadius.circular(8)),
                           alignment: Alignment.center,
                           child: BackdropFilter(

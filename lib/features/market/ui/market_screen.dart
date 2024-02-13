@@ -111,7 +111,7 @@ class _MarketScreenState extends State<MarketScreen> {
                                     .read<ProfileRepository>()
                                     .user
                                     .evmBill
-                                    .toString(),
+                                    .toStringAsFixed(3),
                                 style: AppFonts.font14w500
                                     .copyWith(color: AppColors.white),
                               );
