@@ -42,6 +42,9 @@ class ProfileRepository extends PostSource {
   BehaviorSubject<LoadingStateEnum> userPostsState =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
+  BehaviorSubject<LoadingStateEnum> userNftStream =
+      BehaviorSubject.seeded(LoadingStateEnum.wait);
+
   ProfileTabsEnum activeTab = ProfileTabsEnum.nft;
 
   List<NftModel> userNftList = [];
@@ -187,20 +190,30 @@ class ProfileRepository extends PostSource {
     log("**Removed** fav-s item for ${user.id}");
   }
 
-  Future<void> sellNft(String id) async {
+  Future<void> sellNft(NftModel nft, double newPrice) async {
+    final marketColl = FirebaseCollections.marketCollection;
+    marketColl.add(MarketItemModel.create(
+        currentPrice: newPrice,
+        lastOwnerId: _userModel!.id,
+        lastSaleDate: DateTime.now(),
+        nftId: nft.documentId));
+
     final userDoc = _users.doc(_userModel!.id);
     final userData = await userDoc.get();
     Map nftCollection = userData.data()!['user_nft'];
-    if (nftCollection[id] == 1) {
-      nftCollection.remove(id);
+    if (nftCollection[nft.documentId] == 1) {
+      nftCollection.remove(nft.documentId);
     } else {
-      nftCollection[id] -= 1;
+      nftCollection[nft.documentId] -= 1;
     }
 
     await userDoc.update({'user_nft': nftCollection});
+    await setUser(_userModel!.id);
+    await loadUserNftList();
   }
 
   Future<void> loadUserNftList() async {
+    userNftStream.add(LoadingStateEnum.loading);
     userNftList.clear();
     final dbUser = _users.doc(_userModel!.id);
     final snapshot = await dbUser.get();
@@ -213,7 +226,7 @@ class ProfileRepository extends PostSource {
         userNftList.add(nftModel);
       }
     }
-
+    userNftStream.add(LoadingStateEnum.success);
     log("Loaded user nft list: $userNftList");
   }
 

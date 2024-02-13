@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
-import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -23,22 +23,27 @@ class SellNftPopup extends StatefulWidget {
 
 class _SellNftPopupState extends State<SellNftPopup> {
   final TextEditingController _priceController = TextEditingController();
+  late final ProfileRepository profileRepository;
+
+  @override
+  void initState() {
+    profileRepository = context.read<ProfileRepository>();
+    super.initState();
+  }
 
   bool agree = false;
 
-  // void onBuyNftTap() {
-  //   context
-  //       .read<BuyNftCubit>()
-  //       .buyNft(widget.nft, extraBid + widget.nft.currentBit);
-  // }
+  void onBuyNftTap() {
+    context.read<SellCubit>().sellNft(
+        nft: widget.nft, newPrice: double.parse(_priceController.text));
+  }
 
-  bool isActive() => agree;
+  bool isActive() =>
+      agree && _priceController.text != "0" && _priceController.text != "";
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final ProfileRepository profileRepository =
-        context.read<ProfileRepository>();
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -67,7 +72,9 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 ),
                 CustomTextFormField(
                   controller: _priceController,
-                  prefixIcon: SvgPicture.asset("assets/icons/eth.svg"),
+                  prefixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: SvgPicture.asset("assets/icons/eth.svg")),
                   backgroundColor: AppColors.black_262627,
                 ),
                 const SizedBox(
@@ -108,7 +115,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
                     width: 170,
                     height: 49,
                     text: "Put up for sale",
-                    onTap: () {},
+                    onTap: onBuyNftTap,
                     isActive: isActive())
               ],
             ),

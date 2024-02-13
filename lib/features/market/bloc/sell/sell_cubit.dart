@@ -10,10 +10,10 @@ class SellCubit extends Cubit<SellState> {
 
   SellCubit(this.profileRepository) : super(SellInitial());
 
-  void sellNft(NftModel nft) async {
+  void sellNft({required NftModel nft, required double newPrice}) async {
     emit(SellLoading());
     try {
-      await profileRepository.sellNft(nft.documentId);
+      await profileRepository.sellNft(nft, newPrice);
       emit(SellSuccess());
     } catch (e) {
       emit(SellFailure());

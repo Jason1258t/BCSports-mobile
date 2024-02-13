@@ -55,13 +55,13 @@ class AppRoutes {
             builder: (ctx) => MarketProductBuyScreen(
                   product: product,
                 ));
-      // case AppRouteNames.marketSell:
-      //   final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
-      //   final NftModel playerNft = pageArgs['nft'];
-      //   return MaterialPageRoute(
-      //       builder: (ctx) => MarketProductSellScreen(
-      //             nft: playerNft,
-      //           ));
+      case AppRouteNames.marketSell:
+        final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
+        final NftModel playerNft = pageArgs['nft'];
+        return MaterialPageRoute(
+            builder: (ctx) => MarketProductSellScreen(
+                  nft: playerNft,
+                ));
       case AppRouteNames.favourites:
         return MaterialPageRoute(
             builder: (ctx) => const MarketFavouritesScreen());

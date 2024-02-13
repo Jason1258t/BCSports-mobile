@@ -27,4 +27,17 @@ class MarketItemModel {
         nftId: json['nft_id'],
         nft: responseNft);
   }
+
+  static create({
+    required currentPrice,
+    required lastOwnerId,
+    required lastSaleDate,
+    required nftId,
+  }) =>
+      {
+        "current_price": currentPrice,
+        "last_sale_date": lastSaleDate,
+        "nft_id": nftId,
+        "last_owner": lastOwnerId
+      };
 }

@@ -39,7 +39,7 @@ class MarketRepository {
   }
 
   Future<void> removeProductFromMarket(MarketItemModel prod) async {
-    final product = await FirebaseCollections.marketCollection.doc(prod.id);
+    final product =  FirebaseCollections.marketCollection.doc(prod.id);
     await product.delete();
 
     log("Product deleted from market!");
