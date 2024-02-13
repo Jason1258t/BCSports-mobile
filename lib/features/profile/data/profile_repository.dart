@@ -168,6 +168,9 @@ class ProfileRepository extends PostSource {
 
     _userModel!.evmBill = _userModel!.evmBill - product.currentPrice;
     _userModel!.userNftList = updatedCollection;
+
+    final seller = _users.doc(product.lastOwnerId);
+    await seller.update({"evmBill": FieldValue.increment(product.currentPrice)});
   }
 
   Future<void> markFavourite(NftModel nft) async {
