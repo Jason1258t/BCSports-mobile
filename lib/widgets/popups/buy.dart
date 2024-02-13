@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -12,9 +12,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 class BuyNftPopup extends StatefulWidget {
-  final NftModel nft;
+  final MarketItemModel product;
 
-  const BuyNftPopup({super.key, required this.nft});
+  const BuyNftPopup({super.key, required this.product});
 
   @override
   State<BuyNftPopup> createState() => _BuyNftPopupState();
@@ -25,12 +25,14 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
 
   void onBuyTap() {
     context.read<BuyNftCubit>().buyNft(
-          widget.nft,
+          widget.product,
         );
   }
 
-  bool isActive() => agree;
-  // context.read<ProfileRepository>().user.evmBill >= 0 &&agree;
+  bool isActive() =>
+      context.read<ProfileRepository>().user.evmBill >=
+          widget.product.currentPrice &&
+      agree;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                             width: 10,
                           ),
                           Text(
-                            "${0} ETH",
+                            "${widget.product.currentPrice} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),

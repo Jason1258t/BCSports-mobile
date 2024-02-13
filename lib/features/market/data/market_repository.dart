@@ -22,17 +22,26 @@ class MarketRepository {
       productList.clear();
 
       snapshot.docs.forEach((doc) {
-        Map productMap = doc.data() as Map;
-        final nftId = productMap['nft_id'];
-        final NftModel productNft = nftService.nftCollectionList
-            .where((nftItem) => nftItem.documentId == nftId)
-            .first;
-        MarketItemModel marketItemModel =
-            MarketItemModel.fromJson(productMap, productNft);
-
-        productList.add(marketItemModel);
+        try {
+          Map productMap = doc.data() as Map;
+          final nftId = productMap['nft_id'];
+          final NftModel productNft = nftService.nftCollectionList
+              .where((nftItem) => nftItem.documentId == nftId)
+              .first;
+          MarketItemModel marketItemModel =
+              MarketItemModel.fromJson(productMap, productNft, doc.id);
+          productList.add(marketItemModel);
+        } catch (e) {
+          log("Fail to parse market item by id ${doc.id}");
+        }
       });
     });
   }
 
+  Future<void> removeProductFromMarket(MarketItemModel prod) async {
+    final product = await FirebaseCollections.marketCollection.doc(prod.id);
+    await product.delete();
+
+    log("Product deleted from market!");
+  }
 }

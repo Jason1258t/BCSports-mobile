@@ -1,11 +1,12 @@
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -17,9 +18,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MarketProductBuyScreen extends StatefulWidget {
-  final NftModel nft;
+  final MarketItemModel product;
 
-  const MarketProductBuyScreen({super.key, required this.nft});
+  const MarketProductBuyScreen({super.key, required this.product});
 
   @override
   State<MarketProductBuyScreen> createState() => _MarketProductBuyScreenState();
@@ -32,7 +33,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   @override
   void initState() {
     initProviders();
-    nftCubit.getNftDetails(widget.nft);
+    nftCubit.getNftDetails(widget.product.nft);
 
     super.initState();
   }
@@ -46,7 +47,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
     showDialog(
         context: context,
         builder: (context) => BuyNftPopup(
-              nft: marketRepository.nftService.lastLoadedNft,
+              product: widget.product,
             ));
   }
 

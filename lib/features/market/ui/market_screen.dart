@@ -1,12 +1,11 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +37,8 @@ class _MarketScreenState extends State<MarketScreen> {
     Navigator.of(context).pushNamed(AppRouteNames.favourites);
   }
 
-  void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': nft});
+  void onNftCardTap(MarketItemModel product) {
+    Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': product});
   }
 
   Future<void> updateUser() async {
@@ -159,7 +158,7 @@ class _MarketScreenState extends State<MarketScreen> {
                                 nft: marketRepository.productList[index].nft,
                                 onTap: () {
                                   onNftCardTap(
-                                      marketRepository.productList[index].nft);
+                                      marketRepository.productList[index]);
                                 },
                               ),
                           childCount: marketRepository.productList.length));

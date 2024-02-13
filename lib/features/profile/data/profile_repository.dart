@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/services/exceptions.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
@@ -147,22 +148,22 @@ class ProfileRepository extends PostSource {
     }
   }
 
-  Future<void> buyNft({required NftModel nftForBuy}) async {
+  Future<void> buyNft({required MarketItemModel product}) async {
     final user = _users.doc(_userModel!.id);
 
     Map updatedCollection = _userModel!.userNftList;
-    if (updatedCollection.keys.contains(nftForBuy.documentId)) {
-      updatedCollection[nftForBuy.documentId] += 1;
+    if (updatedCollection.keys.contains(product.nft.documentId)) {
+      updatedCollection[product.nft.documentId] += 1;
     } else {
-      updatedCollection[nftForBuy.documentId] = 1;
+      updatedCollection[product.nft.documentId] = 1;
     }
 
-    // await user.update({
-    //   "evmBill": _userModel!.evmBill - nftForBuy.currentBit,
-    //   "user_nft": updatedCollection
-    // });
+    await user.update({
+      "evmBill": _userModel!.evmBill - product.currentPrice,
+      "user_nft": updatedCollection
+    });
 
-    // _userModel!.evmBill = _userModel!.evmBill - nftForBuy.currentBit;
+    _userModel!.evmBill = _userModel!.evmBill - product.currentPrice;
     _userModel!.userNftList = updatedCollection;
   }
 

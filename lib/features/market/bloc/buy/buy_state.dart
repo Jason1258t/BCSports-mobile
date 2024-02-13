@@ -1,4 +1,4 @@
-part of 'place_bid_cubit.dart';
+part of 'buy_cubit.dart';
 
 @immutable
 sealed class BuyNftState {}

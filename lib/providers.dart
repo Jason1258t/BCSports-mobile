@@ -6,9 +6,9 @@ import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/data/nft_service.dart';
@@ -91,7 +91,7 @@ class MyBlocProviders extends StatelessWidget {
             create: (context) =>
                 UserCubit(profileRepository: profileRepository)),
         BlocProvider(create: (context) => MainCubit()),
-        BlocProvider(create: (context) => BuyNftCubit(profileRepository)),
+        BlocProvider(create: (context) => BuyNftCubit(profileRepository, marketRepository)),
         BlocProvider(create: (context) => FavouriteCubit(profileRepository)),
         BlocProvider(
             create: (context) =>
