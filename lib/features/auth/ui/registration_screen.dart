@@ -63,153 +63,158 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
       },
       child: CustomScaffold(
-          body: Column(
-        children: [
-          const Padding(
-              padding: EdgeInsets.symmetric(vertical: 80), child: LogoWidget()),
-          Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                CustomTextFormField(
-                  onChange: (b) {
-                    validate();
-                  },
-                  validator: Validator.emailValidator,
-                  controller: emailController,
-                  labelText: 'Email address',
-                  hintText: 'Email',
-                  keyboardType: TextInputType.emailAddress,
-                  prefixIcon: Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    height: 20,
-                    child: SvgPicture.asset(
-                      Assets.icons('email.svg'),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                CustomTextFormField(
-                  onChange: (b) {
-                    validate();
-                  },
-                  controller: passwordController,
-                  validator: Validator.passwordValidator,
-                  labelText: 'Password',
-                  hintText: 'Password',
-                  keyboardType: TextInputType.visiblePassword,
-                  prefixIcon: Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: SvgPicture.asset(
-                      Assets.icons('lock.svg'),
-                    ),
-                  ),
-                  suffixIcon: InkWell(
-                    child: SvgPicture.asset(Assets.icons('eye-close.svg')),
-                    onTap: () {
-                      setState(() {
-                        passwordObscured = !passwordObscured;
-                      });
+          body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            const Padding(
+                padding: EdgeInsets.symmetric(vertical: 80),
+                child: LogoWidget()),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextFormField(
+                    onChange: (b) {
+                      validate();
                     },
-                  ),
-                  obscured: passwordObscured,
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                Row(
-                  children: [
-                    FlutterSwitch(
-                        width: 40,
-                        height: 20,
-                        value: agree,
-                        padding: 3,
-                        toggleSize: 14,
-                        activeColor: AppColors.primary,
-                        inactiveColor: AppColors.black_s2new_1A1A1A,
-                        onToggle: (value) {
-                          setState(() {
-                            agree = value;
-                            validate();
-                          });
-                        }),
-                    const SizedBox(width: 8),
-                    Text.rich(TextSpan(children: [
-                      TextSpan(
-                          text: 'I agree to the ', style: AppFonts.font12w400),
-                      TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap = () {},
-                          text: 'terms and conditions',
-                          style: AppFonts.font12w400.copyWith(
-                              decoration: TextDecoration.underline,
-                              decorationThickness: 3,
-                              decorationColor: Colors.white)),
-                    ]))
-                  ],
-                ),
-                const SizedBox(
-                  height: 55,
-                ),
-                CustomTextButton(
-                  text: 'Sign up',
-                  onTap: () {
-                    context.read<AuthCubit>().signUpWithEmailAndPassword(
-                        email: emailController.text.trim(),
-                        password: passwordController.text.trim());
-                  },
-                  isActive: buttonActive,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: ButtonWithIcon(
-                      height: 40,
-                      text: 'Google',
-                      icon: SvgPicture.asset(Assets.icons('google.svg')),
-                      onTap: () {
-                        context.read<AuthCubit>().signInWithGoogle();
-                      },
-                      isActive: true,
-                    )),
-                    const SizedBox(
-                      width: 16,
+                    validator: Validator.emailValidator,
+                    controller: emailController,
+                    labelText: 'Email address',
+                    hintText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Container(
+                      padding: const EdgeInsets.only(right: 5),
+                      height: 20,
+                      child: SvgPicture.asset(
+                        Assets.icons('email.svg'),
+                      ),
                     ),
-                    Expanded(
-                        child: ButtonWithIcon(
-                      height: 40,
-                      text: 'Apple',
-                      icon: SvgPicture.asset(Assets.icons('apple.svg')),
+                  ),
+                  const SizedBox(
+                    height: 28,
+                  ),
+                  CustomTextFormField(
+                    onChange: (b) {
+                      validate();
+                    },
+                    controller: passwordController,
+                    validator: Validator.passwordValidator,
+                    labelText: 'Password',
+                    hintText: 'Password',
+                    keyboardType: TextInputType.visiblePassword,
+                    prefixIcon: Container(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: SvgPicture.asset(
+                        Assets.icons('lock.svg'),
+                      ),
+                    ),
+                    suffixIcon: InkWell(
+                      child: SvgPicture.asset(Assets.icons('eye-close.svg')),
                       onTap: () {
-                        context.read<AuthCubit>().signInWithApple();
+                        setState(() {
+                          passwordObscured = !passwordObscured;
+                        });
                       },
-                      isActive: true,
-                    )),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text.rich(TextSpan(children: [
-                  TextSpan(
-                      text: 'Already have an account? ',
-                      style: AppFonts.font12w400),
-                  TextSpan(
-                      text: 'Sign in',
-                      style: AppFonts.font12w600,
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pop(context);
-                        }),
-                ])),
-              ],
-            ),
-          )
-        ],
+                    ),
+                    obscured: passwordObscured,
+                  ),
+                  const SizedBox(
+                    height: 28,
+                  ),
+                  Row(
+                    children: [
+                      FlutterSwitch(
+                          width: 40,
+                          height: 20,
+                          value: agree,
+                          padding: 3,
+                          toggleSize: 14,
+                          activeColor: AppColors.primary,
+                          inactiveColor: AppColors.black_s2new_1A1A1A,
+                          onToggle: (value) {
+                            setState(() {
+                              agree = value;
+                              validate();
+                            });
+                          }),
+                      const SizedBox(width: 8),
+                      Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: 'I agree to the ',
+                            style: AppFonts.font12w400),
+                        TextSpan(
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                            text: 'terms and conditions',
+                            style: AppFonts.font12w400.copyWith(
+                                decoration: TextDecoration.underline,
+                                decorationThickness: 3,
+                                decorationColor: Colors.white)),
+                      ]))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 55,
+                  ),
+                  CustomTextButton(
+                    text: 'Sign up',
+                    onTap: () {
+                      context.read<AuthCubit>().signUpWithEmailAndPassword(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim());
+                    },
+                    isActive: buttonActive,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: ButtonWithIcon(
+                        height: 40,
+                        text: 'Google',
+                        icon: SvgPicture.asset(Assets.icons('google.svg')),
+                        onTap: () {
+                          context.read<AuthCubit>().signInWithGoogle();
+                        },
+                        isActive: true,
+                      )),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                          child: ButtonWithIcon(
+                        height: 40,
+                        text: 'Apple',
+                        icon: SvgPicture.asset(Assets.icons('apple.svg')),
+                        onTap: () {
+                          context.read<AuthCubit>().signInWithApple();
+                        },
+                        isActive: true,
+                      )),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                        text: 'Already have an account? ',
+                        style: AppFonts.font12w400),
+                    TextSpan(
+                        text: 'Sign in',
+                        style: AppFonts.font12w600,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pop(context);
+                          }),
+                  ])),
+                ],
+              ),
+            )
+          ],
+        ),
       )),
     );
   }

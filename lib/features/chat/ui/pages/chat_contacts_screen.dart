@@ -4,7 +4,6 @@ import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart
 import 'package:bcsports_mobile/features/chat/ui/widgets/chat_preview.dart';
 import 'package:bcsports_mobile/features/chat/ui/widgets/small_user_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -14,7 +13,6 @@ import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
-import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class ChatContactsScreen extends StatefulWidget {
   const ChatContactsScreen({super.key});
@@ -34,6 +32,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
   Widget build(BuildContext context) {
     final ProfileRepository profileRepository =
         context.read<ProfileRepository>();
+
+    final ChatRepository chatRepository = context.read<ChatRepository>();
 
     return CustomScaffold(
       onTap: () {
@@ -72,7 +72,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                 context.read<UserSearchCubit>().searchByString(
                     v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
                 setState(() {
-                  isOpenSearch = MediaQuery.of(context).viewInsets.bottom != 0;
+                  isOpenSearch =
+                      MediaQuery.of(context).viewInsets.bottom != 0 ||
+                          chatRepository.filteredUserList.isNotEmpty;
                 });
               },
               onTap: () {

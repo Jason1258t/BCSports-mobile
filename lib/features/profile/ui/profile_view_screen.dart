@@ -1,9 +1,11 @@
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
@@ -23,8 +25,13 @@ class ProfileViewScreen extends StatefulWidget {
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
   @override
   void initState() {
-    context.read<UserNftCubit>().loadUserNft();
+    context.read<ProfileRepository>().loadUserNftList();
     super.initState();
+  }
+
+  void onNftCardTap(NftModel nft) {
+    Navigator.of(context).pushNamed('/market/details',
+        arguments: {'nft': nft, "target": ProductTarget.sell});
   }
 
   @override
@@ -93,7 +100,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                         alignment: Alignment.bottomCenter,
                         child: CircleAvatar(
                           radius: sizeof.width * 0.20,
-                          backgroundColor: AppColors.black_090723,
+                          backgroundColor: AppColors.background,
                           child: CircleAvatar(
                               radius: sizeof.width * 0.18,
                               backgroundColor: user.avatarColor,
@@ -198,6 +205,9 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                   childAspectRatio: 0.59),
               delegate: SliverChildBuilderDelegate(
                   (context, index) => MarketNftCard(
+                        onTap: () {
+                          onNftCardTap(repository.userNftList[index]);
+                        },
                         nft: repository.userNftList[index],
                       ),
                   childCount: repository.userNftList.length));
@@ -213,34 +223,34 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
     );
   }
 
-Widget buildPostsTab(ProfileViewRepository repository) {
-  return StreamBuilder(
-      stream: repository.userPostsState.stream,
-      builder: (context, snapshot) {
-        if (snapshot.data == LoadingStateEnum.success &&
-            repository.posts.isNotEmpty) {
-          return SliverList(
-              delegate: SliverChildBuilderDelegate(
-                    (context, index) => FeedPostWidget(
-                  postId: repository.posts[index].postModel.id,
-                  source: repository,
-                ),
-                childCount: repository.posts.length,
-              ));
-        } else if (repository.posts.isEmpty) {
-          return SliverToBoxAdapter(
+  Widget buildPostsTab(ProfileViewRepository repository) {
+    return StreamBuilder(
+        stream: repository.userPostsState.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data == LoadingStateEnum.success &&
+              repository.posts.isNotEmpty) {
+            return SliverList(
+                delegate: SliverChildBuilderDelegate(
+              (context, index) => FeedPostWidget(
+                postId: repository.posts[index].postModel.id,
+                source: repository,
+              ),
+              childCount: repository.posts.length,
+            ));
+          } else if (repository.posts.isEmpty) {
+            return SliverToBoxAdapter(
+                child: Center(
+                    child: Text(
+              'This user does not have Posts',
+              style: AppFonts.font20w600,
+            )));
+          } else {
+            return SliverToBoxAdapter(
               child: Center(
-                  child: Text(
-                    'This user does not have Posts',
-                    style: AppFonts.font20w600,
-                  )));
-        } else {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: AppAnimations.circleIndicator,
-            ),
-          );
-        }
-      });
-}
+                child: AppAnimations.circleIndicator,
+              ),
+            );
+          }
+        });
+  }
 }

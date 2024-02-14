@@ -15,11 +15,10 @@ class _ArScreenState extends State<ArScreen> {
   Widget build(BuildContext context) {
     return CustomScaffold(
         body: Center(
-      child: FittedBox(
-          child: Text(
-        'в разработке',
-        style: AppFonts.font36w800.copyWith(color: AppColors.white),
-      )),
-    ));
+            child: SingleChildScrollView(
+      child: Column(
+
+      ),
+    )));
   }
 }

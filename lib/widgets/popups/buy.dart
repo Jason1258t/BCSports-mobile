@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -11,32 +11,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-class PlaceBitPopup extends StatefulWidget {
-  final NftModel nft;
+class BuyNftPopup extends StatefulWidget {
+  final MarketItemModel product;
 
-  const PlaceBitPopup({super.key, required this.nft});
+  const BuyNftPopup({super.key, required this.product});
 
   @override
-  State<PlaceBitPopup> createState() => _PlaceBitPopupState();
+  State<BuyNftPopup> createState() => _BuyNftPopupState();
 }
 
-class _PlaceBitPopupState extends State<PlaceBitPopup> {
+class _BuyNftPopupState extends State<BuyNftPopup> {
   bool agree = false;
-  double extraBid = 0;
 
-  void onPlaceBidTap() {
-    context.read<PlaceBidCubit>().updateBid(widget.nft, extraBid + widget.nft.currentBit);
-  }
-
-  void increaseBet() {
-    setState(() {
-      extraBid += 10;
-    });
+  void onBuyTap() {
+    context.read<BuyNftCubit>().buyNft(
+          widget.product,
+        );
   }
 
   bool isActive() =>
-      context.read<ProfileRepository>().user.evmBill + extraBid >=
-          widget.nft.currentBit &&
+      context.read<ProfileRepository>().user.evmBill >=
+          widget.product.currentPrice &&
       agree;
 
   @override
@@ -64,19 +59,18 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Place a bid",
+                  "Buy",
                   style: AppFonts.font24w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
                 Container(
-                  constraints: const BoxConstraints(minWidth: 200),
-                  padding: const EdgeInsets.all(11),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(48),
-                      border:
-                          Border.all(width: 1, color: AppColors.primary)),
+                      border: Border.all(width: 1, color: AppColors.primary)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.min,
@@ -89,30 +83,30 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                             width: 10,
                           ),
                           Text(
-                            "${widget.nft.currentBit + extraBid} ETH",
+                            "${widget.product.currentPrice} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),
                         ],
                       ),
-                      Material(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(1000),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000),
-                          onTap: increaseBet,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 39,
-                            height: 39,
-                            child: Text(
-                              "+",
-                              style: AppFonts.font24w500
-                                  .copyWith(color: AppColors.black),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Material(
+                      //   color: AppColors.primary,
+                      //   borderRadius: BorderRadius.circular(1000),
+                      //   child: InkWell(
+                      //     borderRadius: BorderRadius.circular(1000),
+                      //     onTap: increaseBet,
+                      //     child: Container(
+                      //       alignment: Alignment.center,
+                      //       width: 39,
+                      //       height: 39,
+                      //       child: Text(
+                      //         "+",
+                      //         style: AppFonts.font24w500
+                      //             .copyWith(color: AppColors.black),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -166,7 +160,7 @@ class _PlaceBitPopupState extends State<PlaceBitPopup> {
                     width: 170,
                     height: 49,
                     text: "Place a Bid",
-                    onTap: onPlaceBidTap,
+                    onTap: onBuyTap,
                     isActive: isActive())
               ],
             ),

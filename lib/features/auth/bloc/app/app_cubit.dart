@@ -28,9 +28,9 @@ class AppCubit extends Cubit<AppState> {
   }
 
   void subscribe() {
-    _authRepository.appState.stream.listen((event) {
+    _authRepository.appState.stream.listen((event) async {
       if (event == AppAuthStateEnum.auth) {
-        _profileRepository.setUser(_authRepository.currentUser!.uid);
+        await _profileRepository.setUser(_authRepository.currentUser!.uid); // await cuz maret depends on user
         _socialRepository.initial();
         emit(AppAuthState());
       }

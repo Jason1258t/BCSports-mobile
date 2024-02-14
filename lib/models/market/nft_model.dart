@@ -13,9 +13,8 @@ class NftModel {
   final String role;
   final int weight;
   final String previewImagePath;
-  final DateTime auctionStopTime;
-  String lastBidderName;
-  double currentBit;
+  final int views;
+
 
   NftModel(
       {required this.documentId,
@@ -30,9 +29,7 @@ class NftModel {
       required this.position,
       required this.role,
       required this.weight,
-      required this.auctionStopTime,
-      required this.currentBit,
-      required this.lastBidderName,
+      required this.views,
       required this.previewImagePath});
 
   factory NftModel.fromJson(Map<String, dynamic> json, String documentId) {
@@ -47,28 +44,10 @@ class NftModel {
         isRightFoot: json['is_right_foot'],
         name: json['name'],
         position: json['position'],
+        views: json['views'],
         role: json['role'],
-        lastBidderName: json['last_bidder'],
-        currentBit: double.parse(json['current_bit'].toString()),
         weight: json['weight'],
-        auctionStopTime: json['auction_stop_time'].toDate(),
         previewImagePath: json['mini_image_path']);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'birthday': birthday.toIso8601String(),
-      'citizenship': citizenship,
-      'club': club,
-      'country': country,
-      'height': height,
-      'image_path': imagePath,
-      'is_right_foot': isRightFoot,
-      'name': name,
-      'position': position,
-      'role': role,
-      'weight': weight,
-    };
   }
 
   @override

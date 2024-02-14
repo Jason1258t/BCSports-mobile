@@ -12,7 +12,12 @@ class CustomTextFormField extends StatelessWidget {
       this.labelText,
       this.obscured = false,
       this.suffixIcon,
-      this.keyboardType, this.onChange,this.initValue, this.onTap, this.showCursor});
+      this.keyboardType,
+      this.onChange,
+      this.initValue,
+      this.onTap,
+      this.backgroundColor,
+      this.showCursor});
 
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -27,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? initValue;
   final Function()? onTap;
   final bool? showCursor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
         ],
         Container(
           decoration: BoxDecoration(
-              color: AppColors.black_s2new_1A1A1A,
+              color: backgroundColor ?? AppColors.black_s2new_1A1A1A,
               borderRadius: BorderRadius.circular(9)),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           alignment: Alignment.center,
@@ -61,7 +67,9 @@ class CustomTextFormField extends StatelessWidget {
             style: AppFonts.font16w500,
             decoration: InputDecoration(
                 prefixIcon: prefixIcon,
-                errorStyle: const TextStyle(fontSize: 0,),
+                errorStyle: const TextStyle(
+                  fontSize: 0,
+                ),
                 prefixIconConstraints: const BoxConstraints(
                   maxWidth: 25,
                   maxHeight: 20,
