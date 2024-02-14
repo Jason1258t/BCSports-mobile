@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
@@ -20,11 +21,11 @@ class CreatePostCubit extends Cubit<CreatePostState> {
         _profileRepository = profileRepository,
         super(CreatePostInitial());
 
-  void createPost(String? text, [XFile? image]) async {
+  void createPost(String? text, [Uint8List? croppedImage]) async {
     emit(CreateLoadingState());
     try {
       PostImageDTO? imageDTO;
-      if (image != null) imageDTO = await _uploadImages(image);
+      if (croppedImage != null) imageDTO = await _uploadImages(croppedImage);
 
       await _socialRepository.createPost(PostModel.create(
           creatorId: _profileRepository.user.id, text: text, image: imageDTO));
@@ -37,12 +38,12 @@ class CreatePostCubit extends Cubit<CreatePostState> {
     }
   }
 
-  Future<PostImageDTO> _uploadImages(XFile image) async {
+  Future<PostImageDTO> _uploadImages(Uint8List image) async {
     String imageUrl;
     String compressedImageUrl;
 
     final List<Future> waitFor = [];
-    waitFor.add(_socialRepository.uploadPostImage(filePath: image.path));
+    waitFor.add(_socialRepository.uploadPostImage(image: image));
     waitFor.add(_compressImageAndUpload(image));
 
     final results = await Future.wait(waitFor);
@@ -54,8 +55,8 @@ class CreatePostCubit extends Cubit<CreatePostState> {
         imageUrl: imageUrl, compressedImageUrl: compressedImageUrl);
   }
 
-  Future<String> _compressImageAndUpload(XFile image) async {
-    final compressedImage = await _compressImage(await image.readAsBytes());
+  Future<String> _compressImageAndUpload(Uint8List image) async {
+    final compressedImage = await _compressImage(image);
     return _socialRepository.uploadPostImage(bytes: compressedImage);
   }
 

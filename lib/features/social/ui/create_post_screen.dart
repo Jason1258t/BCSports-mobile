@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreatePostScreen extends StatefulWidget {
@@ -27,9 +29,43 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController textController = TextEditingController();
 
   XFile? image;
+  CroppedFile? croppedImage;
+  Uint8List? croppedImagesBytes;
 
   void pickImage() async {
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+
+    croppedImage = await ImageCropper().cropImage(
+      sourcePath: image!.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+      ],
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: AppColors.background,
+            toolbarWidgetColor: AppColors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            statusBarColor: AppColors.background,
+            dimmedLayerColor: AppColors.background,
+            backgroundColor: AppColors.background,
+            hideBottomControls: true,
+            lockAspectRatio: true),
+        IOSUiSettings(
+          title: 'Cropper',
+          aspectRatioLockEnabled: true,
+          minimumAspectRatio: 1,
+        ),
+      ],
+    );
+
+    if (croppedImage == null) {
+      image = null;
+    } else {
+      croppedImagesBytes = await croppedImage!.readAsBytes();
+    }
     validate();
   }
 
@@ -76,7 +112,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 text: 'Publish',
                 onTap: () => context
                     .read<CreatePostCubit>()
-                    .createPost(textController.text, image),
+                    .createPost(textController.text, croppedImagesBytes),
                 active: buttonActive,
               ),
             ],
@@ -135,13 +171,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     height: MediaQuery.sizeOf(context).width - 48,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: FileImage(File(image!.path)),
+                            image: MemoryImage(croppedImagesBytes!),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(16)),
                     padding: const EdgeInsets.all(8),
                     alignment: Alignment.bottomLeft,
                   ),
-            const SizedBox(height: 12,),
+            const SizedBox(
+              height: 12,
+            ),
             image != null
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -152,6 +190,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         text: 'Delete',
                         onTap: () {
                           image = null;
+                          croppedImage = null;
+                          croppedImagesBytes = null;
                           validate();
                         },
                       ),

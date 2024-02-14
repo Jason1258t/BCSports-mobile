@@ -13,6 +13,7 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
@@ -83,14 +84,13 @@ class SocialRepository extends PostSource {
         .set({'id': post.id}, SetOptions(merge: true));
   }
 
-  Future<String> uploadPostImage({String? filePath, Uint8List? bytes}) async {
-    assert(filePath != null || bytes != null);
+  Future<String> uploadPostImage({Uint8List? image, Uint8List? bytes}) async {
+    assert(image != null || bytes != null);
     final fileRef = _postsBucket.child('${const Uuid().v1()}.jpeg');
     final TaskSnapshot task;
     try {
-      if (filePath != null) {
-        File file = File(filePath);
-        task = await fileRef.putFile(file);
+      if (image != null) {
+        task = await fileRef.putData(image);
       } else {
         task = await fileRef.putData(bytes!);
       }
