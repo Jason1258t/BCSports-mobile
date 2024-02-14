@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,13 @@ class _ArScreenState extends State<ArScreen> {
               height: sizeOf.width * 0.456,
               assetIcon: 'people_with_rows.svg',
               title: 'Player',
-              text: 'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
+              text:
+                  'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
               backGroundImage: 'ar/ar_pepole.png',
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             ArBannerWidget(
               width: sizeOf.width,
               height: sizeOf.width * 0.456,
@@ -35,7 +39,9 @@ class _ArScreenState extends State<ArScreen> {
               text: 'AR визуализация Бразильской академии',
               backGroundImage: 'ar/dybai.png',
             ),
-            const SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             ArBannerWidget(
               width: sizeOf.width,
               height: sizeOf.width * 0.456,
@@ -43,6 +49,9 @@ class _ArScreenState extends State<ArScreen> {
               title: 'Mini-games',
               text: 'Выбери, сыгрый, победи',
               backGroundImage: 'ar/footboll_field.png',
+              onTap: () {
+                Navigator.pushNamed(context, AppRouteNames.arMiniGames);
+              },
             ),
           ],
         ));

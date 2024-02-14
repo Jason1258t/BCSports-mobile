@@ -5,15 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../utils/assets.dart';
 import '../../../../utils/fonts.dart';
 
-class ArBannerWidget extends StatelessWidget {
-  const ArBannerWidget(
+class MediumActivityWidget extends StatelessWidget {
+  const MediumActivityWidget(
       {super.key,
       required this.width,
       required this.height,
       required this.assetIcon,
       required this.title,
       required this.text,
-      required this.backGroundImage,
       this.onTap});
 
   final double width;
@@ -21,7 +20,6 @@ class ArBannerWidget extends StatelessWidget {
   final String assetIcon;
   final String title;
   final String text;
-  final String backGroundImage;
   final Function()? onTap;
 
   @override
@@ -31,19 +29,24 @@ class ArBannerWidget extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(width * 0.036),
+        padding: EdgeInsets.all(width * 0.096),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-                image: AssetImage(Assets.images(backGroundImage)),
-                fit: BoxFit.cover)),
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [Color(0xFF474322), Color(0xFF201F15)],
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SvgPicture.asset(
               Assets.icons(assetIcon),
               color: AppColors.primary,
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,8 +60,8 @@ class ArBannerWidget extends StatelessWidget {
                 ),
                 Text(
                   text,
-                  style: AppFonts.font12w300
-                      .copyWith(color: AppColors.grey_727477),
+                  style: AppFonts.font14w400
+                      .copyWith(color: AppColors.grey_B3B3B3),
                 ),
               ],
             )
