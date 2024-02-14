@@ -10,7 +10,7 @@ class UserNftCubit extends Cubit<UserNftState> {
 
   UserNftCubit(this._profileRepository) : super(UserNftInitial()) {
     _profileRepository.userNftStream.listen((value) {
-      if (value == LoadingStateEnum.fail) emit(UserNftLoading());
+      if (value == LoadingStateEnum.loading) emit(UserNftLoading());
       if (value == LoadingStateEnum.success) emit(UserNftSuccess());
       if (value == LoadingStateEnum.fail) emit(UserNftFailure());
     });
