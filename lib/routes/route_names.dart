@@ -5,12 +5,13 @@ abstract class AppRouteNames {
   static const String profileView = '/profile/view';
 
   static const String createPost = '/create_post';
-  
+
   static const String onboarding = '/onboarding';
 
   static const String market = '/market';
   static const String marketBuy = '/market/buy';
   static const String marketSell = '/market/sell';
+  static const String marketLots = '/market/lots';
 
   static const String login = '/login';
   static const String registration = '/register';

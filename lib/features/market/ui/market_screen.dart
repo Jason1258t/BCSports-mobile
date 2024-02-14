@@ -1,7 +1,9 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/mini_appbar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
+import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_third.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
@@ -35,6 +37,10 @@ class _MarketScreenState extends State<MarketScreen> {
 
   void onFavouritesTap() {
     Navigator.of(context).pushNamed(AppRouteNames.favourites);
+  }
+
+  void onMyLotsTap() {
+    Navigator.of(context).pushNamed(AppRouteNames.marketLots);
   }
 
   void onNftCardTap(MarketItemModel product) {
@@ -75,17 +81,18 @@ class _MarketScreenState extends State<MarketScreen> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  MiniAppBarButton(
                     onTap: onFavouritesTap,
-                    borderRadius: BorderRadius.circular(10000),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: SvgPicture.asset(
-                        "assets/icons/like.svg",
-                        width: 20,
-                      ),
-                    ),
+                    iconPath: 'assets/icons/like.svg',
                   ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  MiniAppBarButton(
+                    onTap: onMyLotsTap,
+                    iconPath: 'assets/icons/lots.svg',
+                  ),
+                  Spacer(),
                   InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, AppRouteNames.wallet);

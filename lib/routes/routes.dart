@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_contacts_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
+import 'package:bcsports_mobile/features/market/ui/market_lots_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_sell_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
@@ -65,6 +66,9 @@ class AppRoutes {
       case AppRouteNames.favourites:
         return MaterialPageRoute(
             builder: (ctx) => const MarketFavouritesScreen());
+      case AppRouteNames.marketLots:
+        return MaterialPageRoute(
+            builder: (ctx) => const MarketLotsScreen());
       case AppRouteNames.login:
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:

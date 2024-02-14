@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
@@ -97,8 +98,11 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                     floatingActionButton: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: CustomTextButton(
-                      
-                          text: "Buy", onTap: onBuyTap, isActive: true, height: 52,),
+                        text: "Buy",
+                        onTap: onBuyTap,
+                        isActive: true,
+                        height: 52,
+                      ),
                     ),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.centerDocked,
@@ -139,8 +143,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                           fit: BoxFit.fitHeight,
                           placeholder:
                               const AssetImage("assets/images/noname_det.png"),
-                          image: NetworkImage(
-                              nft.imagePath)),
+                          image: NetworkImage(nft.imagePath)),
                       Positioned(
                         top: 20,
                         right: 20,
@@ -148,8 +151,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                           builder: (context, state) {
                             final user = context.read<ProfileRepository>().user;
                             final userNfts = user.favouritesNftList;
-                            final bool isLiked = userNfts.contains(
-                                nft.documentId);
+                            final bool isLiked =
+                                userNfts.contains(nft.documentId);
 
                             if (state is FavouriteLoading) {
                               return Padding(
@@ -200,8 +203,14 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(
+                  const SizedBox(
                   height: 16,
+                ),
+                NftArButton(
+                  isActive: false,
+                ),
+                const SizedBox(
+                  height: 24,
                 ),
               ],
             ),

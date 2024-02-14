@@ -152,6 +152,11 @@ class ProfileRepository extends PostSource {
   }
 
   Future<void> buyNft({required MarketItemModel product}) async {
+    await placeNftIntoInventory(product);
+    await sendNftPriceToSeller(product);
+  }
+
+  Future<void> placeNftIntoInventory(MarketItemModel product) async {
     final user = _users.doc(_userModel!.id);
 
     Map updatedCollection = _userModel!.userNftList;
@@ -168,9 +173,12 @@ class ProfileRepository extends PostSource {
 
     _userModel!.evmBill = _userModel!.evmBill - product.currentPrice;
     _userModel!.userNftList = updatedCollection;
+  }
 
+  Future<void> sendNftPriceToSeller(MarketItemModel product) async {
     final seller = _users.doc(product.lastOwnerId);
-    await seller.update({"evmBill": FieldValue.increment(product.currentPrice)});
+    await seller
+        .update({"evmBill": FieldValue.increment(product.currentPrice)});
   }
 
   Future<void> markFavourite(NftModel nft) async {

@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.d
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
@@ -10,6 +11,8 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
@@ -28,6 +31,7 @@ class MarketProductSellScreen extends StatefulWidget {
 }
 
 class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
+
   late final NftDetailsCubit nftCubit;
   late final MarketRepository marketRepository;
 
@@ -205,6 +209,12 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                   ),
                   const SizedBox(
                     height: 16,
+                  ),
+                  NftArButton(
+                    isActive: true,
+                  ),
+                  const SizedBox(
+                    height: 24,
                   ),
                 ],
               ),

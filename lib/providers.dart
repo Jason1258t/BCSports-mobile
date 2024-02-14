@@ -7,7 +7,9 @@ import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
@@ -40,13 +42,16 @@ class MyRepositoryProviders extends StatelessWidget {
 
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => MarketRepository(nftService: NftService())),
         RepositoryProvider(create: (context) => ChatRepository()),
         RepositoryProvider(create: (context) => ProfileRepository(likes)),
         RepositoryProvider(create: (context) => SocialRepository(likes)),
         RepositoryProvider(create: (context) => ProfileViewRepository(likes)),
         RepositoryProvider(
             create: (context) => FavouritePostsRepository(likes)),
+        RepositoryProvider(
+            create: (context) => MarketRepository(
+                nftService: NftService(),
+                profileRepository: context.read<ProfileRepository>())),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,
@@ -91,7 +96,9 @@ class MyBlocProviders extends StatelessWidget {
             create: (context) =>
                 UserCubit(profileRepository: profileRepository)),
         BlocProvider(create: (context) => MainCubit()),
-        BlocProvider(create: (context) => BuyNftCubit(profileRepository, marketRepository)),
+        BlocProvider(
+            create: (context) =>
+                BuyNftCubit(profileRepository, marketRepository)),
         BlocProvider(create: (context) => FavouriteCubit(profileRepository)),
         BlocProvider(
             create: (context) =>
@@ -113,9 +120,11 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 UserSearchCubit(chatRepository: chatRepository)),
+        BlocProvider(create: (context) => SellCubit(profileRepository)),
+        BlocProvider(create: (context) => LotsCubit(marketRepository)),
         BlocProvider(
             create: (context) =>
-                SellCubit(profileRepository)),
+                CanselLotCubit(marketRepository, profileRepository)),
       ],
       child: const MyApp(),
     );

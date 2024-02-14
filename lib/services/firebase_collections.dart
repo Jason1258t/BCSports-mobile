@@ -24,6 +24,7 @@ abstract class FirebaseCollections {
       _firestore.collection(FirebaseCollectionNames.playersNft);
   static final marketCollection =
       _firestore.collection(FirebaseCollectionNames.market);
+  
 }
 
 abstract class CustomFilters {}
