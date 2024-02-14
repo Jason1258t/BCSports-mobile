@@ -95,7 +95,18 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: SingleChildScrollView(
-                    child: StreamBuilder<List<Room>>(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Recent Conversation",
+                      style:
+                          AppFonts.font16w400.copyWith(color: AppColors.white),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    StreamBuilder<List<Room>>(
                         stream: context.read<ChatRepository>().roomsStream,
                         builder: (context, snapshot) {
                           return Column(
@@ -103,7 +114,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                               if (snapshot.hasData) ...generateChats(snapshot)
                             ],
                           );
-                        })),
+                        }),
+                  ],
+                )),
               ),
               buildSearch()
             ],

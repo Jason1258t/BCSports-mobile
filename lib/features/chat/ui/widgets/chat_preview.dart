@@ -21,43 +21,56 @@ class ChatCardPreviewWidget extends StatefulWidget {
 class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     return InkWell(
       onTap: setUserAndOpenChat,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: AppColors.black_s2new_1A1A1A,
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Row(
           children: [
             buildUserAvatar(),
             const SizedBox(
-              width: 15,
+              width: 16,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  getOtherUserName() ?? '',
-                  style: AppFonts.font14w500.copyWith(color: AppColors.white),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                StreamBuilder<List<Message>>(
-                    stream: FirebaseChatCore.instance.messages(widget.room),
-                    builder: (context, snapshot) {
-                      return Text(
-                        getLastMessage(snapshot.data ?? []),
-                        style: AppFonts.font12w400
-                            .copyWith(color: AppColors.white),
-                      );
-                    }),
-              ],
+            SizedBox(
+              width: size.width * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  StreamBuilder<List<Message>>(
+                      stream: FirebaseChatCore.instance.messages(widget.room),
+                      builder: (context, snapshot) {
+                        return Text(
+                          getLastMessage(snapshot.data ?? []) * 10,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: AppFonts.font16w400
+                              .copyWith(color: AppColors.white),
+                        );
+                      }),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    getOtherUserName() ?? '',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: AppFonts.font14w400
+                        .copyWith(color: AppColors.grey_949BA5),
+                  ),
+                ],
+              ),
             )
           ],
         ),
       ),
     );
   }
-
 
   UserModel? getOtherUser() {
     final currentUserId = context.read<ProfileRepository>().user.id;
@@ -85,17 +98,18 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
           shape: BoxShape.circle,
           color: user.avatarColor,
           image: user.avatarUrl != null
-              ? DecorationImage(image: NetworkImage(user.avatarUrl!), fit: BoxFit.cover)
+              ? DecorationImage(
+                  image: NetworkImage(user.avatarUrl!), fit: BoxFit.cover)
               : null),
-      width: 48,
-      height: 48,
+      width: 64,
+      height: 64,
       child: user.avatarUrl == null
           ? Center(
-        child: Text(
-          (user.displayName ?? user.username)[0].toUpperCase(),
-          style: AppFonts.font16w400,
-        ),
-      )
+              child: Text(
+                (user.displayName ?? user.username)[0].toUpperCase(),
+                style: AppFonts.font16w400,
+              ),
+            )
           : Container(),
     );
   }

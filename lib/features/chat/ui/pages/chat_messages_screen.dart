@@ -27,8 +27,15 @@ class ChatMessagesScreen extends StatefulWidget {
 class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
   final chatCore = FirebaseChatCore.instance;
 
-  final ChatTheme them = const DarkChatTheme(
-      backgroundColor: Colors.black, inputBorderRadius: BorderRadius.zero, );
+  final ChatTheme them = DarkChatTheme(
+    secondaryColor: AppColors.primary,
+    primaryColor: AppColors.black_s2new_1A1A1A,
+      backgroundColor: Colors.black,
+      inputBorderRadius: BorderRadius.zero,
+      receivedMessageBodyTextStyle:
+          AppFonts.font14w400.copyWith(color: AppColors.black_s2new_1A1A1A),
+      sentMessageBodyTextStyle:
+          AppFonts.font14w400.copyWith(color: AppColors.white));
 
   @override
   Widget build(BuildContext context) {
