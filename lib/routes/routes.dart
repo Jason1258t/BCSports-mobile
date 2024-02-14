@@ -5,7 +5,9 @@ import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_contacts_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
+import 'package:bcsports_mobile/features/market/ui/market_lots_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
+import 'package:bcsports_mobile/features/market/ui/market_product_sell_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
@@ -16,6 +18,7 @@ import 'package:bcsports_mobile/features/social/ui/create_post_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/favourites_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/feed_screen.dart';
 import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
@@ -46,18 +49,26 @@ class AppRoutes {
       // return MaterialPageRoute(builder: (ctx) => RegistrationScreen());
       case AppRouteNames.market:
         return MaterialPageRoute(builder: (ctx) => const MarketScreen());
-      case AppRouteNames.marketDetails:
+      case AppRouteNames.marketBuy:
+        final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
+        final MarketItemModel product = pageArgs['nft'];
+        return MaterialPageRoute(
+            builder: (ctx) => MarketProductBuyScreen(
+                  product: product,
+                ));
+      case AppRouteNames.marketSell:
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
         final NftModel playerNft = pageArgs['nft'];
-        final ProductTarget target = pageArgs['target'];
         return MaterialPageRoute(
-            builder: (ctx) => MarketProductScreen(
+            builder: (ctx) => MarketProductSellScreen(
                   nft: playerNft,
-                  target: target,
                 ));
       case AppRouteNames.favourites:
         return MaterialPageRoute(
             builder: (ctx) => const MarketFavouritesScreen());
+      case AppRouteNames.marketLots:
+        return MaterialPageRoute(
+            builder: (ctx) => const MarketLotsScreen());
       case AppRouteNames.login:
         return MaterialPageRoute(builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:

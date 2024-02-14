@@ -6,11 +6,14 @@ import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/data/nft_service.dart';
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
@@ -39,13 +42,16 @@ class MyRepositoryProviders extends StatelessWidget {
 
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (context) => MarketRepository()),
         RepositoryProvider(create: (context) => ChatRepository()),
         RepositoryProvider(create: (context) => ProfileRepository(likes)),
         RepositoryProvider(create: (context) => SocialRepository(likes)),
         RepositoryProvider(create: (context) => ProfileViewRepository(likes)),
         RepositoryProvider(
             create: (context) => FavouritePostsRepository(likes)),
+        RepositoryProvider(
+            create: (context) => MarketRepository(
+                nftService: NftService(),
+                profileRepository: context.read<ProfileRepository>())),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,
@@ -83,7 +89,6 @@ class MyBlocProviders extends StatelessWidget {
                 socialRepository, favouritesRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
-        BlocProvider(create: (context) => MarketCubit(marketRepository)),
         BlocProvider(
             create: (context) =>
                 EditUserCubit(profileRepository: profileRepository)),
@@ -93,7 +98,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(create: (context) => MainCubit()),
         BlocProvider(
             create: (context) =>
-                PlaceBidCubit(marketRepository, profileRepository)),
+                BuyNftCubit(profileRepository, marketRepository)),
         BlocProvider(create: (context) => FavouriteCubit(profileRepository)),
         BlocProvider(
             create: (context) =>
@@ -115,6 +120,11 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 UserSearchCubit(chatRepository: chatRepository)),
+        BlocProvider(create: (context) => SellCubit(profileRepository)),
+        BlocProvider(create: (context) => LotsCubit(marketRepository)),
+        BlocProvider(
+            create: (context) =>
+                CanselLotCubit(marketRepository, profileRepository)),
       ],
       child: const MyApp(),
     );

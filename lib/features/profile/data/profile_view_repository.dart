@@ -94,7 +94,7 @@ class ProfileViewRepository extends PostSource{
       final playersCollection = await _playersCollection.get();
       playersCollection.docs.forEach((doc) {
         print(doc);
-        if (_userModel!.ownUserNftList.contains(doc.id)) {
+        if (_userModel!.userNftList.keys.contains(doc.id)) {
           final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
           userNftList.add(nft);
         }

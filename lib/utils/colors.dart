@@ -39,5 +39,6 @@ abstract class AppColors {
   static Color background = Colors.black;
   static Color blueLink = const Color(0xFF2E8AF6);
 
+  static Color greyStrange = const Color(0xFF403D31);
   static Color blue = const Color.fromARGB(51, 243, 213, 35);
 }

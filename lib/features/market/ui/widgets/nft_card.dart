@@ -44,7 +44,7 @@ class MarketNftCardState extends State<MarketNftCard> {
               children: [
                 Positioned(
                   left: 3,
-                  top: topMargin + 57,
+                  top: topMargin + 52,
                   child: SizedBox(
                     width: 57,
                     child: Transform.rotate(
@@ -83,33 +83,33 @@ class MarketNftCardState extends State<MarketNftCard> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 40,
+                    height: 42,
                     child: Text(
                       widget.nft.name.toUpperCase(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppFonts.font22w800ItalicAS
-                          .copyWith(color: AppColors.primary, letterSpacing: 1),
+                      style: AppFonts.font22w800ItalicAS.copyWith(
+                          color: AppColors.primary,
+                          letterSpacing: 1,
+                          height: 0.9),
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 2,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 4),
                     clipBehavior: Clip.hardEdge,
                     height: 26,
                     decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.1),
+                        color: AppColors.greyStrange,
                         borderRadius: BorderRadius.circular(8)),
                     alignment: Alignment.center,
-                    child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                        child: Text(
-                          widget.nft.position.toUpperCase(),
-                          style: AppFonts.font9w600
-                              .copyWith(color: AppColors.white),
-                        )),
+                    child: Text(
+                      widget.nft.position.toUpperCase(),
+                      style:
+                          AppFonts.font9w600.copyWith(color: AppColors.white),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,28 +120,26 @@ class MarketNftCardState extends State<MarketNftCard> {
                           height: 26,
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              color: AppColors.white.withOpacity(0.1),
+                              color: AppColors.greyStrange,
                               borderRadius: BorderRadius.circular(8)),
                           alignment: Alignment.center,
-                          child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Country",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w300
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                  Text(
-                                    widget.nft.country.toUpperCase(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w600
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                ],
-                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Country",
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFonts.font9w300
+                                    .copyWith(color: AppColors.white),
+                              ),
+                              Text(
+                                widget.nft.country.toUpperCase(),
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFonts.font9w600
+                                    .copyWith(color: AppColors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -153,31 +151,29 @@ class MarketNftCardState extends State<MarketNftCard> {
                           height: 26,
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                              color: AppColors.white.withOpacity(0.1),
+                              color: AppColors.greyStrange,
                               borderRadius: BorderRadius.circular(8)),
                           alignment: Alignment.center,
-                          child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Born",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w300
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                  Text(
-                                    DateFormat('dd.MM.yyyy')
-                                        .format(widget.nft.birthday)
-                                        .toString()
-                                        .toUpperCase(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppFonts.font9w600
-                                        .copyWith(color: AppColors.white),
-                                  ),
-                                ],
-                              )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Born",
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFonts.font9w300
+                                    .copyWith(color: AppColors.white),
+                              ),
+                              Text(
+                                DateFormat('dd.MM.yyyy')
+                                    .format(widget.nft.birthday)
+                                    .toString()
+                                    .toUpperCase(),
+                                overflow: TextOverflow.ellipsis,
+                                style: AppFonts.font9w600
+                                    .copyWith(color: AppColors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

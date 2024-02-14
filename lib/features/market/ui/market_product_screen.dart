@@ -1,43 +1,40 @@
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
+import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/buy.dart';
-import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MarketProductScreen extends StatefulWidget {
-  final ProductTarget target;
-  final NftModel nft;
+class MarketProductBuyScreen extends StatefulWidget {
+  final MarketItemModel product;
 
-  const MarketProductScreen(
-      {super.key, required this.nft, required this.target});
+  const MarketProductBuyScreen({super.key, required this.product});
 
   @override
-  State<MarketProductScreen> createState() => _MarketProductScreenState();
+  State<MarketProductBuyScreen> createState() => _MarketProductBuyScreenState();
 }
 
-class _MarketProductScreenState extends State<MarketProductScreen> {
-  Duration remainingTime = Duration.zero;
+class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   late final NftDetailsCubit nftCubit;
   late final MarketRepository marketRepository;
 
   @override
   void initState() {
     initProviders();
-    nftCubit.getNftDetails(widget.nft);
+    nftCubit.getNftDetails(widget.product.nft);
 
     super.initState();
   }
@@ -48,51 +45,43 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
   }
 
   void onBuyTap() {
-    if (widget.target == ProductTarget.buy) {
-      showDialog(
-          context: context,
-          builder: (context) => BuyNftPopup(
-                nft: marketRepository.lastOpenedNft,
-              ));
-    } else {
-      showDialog(
-          context: context,
-          builder: (context) => SellNftPopup(
-                nft: marketRepository.lastOpenedNft,
-              ));
-    }
+    showDialog(
+        context: context,
+        builder: (context) => BuyNftPopup(
+              product: widget.product,
+            ));
   }
 
   void onLikeTap(bool isLiked) {
     if (isLiked) {
       context
           .read<FavouriteCubit>()
-          .removeFromFavourites(marketRepository.lastOpenedNft);
+          .removeFromFavourites(marketRepository.nftService.lastLoadedNft);
     } else {
       context
           .read<FavouriteCubit>()
-          .markAsFavourite(marketRepository.lastOpenedNft);
+          .markAsFavourite(marketRepository.nftService.lastLoadedNft);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PlaceBidCubit, PlaceBidState>(
+    return BlocConsumer<BuyNftCubit, BuyNftState>(
       listener: (context, state) {
-        if (state is PlaceBidSuccess || state is PlaceBidFail) {
+        if (state is BuyNftSuccess || state is BuyNftFail) {
           Navigator.pop(context);
           Navigator.pop(context);
         }
 
-        if (state is PlaceBidLoading) {
+        if (state is BuyNftLoading) {
           showDialog(
               context: context,
               builder: (context) =>
                   Center(child: AppAnimations.circleIndicator));
-        } else if (state is PlaceBidFail) {
+        } else if (state is BuyNftFail) {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
-        } else if (state is PlaceBidSuccess) {
+        } else if (state is BuyNftSuccess) {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Success buy!"));
         }
@@ -107,13 +96,13 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
               } else if (state is NftDetailsSuccess) {
                 return Scaffold(
                     floatingActionButton: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: CustomTextButton(
-                          text: widget.target == ProductTarget.buy
-                              ? "Buy"
-                              : "Sell",
-                          onTap: onBuyTap,
-                          isActive: true),
+                        text: "Buy",
+                        onTap: onBuyTap,
+                        isActive: true,
+                        height: 52,
+                      ),
                     ),
                     floatingActionButtonLocation:
                         FloatingActionButtonLocation.centerDocked,
@@ -131,6 +120,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
 
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
+    final nft = marketRepository.nftService.lastLoadedNft;
 
     return CustomScrollView(
       slivers: [
@@ -153,8 +143,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           fit: BoxFit.fitHeight,
                           placeholder:
                               const AssetImage("assets/images/noname_det.png"),
-                          image: NetworkImage(
-                              marketRepository.lastOpenedNft.imagePath)),
+                          image: NetworkImage(nft.imagePath)),
                       Positioned(
                         top: 20,
                         right: 20,
@@ -162,8 +151,8 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                           builder: (context, state) {
                             final user = context.read<ProfileRepository>().user;
                             final userNfts = user.favouritesNftList;
-                            final bool isLiked = userNfts.contains(
-                                marketRepository.lastOpenedNft.documentId);
+                            final bool isLiked =
+                                userNfts.contains(nft.documentId);
 
                             if (state is FavouriteLoading) {
                               return Padding(
@@ -194,7 +183,7 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     PlayerAppStatsWidget(
@@ -208,20 +197,26 @@ class _MarketProductScreenState extends State<MarketProductScreen> {
                       iconPath: 'assets/icons/people.svg',
                     ),
                     PlayerAppStatsWidget(
-                      value: 12,
+                      value: nft.views,
                       statsName: "Views",
                       iconPath: 'assets/icons/ar.svg',
                     ),
                   ],
                 ),
-                const SizedBox(
+                  const SizedBox(
                   height: 16,
+                ),
+                NftArButton(
+                  isActive: false,
+                ),
+                const SizedBox(
+                  height: 24,
                 ),
               ],
             ),
           ),
         ),
-        GeneralStatistics(nft: marketRepository.lastOpenedNft)
+        GeneralStatistics(nft: nft)
       ],
     );
   }

@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/market/bloc/cubit/market_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
@@ -23,8 +22,8 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   String text = "Favourites";
 
   void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/details',
-        arguments: {'nft': nft, "target": ProductTarget.buy});
+    Navigator.of(context).pushNamed('/market/buy',
+        arguments: {'nft': nft});
   }
 
   @override
@@ -34,18 +33,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
       child: SafeArea(
         child: Scaffold(
             backgroundColor: Colors.transparent,
-            body: BlocBuilder<MarketCubit, MarketState>(
-              builder: (context, state) {
-                if (state is MarketLoading) {
-                  return Center(
-                    child: AppAnimations.circleIndicator,
-                  );
-                } else if (state is MarketSuccess) {
-                  return buildMainInfoWidget();
-                }
-                return Container();
-              },
-            )),
+            body: buildMainInfoWidget()),
       ),
     );
   }
@@ -91,7 +79,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                 final List<dynamic> likedNftIdList =
                     profileRepository.user.favouritesNftList;
 
-                final List<NftModel> favouriteNftList = marketRepository.nftList
+                final List<NftModel> favouriteNftList = marketRepository.nftService.nftCollectionList
                     .where((nft) => likedNftIdList.contains(nft.documentId))
                     .toList();
 

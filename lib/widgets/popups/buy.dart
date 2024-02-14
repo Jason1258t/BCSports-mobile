@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:bcsports_mobile/features/market/bloc/place_bid/place_bid_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -12,9 +12,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 class BuyNftPopup extends StatefulWidget {
-  final NftModel nft;
+  final MarketItemModel product;
 
-  const BuyNftPopup({super.key, required this.nft});
+  const BuyNftPopup({super.key, required this.product});
 
   @override
   State<BuyNftPopup> createState() => _BuyNftPopupState();
@@ -22,23 +22,16 @@ class BuyNftPopup extends StatefulWidget {
 
 class _BuyNftPopupState extends State<BuyNftPopup> {
   bool agree = false;
-  double extraBid = 0;
 
-  void onPlaceBidTap() {
-    context
-        .read<PlaceBidCubit>()
-        .updateBid(widget.nft, extraBid + widget.nft.currentBit);
-  }
-
-  void increaseBet() {
-    setState(() {
-      extraBid += 10;
-    });
+  void onBuyTap() {
+    context.read<BuyNftCubit>().buyNft(
+          widget.product,
+        );
   }
 
   bool isActive() =>
-      context.read<ProfileRepository>().user.evmBill + extraBid >=
-          widget.nft.currentBit &&
+      context.read<ProfileRepository>().user.evmBill >=
+          widget.product.currentPrice &&
       agree;
 
   @override
@@ -90,7 +83,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                             width: 10,
                           ),
                           Text(
-                            "${widget.nft.currentBit + extraBid} ETH",
+                            "${widget.product.currentPrice} ETH",
                             style: AppFonts.font17w500
                                 .copyWith(color: AppColors.white),
                           ),
@@ -167,7 +160,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                     width: 170,
                     height: 49,
                     text: "Place a Bid",
-                    onTap: onPlaceBidTap,
+                    onTap: onBuyTap,
                     isActive: isActive())
               ],
             ),

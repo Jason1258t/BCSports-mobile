@@ -24,13 +24,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    context.read<UserNftCubit>().loadUserNft();
+    context.read<ProfileRepository>().loadUserNftList();
     super.initState();
   }
 
   void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/details',
-        arguments: {'nft': nft, "target": ProductTarget.sell});
+    Navigator.of(context).pushNamed('/market/sell', arguments: {'nft': nft});
   }
 
   @override
@@ -52,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           return CustomScaffold(
             appBar: AppBar(
+                surfaceTintColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
                 title: Stack(
                   alignment: Alignment.center,

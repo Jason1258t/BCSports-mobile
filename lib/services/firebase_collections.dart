@@ -8,6 +8,7 @@ abstract class FirebaseCollectionNames {
   static const String userAvatar = '/user_avatar';
   static const String playersNft = 'players_NFT';
   static const String chatUsers = 'chat_users';
+  static const String market = 'market';
 }
 
 abstract class FirebaseCollections {
@@ -21,8 +22,9 @@ abstract class FirebaseCollections {
       _firestore.collection(FirebaseCollectionNames.posts);
   static final playersNftCollection =
       _firestore.collection(FirebaseCollectionNames.playersNft);
+  static final marketCollection =
+      _firestore.collection(FirebaseCollectionNames.market);
+  
 }
 
-abstract class CustomFilters {
-
-}
+abstract class CustomFilters {}
