@@ -3,6 +3,7 @@ abstract class AppRouteNames {
   static const String profileSettings = '/profile/settings';
   static const String profileEdit = '/profile/edit';
   static const String profileView = '/profile/view';
+  static const String profileLanguage = '/profile/lang';
 
   static const String createPost = '/create_post';
 
