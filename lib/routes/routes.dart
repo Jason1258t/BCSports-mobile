@@ -35,64 +35,94 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRouteNames.root:
-        return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
-      // return MaterialPageRoute(builder: (ctx) => const AppStateWidget());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const AppStateWidget());
+      // return NoAnimationMaterialPageRoute(builder: (ctx) => const AppStateWidget());
       case AppRouteNames.profileSettings:
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => const ProfileSettingScreen());
       case AppRouteNames.createPost:
-        return MaterialPageRoute(builder: (ctx) => const CreatePostScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const CreatePostScreen());
       case AppRouteNames.onboarding:
-        return MaterialPageRoute(builder: (ctx) => const OnboardingScreen());
-      // return MaterialPageRoute(builder: (ctx) => RegistrationScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const OnboardingScreen());
+      // return NoAnimationMaterialPageRoute(builder: (ctx) => RegistrationScreen());
       case AppRouteNames.market:
-        return MaterialPageRoute(builder: (ctx) => const MarketScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const MarketScreen());
       case AppRouteNames.marketBuy:
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
         final MarketItemModel product = pageArgs['nft'];
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => MarketProductBuyScreen(
                   product: product,
                 ));
       case AppRouteNames.marketSell:
         final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
         final NftModel playerNft = pageArgs['nft'];
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => MarketProductSellScreen(
                   nft: playerNft,
                 ));
       case AppRouteNames.favourites:
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => const MarketFavouritesScreen());
       case AppRouteNames.marketLots:
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => const MarketLotsScreen());
       case AppRouteNames.login:
-        return MaterialPageRoute(builder: (ctx) => const LoginScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const LoginScreen());
       case AppRouteNames.registration:
-        return MaterialPageRoute(builder: (ctx) => const RegistrationScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const RegistrationScreen());
       case AppRouteNames.wallet:
-        return MaterialPageRoute(builder: (ctx) => const WalletScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const WalletScreen());
       case AppRouteNames.recovery:
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => const PasswordRecoveryScreen());
       case AppRouteNames.profileEdit:
-        return MaterialPageRoute(builder: (ctx) => const EditProfileScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const EditProfileScreen());
       case AppRouteNames.profileView:
-        return MaterialPageRoute(builder: (ctx) => const ProfileViewScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ProfileViewScreen());
       case AppRouteNames.favouritesPost:
-        return MaterialPageRoute(builder: (ctx) => const FavouritesScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const FavouritesScreen());
 
       case AppRouteNames.chatContacts:
-        return MaterialPageRoute(builder: (ctx) => const ChatContactsScreen());
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ChatContactsScreen());
       // case AppRouteNames.chatMessages:
-      //   return MaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
+      //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
       default:
-        return MaterialPageRoute(
+        return NoAnimationMaterialPageRoute(
             builder: (ctx) => Container(
                   color: Colors.red,
                 ));
     }
+  }
+}
+
+class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
+  NoAnimationMaterialPageRoute({
+    required WidgetBuilder builder,
+    RouteSettings? settings,
+    bool maintainState = true,
+    bool fullscreenDialog = false,
+  }) : super(
+            builder: builder,
+            maintainState: maintainState,
+            settings: settings,
+            fullscreenDialog: fullscreenDialog);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return child;
   }
 }
