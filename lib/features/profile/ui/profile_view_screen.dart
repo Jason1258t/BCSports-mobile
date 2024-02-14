@@ -99,7 +99,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                         alignment: Alignment.bottomCenter,
                         child: CircleAvatar(
                           radius: sizeof.width * 0.20,
-                          backgroundColor: AppColors.black_090723,
+                          backgroundColor: AppColors.background,
                           child: CircleAvatar(
                               radius: sizeof.width * 0.18,
                               backgroundColor: user.avatarColor,
