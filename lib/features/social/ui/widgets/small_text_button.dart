@@ -14,11 +14,12 @@ class SmallTextButton extends StatelessWidget {
       required this.text,
       required this.onTap,
       this.active = true,
-      this.type = SmallTextButtonType.withBackground});
+      this.type = SmallTextButtonType.withBackground, this.backgroundColor});
 
   final String text;
   final VoidCallback onTap;
   final bool active;
+  final Color? backgroundColor;
   final SmallTextButtonType type;
 
   @override
@@ -53,8 +54,8 @@ class SmallTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-            backgroundColor: background,
-            foregroundColor: background,
+            backgroundColor: backgroundColor ?? background,
+            foregroundColor: backgroundColor ?? background,
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12)),
         child: Text(text, style: textStyle),
       ),

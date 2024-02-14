@@ -131,8 +131,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
                   )
                 : Container(
-                    width: double.infinity,
-                    height: MediaQuery.sizeOf(context).width / 2,
+                    width: MediaQuery.sizeOf(context).width - 48,
+                    height: MediaQuery.sizeOf(context).width - 48,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: FileImage(File(image!.path)),
@@ -140,15 +140,24 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         borderRadius: BorderRadius.circular(16)),
                     padding: const EdgeInsets.all(8),
                     alignment: Alignment.bottomLeft,
-                    child: SmallTextButton(
-                      type: SmallTextButtonType.withBackgroundReverse,
-                      text: 'Delete',
-                      onTap: () {
-                        image = null;
-                        validate();
-                      },
-                    ),
+                  ),
+            const SizedBox(height: 12,),
+            image != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SmallTextButton(
+                        type: SmallTextButtonType.withBackground,
+                        backgroundColor: Colors.white,
+                        text: 'Delete',
+                        onTap: () {
+                          image = null;
+                          validate();
+                        },
+                      ),
+                    ],
                   )
+                : Container()
           ],
         ),
       ),

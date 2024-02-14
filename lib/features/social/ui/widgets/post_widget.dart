@@ -89,12 +89,12 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         SizedBox(
           height: 32,
           child: InkWell(
-            onTap: (){
-              if(widget.userId != profileRepository.user.id && widget.userId != null){
+            onTap: () {
+              if (widget.userId != profileRepository.user.id &&
+                  widget.userId != null) {
                 context.read<ProfileViewRepository>().setUser(widget.userId!);
                 Navigator.pushNamed(context, AppRouteNames.profileView);
-              }
-              else if(widget.userId == profileRepository.user.id){
+              } else if (widget.userId == profileRepository.user.id) {
                 context.read<MainCubit>().changePageIndexTo(3);
               }
             },
@@ -128,13 +128,14 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         const SizedBox(
           height: 16,
         ),
-        if (post.postModel.text != null) ...[
+        if ((post.postModel.text ?? '').isNotEmpty) ...[
           Text(
             post.postModel.text!,
             style: AppFonts.font16w400.copyWith(color: AppColors.white_F4F4F4),
           )
         ],
-        if (post.postModel.imageUrl != null && post.postModel.text != null) ...[
+        if (post.postModel.imageUrl != null &&
+            (post.postModel.text ?? '').isNotEmpty) ...[
           const SizedBox(
             height: 16,
           ),
@@ -229,9 +230,11 @@ class CustomNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context).width - 48;
+
     return Container(
-      width: MediaQuery.sizeOf(context).width - 48,
-      height: MediaQuery.sizeOf(context).width / 2,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover)),
