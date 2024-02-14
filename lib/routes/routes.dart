@@ -99,6 +99,9 @@ class AppRoutes {
       case AppRouteNames.chatContacts:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const ChatContactsScreen());
+      case AppRouteNames.arMiniGames:
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ArMini());
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 

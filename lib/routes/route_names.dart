@@ -22,4 +22,7 @@ abstract class AppRouteNames {
   static const String favouritesPost = '/favouritesPost';
   static const String chatContacts = '/chat/contacts';
   static const String chatMessages = '/chat/messages';
+
+  static const String ar = '/ar';
+  static const String arMiniGames = '/ar/mini-games';
 }
