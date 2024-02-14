@@ -26,6 +26,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
     return InkWell(
       onTap: setUserAndOpenChat,
       child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: AppColors.black_s2new_1A1A1A,
@@ -46,7 +47,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
                       stream: FirebaseChatCore.instance.messages(widget.room),
                       builder: (context, snapshot) {
                         return Text(
-                          getLastMessage(snapshot.data ?? []) * 10,
+                          getLastMessage(snapshot.data ?? []),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: AppFonts.font16w400
@@ -54,7 +55,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
                         );
                       }),
                   const SizedBox(
-                    height: 4,
+                    height: 6,
                   ),
                   Text(
                     getOtherUserName() ?? '',

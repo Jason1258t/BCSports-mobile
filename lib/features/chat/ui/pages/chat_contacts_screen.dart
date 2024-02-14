@@ -24,7 +24,7 @@ class ChatContactsScreen extends StatefulWidget {
 class _ChatContactsScreenState extends State<ChatContactsScreen> {
   final TextEditingController searchController = TextEditingController();
 
-  final String title = "Contacts";
+  final String title = "Messages";
 
   bool isOpenSearch = false;
 
@@ -68,7 +68,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
       body: Column(
         children: [
           CustomTextFormField(
-              onChange: (v) {
+                borderRadius: BorderRadius.circular(32),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                onChange: (v) {
                 context.read<UserSearchCubit>().searchByString(
                     v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
                 setState(() {
@@ -88,7 +90,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   isOpenSearch = true;
                 });
               },
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon:  Icon(Icons.search, color: AppColors.grey_d9d9d9,),
               controller: searchController),
           Stack(
             children: [
