@@ -117,7 +117,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
 
   String getLastMessage(List<Message> messages) {
     if (messages.isNotEmpty) {
-      final lastMessage = messages.last;
+      final lastMessage = messages.first;
 
       if (lastMessage.type == MessageType.text) {
         return (lastMessage as TextMessage).text;
