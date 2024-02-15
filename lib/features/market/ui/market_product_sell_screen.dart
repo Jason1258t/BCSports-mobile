@@ -54,17 +54,17 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
             ));
   }
 
-  void onLikeTap(bool isLiked) {
-    if (isLiked) {
-      context
-          .read<FavouriteCubit>()
-          .removeFromFavourites(marketRepository.nftService.lastLoadedNft);
-    } else {
-      context
-          .read<FavouriteCubit>()
-          .markAsFavourite(marketRepository.nftService.lastLoadedNft);
-    }
-  }
+  // void onLikeTap(bool isLiked) {
+  //   if (isLiked) {
+  //     context
+  //         .read<FavouriteCubit>()
+  //         .removeFromFavourites(widget.nft);
+  //   } else {
+  //     context
+  //         .read<FavouriteCubit>()
+  //         .markAsFavourite(widget.product);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +106,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
         if (state is SellSuccess || state is SellFailure) {
           Navigator.pop(context);
           Navigator.pop(context);
+          Navigator.pop(context);
         }
 
         if (state is SellLoading) {
@@ -144,41 +145,41 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                                 "assets/images/noname_det.png"),
                             image: NetworkImage(marketRepository
                                 .nftService.lastLoadedNft.imagePath)),
-                        Positioned(
-                          top: 20,
-                          right: 20,
-                          child: BlocBuilder<FavouriteCubit, FavouriteState>(
-                            builder: (context, state) {
-                              final user =
-                                  context.read<ProfileRepository>().user;
-                              final userNfts = user.favouritesNftList;
-                              final bool isLiked = userNfts.contains(
-                                  marketRepository
-                                      .nftService.lastLoadedNft.documentId);
+                        // Positioned(
+                        //   top: 20,
+                        //   right: 20,
+                        //   child: BlocBuilder<FavouriteCubit, FavouriteState>(
+                        //     builder: (context, state) {
+                        //       final user =
+                        //           context.read<ProfileRepository>().user;
+                        //       final userNfts = user.favouritesNftList;
+                        //       final bool isLiked = userNfts.contains(
+                        //           marketRepository
+                        //               .nftService.lastLoadedNft.documentId);
 
-                              if (state is FavouriteLoading) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: AppAnimations.circleIndicator,
-                                );
-                              }
+                        //       if (state is FavouriteLoading) {
+                        //         return Padding(
+                        //           padding: const EdgeInsets.all(10.0),
+                        //           child: AppAnimations.circleIndicator,
+                        //         );
+                        //       }
 
-                              return InkWell(
-                                onTap: () => onLikeTap(isLiked),
-                                borderRadius: BorderRadius.circular(10000),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(10),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
-                                    color: AppColors.primary,
-                                    width: 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        //       return InkWell(
+                        //         onTap: () => onLikeTap(isLiked),
+                        //         borderRadius: BorderRadius.circular(10000),
+                        //         child: Container(
+                        //           alignment: Alignment.center,
+                        //           padding: const EdgeInsets.all(10),
+                        //           child: SvgPicture.asset(
+                        //             "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
+                        //             color: AppColors.primary,
+                        //             width: 20,
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

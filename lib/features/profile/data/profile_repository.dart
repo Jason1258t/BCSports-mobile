@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:bcsports_mobile/features/market/data/nft_service.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
@@ -18,6 +19,7 @@ import 'package:rxdart/rxdart.dart';
 
 class ProfileRepository extends PostSource {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
+  final NftService nftService;
 
   static final _users = FirebaseCollections.usersCollection;
   static final _postsCollection = FirebaseCollections.postsCollection;
@@ -32,7 +34,7 @@ class ProfileRepository extends PostSource {
   @override
   final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
 
-  ProfileRepository(this.likesManager) {
+  ProfileRepository(this.likesManager, this.nftService) {
     likesManager.addSource(this);
   }
 
@@ -181,22 +183,22 @@ class ProfileRepository extends PostSource {
         .update({"evmBill": FieldValue.increment(product.currentPrice)});
   }
 
-  Future<void> markFavourite(NftModel nft) async {
+  Future<void> markFavourite(MarketItemModel product) async {
     final dbUser = _users.doc(_userModel!.id);
     await dbUser.update({
-      'favourites_list': FieldValue.arrayUnion([nft.documentId])
+      'favourites_list': FieldValue.arrayUnion([product.id])
     });
-    _userModel!.favouritesNftList.add(nft.documentId);
+    _userModel!.favouritesNftList.add(product.id);
 
     log("New fav-s item for ${user.id}");
   }
 
-  Future<void> removeFromFavourites(NftModel nft) async {
+  Future<void> removeFromFavourites(MarketItemModel nft) async {
     final dbUser = _users.doc(_userModel!.id);
     await dbUser.update({
-      'favourites_list': FieldValue.arrayRemove([nft.documentId])
+      'favourites_list': FieldValue.arrayRemove([nft.id])
     });
-    _userModel!.favouritesNftList.remove(nft.documentId);
+    _userModel!.favouritesNftList.remove(nft.id);
 
     log("**Removed** fav-s item for ${user.id}");
   }

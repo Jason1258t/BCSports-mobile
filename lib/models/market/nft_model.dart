@@ -15,7 +15,6 @@ class NftModel {
   final String previewImagePath;
   final int views;
 
-
   NftModel(
       {required this.documentId,
       required this.birthday,

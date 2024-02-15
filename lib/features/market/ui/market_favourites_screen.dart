@@ -2,10 +2,9 @@ import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.d
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
-import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +20,8 @@ class MarketFavouritesScreen extends StatefulWidget {
 class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   String text = "Favourites";
 
-  void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/buy',
-        arguments: {'nft': nft});
+  void onNftCardTap(MarketItemModel product) {
+    Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': product});
   }
 
   @override
@@ -32,8 +30,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
       color: AppColors.black,
       child: SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: buildMainInfoWidget()),
+            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
       ),
     );
   }
@@ -79,8 +76,9 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                 final List<dynamic> likedNftIdList =
                     profileRepository.user.favouritesNftList;
 
-                final List<NftModel> favouriteNftList = marketRepository.nftService.nftCollectionList
-                    .where((nft) => likedNftIdList.contains(nft.documentId))
+                final List<MarketItemModel> favouriteNftList = marketRepository
+                    .productList
+                    .where((product) => likedNftIdList.contains(product.id))
                     .toList();
 
                 return SliverGrid(
@@ -91,7 +89,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                       childAspectRatio: 0.59),
                   delegate: SliverChildBuilderDelegate(
                       (context, index) => MarketNftCard(
-                            nft: favouriteNftList[index],
+                            nft: favouriteNftList[index].nft,
                             onTap: () {
                               onNftCardTap(favouriteNftList[index]);
                             },

@@ -39,18 +39,20 @@ class MyRepositoryProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final likes = LikesManager();
+    final nftService = NftService();
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => ChatRepository()),
-        RepositoryProvider(create: (context) => ProfileRepository(likes)),
+        RepositoryProvider(create: (context) => ProfileRepository(likes, nftService)),
         RepositoryProvider(create: (context) => SocialRepository(likes)),
-        RepositoryProvider(create: (context) => ProfileViewRepository(likes)),
+        RepositoryProvider(
+            create: (context) => ProfileViewRepository(likes, nftService)),
         RepositoryProvider(
             create: (context) => FavouritePostsRepository(likes)),
         RepositoryProvider(
             create: (context) => MarketRepository(
-                nftService: NftService(),
+                nftService: nftService,
                 profileRepository: context.read<ProfileRepository>())),
         RepositoryProvider(
           create: (context) => AuthRepository(),

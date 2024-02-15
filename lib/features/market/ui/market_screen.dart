@@ -24,6 +24,7 @@ class MarketScreen extends StatefulWidget {
 class _MarketScreenState extends State<MarketScreen> {
   String explore = "All Collections";
   late final MarketRepository marketRepository;
+  late final ProfileRepository profileRepository;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
   initProviders() {
     marketRepository = RepositoryProvider.of<MarketRepository>(context);
+    profileRepository = RepositoryProvider.of<ProfileRepository>(context);
   }
 
   void onFavouritesTap() {
@@ -57,8 +59,9 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      padding: EdgeInsets.zero,
-        color: AppColors.background, body: buildMainInfoWidget());
+        padding: EdgeInsets.zero,
+        color: AppColors.background,
+        body: buildMainInfoWidget());
   }
 
   Widget buildMainInfoWidget() {
@@ -150,6 +153,12 @@ class _MarketScreenState extends State<MarketScreen> {
             sliver: StreamBuilder(
                 stream: context.read<MarketRepository>().marketStream,
                 builder: (context, snapshot) {
+                  List<MarketItemModel> productList = marketRepository
+                      .productList
+                      .where((product) =>
+                          product.lastOwnerId != profileRepository.user.id)
+                      .toList();
+
                   return SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -159,13 +168,13 @@ class _MarketScreenState extends State<MarketScreen> {
                               childAspectRatio: 0.59),
                       delegate: SliverChildBuilderDelegate(
                           (context, index) => MarketNftCard(
-                                nft: marketRepository.productList[index].nft,
+                                nft: productList[index].nft,
                                 onTap: () {
                                   onNftCardTap(
-                                      marketRepository.productList[index]);
+                                      productList[index]);
                                 },
                               ),
-                          childCount: marketRepository.productList.length));
+                          childCount: productList.length));
                 }),
           ),
           const SliverToBoxAdapter(

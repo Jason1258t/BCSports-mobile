@@ -37,8 +37,9 @@ class AppCubit extends Cubit<AppState> {
         await _profileRepository.setUser(_authRepository
             .currentUser!.uid); // await cuz maret depends on user
         _socialRepository.initial();
-        await _marketRepository.nftService.loadNftCollection();
-        _marketRepository.subscribeOnMarketStream();
+        await _marketRepository.nftService
+            .loadNftCollection()
+            .then((value) => _marketRepository.subscribeOnMarketStream());
 
         emit(AppAuthState());
       }

@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/market/data/nft_service.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/models/like_action_data.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
@@ -10,13 +11,14 @@ import 'package:rxdart/subjects.dart';
 
 import '../../../utils/enums.dart';
 
-class ProfileViewRepository extends PostSource{
+class ProfileViewRepository extends PostSource {
+  final NftService nftService;
 
   static final _users = FirebaseCollections.usersCollection;
   static final _postsCollection = FirebaseCollections.postsCollection;
   static final _playersCollection = FirebaseCollections.playersNftCollection;
 
-  ProfileViewRepository(this.likesManager) {
+  ProfileViewRepository(this.likesManager, this.nftService) {
     likesManager.addSource(this);
   }
 
@@ -38,10 +40,10 @@ class ProfileViewRepository extends PostSource{
   List<NftModel> userNftList = [];
 
   BehaviorSubject<LoadingStateEnum> profileViewState =
-  BehaviorSubject.seeded(LoadingStateEnum.wait);
+      BehaviorSubject.seeded(LoadingStateEnum.wait);
 
   BehaviorSubject<LoadingStateEnum> userPostsState =
-  BehaviorSubject.seeded(LoadingStateEnum.wait);
+      BehaviorSubject.seeded(LoadingStateEnum.wait);
 
   void setUser(String userId) async {
     profileViewState.add(LoadingStateEnum.loading);
@@ -92,17 +94,18 @@ class ProfileViewRepository extends PostSource{
       userNftList.clear();
 
       final playersCollection = await _playersCollection.get();
-      playersCollection.docs.forEach((doc) {
+      playersCollection.docs.forEach((doc) async {
         print(doc);
         if (_userModel!.userNftList.keys.contains(doc.id)) {
-          final NftModel nft = NftModel.fromJson(doc.data(), doc.id);
+
+          final NftModel nft =
+              NftModel.fromJson(doc.data(), doc.id);
           userNftList.add(nft);
         }
       });
 
       profileViewState.add(LoadingStateEnum.success);
-    }
-    catch (e){
+    } catch (e) {
       profileViewState.add(LoadingStateEnum.fail);
     }
   }
