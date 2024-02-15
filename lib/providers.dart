@@ -86,7 +86,7 @@ class MyBlocProviders extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) => AppCubit(authRepository, profileRepository,
-                socialRepository, favouritesRepository),
+                socialRepository, favouritesRepository, marketRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(

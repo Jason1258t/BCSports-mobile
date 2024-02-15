@@ -21,10 +21,7 @@ class MarketRepository {
   BehaviorSubject<LoadingStateEnum> lotsStream =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
-  MarketRepository(
-      {required this.nftService, required this.profileRepository}) {
-    subscribeOnMarketStream();
-  }
+  MarketRepository({required this.nftService, required this.profileRepository});
 
   subscribeOnMarketStream() {
     marketStream.listen((snapshot) {
@@ -35,7 +32,7 @@ class MarketRepository {
           MarketItemModel marketItemModel = parseMarketDocument(doc);
           productList.add(marketItemModel);
         } catch (e) {
-          log("Fail to parse market item by id ${doc.id}");
+          log("Fail to parse market item by id ${doc.id} ! ${e}");
         }
       });
     });
@@ -63,6 +60,7 @@ class MarketRepository {
 
   MarketItemModel parseMarketDocument(doc) {
     Map productMap = doc.data() as Map;
+    print(productMap);
     final nftId = productMap['nft_id'];
     final NftModel productNft = nftService.nftCollectionList
         .where((nftItem) => nftItem.documentId == nftId)

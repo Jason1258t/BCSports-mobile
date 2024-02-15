@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
+import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
@@ -13,16 +14,19 @@ class AppCubit extends Cubit<AppState> {
   final ProfileRepository _profileRepository;
   final SocialRepository _socialRepository;
   final FavouritePostsRepository _favouritesRepository;
+  final MarketRepository _marketRepository;
 
   AppCubit(
       AuthRepository authRepository,
       ProfileRepository profileRepository,
       SocialRepository socialRepository,
-      FavouritePostsRepository favouritePostsRepository)
+      FavouritePostsRepository favouritePostsRepository,
+      MarketRepository marketRepository)
       : _authRepository = authRepository,
         _profileRepository = profileRepository,
         _socialRepository = socialRepository,
         _favouritesRepository = favouritePostsRepository,
+        _marketRepository = marketRepository,
         super(AppInitial()) {
     subscribe();
   }
@@ -30,8 +34,12 @@ class AppCubit extends Cubit<AppState> {
   void subscribe() {
     _authRepository.appState.stream.listen((event) async {
       if (event == AppAuthStateEnum.auth) {
-        await _profileRepository.setUser(_authRepository.currentUser!.uid); // await cuz maret depends on user
+        await _profileRepository.setUser(_authRepository
+            .currentUser!.uid); // await cuz maret depends on user
         _socialRepository.initial();
+        await _marketRepository.nftService.loadNftCollection();
+        _marketRepository.subscribeOnMarketStream();
+
         emit(AppAuthState());
       }
       if (event == AppAuthStateEnum.unAuth) {
