@@ -230,7 +230,8 @@ class ProfileRepository extends PostSource {
     final snapshot = await dbUser.get();
 
     Map<dynamic, dynamic> user = snapshot.data() ?? {};
-    Map<dynamic, dynamic> nftData = user['user_nft'];
+    Map<dynamic, dynamic> nftData = user['user_nft'] ?? {};
+
     for (var item in nftData.entries) {
       final nftModel = await loadNftData(item.key);
       for (int i = 0; i < item.value; i++) {
