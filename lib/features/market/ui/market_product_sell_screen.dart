@@ -11,8 +11,6 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
-import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
@@ -194,11 +192,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                         value: 0,
                         statsName: "Favorites",
                         iconPath: 'assets/icons/like.svg',
-                      ),
-                      PlayerAppStatsWidget(
-                        value: 1,
-                        statsName: "Owners",
-                        iconPath: 'assets/icons/people.svg',
                       ),
                       PlayerAppStatsWidget(
                         value: marketRepository.nftService.lastLoadedNft.views,

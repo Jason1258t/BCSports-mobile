@@ -191,11 +191,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                       statsName: "Favorites",
                       iconPath: 'assets/icons/like.svg',
                     ),
-                    PlayerAppStatsWidget(
-                      value: 1,
-                      statsName: "Owners",
-                      iconPath: 'assets/icons/people.svg',
-                    ),
+              
                     PlayerAppStatsWidget(
                       value: nft.views,
                       statsName: "Views",
