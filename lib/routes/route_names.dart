@@ -25,4 +25,5 @@ abstract class AppRouteNames {
 
   static const String ar = '/ar';
   static const String arMiniGames = '/ar/mini-games';
+  static const String arUserNft = '/ar/nft';
 }

@@ -18,7 +18,7 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
     final sizeOf = MediaQuery.sizeOf(context);
 
     return CustomScaffold(
-        padding: EdgeInsets.all(sizeOf.width * 0.058),
+        padding: EdgeInsets.all(sizeOf.width * 0.058).copyWith(bottom: 0),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
@@ -30,79 +30,81 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
             ],
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppColors.black_s2new_1A1A1A),
-              child: Column(
-                children: [
-                  ArBannerWidget(
-                    width: sizeOf.width,
-                    height: sizeOf.width * 0.456,
-                    assetIcon: 'bxs_joystick.svg',
-                    title: 'Mini-games',
-                    text: 'Выбери, сыгрый, победи',
-                    backGroundImage: 'ar/footboll_field.png',
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(sizeOf.width * 0.037),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            MediumActivityWidget(
-                              width: sizeOf.width * 0.3865,
-                              assetIcon: 'fluent_run-16-filled.svg',
-                              height: sizeOf.width * 0.3865,
-                              title: 'Footbag',
-                              text: 'Набей максимальное количество раз',
-                            ),
-                            SizedBox(
-                              width: sizeOf.width * 0.037,
-                            ),
-                            MediumActivityWidget(
-                              width: sizeOf.width * 0.3865,
-                              assetIcon: 'fluent_run-16-filled.svg',
-                              height: sizeOf.width * 0.3865,
-                              title: 'Penalty',
-                              text: 'Обхитри вратаря и попади в ворота',
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: sizeOf.width * 0.037,
-                        ),
-                        Row(
-                          children: [
-                            MediumActivityWidget(
-                              width: sizeOf.width * 0.3865,
-                              assetIcon: 'fluent_run-16-filled.svg',
-                              height: sizeOf.width * 0.3865,
-                              title: 'Basketball',
-                              text:
-                                  'Покажи свою меткость и точность, забей трехочковый',
-                            ),
-                            SizedBox(
-                              width: sizeOf.width * 0.037,
-                            ),
-                            MediumActivityWidget(
-                              width: sizeOf.width * 0.3865,
-                              assetIcon: 'fluent_run-16-filled.svg',
-                              height: sizeOf.width * 0.3865,
-                              title: 'MotoGP',
-                              text: 'Почувствуй себя проффесиональным гонщиком',
-                            ),
-                          ],
-                        )
-                      ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.black_s2new_1A1A1A),
+                child: Column(
+                  children: [
+                    ArBannerWidget(
+                      width: sizeOf.width,
+                      height: sizeOf.width * 0.456,
+                      assetIcon: 'bxs_joystick.svg',
+                      title: 'Mini-games',
+                      text: 'Выбери, сыгрый, победи',
+                      backGroundImage: 'ar/footboll_field.png',
                     ),
-                  )
-                ],
+                    Container(
+                      padding: EdgeInsets.all(sizeOf.width * 0.037),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              MediumActivityWidget(
+                                width: sizeOf.width * 0.3865,
+                                assetIcon: 'fluent_run-16-filled.svg',
+                                height: sizeOf.width * 0.3865,
+                                title: 'Footbag',
+                                text: 'Набей максимальное количество раз',
+                              ),
+                              SizedBox(
+                                width: sizeOf.width * 0.037,
+                              ),
+                              MediumActivityWidget(
+                                width: sizeOf.width * 0.3865,
+                                assetIcon: 'fluent_run-16-filled.svg',
+                                height: sizeOf.width * 0.3865,
+                                title: 'Penalty',
+                                text: 'Обхитри вратаря и попади в ворота',
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: sizeOf.width * 0.037,
+                          ),
+                          Row(
+                            children: [
+                              MediumActivityWidget(
+                                width: sizeOf.width * 0.3865,
+                                assetIcon: 'fluent_run-16-filled.svg',
+                                height: sizeOf.width * 0.3865,
+                                title: 'Basketball',
+                                text:
+                                    'Покажи свою меткость и точность, забей трехочковый',
+                              ),
+                              SizedBox(
+                                width: sizeOf.width * 0.037,
+                              ),
+                              MediumActivityWidget(
+                                width: sizeOf.width * 0.3865,
+                                assetIcon: 'fluent_run-16-filled.svg',
+                                height: sizeOf.width * 0.3865,
+                                title: 'MotoGP',
+                                text: 'Почувствуй себя проффесиональным гонщиком',
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_mini-games_screen.daret.dart';
+import 'package:bcsports_mobile/features/ar/ui/ar_players_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
@@ -103,6 +104,9 @@ class AppRoutes {
       case AppRouteNames.arMiniGames:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const ArMiniGagesScreen());
+      case AppRouteNames.arUserNft:
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ArPlayersScreen());
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
