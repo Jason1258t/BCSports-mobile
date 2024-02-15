@@ -9,6 +9,7 @@ import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -55,13 +56,9 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.black,
-      child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
-      ),
-    );
+    return CustomScaffold(
+      padding: EdgeInsets.zero,
+        color: AppColors.background, body: buildMainInfoWidget());
   }
 
   Widget buildMainInfoWidget() {

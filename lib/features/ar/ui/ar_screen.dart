@@ -24,8 +24,7 @@ class _ArScreenState extends State<ArScreen> {
               height: sizeOf.width * 0.456,
               assetIcon: 'people_with_rows.svg',
               title: 'Player',
-              text:
-                  'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
+              text: 'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
               backGroundImage: 'ar/ar_pepole.png',
             ),
             const SizedBox(
