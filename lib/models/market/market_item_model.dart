@@ -18,7 +18,7 @@ class MarketItemModel {
       required this.nft});
 
   factory MarketItemModel.fromJson(
-      Map json, NftModel responseNft, String docId) {
+      Map json, NftModel responseNft, String docId,) {
     return MarketItemModel(
         id: docId,
         currentPrice: double.parse(json['current_price'].toString()),

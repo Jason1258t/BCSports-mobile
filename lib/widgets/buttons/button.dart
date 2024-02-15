@@ -8,6 +8,7 @@ class CustomTextButton extends StatelessWidget {
       required this.text,
       required this.onTap,
       required this.isActive,
+      this.color,
       this.height,
       this.width});
 
@@ -15,6 +16,7 @@ class CustomTextButton extends StatelessWidget {
   final VoidCallback onTap;
   final bool isActive;
   final double? width;
+  final Color? color;
   final double? height;
 
   @override
@@ -24,7 +26,7 @@ class CustomTextButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
             backgroundColor:
-                isActive ? AppColors.primary : AppColors.black_s2new_1A1A1A,
+                isActive ? color ?? AppColors.primary : AppColors.black_s2new_1A1A1A,
             foregroundColor:
                 isActive ? AppColors.primary : AppColors.black_s2new_1A1A1A),
         child: Container(

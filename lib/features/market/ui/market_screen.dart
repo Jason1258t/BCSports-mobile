@@ -7,9 +7,11 @@ import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_third.
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -170,8 +172,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           (context, index) => MarketNftCard(
                                 nft: productList[index].nft,
                                 onTap: () {
-                                  onNftCardTap(
-                                      productList[index]);
+                                  onNftCardTap(productList[index]);
                                 },
                               ),
                           childCount: productList.length));

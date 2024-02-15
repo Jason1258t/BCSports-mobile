@@ -29,7 +29,6 @@ class MarketProductSellScreen extends StatefulWidget {
 }
 
 class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
-
   late final NftDetailsCubit nftCubit;
   late final MarketRepository marketRepository;
 
@@ -53,18 +52,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
               nft: marketRepository.nftService.lastLoadedNft,
             ));
   }
-
-  // void onLikeTap(bool isLiked) {
-  //   if (isLiked) {
-  //     context
-  //         .read<FavouriteCubit>()
-  //         .removeFromFavourites(widget.nft);
-  //   } else {
-  //     context
-  //         .read<FavouriteCubit>()
-  //         .markAsFavourite(widget.product);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

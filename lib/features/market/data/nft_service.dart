@@ -8,11 +8,10 @@ class NftService {
 
   Future<void> loadNftCollection() async {
     final nftColl = await FirebaseCollections.playersNftCollection.get();
-    nftColl.docs.forEach((doc)  async {
+    nftColl.docs.forEach((doc) {
       NftModel nft = NftModel.fromJson(doc.data(), doc.id);
       nftCollectionList.add(nft);
     });
-
   }
 
   Future<void> updateNftViewsCounter(String id) async {
@@ -24,19 +23,5 @@ class NftService {
     final resNftRaw = FirebaseCollections.playersNftCollection.doc(id);
     final nft = await resNftRaw.get();
     lastLoadedNft = NftModel.fromJson(nft.data()!, nft.id);
-  }
-
-  Future<int> loadNftCardFavouritesValue(String nftId) async {
-    final userColl = await FirebaseCollections.usersCollection.get();
-    int total = 0;
-
-    userColl.docs.forEach((doc) {
-      Map userDoc = doc.data();
-      final userNftIdList = userDoc['favourites_list'] ?? [];
-      if (userNftIdList.contains(nftId)) {
-        total += 1;
-      }
-    });
-    return total;
   }
 }
