@@ -65,7 +65,7 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                               ),
                               MediumActivityWidget(
                                 width: sizeOf.width * 0.3865,
-                                assetIcon: 'fluent_run-16-filled.svg',
+                                assetIcon: 'game-icons_feathered-wing.svg',
                                 height: sizeOf.width * 0.3865,
                                 title: 'Penalty',
                                 text: 'Обхитри вратаря и попади в ворота',
@@ -79,7 +79,7 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                             children: [
                               MediumActivityWidget(
                                 width: sizeOf.width * 0.3865,
-                                assetIcon: 'fluent_run-16-filled.svg',
+                                assetIcon: 'mdi_basketball.svg',
                                 height: sizeOf.width * 0.3865,
                                 title: 'Basketball',
                                 text:
@@ -90,7 +90,7 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                               ),
                               MediumActivityWidget(
                                 width: sizeOf.width * 0.3865,
-                                assetIcon: 'fluent_run-16-filled.svg',
+                                assetIcon: 'material-symbols_sports-motorsports-sharp.svg',
                                 height: sizeOf.width * 0.3865,
                                 title: 'MotoGP',
                                 text: 'Почувствуй себя проффесиональным гонщиком',
