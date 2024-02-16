@@ -24,6 +24,7 @@ class SellNftPopup extends StatefulWidget {
 class _SellNftPopupState extends State<SellNftPopup> {
   final TextEditingController _priceController = TextEditingController();
   late final ProfileRepository profileRepository;
+  String digits = "0123456789.";
 
   @override
   void initState() {
@@ -38,8 +39,22 @@ class _SellNftPopupState extends State<SellNftPopup> {
         nft: widget.nft, newPrice: double.parse(_priceController.text));
   }
 
-  bool isActive() =>
-      agree && _priceController.text != "0" && _priceController.text != "";
+  bool isActive() {
+    final List<String> currentPrice = _priceController.text.trim().split("");
+    if (currentPrice.where((ch) => ch == '.').length > 1 ||
+        currentPrice.contains("-") ||
+        currentPrice.isEmpty) {
+      return false;
+    }
+
+    for (var ch in currentPrice) {
+      if (digits.contains(ch) == false) {
+        return false;
+      }
+    }
+
+    return true && agree;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +91,10 @@ class _SellNftPopupState extends State<SellNftPopup> {
                       padding: const EdgeInsets.only(right: 10),
                       child: SvgPicture.asset("assets/icons/eth.svg")),
                   backgroundColor: AppColors.black_262627,
+                  onChange: (p0) {
+                    isActive();
+                    setState(() {});
+                  },
                 ),
                 const SizedBox(
                   height: 20,
