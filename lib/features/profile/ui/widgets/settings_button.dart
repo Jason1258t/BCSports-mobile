@@ -35,7 +35,7 @@ class SettingButton extends StatelessWidget {
               name,
               style: AppFonts.font14w500,
             ),
-            const Icon(Icons.arrow_forward),
+            Icon(Icons.arrow_forward, color: AppColors.white,),
           ],
         ),
       ),
