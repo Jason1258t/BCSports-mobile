@@ -15,9 +15,9 @@ class DateTimeDifferenceConverter {
     final now = DateTime.now();
     final difference = now.difference(otherDate);
     if (dateEqual(now.subtract(const Duration(hours: 24)), now.subtract(difference))) {
-      return 'yesterday ${DateFormat('hh:mm').format(otherDate)}';
+      return DateFormat('hh:mm').format(otherDate);
     } else {
-      return '${DateFormat('yyyy.MM.dd').format(otherDate)} ${DateFormat('hh:mm').format(otherDate)}';
+      return DateFormat('dd.MM').format(otherDate);
     }
   }
 

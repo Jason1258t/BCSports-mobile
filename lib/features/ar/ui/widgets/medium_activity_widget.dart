@@ -50,17 +50,16 @@ class MediumActivityWidget extends StatelessWidget {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title,
                   style: AppFonts.font18w400.copyWith(color: AppColors.white),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 10,),
                 Text(
                   text,
-                  style: AppFonts.font14w400
+                  style: AppFonts.font14w300
                       .copyWith(color: AppColors.grey_B3B3B3),
                 ),
               ],
