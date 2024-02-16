@@ -54,8 +54,8 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
     final repositoryChatRepository =
         RepositoryProvider.of<ChatRepository>(context);
 
-    void sendMessage(){
-      if(messageController.text != ''){
+    void sendMessage() {
+      if (messageController.text != '') {
         repositoryChatRepository.sendMessage(
             widget.room.id, PartialText(text: messageController.text));
 
@@ -130,24 +130,28 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                               borderRadius: BorderRadius.circular(20)),
                           padding: const EdgeInsets.all(4),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               const SizedBox(
                                 width: 16,
                               ),
                               SizedBox(
-                                width: MediaQuery.sizeOf(context).width *
-                                    290 /
-                                    375,
+                                width:
+                                    MediaQuery.sizeOf(context).width * 0.7733,
                                 child: TextField(
                                   textAlign: TextAlign.left,
                                   minLines: 1,
+                                  textAlignVertical: TextAlignVertical.bottom,
                                   maxLines: 4,
                                   controller: messageController,
                                   style: AppFonts.font14w400,
                                   decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.only(top: 10),
                                       counter: Container(),
                                       isDense: true,
-                                      hintStyle: AppFonts.font14w400,
+                                      hintStyle: AppFonts.font14w400
+                                          .copyWith(height: 0.5),
                                       hintText: 'Message',
                                       border: InputBorder.none),
                                 ),
