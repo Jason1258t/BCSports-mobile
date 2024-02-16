@@ -44,16 +44,18 @@ class MyRepositoryProviders extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => ChatRepository()),
-        RepositoryProvider(create: (context) => ProfileRepository(likes, nftService)),
-        RepositoryProvider(create: (context) => SocialRepository(likes)),
         RepositoryProvider(
-            create: (context) => ProfileViewRepository(likes, nftService)),
+            create: (context) => ProfileRepository(likes, nftService)),
+        RepositoryProvider(create: (context) => SocialRepository(likes)),
         RepositoryProvider(
             create: (context) => FavouritePostsRepository(likes)),
         RepositoryProvider(
             create: (context) => MarketRepository(
                 nftService: nftService,
                 profileRepository: context.read<ProfileRepository>())),
+        RepositoryProvider(
+            create: (context) => ProfileViewRepository(
+                likes, nftService, context.read<MarketRepository>())),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,

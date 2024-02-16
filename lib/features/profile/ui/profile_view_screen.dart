@@ -23,11 +23,7 @@ class ProfileViewScreen extends StatefulWidget {
 }
 
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
-  @override
-  void initState() {
-    context.read<ProfileViewRepository>().loadUserNftList();
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -181,38 +177,27 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
   }
 
   Widget buildNftTab(ProfileViewRepository repository) {
-    return BlocBuilder<UserNftCubit, UserNftState>(
-      builder: (context, state) {
-        if (state is ViewProfileLoadingState) {
-          return SliverToBoxAdapter(
-            child: Center(
-              child: AppAnimations.circleIndicator,
-            ),
-          );
-        } else if (state is ViewProfileSuccessState &&
-            repository.userNftList.isNotEmpty) {
-          return SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 29,
-                  crossAxisSpacing: 8,
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.59),
-              delegate: SliverChildBuilderDelegate(
-                  (context, index) => MarketNftCard(
-                        onTap: () {},
-                        nft: repository.userNftList[index],
-                      ),
-                  childCount: repository.userNftList.length));
-        }
+    if (repository.userNftList.isEmpty) {
+      return SliverToBoxAdapter(
+          child: Center(
+              child: Text(
+        'This user does not have NFTs',
+        style: AppFonts.font20w600,
+      )));
+    }
 
-        return SliverToBoxAdapter(
-            child: Center(
-                child: Text(
-          'This user does not have NFTs',
-          style: AppFonts.font20w600,
-        )));
-      },
-    );
+    return SliverGrid(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisSpacing: 29,
+            crossAxisSpacing: 8,
+            crossAxisCount: 2,
+            childAspectRatio: 0.59),
+        delegate: SliverChildBuilderDelegate(
+            (context, index) => MarketNftCard(
+                  onTap: () {},
+                  nft: repository.userNftList[index],
+                ),
+            childCount: repository.userNftList.length));
   }
 
   Widget buildPostsTab(ProfileViewRepository repository) {

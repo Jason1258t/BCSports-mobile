@@ -23,12 +23,12 @@ class MarketRepository {
 
   MarketRepository({required this.nftService, required this.profileRepository});
 
-  subscribeOnMarketStream()  {
+  subscribeOnMarketStream() {
     marketStream.listen((snapshot) {
       productList.clear();
-      snapshot.docs.forEach((doc)  {
+      snapshot.docs.forEach((doc) {
         try {
-          MarketItemModel marketItemModel =  parseMarketDocument(doc);
+          MarketItemModel marketItemModel = parseMarketDocument(doc);
           productList.add(marketItemModel);
         } catch (e) {
           log("Fail to parse market item by id ${doc.id} ! ${e}");
@@ -57,6 +57,12 @@ class MarketRepository {
     }
   }
 
+  Future<List<MarketItemModel>> getUserLotsById(String userId) async {
+    final userProductList =
+        productList.where((product) => product.lastOwnerId == userId).toList();
+    return userProductList;
+  }
+
   MarketItemModel parseMarketDocument(doc) {
     Map productMap = doc.data() as Map;
     print(productMap);
@@ -64,8 +70,8 @@ class MarketRepository {
     final NftModel productNft = nftService.nftCollectionList
         .where((nftItem) => nftItem.documentId == nftId)
         .first;
-    MarketItemModel marketItemModel = MarketItemModel.fromJson(
-        productMap, productNft, doc.id);
+    MarketItemModel marketItemModel =
+        MarketItemModel.fromJson(productMap, productNft, doc.id);
 
     return marketItemModel;
   }

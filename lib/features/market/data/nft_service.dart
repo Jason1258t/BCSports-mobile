@@ -24,4 +24,10 @@ class NftService {
     final nft = await resNftRaw.get();
     lastLoadedNft = NftModel.fromJson(nft.data()!, nft.id);
   }
+
+  Future<NftModel> loadNftData(String docId) async {
+    final nftDb = FirebaseCollections.playersNftCollection.doc(docId);
+    final nft = await nftDb.get();
+    return NftModel.fromJson(nft.data()!, nft.id);
+  }
 }

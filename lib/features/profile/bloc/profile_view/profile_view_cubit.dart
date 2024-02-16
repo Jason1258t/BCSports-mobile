@@ -10,12 +10,12 @@ class ProfileViewCubit extends Cubit<ProfileViewState> {
 
   ProfileViewCubit({required ProfileViewRepository profileRepository})
       : _profileRepository = profileRepository,
-        super(ViewProfileInitial()){
+        super(ViewProfileInitial()) {
     _profileRepository.profileViewState.listen((event) {
-      if(event == LoadingStateEnum.loading) emit(ViewProfileLoadingState());
-      if(event == LoadingStateEnum.fail) emit(ViewProfileFailState());
-      if(event == LoadingStateEnum.success) emit(ViewProfileSuccessState());
-      if(event == LoadingStateEnum.wait) emit(ViewProfileLoadingState());
+      if (event == LoadingStateEnum.loading) emit(ViewProfileLoadingState());
+      if (event == LoadingStateEnum.fail) emit(ViewProfileFailState());
+      if (event == LoadingStateEnum.success) emit(ViewProfileSuccessState());
+      if (event == LoadingStateEnum.wait) emit(ViewProfileLoadingState());
     });
   }
 }

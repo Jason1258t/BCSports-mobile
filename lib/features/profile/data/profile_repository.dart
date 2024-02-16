@@ -239,7 +239,7 @@ class ProfileRepository extends PostSource {
     Map<dynamic, dynamic> nftData = user['user_nft'] ?? {};
 
     for (var item in nftData.entries) {
-      final nftModel = await loadNftData(item.key);
+      final nftModel = await nftService.loadNftData(item.key);
       for (int i = 0; i < item.value; i++) {
         userNftList.add(nftModel);
       }
@@ -248,11 +248,6 @@ class ProfileRepository extends PostSource {
     log("Loaded user nft list: $userNftList");
   }
 
-  Future<NftModel> loadNftData(String docId) async {
-    final nftDb = _playersCollection.doc(docId);
-    final nft = await nftDb.get();
-    return NftModel.fromJson(nft.data()!, nft.id);
-  }
 
   void setProfileActiveTab(ProfileTabsEnum tab) {
     activeTab = tab;
