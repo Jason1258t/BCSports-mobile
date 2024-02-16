@@ -65,64 +65,51 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
         ),
       ),
       color: AppColors.background,
-      body: Column(
-        children: [
-          CustomTextFormField(
-              borderRadius: BorderRadius.circular(32),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              onChange: (v) {
-                context.read<UserSearchCubit>().searchByString(
-                    v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
-                setState(() {
-                  isOpenSearch =
-                      MediaQuery.of(context).viewInsets.bottom != 0 &&
-                          chatRepository.filteredUserList.isNotEmpty;
-                });
-              },
-              onTap: () {
-                context.read<UserSearchCubit>().searchByString(
-                    searchController.text == ''
-                        ? '123123123'
-                        : searchController.text,
-                    profileRepository.user.id);
-
-                setState(() {
-                  isOpenSearch = chatRepository.filteredUserList.isNotEmpty;
-                });
-              },
-              prefixIcon: Icon(
-                Icons.search,
-                color: AppColors.grey_d9d9d9,
-              ),
-              controller: searchController),
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: StreamBuilder<List<Room>>(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomTextFormField(
+                  borderRadius: BorderRadius.circular(32),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  onChange: (v) {
+                  context.read<UserSearchCubit>().searchByString(
+                      v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
+                  setState(() {
+                    isOpenSearch =
+                        MediaQuery.of(context).viewInsets.bottom != 0 &&
+                            chatRepository.filteredUserList.isNotEmpty;
+                  });
+                },
+                onTap: () {
+                  context.read<UserSearchCubit>().searchByString(
+                      searchController.text == ''
+                          ? '123123123'
+                          : searchController.text,
+                      profileRepository.user.id);
+        
+                  setState(() {
+                    isOpenSearch = chatRepository.filteredUserList.isNotEmpty;
+                  });
+                },
+                prefixIcon:  Icon(Icons.search, color: AppColors.grey_d9d9d9,),
+                controller: searchController),
+            const SizedBox(height: 20,),
+            Stack(
+              children: [
+                StreamBuilder<List<Room>>(
                     stream: context.read<ChatRepository>().roomsStream,
                     builder: (context, snapshot) {
-                      return SingleChildScrollView(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      return Column(
                         children: [
-                          Text(
-                            "Recent Conversation",
-                            style: AppFonts.font16w400
-                                .copyWith(color: AppColors.white),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
                           if (snapshot.hasData) ...generateChats(snapshot)
                         ],
-                      ));
+                      );
                     }),
-              ),
-              buildSearch()
-            ],
-          ),
-        ],
+                buildSearch()
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -135,15 +122,10 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
       color: AppColors.black,
       child: AnimatedContainer(
         margin: isOpenSearch ? const EdgeInsets.only(top: 20) : EdgeInsets.zero,
-        padding: isOpenSearch
-            ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10)
-            : EdgeInsets.zero,
+        padding: isOpenSearch ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10) : EdgeInsets.zero,
         duration: const Duration(milliseconds: 100),
         width: double.infinity,
-        height: isOpenSearch
-            ? 20 +
-                (sizeOf.width * 0.1 + 10) * repository.filteredUserList.length
-            : 0,
+        height: isOpenSearch ? 20 + (sizeOf.width * 0.1 + 10) * repository.filteredUserList.length : 0,
         decoration: BoxDecoration(
             color: AppColors.black_s2new_1A1A1A,
             borderRadius: BorderRadius.circular(10)),
