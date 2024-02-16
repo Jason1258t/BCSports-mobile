@@ -75,7 +75,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                     v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
                 setState(() {
                   isOpenSearch =
-                      MediaQuery.of(context).viewInsets.bottom != 0 ||
+                      MediaQuery.of(context).viewInsets.bottom != 0 &&
                           chatRepository.filteredUserList.isNotEmpty;
                 });
               },
@@ -87,7 +87,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                     profileRepository.user.id);
 
                 setState(() {
-                  isOpenSearch = true;
+                  isOpenSearch = chatRepository.filteredUserList.isNotEmpty;
                 });
               },
               prefixIcon:  Icon(Icons.search, color: AppColors.grey_d9d9d9,),
@@ -131,14 +131,15 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
   Widget buildSearch() {
     final repository = context.read<ChatRepository>();
     final sizeOf = MediaQuery.sizeOf(context);
+
     return Container(
       color: AppColors.black,
       child: AnimatedContainer(
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: isOpenSearch ? const EdgeInsets.only(top: 20) : EdgeInsets.zero,
+        padding: isOpenSearch ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10) : EdgeInsets.zero,
         duration: const Duration(milliseconds: 100),
         width: double.infinity,
-        height: isOpenSearch ? sizeOf.height * 0.5 : 0,
+        height: isOpenSearch ? 20 + (sizeOf.width * 0.1 + 10) * repository.filteredUserList.length : 0,
         decoration: BoxDecoration(
             color: AppColors.black_s2new_1A1A1A,
             borderRadius: BorderRadius.circular(10)),
