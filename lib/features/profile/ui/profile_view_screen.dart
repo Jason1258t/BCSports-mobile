@@ -25,7 +25,7 @@ class ProfileViewScreen extends StatefulWidget {
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
   @override
   void initState() {
-    context.read<ProfileRepository>().loadUserNftList();
+    context.read<ProfileViewRepository>().loadUserNftList();
     super.initState();
   }
 

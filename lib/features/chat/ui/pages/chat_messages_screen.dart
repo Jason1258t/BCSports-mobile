@@ -134,18 +134,17 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                               const SizedBox(
                                 width: 16,
                               ),
-                              SizedBox(
+                              Container(
                                 width: MediaQuery.sizeOf(context).width *
                                     290 /
                                     375,
+                                alignment: Alignment.centerLeft,
                                 child: TextField(
-                                  textAlign: TextAlign.left,
                                   minLines: 1,
                                   maxLines: 4,
                                   controller: messageController,
                                   style: AppFonts.font14w400,
                                   decoration: InputDecoration(
-                                      counter: Container(),
                                       isDense: true,
                                       hintStyle: AppFonts.font14w400,
                                       hintText: 'Message',
