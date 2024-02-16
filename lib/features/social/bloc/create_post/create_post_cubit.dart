@@ -5,8 +5,6 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 part 'create_post_state.dart';
