@@ -25,19 +25,13 @@ class ProfileViewScreen extends StatefulWidget {
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
   @override
   void initState() {
-    context.read<ProfileRepository>().loadUserNftList();
+    context.read<ProfileViewRepository>().loadUserNftList();
     super.initState();
-  }
-
-  void onNftCardTap(NftModel nft) {
-    Navigator.of(context).pushNamed('/market/details',
-        arguments: {'nft': nft, "target": ProductTarget.sell});
   }
 
   @override
   Widget build(BuildContext context) {
     final sizeof = MediaQuery.sizeOf(context);
-
     final repository = RepositoryProvider.of<ProfileViewRepository>(context);
 
     const separator = SliverToBoxAdapter(
@@ -205,9 +199,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                   childAspectRatio: 0.59),
               delegate: SliverChildBuilderDelegate(
                   (context, index) => MarketNftCard(
-                        onTap: () {
-                          onNftCardTap(repository.userNftList[index]);
-                        },
+                        onTap: () {},
                         nft: repository.userNftList[index],
                       ),
                   childCount: repository.userNftList.length));

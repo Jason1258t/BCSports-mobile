@@ -102,18 +102,17 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            SvgPicture.asset("assets/icons/poop.svg"),
+                            SvgPicture.asset("assets/icons/poop.svg", color: AppColors.grey_B4B4B4,),
                             const SizedBox(
-                              height: 13,
+                              height: 8,
                             ),
-                            SizedBox(
-                                width: 181,
-                                child: Text(
-                                  "Looks like you\nhave no active lots",
-                                  style: AppFonts.font20w400.copyWith(
-                                      color: AppColors.white, height: 1.2),
-                                  textAlign: TextAlign.center,
-                                ))
+                            Text(
+                              "Looks like you have no active lots",
+                              overflow: TextOverflow.ellipsis,
+                              style: AppFonts.font20w400.copyWith(
+                                  color: AppColors.grey_B4B4B4, height: 1.2),
+                              textAlign: TextAlign.center,
+                            )
                           ],
                         ),
                       ),
