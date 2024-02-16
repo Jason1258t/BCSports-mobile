@@ -98,8 +98,10 @@ class _MarketScreenState extends State<MarketScreen> {
                     },
                     borderRadius: BorderRadius.circular(31),
                     child: Container(
+                      height: 28,
+                      
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 10),
+                          horizontal: 14),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: AppColors.black_s2new_1A1A1A,
@@ -118,7 +120,7 @@ class _MarketScreenState extends State<MarketScreen> {
                                     .user
                                     .evmBill
                                     .toStringAsFixed(3),
-                                style: AppFonts.font14w500
+                                style: AppFonts.font14w400
                                     .copyWith(color: AppColors.white),
                               );
                             },
@@ -127,7 +129,7 @@ class _MarketScreenState extends State<MarketScreen> {
                             width: 5,
                           ),
                           Text("ETH",
-                              style: AppFonts.font14w500
+                              style: AppFonts.font14w400
                                   .copyWith(color: AppColors.primary))
                         ],
                       ),
