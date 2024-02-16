@@ -25,72 +25,75 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    print(size.width);
-
     return InkWell(
       onTap: setUserAndOpenChat,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.only(left: 10, top: 10 , bottom: 10, right: 0),
-        child: Row(
+        child: Column(
           children: [
-            buildUserAvatar(),
-            const SizedBox(
-              width: 16,
+            Row(
+              children: [
+                buildUserAvatar(),
+                const SizedBox(
+                  width: 16,
+                ),
+                SizedBox(
+                  width: (size.width - 56) * 0.843,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        getOtherUserName() ?? '',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: AppFonts.font16w400.copyWith(color: AppColors.white),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      StreamBuilder<List<Message>>(
+                          stream: FirebaseChatCore.instance.messages(widget.room),
+                          builder: (context, snapshot) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: (size.width - 56) * 0.51,
+                                  child: Text(
+                                    getLastMessage(snapshot.data ?? []),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: AppFonts.font14w400
+                                        .copyWith(color: AppColors.grey_949BA5),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: (size.width - 56) * 0.333,
+                                  child: Text(
+                                    getLastMessageTime(snapshot.data ?? []) != null
+                                        ? DateTimeDifferenceConverter.diffToString(
+                                                DateTime.fromMillisecondsSinceEpoch(
+                                                    getLastMessageTime(
+                                                        snapshot.data ?? [])!))
+                                            .toString()
+                                        : '',
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.right,
+                                    maxLines: 1,
+                                    style: AppFonts.font12w300
+                                        .copyWith(color: AppColors.grey_949BA5),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                    ],
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              width: (size.width - 106) * 0.843,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    getOtherUserName() ?? '',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: AppFonts.font16w400.copyWith(color: AppColors.white),
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  StreamBuilder<List<Message>>(
-                      stream: FirebaseChatCore.instance.messages(widget.room),
-                      builder: (context, snapshot) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: (size.width - 106) * 0.51,
-                              child: Text(
-                                getLastMessage(snapshot.data ?? []),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: AppFonts.font14w400
-                                    .copyWith(color: AppColors.grey_949BA5),
-                              ),
-                            ),
-                            SizedBox(
-                              width: (size.width - 106) * 0.333,
-                              child: Text(
-                                getLastMessageTime(snapshot.data ?? []) != null
-                                    ? DateTimeDifferenceConverter.diffToString(
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                                getLastMessageTime(
-                                                    snapshot.data ?? [])!))
-                                        .toString()
-                                    : '',
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.right,
-                                maxLines: 1,
-                                style: AppFonts.font12w300
-                                    .copyWith(color: AppColors.grey_949BA5),
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                ],
-              ),
-            )
+            SizedBox(height: 10,),
+            Divider(height: 1, color: AppColors.black_101119,),
           ],
         ),
       ),
@@ -128,8 +131,8 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
               ? DecorationImage(
                   image: NetworkImage(user.avatarUrl!), fit: BoxFit.cover)
               : null),
-      width: (sizeOf.width -106) * 0.157,
-      height:  (sizeOf.width -106) * 0.157,
+      width: (sizeOf.width -56) * 0.157,
+      height:  (sizeOf.width -56) * 0.157,
       child: user.avatarUrl == null
           ? Center(
               child: Text(
