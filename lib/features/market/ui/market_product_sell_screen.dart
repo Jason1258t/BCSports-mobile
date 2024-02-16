@@ -11,8 +11,6 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
-import 'package:bcsports_mobile/utils/gradients.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
@@ -31,7 +29,6 @@ class MarketProductSellScreen extends StatefulWidget {
 }
 
 class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
-
   late final NftDetailsCubit nftCubit;
   late final MarketRepository marketRepository;
 
@@ -54,18 +51,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
         builder: (context) => SellNftPopup(
               nft: marketRepository.nftService.lastLoadedNft,
             ));
-  }
-
-  void onLikeTap(bool isLiked) {
-    if (isLiked) {
-      context
-          .read<FavouriteCubit>()
-          .removeFromFavourites(marketRepository.nftService.lastLoadedNft);
-    } else {
-      context
-          .read<FavouriteCubit>()
-          .markAsFavourite(marketRepository.nftService.lastLoadedNft);
-    }
   }
 
   @override
@@ -108,6 +93,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
         if (state is SellSuccess || state is SellFailure) {
           Navigator.pop(context);
           Navigator.pop(context);
+          Navigator.pop(context);
         }
 
         if (state is SellLoading) {
@@ -146,41 +132,41 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                                 "assets/images/noname_det.png"),
                             image: NetworkImage(marketRepository
                                 .nftService.lastLoadedNft.imagePath)),
-                        Positioned(
-                          top: 20,
-                          right: 20,
-                          child: BlocBuilder<FavouriteCubit, FavouriteState>(
-                            builder: (context, state) {
-                              final user =
-                                  context.read<ProfileRepository>().user;
-                              final userNfts = user.favouritesNftList;
-                              final bool isLiked = userNfts.contains(
-                                  marketRepository
-                                      .nftService.lastLoadedNft.documentId);
+                        // Positioned(
+                        //   top: 20,
+                        //   right: 20,
+                        //   child: BlocBuilder<FavouriteCubit, FavouriteState>(
+                        //     builder: (context, state) {
+                        //       final user =
+                        //           context.read<ProfileRepository>().user;
+                        //       final userNfts = user.favouritesNftList;
+                        //       final bool isLiked = userNfts.contains(
+                        //           marketRepository
+                        //               .nftService.lastLoadedNft.documentId);
 
-                              if (state is FavouriteLoading) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: AppAnimations.circleIndicator,
-                                );
-                              }
+                        //       if (state is FavouriteLoading) {
+                        //         return Padding(
+                        //           padding: const EdgeInsets.all(10.0),
+                        //           child: AppAnimations.circleIndicator,
+                        //         );
+                        //       }
 
-                              return InkWell(
-                                onTap: () => onLikeTap(isLiked),
-                                borderRadius: BorderRadius.circular(10000),
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(10),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
-                                    color: AppColors.primary,
-                                    width: 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
+                        //       return InkWell(
+                        //         onTap: () => onLikeTap(isLiked),
+                        //         borderRadius: BorderRadius.circular(10000),
+                        //         child: Container(
+                        //           alignment: Alignment.center,
+                        //           padding: const EdgeInsets.all(10),
+                        //           child: SvgPicture.asset(
+                        //             "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
+                        //             color: AppColors.primary,
+                        //             width: 20,
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -194,11 +180,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                         value: 0,
                         statsName: "Favorites",
                         iconPath: 'assets/icons/like.svg',
-                      ),
-                      PlayerAppStatsWidget(
-                        value: 1,
-                        statsName: "Owners",
-                        iconPath: 'assets/icons/people.svg',
                       ),
                       PlayerAppStatsWidget(
                         value: marketRepository.nftService.lastLoadedNft.views,

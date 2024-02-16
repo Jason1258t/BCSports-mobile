@@ -34,6 +34,7 @@ abstract class AppColors {
   static Color grey_393939 = const Color(0xFF393939);
   static Color grey_727477 = const Color(0xFF727477);
   static Color grey_797979 = const Color(0xFF797979);
+  static Color grey_949BA5 = const Color(0xFF949BA5);
 
   static Color primary = const Color(0xffF3D523);
   static Color background = Colors.black;

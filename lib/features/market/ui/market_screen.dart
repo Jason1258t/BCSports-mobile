@@ -3,12 +3,12 @@ import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/mini_appbar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
-import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_third.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,6 +23,7 @@ class MarketScreen extends StatefulWidget {
 class _MarketScreenState extends State<MarketScreen> {
   String explore = "All Collections";
   late final MarketRepository marketRepository;
+  late final ProfileRepository profileRepository;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _MarketScreenState extends State<MarketScreen> {
 
   initProviders() {
     marketRepository = RepositoryProvider.of<MarketRepository>(context);
+    profileRepository = RepositoryProvider.of<ProfileRepository>(context);
   }
 
   void onFavouritesTap() {
@@ -55,13 +57,10 @@ class _MarketScreenState extends State<MarketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.black,
-      child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
-      ),
-    );
+    return CustomScaffold(
+        padding: EdgeInsets.zero,
+        color: AppColors.background,
+        body: buildMainInfoWidget());
   }
 
   Widget buildMainInfoWidget() {
@@ -153,6 +152,12 @@ class _MarketScreenState extends State<MarketScreen> {
             sliver: StreamBuilder(
                 stream: context.read<MarketRepository>().marketStream,
                 builder: (context, snapshot) {
+                  List<MarketItemModel> productList = marketRepository
+                      .productList
+                      .where((product) =>
+                          product.lastOwnerId != profileRepository.user.id)
+                      .toList();
+
                   return SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -162,13 +167,12 @@ class _MarketScreenState extends State<MarketScreen> {
                               childAspectRatio: 0.59),
                       delegate: SliverChildBuilderDelegate(
                           (context, index) => MarketNftCard(
-                                nft: marketRepository.productList[index].nft,
+                                nft: productList[index].nft,
                                 onTap: () {
-                                  onNftCardTap(
-                                      marketRepository.productList[index]);
+                                  onNftCardTap(productList[index]);
                                 },
                               ),
-                          childCount: marketRepository.productList.length));
+                          childCount: productList.length));
                 }),
           ),
           const SliverToBoxAdapter(

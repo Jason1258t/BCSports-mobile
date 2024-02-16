@@ -1,4 +1,6 @@
 import 'package:bcsports_mobile/app.dart';
+import 'package:bcsports_mobile/features/ar/ui/ar_mini-games_screen.daret.dart';
+import 'package:bcsports_mobile/features/ar/ui/ar_players_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
@@ -10,6 +12,7 @@ import 'package:bcsports_mobile/features/market/ui/market_product_sell_screen.da
 import 'package:bcsports_mobile/features/market/ui/market_screen.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_edit_screen.dart';
+import 'package:bcsports_mobile/features/profile/ui/profile_language_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_settings_screen.dart';
 import 'package:bcsports_mobile/features/profile/ui/profile_view_screen.dart';
@@ -92,10 +95,18 @@ class AppRoutes {
       case AppRouteNames.favouritesPost:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const FavouritesScreen());
-
+      case AppRouteNames.profileLanguage:
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ProfileLanguageScreen());
       case AppRouteNames.chatContacts:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const ChatContactsScreen());
+      case AppRouteNames.arMiniGames:
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ArMiniGagesScreen());
+      case AppRouteNames.arUserNft:
+        return NoAnimationMaterialPageRoute(
+            builder: (ctx) => const ArPlayersScreen());
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 

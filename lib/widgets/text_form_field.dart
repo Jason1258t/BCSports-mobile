@@ -16,7 +16,9 @@ class CustomTextFormField extends StatelessWidget {
       this.onChange,
       this.initValue,
       this.onTap,
+      this.padding,
       this.backgroundColor,
+      this.borderRadius,
       this.showCursor});
 
   final String? Function(String?)? validator;
@@ -33,6 +35,8 @@ class CustomTextFormField extends StatelessWidget {
   final Function()? onTap;
   final bool? showCursor;
   final Color? backgroundColor;
+  final EdgeInsets? padding;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +56,8 @@ class CustomTextFormField extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               color: backgroundColor ?? AppColors.black_s2new_1A1A1A,
-              borderRadius: BorderRadius.circular(9)),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              borderRadius:borderRadius ??  BorderRadius.circular(9)),
+          padding: padding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           alignment: Alignment.center,
           child: TextFormField(
             showCursor: showCursor,

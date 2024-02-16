@@ -3,6 +3,7 @@ abstract class AppRouteNames {
   static const String profileSettings = '/profile/settings';
   static const String profileEdit = '/profile/edit';
   static const String profileView = '/profile/view';
+  static const String profileLanguage = '/profile/lang';
 
   static const String createPost = '/create_post';
 
@@ -21,4 +22,8 @@ abstract class AppRouteNames {
   static const String favouritesPost = '/favouritesPost';
   static const String chatContacts = '/chat/contacts';
   static const String chatMessages = '/chat/messages';
+
+  static const String ar = '/ar';
+  static const String arMiniGames = '/ar/mini-games';
+  static const String arUserNft = '/ar/nft';
 }

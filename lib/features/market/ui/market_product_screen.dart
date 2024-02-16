@@ -54,13 +54,9 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
 
   void onLikeTap(bool isLiked) {
     if (isLiked) {
-      context
-          .read<FavouriteCubit>()
-          .removeFromFavourites(marketRepository.nftService.lastLoadedNft);
+      context.read<FavouriteCubit>().removeFromFavourites(widget.product);
     } else {
-      context
-          .read<FavouriteCubit>()
-          .markAsFavourite(marketRepository.nftService.lastLoadedNft);
+      context.read<FavouriteCubit>().markAsFavourite(widget.product);
     }
   }
 
@@ -69,6 +65,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
     return BlocConsumer<BuyNftCubit, BuyNftState>(
       listener: (context, state) {
         if (state is BuyNftSuccess || state is BuyNftFail) {
+          Navigator.pop(context);
           Navigator.pop(context);
           Navigator.pop(context);
         }
@@ -152,7 +149,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                             final user = context.read<ProfileRepository>().user;
                             final userNfts = user.favouritesNftList;
                             final bool isLiked =
-                                userNfts.contains(nft.documentId);
+                                userNfts.contains(widget.product.id);
 
                             if (state is FavouriteLoading) {
                               return Padding(
@@ -192,18 +189,13 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                       iconPath: 'assets/icons/like.svg',
                     ),
                     PlayerAppStatsWidget(
-                      value: 1,
-                      statsName: "Owners",
-                      iconPath: 'assets/icons/people.svg',
-                    ),
-                    PlayerAppStatsWidget(
                       value: nft.views,
                       statsName: "Views",
                       iconPath: 'assets/icons/ar.svg',
                     ),
                   ],
                 ),
-                  const SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 NftArButton(

@@ -53,85 +53,98 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
         if (state is UserSuccessState) {
           var user = RepositoryProvider.of<ProfileRepository>(context).user;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: user.avatarColor,
-                radius: sizeOf.width * 0.20,
-                backgroundImage: user.avatarUrl != null
-                    ? NetworkImage(user.avatarUrl!)
-                    : null,
-                child: user.avatarUrl == null
-                    ? Center(
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: user.avatarColor,
+                  radius: sizeOf.width * 0.20,
+                  backgroundImage: user.avatarUrl != null
+                      ? NetworkImage(user.avatarUrl!)
+                      : null,
+                  child: user.avatarUrl == null
+                      ? Center(
+                          child: Text(
+                            (user.displayName ?? user.username)[0]
+                                .toUpperCase(),
+                            style: AppFonts.font64w400,
+                          ),
+                        )
+                      : Container(),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  user.displayName ?? user.username,
+                  style: AppFonts.font20w600,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  '@${user.username}',
+                  style: AppFonts.font13w100,
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                SettingButton(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRouteNames.profileEdit);
+                    },
+                    name: 'Edit profile',
+                    width: double.infinity,
+                    height: sizeOf.width * 0.16),
+                const SizedBox(
+                  height: 20,
+                ),
+                SettingButton(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRouteNames.recovery);
+                    },
+                    name: 'Change Password',
+                    width: double.infinity,
+                    height: sizeOf.width * 0.16),
+                const SizedBox(
+                  height: 20,
+                ),
+                SettingButton(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, AppRouteNames.profileLanguage);
+                    },
+                    name: 'Change Language',
+                    width: double.infinity,
+                    height: sizeOf.width * 0.16),
+                const SizedBox(
+                  height: 40,
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.read<AuthCubit>().signOut();
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(Assets.icons('logout.svg')),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5, left: 10),
                         child: Text(
-                          (user.displayName ?? user.username)[0].toUpperCase(),
-                          style: AppFonts.font64w400,
+                          'Log out',
+                          style: AppFonts.font16w400
+                              .copyWith(color: AppColors.primary),
                         ),
                       )
-                    : Container(),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                user.displayName ?? user.username,
-                style: AppFonts.font20w600,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                '@${user.username}',
-                style: AppFonts.font13w100,
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              SettingButton(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouteNames.profileEdit);
-                  },
-                  name: 'Edit profile',
-                  width: double.infinity,
-                  height: sizeOf.width * 0.16),
-              const SizedBox(
-                height: 20,
-              ),
-              SettingButton(
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouteNames.recovery);
-                  },
-                  name: 'Change Password',
-                  width: double.infinity,
-                  height: sizeOf.width * 0.16),
-              const SizedBox(
-                height: 20,
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthCubit>().signOut();
-                  Navigator.pop(context);
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(Assets.icons('logout.svg')),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5, left: 10),
-                      child: Text(
-                        'Log out',
-                        style: AppFonts.font16w400
-                            .copyWith(color: AppColors.primary),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                    ],
+                  ),
+                )
+              ],
+            ),
           );
         } else {
           return Center(

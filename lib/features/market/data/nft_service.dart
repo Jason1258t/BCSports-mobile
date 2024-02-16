@@ -6,11 +6,7 @@ class NftService {
   List<NftModel> nftCollectionList = [];
   late NftModel lastLoadedNft;
 
-  NftService() {
-    loadNftCollection();
-  }
-
-  void loadNftCollection() async {
+  Future<void> loadNftCollection() async {
     final nftColl = await FirebaseCollections.playersNftCollection.get();
     nftColl.docs.forEach((doc) {
       NftModel nft = NftModel.fromJson(doc.data(), doc.id);
@@ -19,13 +15,19 @@ class NftService {
   }
 
   Future<void> updateNftViewsCounter(String id) async {
-    final doc = await FirebaseCollections.playersNftCollection.doc(id);
+    final doc = FirebaseCollections.playersNftCollection.doc(id);
     await doc.update({'views': FieldValue.increment(1)});
   }
 
   Future<void> loadNftDetailsData(String id) async {
-    final resNftRaw = await FirebaseCollections.playersNftCollection.doc(id);
+    final resNftRaw = FirebaseCollections.playersNftCollection.doc(id);
     final nft = await resNftRaw.get();
     lastLoadedNft = NftModel.fromJson(nft.data()!, nft.id);
+  }
+
+  Future<NftModel> loadNftData(String docId) async {
+    final nftDb = FirebaseCollections.playersNftCollection.doc(docId);
+    final nft = await nftDb.get();
+    return NftModel.fromJson(nft.data()!, nft.id);
   }
 }

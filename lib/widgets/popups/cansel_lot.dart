@@ -80,6 +80,7 @@ class _CanselLotPopupState extends State<CanselLotPopup> {
                     ),
                     CustomTextButton(
                       text: "yes",
+                      color: AppColors.white,
                       onTap: _onAccept,
                       width: size.width * 0.35,
                       height: 52,

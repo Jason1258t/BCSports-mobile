@@ -24,7 +24,7 @@ class ChatContactsScreen extends StatefulWidget {
 class _ChatContactsScreenState extends State<ChatContactsScreen> {
   final TextEditingController searchController = TextEditingController();
 
-  final String title = "Contacts";
+  final String title = "Messages";
 
   bool isOpenSearch = false;
 
@@ -68,12 +68,14 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
       body: Column(
         children: [
           CustomTextFormField(
-              onChange: (v) {
+                borderRadius: BorderRadius.circular(32),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                onChange: (v) {
                 context.read<UserSearchCubit>().searchByString(
                     v == '' ? '123412dfasdaf' : v!, profileRepository.user.id);
                 setState(() {
                   isOpenSearch =
-                      MediaQuery.of(context).viewInsets.bottom != 0 ||
+                      MediaQuery.of(context).viewInsets.bottom != 0 &&
                           chatRepository.filteredUserList.isNotEmpty;
                 });
               },
@@ -85,17 +87,28 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                     profileRepository.user.id);
 
                 setState(() {
-                  isOpenSearch = true;
+                  isOpenSearch = chatRepository.filteredUserList.isNotEmpty;
                 });
               },
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon:  Icon(Icons.search, color: AppColors.grey_d9d9d9,),
               controller: searchController),
           Stack(
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: SingleChildScrollView(
-                    child: StreamBuilder<List<Room>>(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Recent Conversation",
+                      style:
+                          AppFonts.font16w400.copyWith(color: AppColors.white),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    StreamBuilder<List<Room>>(
                         stream: context.read<ChatRepository>().roomsStream,
                         builder: (context, snapshot) {
                           return Column(
@@ -103,7 +116,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                               if (snapshot.hasData) ...generateChats(snapshot)
                             ],
                           );
-                        })),
+                        }),
+                  ],
+                )),
               ),
               buildSearch()
             ],
@@ -116,14 +131,15 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
   Widget buildSearch() {
     final repository = context.read<ChatRepository>();
     final sizeOf = MediaQuery.sizeOf(context);
+
     return Container(
       color: AppColors.black,
       child: AnimatedContainer(
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: isOpenSearch ? const EdgeInsets.only(top: 20) : EdgeInsets.zero,
+        padding: isOpenSearch ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10) : EdgeInsets.zero,
         duration: const Duration(milliseconds: 100),
         width: double.infinity,
-        height: isOpenSearch ? sizeOf.height * 0.5 : 0,
+        height: isOpenSearch ? 20 + (sizeOf.width * 0.1 + 10) * repository.filteredUserList.length : 0,
         decoration: BoxDecoration(
             color: AppColors.black_s2new_1A1A1A,
             borderRadius: BorderRadius.circular(10)),
