@@ -64,18 +64,14 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
               children: [
                 ButtonBack(
                   onTap: () => Navigator.pop(context),
-                )
+                ),
+                const SizedBox(width:16,),
+                Text(
+                  text,
+                  style: AppFonts.font18w600,
+                ),
               ],
             )),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          sliver: SliverToBoxAdapter(
-            child: Text(
-              text,
-              style: AppFonts.font18w600,
-            ),
-          ),
-        ),
         const SliverToBoxAdapter(
           child: SizedBox(height: 16),
         ),
@@ -101,7 +97,10 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            SvgPicture.asset("assets/icons/poop.svg", color: AppColors.grey_B4B4B4,),
+                            SvgPicture.asset(
+                              "assets/icons/poop.svg",
+                              color: AppColors.grey_B4B4B4,
+                            ),
                             const SizedBox(
                               height: 8,
                             ),

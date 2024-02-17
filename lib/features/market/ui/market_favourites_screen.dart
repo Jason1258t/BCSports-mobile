@@ -48,18 +48,17 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
               children: [
                 ButtonBack(
                   onTap: () => Navigator.pop(context),
-                )
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Text(
+                  text,
+                  style: AppFonts.font18w600,
+                ),
               ],
             )),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          sliver: SliverToBoxAdapter(
-            child: Text(
-              text,
-              style: AppFonts.font18w600,
-            ),
-          ),
-        ),
+
         const SliverToBoxAdapter(
           child: SizedBox(height: 16),
         ),
