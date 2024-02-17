@@ -156,7 +156,7 @@ class CommentsScreen extends StatelessWidget {
                       child: Ink(
                         decoration: BoxDecoration(
                             color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(16)),
+                            borderRadius: BorderRadius.circular(100)),
                         padding: const EdgeInsets.all(6),
                         child:
                             SvgPicture.asset(Assets.icons('send_comment.svg')),

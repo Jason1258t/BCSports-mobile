@@ -160,7 +160,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                     decoration: BoxDecoration(
                                         color: AppColors.primary,
                                         borderRadius:
-                                            BorderRadius.circular(16)),
+                                            BorderRadius.circular(100)),
                                     padding: const EdgeInsets.all(6),
                                     child: SvgPicture.asset(Assets.icons(
                                         'send_message_messenger.svg')),

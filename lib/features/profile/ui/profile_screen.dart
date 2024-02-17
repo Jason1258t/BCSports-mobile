@@ -51,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           var user = RepositoryProvider.of<ProfileRepository>(context).user;
 
           return CustomScaffold(
+            padding: EdgeInsets.zero,
             appBar: AppBar(
                 surfaceTintColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
@@ -112,10 +113,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           decoration: user.banner.url == null
                               ? BoxDecoration(
                                   color: user.bannerColor,
-                                  borderRadius: BorderRadius.circular(15),
                                 )
                               : BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
                                   image: DecorationImage(
                                       image: AssetImage(user.banner.url!),
                                       fit: BoxFit.cover),
@@ -167,30 +166,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 separator,
                 SliverToBoxAdapter(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ToggleButton(
-                        activeTap: repository.activeTab,
-                        width: sizeof.width * 0.4,
-                        enumTap: ProfileTabsEnum.nft,
-                        text: 'NFT',
-                        onTap: () {
-                          repository.setProfileActiveTab(ProfileTabsEnum.nft);
-                          setState(() {});
-                        },
-                      ),
-                      ToggleButton(
-                        activeTap: repository.activeTab,
-                        width: sizeof.width * 0.4,
-                        enumTap: ProfileTabsEnum.posts,
-                        text: 'Posts',
-                        onTap: () {
-                          repository.setProfileActiveTab(ProfileTabsEnum.posts);
-                          setState(() {});
-                        },
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ToggleButton(
+                          activeTap: repository.activeTab,
+                          width: sizeof.width * 0.4,
+                          enumTap: ProfileTabsEnum.nft,
+                          text: 'NFT',
+                          onTap: () {
+                            repository.setProfileActiveTab(ProfileTabsEnum.nft);
+                            setState(() {});
+                          },
+                        ),
+                        ToggleButton(
+                          activeTap: repository.activeTab,
+                          width: sizeof.width * 0.4,
+                          enumTap: ProfileTabsEnum.posts,
+                          text: 'Posts',
+                          onTap: () {
+                            repository.setProfileActiveTab(ProfileTabsEnum.posts);
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 separator,
