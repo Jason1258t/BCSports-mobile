@@ -22,7 +22,7 @@ class FeedScreen extends StatelessWidget {
     final repository = RepositoryProvider.of<SocialRepository>(context);
 
     return CustomScaffold(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.zero,
         appBar: EmptyAppBar(
           title: Padding(
             padding: const EdgeInsets.all(24.0),
