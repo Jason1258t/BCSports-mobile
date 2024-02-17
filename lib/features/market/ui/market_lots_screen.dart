@@ -107,7 +107,7 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                             Text(
                               "Looks like you have no active lots",
                               overflow: TextOverflow.ellipsis,
-                              style: AppFonts.font20w400.copyWith(
+                              style: AppFonts.font16w300.copyWith(
                                   color: AppColors.grey_B4B4B4, height: 1.2),
                               textAlign: TextAlign.center,
                             )
