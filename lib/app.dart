@@ -24,6 +24,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'BCSports',
       onGenerateRoute: AppRoutes.generateRoute,
+      builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+          child: child!),
     );
   }
 }

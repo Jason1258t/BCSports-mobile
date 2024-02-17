@@ -91,6 +91,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 ),
                 CustomTextFormField(
                   controller: _priceController,
+                  keyboardType: TextInputType.number,
                   prefixIcon: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: SvgPicture.asset("assets/icons/eth.svg")),

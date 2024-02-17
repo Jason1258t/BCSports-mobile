@@ -101,14 +101,14 @@ class _MarketScreenState extends State<MarketScreen> {
                       height: 28,
                       
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14),
+                          horizontal: 17),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: AppColors.black_s2new_1A1A1A,
                           borderRadius: BorderRadius.circular(31)),
                       child: Row(
                         children: [
-                          SvgPicture.asset('assets/icons/bankcard.svg'),
+                          SvgPicture.asset('assets/icons/wallet2.svg'),
                           const SizedBox(
                             width: 10,
                           ),
@@ -119,7 +119,7 @@ class _MarketScreenState extends State<MarketScreen> {
                                     .read<ProfileRepository>()
                                     .user
                                     .evmBill
-                                    .toStringAsFixed(3),
+                                    .toStringAsFixed(2),
                                 style: AppFonts.font14w400
                                     .copyWith(color: AppColors.white),
                               );
