@@ -20,8 +20,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Map<int, String> exploreMoreData = {
     0: "Explore more",
     1: "Next",
-    2: "Get Started",
-    3: "LGOOGOG"
+    2: "Next",
+    3: "Start"
   };
   final PageController _pageController = PageController();
 
