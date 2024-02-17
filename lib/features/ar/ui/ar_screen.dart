@@ -1,4 +1,6 @@
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
+import 'package:bcsports_mobile/l10n/l10n.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -28,7 +30,7 @@ class _ArScreenState extends State<ArScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'AR',
+                AppLocalizations.of(context)!.ar,
                 style: AppFonts.font18w400,
               ),
             ],
