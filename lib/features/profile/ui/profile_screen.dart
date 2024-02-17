@@ -13,6 +13,7 @@ import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -75,13 +76,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   context, AppRouteNames.createPost),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             IconButton(
-                              icon: Icon(
-                                Icons.settings,
-                                color: AppColors.white,
-                              ),
+                              icon:
+                                  SvgPicture.asset("assets/icons/settings.svg"),
                               onPressed: () {
                                 Navigator.pushNamed(
                                     context, AppRouteNames.profileSettings);

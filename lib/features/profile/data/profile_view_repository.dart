@@ -6,7 +6,6 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
-import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:rxdart/subjects.dart';
@@ -18,7 +17,6 @@ class ProfileViewRepository extends PostSource {
 
   static final _users = FirebaseCollections.usersCollection;
   static final _postsCollection = FirebaseCollections.postsCollection;
-  static final _playersCollection = FirebaseCollections.playersNftCollection;
   final MarketRepository marketRepository;
 
   ProfileViewRepository(

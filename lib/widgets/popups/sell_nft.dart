@@ -53,6 +53,10 @@ class _SellNftPopupState extends State<SellNftPopup> {
       }
     }
 
+    if (double.parse(_priceController.text) > 100) {
+      return false;
+    }
+
     return true && agree;
   }
 
@@ -87,6 +91,8 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 ),
                 CustomTextFormField(
                   controller: _priceController,
+                  hintText: "0...100 ETH",
+                  keyboardType: TextInputType.number,
                   prefixIcon: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: SvgPicture.asset("assets/icons/eth.svg")),

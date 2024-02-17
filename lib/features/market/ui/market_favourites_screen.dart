@@ -3,12 +3,12 @@ import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class MarketFavouritesScreen extends StatefulWidget {
   const MarketFavouritesScreen({super.key});
@@ -49,18 +49,16 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
               children: [
                 ButtonBack(
                   onTap: () => Navigator.pop(context),
-                )
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                Text(
+                  text,
+                  style: AppFonts.font18w600,
+                ),
               ],
             )),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 23),
-          sliver: SliverToBoxAdapter(
-            child: Text(
-              text,
-              style: AppFonts.font18w600,
-            ),
-          ),
-        ),
         const SliverToBoxAdapter(
           child: SizedBox(height: 16),
         ),
@@ -81,6 +79,10 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                     .where((product) => likedNftIdList.contains(product.id))
                     .toList();
 
+                if (favouriteNftList.isEmpty) {
+                  return buildEmptyDataMessage();
+                }
+
                 return SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: 29,
@@ -99,6 +101,35 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
               },
             ))
       ],
+    );
+  }
+
+  Widget buildEmptyDataMessage() {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: MediaQuery.sizeOf(context).height - 250,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SvgPicture.asset(
+              "assets/icons/poop.svg",
+              color: AppColors.grey_B4B4B4,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              "Looks like you have no favourites cards",
+              overflow: TextOverflow.ellipsis,
+              style: AppFonts.font16w300
+                  .copyWith(color: AppColors.grey_B4B4B4, height: 1.2),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

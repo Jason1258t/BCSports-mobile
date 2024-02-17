@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
@@ -13,6 +14,7 @@ import 'package:bcsports_mobile/utils/strings.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
 import 'package:rxdart/rxdart.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -131,18 +133,40 @@ class AuthRepository {
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+    if(Platform.isAndroid) {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
 
-    final userCredential = await _auth.signInWithCredential(credential);
-    await _writeUserDataInDatabase(userCredential.user!.uid);
-    appState.add(AppAuthStateEnum.auth);
-    return userCredential;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final userCredential = await _auth.signInWithCredential(credential);
+
+      await _writeUserDataInDatabase(userCredential.user!.uid);
+      appState.add(AppAuthStateEnum.auth);
+
+      return userCredential;
+    }
+    else{
+      final GoogleSignInAccount? googleUser = await GoogleSignIn(clientId: '626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com').signIn();
+      final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final userCredential = await _auth.signInWithCredential(credential);
+
+      await _writeUserDataInDatabase(userCredential.user!.uid);
+      appState.add(AppAuthStateEnum.auth);
+
+      return userCredential;
+    }
   }
 
   /// Generates a cryptographically secure random nonce, to be included in a
@@ -182,7 +206,7 @@ class AuthRepository {
     final userCredential =
         await FirebaseAuth.instance.signInWithCredential(oauthCredential);
 
-    await _writeUserDataInDatabase(userCredential.user!.uid);
+    await _writeUserDataInDatabase(userCredential.user!.uid );
     appState.add(AppAuthStateEnum.auth);
     return userCredential;
   }

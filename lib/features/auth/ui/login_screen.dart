@@ -44,11 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInProcess) {
-          Dialogs.showModal(
-              context,
-              Center(
-                child: AppAnimations.circleIndicator,
-              ));
+          // Dialogs.showModal(
+          //     context,
+          //     Center(
+          //       child: AppAnimations.circleIndicator,
+          //     ));
         } else {
           Dialogs.hide(context);
         }

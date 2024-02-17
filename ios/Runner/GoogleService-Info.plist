@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.626741015-la6fgg3icmrqeus524th3kv1uf59ri97</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyD2Ni7eCvOjwPRFK-8W_rml9dxERkNjv-8</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.bcsportsMobile</string>
+	<string>com.bcsportsMobile.nftApplicaion</string>
 	<key>PROJECT_ID</key>
 	<string>bcsports-mobile</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:626741015:ios:e0baf9381c21410e20b152</string>
+	<string>1:626741015:ios:719e19333b3a2cb620b152</string>
+	<key>DATABASE_URL</key>
+	<string>https://bcsports-mobile-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
