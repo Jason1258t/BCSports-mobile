@@ -36,20 +36,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void initState() {
-    bloc = context.read<OnboardingCubit>();
+    bloc = BlocProvider.of<OnboardingCubit>(context);
     super.initState();
   }
 
   void animateToPage() {
     _pageController.animateToPage(bloc.currentPageIndex,
-        duration: const Duration(milliseconds: 200), curve: Curves.fastEaseInToSlowEaseOut);
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.fastEaseInToSlowEaseOut);
   }
 
   void nextPage() {
     if (bloc.currentPageIndex == bloc.maxPageIndex) {
       Navigator.pop(context);
+    } else {
+      bloc.nextPage();
     }
-    bloc.nextPage();
+  }
+
+  @override
+  void dispose() {
+    bloc.resetStartPageIndex();
+    super.dispose();
   }
 
   @override
@@ -120,44 +128,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-// InkWell(
-//               onTap: nextPage,
-//               child: Container(
-//                 padding: const EdgeInsets.symmetric(horizontal: 22),
-//                 width: double.infinity,
-//                 height: 83,
-//                 color: AppColors.primary,
-//                 child: Row(
-//                   children: [
-//                     SizedBox(
-//                       width: 37,
-//                       height: 10,
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         children: [0, 1, 2]
-//                             .map((e) => OnboardingDot(
-//                                   isBig: e == bloc.currentPageIndex,
-//                                 ))
-//                             .toList(),
-//                       ),
-//                     ),
-//                     const Spacer(),
-//                     Text(
-//                       exploreMoreData[bloc.currentPageIndex] ?? "Next",
-//                       style: AppFonts.font16w500
-//                           .copyWith(color: AppColors.black_090723),
-//                     ),
-//                     const SizedBox(
-//                       width: 13,
-//                     ),
-//                     SvgPicture.asset(
-//                       'assets/icons/arrow.svg',
-//                       width: 40,
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             )
 
 class OnboardingDot extends StatelessWidget {
   final bool isBig;

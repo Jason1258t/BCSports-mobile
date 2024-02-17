@@ -16,6 +16,10 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     }
   }
 
+  void resetStartPageIndex() {
+    currentPageIndex = 0;
+  }
+
   void skipAllPages() {
     currentPageIndex = maxPageIndex;
     emit(OnboardingPageChanged());
