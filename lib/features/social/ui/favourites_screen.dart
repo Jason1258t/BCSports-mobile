@@ -19,6 +19,7 @@ class FavouritesScreen extends StatelessWidget {
     final repository = RepositoryProvider.of<FavouritePostsRepository>(context);
 
     return CustomScaffold(
+      padding: EdgeInsets.zero,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
