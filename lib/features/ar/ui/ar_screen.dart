@@ -1,7 +1,10 @@
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/colors.dart';
 
 class ArScreen extends StatefulWidget {
   const ArScreen({super.key});
@@ -16,9 +19,24 @@ class _ArScreenState extends State<ArScreen> {
     final sizeOf = MediaQuery.sizeOf(context);
 
     return CustomScaffold(
-        padding: EdgeInsets.all(sizeOf.width * 0.058).copyWith(bottom: 0),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: AppColors.black,
+          surfaceTintColor: Colors.transparent,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                'AR',
+                style: AppFonts.font18w400,
+              ),
+            ],
+          ),
+        ),
+        padding: EdgeInsets.all(sizeOf.width * 0.058).copyWith(bottom: 0, top: 0),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics:const BouncingScrollPhysics(),
           child: Column(
             children: [
               ArBannerWidget(
@@ -58,7 +76,7 @@ class _ArScreenState extends State<ArScreen> {
                   Navigator.pushNamed(context, AppRouteNames.arMiniGames);
                 },
               ),
-                const SizedBox(
+              const SizedBox(
                 height: 15,
               ),
             ],
