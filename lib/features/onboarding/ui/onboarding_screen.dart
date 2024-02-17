@@ -48,8 +48,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void nextPage() {
     if (bloc.currentPageIndex == bloc.maxPageIndex) {
       Navigator.pop(context);
-      bloc.setActivePage(0);
-      return;
     }
     bloc.nextPage();
   }
