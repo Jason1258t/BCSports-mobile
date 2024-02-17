@@ -53,6 +53,10 @@ class _SellNftPopupState extends State<SellNftPopup> {
       }
     }
 
+    if (double.parse(_priceController.text) > 100) {
+      return false;
+    }
+
     return true && agree;
   }
 
