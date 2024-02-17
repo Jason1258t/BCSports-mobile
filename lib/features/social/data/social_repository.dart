@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
@@ -13,7 +12,6 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,5 +1,4 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:meta/meta.dart';

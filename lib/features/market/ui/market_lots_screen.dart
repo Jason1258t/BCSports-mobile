@@ -1,7 +1,6 @@
 import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
-import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_user_lot.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';

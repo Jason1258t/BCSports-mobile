@@ -23,7 +23,6 @@ class ProfileRepository extends PostSource {
 
   static final _users = FirebaseCollections.usersCollection;
   static final _postsCollection = FirebaseCollections.postsCollection;
-  static final _playersCollection = FirebaseCollections.playersNftCollection;
 
   @override
   final LikesManager likesManager;
