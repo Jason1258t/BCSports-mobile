@@ -19,6 +19,7 @@ class _ArScreenState extends State<ArScreen> {
   @override
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
+    final localize = AppLocalizations.of(context)!;
 
     return CustomScaffold(
         appBar: AppBar(
@@ -30,22 +31,23 @@ class _ArScreenState extends State<ArScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                AppLocalizations.of(context)!.ar,
+                localize.ar,
                 style: AppFonts.font18w400,
               ),
             ],
           ),
         ),
-        padding: EdgeInsets.all(sizeOf.width * 0.058).copyWith(bottom: 0, top: 0),
+        padding:
+            EdgeInsets.all(sizeOf.width * 0.058).copyWith(bottom: 0, top: 0),
         body: SingleChildScrollView(
-          physics:const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               ArBannerWidget(
                 width: sizeOf.width,
                 height: sizeOf.width * 0.456,
                 assetIcon: 'people_with_rows.svg',
-                title: 'Player',
+                title: localize.player,
                 text:
                     'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
                 backGroundImage: 'ar/ar_pepole.png',
@@ -60,7 +62,7 @@ class _ArScreenState extends State<ArScreen> {
                 width: sizeOf.width,
                 height: sizeOf.width * 0.456,
                 assetIcon: 'game-icons_soccer-ball.svg',
-                title: 'Academy',
+                title: localize.academy,
                 text: 'AR визуализация Бразильской академии',
                 backGroundImage: 'ar/dybai.png',
               ),
@@ -71,7 +73,7 @@ class _ArScreenState extends State<ArScreen> {
                 width: sizeOf.width,
                 height: sizeOf.width * 0.456,
                 assetIcon: 'bxs_joystick.svg',
-                title: 'Mini-games',
+                title: localize.mini_games,
                 text: 'Выбери, сыгрый, победи',
                 backGroundImage: 'ar/footboll_field.png',
                 onTap: () {

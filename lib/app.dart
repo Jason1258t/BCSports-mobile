@@ -33,7 +33,7 @@ class MyAppState extends State<MyApp> {
           onGenerateRoute: AppRoutes.generateRoute,
           builder: (context, child) => MediaQuery(
               data: MediaQuery.of(context)
-                  .copyWith(textScaler: TextScaler.linear(1.0)),
+                  .copyWith(textScaler: const TextScaler.linear(1.0)),
               child: child!),
         );
       },

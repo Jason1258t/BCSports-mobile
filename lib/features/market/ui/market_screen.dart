@@ -4,6 +4,8 @@ import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/mini_appbar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/l10n/l10n.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -21,7 +23,6 @@ class MarketScreen extends StatefulWidget {
 }
 
 class _MarketScreenState extends State<MarketScreen> {
-  String explore = "All Collections";
   late final MarketRepository marketRepository;
   late final ProfileRepository profileRepository;
 
@@ -64,6 +65,8 @@ class _MarketScreenState extends State<MarketScreen> {
   }
 
   Widget buildMainInfoWidget() {
+    final localize = AppLocalizations.of(context)!;
+
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         await updateUser();
@@ -99,9 +102,7 @@ class _MarketScreenState extends State<MarketScreen> {
                     borderRadius: BorderRadius.circular(31),
                     child: Container(
                       height: 28,
-                      
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 17),
+                      padding: const EdgeInsets.symmetric(horizontal: 17),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: AppColors.black_s2new_1A1A1A,
@@ -141,7 +142,7 @@ class _MarketScreenState extends State<MarketScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 23),
             sliver: SliverToBoxAdapter(
               child: Text(
-                explore,
+                localize.all_collection,
                 style: AppFonts.font18w600,
               ),
             ),
