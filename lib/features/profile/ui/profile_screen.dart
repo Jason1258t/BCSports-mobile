@@ -228,25 +228,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         } else if (state is UserNftSuccess &&
             context.read<ProfileRepository>().userNftList.isNotEmpty) {
-          return SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 29,
-                  crossAxisSpacing: 8,
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.59),
-              delegate: SliverChildBuilderDelegate(
-                  (context, index) => MarketNftCard(
-                        onTap: () {
-                          onNftCardTap(context
+          return SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 29,
+                    crossAxisSpacing: 8,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.59),
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => MarketNftCard(
+                          onTap: () {
+                            onNftCardTap(context
+                                .read<ProfileRepository>()
+                                .userNftList[index]);
+                          },
+                          nft: context
                               .read<ProfileRepository>()
-                              .userNftList[index]);
-                        },
-                        nft: context
-                            .read<ProfileRepository>()
-                            .userNftList[index],
-                      ),
-                  childCount:
-                      context.read<ProfileRepository>().userNftList.length));
+                              .userNftList[index],
+                        ),
+                    childCount:
+                        context.read<ProfileRepository>().userNftList.length)),
+          );
         }
 
         return SliverToBoxAdapter(

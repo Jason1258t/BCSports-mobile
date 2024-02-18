@@ -71,7 +71,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                     height: 4,
                   ),
                   Text(
-                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount}' +
+                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount} ' +
                         'Likes' , //TODO
                     style: AppFonts.font14w400
                         .copyWith(color: const Color(0xFF717477)),

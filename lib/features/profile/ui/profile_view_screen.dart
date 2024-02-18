@@ -188,18 +188,21 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
       )));
     }
 
-    return SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 29,
-            crossAxisSpacing: 8,
-            crossAxisCount: 2,
-            childAspectRatio: 0.59),
-        delegate: SliverChildBuilderDelegate(
-            (context, index) => MarketNftCard(
-                  onTap: () {},
-                  nft: repository.userNftList[index],
-                ),
-            childCount: repository.userNftList.length));
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      sliver: SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 29,
+              crossAxisSpacing: 8,
+              crossAxisCount: 2,
+              childAspectRatio: 0.59),
+          delegate: SliverChildBuilderDelegate(
+              (context, index) => MarketNftCard(
+                    onTap: () {},
+                    nft: repository.userNftList[index],
+                  ),
+              childCount: repository.userNftList.length)),
+    );
   }
 
   Widget buildPostsTab(ProfileViewRepository repository) {
