@@ -129,7 +129,7 @@ class CommentsScreen extends StatelessWidget {
                     width: 16,
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 290 / 375,
+                    width: MediaQuery.sizeOf(context).width - 72 - 16,
                     child: TextField(
                       minLines: 1,
                       maxLines: 6,
