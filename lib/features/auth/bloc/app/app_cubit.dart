@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
+import 'package:bcsports_mobile/services/locale/localization/localization_service.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -21,7 +22,7 @@ class AppCubit extends Cubit<AppState> {
       ProfileRepository profileRepository,
       SocialRepository socialRepository,
       FavouritePostsRepository favouritePostsRepository,
-      MarketRepository marketRepository)
+      MarketRepository marketRepository,)
       : _authRepository = authRepository,
         _profileRepository = profileRepository,
         _socialRepository = socialRepository,
