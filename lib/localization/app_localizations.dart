@@ -114,7 +114,7 @@ abstract class AppLocalizations {
   /// No description provided for @all_collection.
   ///
   /// In en, this message translates to:
-  /// **'all collections'**
+  /// **'All collections'**
   String get all_collection;
 
   /// No description provided for @already_have_acc.
@@ -468,7 +468,7 @@ abstract class AppLocalizations {
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
-  /// **'language'**
+  /// **'Language'**
   String get language;
 
   /// No description provided for @likes.
@@ -504,7 +504,7 @@ abstract class AppLocalizations {
   /// No description provided for @messages.
   ///
   /// In en, this message translates to:
-  /// **'messages'**
+  /// **'Messages'**
   String get messages;
 
   /// No description provided for @mind.
@@ -654,7 +654,7 @@ abstract class AppLocalizations {
   /// No description provided for @profile.
   ///
   /// In en, this message translates to:
-  /// **'profile'**
+  /// **'Profile'**
   String get profile;
 
   /// No description provided for @project_mission.

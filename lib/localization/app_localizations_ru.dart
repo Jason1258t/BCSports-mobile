@@ -191,7 +191,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get killer_passes => 'Убийца проходит';
 
   @override
-  String get language => 'язык';
+  String get language => 'Язык';
 
   @override
   String get likes => 'Нравится';
@@ -284,7 +284,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get posts => 'Посты';
 
   @override
-  String get profile => 'профиль';
+  String get profile => 'Профиль';
 
   @override
   String get project_mission => 'Проектная миссия';
