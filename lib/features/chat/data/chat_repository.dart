@@ -32,6 +32,12 @@ class ChatRepository {
     activeUser = user;
   }
 
+  void init(){
+    FirebaseChatCore.instance
+        .setConfig(const FirebaseChatCoreConfig(null, 'rooms', 'chat_users'));
+    subscribeRoomsUpdates();
+  }
+
   void subscribeRoomsUpdates() {
     chatCore.rooms().listen((event) {
       rooms = event;

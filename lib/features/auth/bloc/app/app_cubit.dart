@@ -43,7 +43,7 @@ class AppCubit extends Cubit<AppState> {
         _socialRepository.initial();
         await _marketRepository.nftService.loadNftCollection();
         _marketRepository.subscribeOnMarketStream();
-        _chatRepository.subscribeRoomsUpdates();
+        _chatRepository.init();
 
 
         emit(AppAuthState());

@@ -47,7 +47,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
 
-
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInProcess) {
@@ -115,7 +114,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
                     suffixIcon: InkWell(
-                      child: SvgPicture.asset(Assets.icons('eye-close.svg')),
+                      child: SvgPicture.asset(
+                        passwordObscured
+                            ? Assets.icons('uil_eye-slash.svg')
+                            : Assets.icons('uil_eye.svg'),
+                      ),
                       onTap: () {
                         setState(() {
                           passwordObscured = !passwordObscured;
@@ -146,11 +149,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(width: 8),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'I agree to the ',// TODO
+                            text: 'I agree to the ', // TODO
                             style: AppFonts.font12w400),
                         TextSpan(
                             recognizer: TapGestureRecognizer()..onTap = () {},
-                            text: 'terms and conditions',// TODO
+                            text: 'terms and conditions', // TODO
                             style: AppFonts.font12w400.copyWith(
                                 decoration: TextDecoration.underline,
                                 decorationThickness: 3,
@@ -205,7 +208,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                        text: localize.already_have_acc, 
+                        text: localize.already_have_acc,
                         style: AppFonts.font12w400),
                     TextSpan(
                         text: localize.sign_in,
