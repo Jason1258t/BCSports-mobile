@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -52,6 +53,8 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
         RepositoryProvider.of<ProfileViewRepository>(context);
     final repositoryChatRepository =
         RepositoryProvider.of<ChatRepository>(context);
+
+    final localize = AppLocalizations.of(context)!;
 
     void sendMessage(){
       if(messageController.text != ''){
@@ -146,7 +149,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       hintStyle: AppFonts.font14w400,
-                                      hintText: 'Message',
+                                      hintText: 'Message', //Todo
                                       border: InputBorder.none),
                                 ),
                               ),
