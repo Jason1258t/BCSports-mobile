@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
@@ -33,6 +34,8 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocListener<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordLoadingState) {
@@ -63,7 +66,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                   },
                 ),
                 Text(
-                  'Forgot password',
+                  localize.forgot_paassword,
                   style: AppFonts.font18w600,
                 ),
                 const SizedBox(
@@ -87,7 +90,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
               SizedBox(
                 width: 225,
                 child: Text(
-                  'Please enter your registered email address.',
+                  localize.enter_registered_email,
                   style: AppFonts.font16w400,
                   textAlign: TextAlign.center,
                 ),
@@ -115,7 +118,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
               ),
               const Spacer(),
               CustomTextButton(
-                text: 'Send recovery mail',
+                text: localize.send_recovery,
                 onTap: () {
                   context
                       .read<ResetPasswordCubit>()

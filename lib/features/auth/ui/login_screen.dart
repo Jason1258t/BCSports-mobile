@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
@@ -41,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+    
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInProcess) {
@@ -76,8 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         validator: Validator.emailValidator,
                         controller: emailController,
-                        labelText: 'Email address',
-                        hintText: 'Email',
+                        labelText: localize.email_address,
+                        hintText: localize.email,
                         keyboardType: TextInputType.emailAddress,
                         prefixIcon: Container(
                           padding: const EdgeInsets.only(right: 5),
@@ -96,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         controller: passwordController,
                         validator: Validator.passwordValidator,
-                        labelText: 'Password',
-                        hintText: 'Password',
+                        labelText: localize.password,
+                        hintText: localize.password,
                         keyboardType: TextInputType.visiblePassword,
                         prefixIcon: Container(
                           padding: const EdgeInsets.only(right: 5),
@@ -178,10 +181,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'Don’t have an account?  ',
+                            text: 'Don’t have an account?  ', // TODO
                             style: AppFonts.font12w400),
                         TextSpan(
-                            text: 'Sign up',
+                            text: 'Sign up', //TODO
                             style: AppFonts.font12w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

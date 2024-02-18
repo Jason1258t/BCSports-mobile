@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -43,6 +44,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
+
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInProcess) {
@@ -100,8 +104,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                     controller: passwordController,
                     validator: Validator.passwordValidator,
-                    labelText: 'Password',
-                    hintText: 'Password',
+                    labelText: localize.password,
+                    hintText: localize.password,
                     keyboardType: TextInputType.visiblePassword,
                     prefixIcon: Container(
                       padding: const EdgeInsets.only(right: 5),
@@ -141,11 +145,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(width: 8),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'I agree to the ',
+                            text: 'I agree to the ',// TODO
                             style: AppFonts.font12w400),
                         TextSpan(
                             recognizer: TapGestureRecognizer()..onTap = () {},
-                            text: 'terms and conditions',
+                            text: 'terms and conditions',// TODO
                             style: AppFonts.font12w400.copyWith(
                                 decoration: TextDecoration.underline,
                                 decorationThickness: 3,
@@ -157,7 +161,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 55,
                   ),
                   CustomTextButton(
-                    text: 'Sign up',
+                    text: 'Sign up',// TODO
                     onTap: () {
                       context.read<AuthCubit>().signUpWithEmailAndPassword(
                           email: emailController.text.trim(),
@@ -200,10 +204,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                        text: 'Already have an account? ',
+                        text: 'Already have an account? ', // TODO
                         style: AppFonts.font12w400),
                     TextSpan(
-                        text: 'Sign in',
+                        text: 'Sign in',// TODO
                         style: AppFonts.font12w600,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
