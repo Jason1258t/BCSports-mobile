@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_text_button.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -75,6 +76,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocListener<CreatePostCubit, CreatePostState>(
       listener: (context, state) {
         if (state is CreateLoadingState) {
@@ -99,16 +102,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmallTextButton(
-                text: 'Discard',
+                text: 'Discard', //TODO
                 onTap: () => Navigator.pop(context),
                 type: SmallTextButtonType.withoutBackground,
               ),
               Text(
-                'CREATE',
+                'CREATE', // TODO
                 style: AppFonts.font14w400,
               ),
               SmallTextButton(
-                text: 'Publish',
+                text: 'Publish', //TODO
                 onTap: () => context
                     .read<CreatePostCubit>()
                     .createPost(textController.text, croppedImagesBytes),
@@ -141,7 +144,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     controller: textController,
                     style: AppFonts.font16w400,
                     decoration: InputDecoration(
-                        hintText: "What's on your mind?",
+                        hintText: "What's on your mind?", //TODO
                         hintStyle: AppFonts.font16w400
                             .copyWith(color: AppColors.grey_727477),
                         border: InputBorder.none),
@@ -186,7 +189,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       SmallTextButton(
                         type: SmallTextButtonType.withBackground,
                         backgroundColor: Colors.white,
-                        text: 'Delete',
+                        text: 'Delete', //TODO
                         onTap: () {
                           image = null;
                           croppedImage = null;

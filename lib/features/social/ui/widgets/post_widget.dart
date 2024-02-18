@@ -16,6 +16,7 @@ import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_actions_bottom_sheet.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/text_post_body.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
@@ -23,7 +24,6 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/time_difference.dart';
-import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -107,6 +107,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
 
     final postType =
         post.postModel.imageUrl != null ? PostType.withImage : PostType.text;
+
+    final localize = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,7 +264,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
     }
     if (state is DeleteFailState && state.postId == post.postId) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(AppSnackBars.snackBar('Delete fail, try again later'));
+          .showSnackBar(AppSnackBars.snackBar('Delete fail, try again later'));//TODO
     }
   }
 

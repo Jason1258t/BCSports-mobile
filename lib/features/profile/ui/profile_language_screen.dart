@@ -32,6 +32,8 @@ class _ProfileLanguageScreenState extends State<ProfileLanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return CustomScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -44,7 +46,7 @@ class _ProfileLanguageScreenState extends State<ProfileLanguageScreen> {
               Navigator.pop(context);
             }),
             Text(
-              AppLocalizations.of(context)!.language,
+              localize.language,
               style: AppFonts.font18w600,
             ),
             const SizedBox(

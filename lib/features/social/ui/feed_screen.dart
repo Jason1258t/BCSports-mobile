@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
@@ -20,6 +21,8 @@ class FeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repository = RepositoryProvider.of<SocialRepository>(context);
+
+    final localize = AppLocalizations.of(context)!;
 
     return CustomScaffold(
         padding: EdgeInsets.zero,
@@ -83,7 +86,7 @@ class FeedScreen extends StatelessWidget {
             }
             else if (state is HomeSocialSuccessState && repository.posts.isEmpty){
               return Center(
-                child: Text('There is no post yet',style: AppFonts.font36w800,),
+                child: Text('There is no post yet',style: AppFonts.font36w800,), //TODO
               );
             }
             else {

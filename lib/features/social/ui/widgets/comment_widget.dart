@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/profile/data/profile_view_repository.da
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/comment_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -25,15 +26,18 @@ class _CommentWidgetState extends State<CommentWidget> {
   @override
   Widget build(BuildContext context) {
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
+
+    final localize = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: InkWell(
-        onTap: (){
-          if(widget.comment.user.id != profileRepository.user.id){
-            context.read<ProfileViewRepository>().setUser(widget.comment.user.id);
+        onTap: () {
+          if (widget.comment.user.id != profileRepository.user.id) {
+            context
+                .read<ProfileViewRepository>()
+                .setUser(widget.comment.user.id);
             Navigator.pushNamed(context, AppRouteNames.profileView);
-          }
-          else {
+          } else {
             context.read<MainCubit>().changePageIndexTo(3);
             Navigator.pop(context);
           }
@@ -67,7 +71,8 @@ class _CommentWidgetState extends State<CommentWidget> {
                     height: 4,
                   ),
                   Text(
-                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount} Likes',
+                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount}' +
+                        'Likes' , //TODO
                     style: AppFonts.font14w400
                         .copyWith(color: const Color(0xFF717477)),
                   )
@@ -80,7 +85,8 @@ class _CommentWidgetState extends State<CommentWidget> {
             InkWell(
               onTap: () =>
                   context.read<PostCommentsCubit>().likeComment(widget.comment),
-              child: SvgPicture.asset(Assets.icons(widget.comment.liked ? 'red_heart.svg': 'heart.svg')),
+              child: SvgPicture.asset(Assets.icons(
+                  widget.comment.liked ? 'red_heart.svg' : 'heart.svg')),
             )
           ],
         ),

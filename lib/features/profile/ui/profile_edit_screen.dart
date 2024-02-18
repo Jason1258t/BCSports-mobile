@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -46,6 +47,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final sizeOf = MediaQuery.sizeOf(context);
     final repository = RepositoryProvider.of<ProfileRepository>(context);
 
+    final localize = AppLocalizations.of(context)!;
+
     return CustomScaffold(
         resize: true,
         color: AppColors.black,
@@ -61,7 +64,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Navigator.pop(context);
               }),
               Text(
-                'Edit Profile',
+                localize.edit_profile,
                 style: AppFonts.font18w600,
               ),
               const SizedBox(
@@ -154,19 +157,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   children: [
                     CustomTextFormField(
                       controller: nameController,
-                      labelText: 'Name',
+                      labelText: localize.name,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     CustomTextFormField(
                       controller: userNameController,
-                      labelText: 'Username',
+                      labelText: localize.username,
                     ),
                   ],
                 ),
                 CustomTextButton(
-                    text: 'Save',
+                    text: localize.save,
                     onTap: () {
                       BlocProvider.of<EditUserCubit>(context).editProfile(
                           nameController.text, userNameController.text, image);

@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -17,6 +18,8 @@ class FavouritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final repository = RepositoryProvider.of<FavouritePostsRepository>(context);
+
+    final localize = AppLocalizations.of(context)!;
 
     return CustomScaffold(
       padding: EdgeInsets.zero,
@@ -47,7 +50,7 @@ class FavouritesScreen extends StatelessWidget {
                     else if(snapshot.data == LoadingStateEnum.success && repository.posts.isEmpty){
                       return SliverToBoxAdapter(
                         child: Center(
-                          child: Text('You haven\'t favorites', style: AppFonts.font18w400,),
+                          child: Text('You haven\'t favorites', style: AppFonts.font18w400,), //TODO
                         ),
                       );
                     }

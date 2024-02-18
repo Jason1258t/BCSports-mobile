@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/settings_button.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -26,6 +27,8 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   Widget build(BuildContext context) {
     final sizeOf = MediaQuery.sizeOf(context);
 
+    final localize = AppLocalizations.of(context)!;
+
     return CustomScaffold(
       color: AppColors.black,
       appBar: AppBar(
@@ -39,7 +42,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               Navigator.pop(context);
             }),
             Text(
-              'Settings',
+              localize.settings,
               style: AppFonts.font18w600,
             ),
             const SizedBox(
@@ -94,7 +97,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     onTap: () {
                       Navigator.pushNamed(context, AppRouteNames.profileEdit);
                     },
-                    name: 'Edit profile',
+                    name: localize.edit_profile,
                     width: double.infinity,
                     height: sizeOf.width * 0.16),
                 const SizedBox(
@@ -104,7 +107,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     onTap: () {
                       Navigator.pushNamed(context, AppRouteNames.recovery);
                     },
-                    name: 'Change Password',
+                    name: localize.change_password,
                     width: double.infinity,
                     height: sizeOf.width * 0.16),
                 const SizedBox(
@@ -115,7 +118,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       Navigator.pushNamed(
                           context, AppRouteNames.profileLanguage);
                     },
-                    name: 'Change Language',
+                    name: localize.change_lang,
                     width: double.infinity,
                     height: sizeOf.width * 0.16),
                 const SizedBox(
@@ -135,7 +138,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 5, left: 10),
                         child: Text(
-                          'Log out',
+                          localize.log_out,
                           style: AppFonts.font16w400
                               .copyWith(color: AppColors.primary),
                         ),

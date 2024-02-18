@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/wallet/ui/widgets/wallet_action_widget.dart';
 import 'package:bcsports_mobile/features/wallet/ui/widgets/wallet_token.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -23,6 +24,8 @@ class _WalletScreenState extends State<WalletScreen> {
     final sizeOf = MediaQuery.sizeOf(context);
     final repository = RepositoryProvider.of<ProfileRepository>(context);
 
+    final localize = AppLocalizations.of(context)!;
+
     return Container(
       color: AppColors.black_3A3A3A,
       child: SafeArea(
@@ -35,7 +38,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 CustomSliverAppBar(
                   height: 90,
                   isBack: true,
-                  title: 'Wallet',
+                  title: 'Wallet', //TODO
                   isSetting: true,
                   color: AppColors.black_3A3A3A,
                 ),

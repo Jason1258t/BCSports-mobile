@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class _ImagePostBodyState extends State<ImagePostBody> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +84,7 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                       });
                     },
                     child: Text(
-                      !showMore ? 'more' : 'hide',
+                      !showMore ? 'more' : 'hide', //TODO
                       style: AppFonts.font12w300
                           .copyWith(color: const Color(0xFF717477)),
                     ),

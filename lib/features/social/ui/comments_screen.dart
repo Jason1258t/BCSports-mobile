@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/comment_widget.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -21,6 +22,9 @@ class CommentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<PostCommentsCubit>(context);
+
+    final localize = AppLocalizations.of(context)!;
+
     return CustomScaffold(
       padding: EdgeInsets.zero,
       resize: true,
@@ -35,7 +39,7 @@ class CommentsScreen extends StatelessWidget {
                 Navigator.pop(context);
               }),
               Text(
-                'Post',
+                'Post', // Todo
                 style: AppFonts.font18w500,
               ),
               const SizedBox(
@@ -75,7 +79,7 @@ class CommentsScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: Center(
                           child: Text(
-                            'COMMENTS (${bloc.comments.length})',
+                            'COMMENTS ' + '(${bloc.comments.length})', //TODO
                             style: AppFonts.font12w400,
                           ),
                         ),
@@ -137,7 +141,7 @@ class CommentsScreen extends StatelessWidget {
                           counterText: "",
                           isDense: true,
                           hintStyle: AppFonts.font14w400,
-                          hintText: 'Type your comment here...',
+                          hintText: 'Type your comment here...',//TODO
                           border: InputBorder.none),
                     ),
                   ),

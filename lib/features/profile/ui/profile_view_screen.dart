@@ -3,6 +3,7 @@ import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
@@ -33,6 +34,8 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
       ),
     );
 
+    final localize = AppLocalizations.of(context)!;
+
     return BlocBuilder<ProfileViewCubit, ProfileViewState>(
       builder: (context, state) {
         if (state is ViewProfileSuccessState) {
@@ -51,7 +54,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                       Navigator.pop(context);
                     }),
                     Text(
-                      'Profile',
+                      localize.profile,
                       style: AppFonts.font18w600,
                     ),
                     const SizedBox(
@@ -147,7 +150,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                         activeTap: repository.activeTab,
                         width: sizeof.width * 0.4,
                         enumTap: ProfileTabsEnum.posts,
-                        text: 'Posts',
+                        text: localize.posts,
                         onTap: () {
                           repository.setProfileActiveTab(ProfileTabsEnum.posts);
                           setState(() {});
@@ -180,7 +183,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
       return SliverToBoxAdapter(
           child: Center(
               child: Text(
-        'This user does not have NFTs',
+        'This user does not have NFTs', // TODO
         style: AppFonts.font20w600,
       )));
     }
@@ -217,7 +220,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              'This user does not have Posts',
+              'This user does not have Posts', // TODO
               style: AppFonts.font20w600,
             )));
           } else {

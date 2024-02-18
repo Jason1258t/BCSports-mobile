@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.da
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
@@ -45,6 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
 
+    final localize = AppLocalizations.of(context)!;
+
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state is UserSuccessState) {
@@ -59,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   alignment: Alignment.center,
                   children: [
                     Text(
-                      'Profile',
+                      localize.profile,
                       style: AppFonts.font18w600,
                     ),
                     Row(
@@ -185,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           activeTap: repository.activeTab,
                           width: sizeof.width * 0.4,
                           enumTap: ProfileTabsEnum.posts,
-                          text: 'Posts',
+                          text: localize.posts,
                           onTap: () {
                             repository.setProfileActiveTab(ProfileTabsEnum.posts);
                             setState(() {});
@@ -249,7 +252,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return SliverToBoxAdapter(
             child: Center(
                 child: Text(
-          'Sorry, you don\'t have NFTs.',
+          'Sorry, you don\'t have NFTs.', // TODO
           style: AppFonts.font18w400,
         )));
       },
@@ -275,7 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              'Sorry, you don\'t have Posts.',
+              'Sorry, you don\'t have Posts.', // TODO
               style: AppFonts.font18w400,
             )));
           } else {

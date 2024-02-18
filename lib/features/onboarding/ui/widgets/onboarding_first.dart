@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,13 @@ class OnboardingFirstWidget extends StatelessWidget {
     super.key,
   });
 
-  static const String mainTitle = "Эксклюзивные цифровые колленкции";
+  static const String mainTitle = "Эксклюзивные цифровые колленкции"; //TODO
   static const String description =
       "Первые NFT, которые зависят не от рынка, а от упехов футболистов.";
-  static const String exploreMore = 'Explore more';
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
     return Stack(
       children: [
         Positioned(

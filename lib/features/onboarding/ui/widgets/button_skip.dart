@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -12,21 +13,21 @@ class ButtonSkip extends StatefulWidget {
 }
 
 class _ButtonSkipState extends State<ButtonSkip> {
-  final String skip = "Skip";
-
   void onTap() {
     context.read<OnboardingCubit>().skipAllPages();
   }
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         InkWell(
           onTap: onTap,
           child: Text(
-            skip,
+            localize.skip,
             style: AppFonts.font16w600.copyWith(color: AppColors.white),
           ),
         )

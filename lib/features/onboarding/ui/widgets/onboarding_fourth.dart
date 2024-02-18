@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,14 @@ class OnboardingFourthWidget extends StatelessWidget {
     super.key,
   });
 
-  static const String mainTitle = "The most trusted way";
-  static const String skip = "Skip";
+  static const String mainTitle = "The most trusted way"; //TODO
   static const String description =
       "Fincher is best and most popular website for selling and your arts and collections in a very easy and hustle free  process.";
-  static const String exploreMore = 'Get Started';
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return Stack(
       children: [
         Positioned(

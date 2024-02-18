@@ -7,11 +7,10 @@ class OnboardingSecondWidget extends StatelessWidget {
     super.key,
   });
 
-  static const String mainTitle = "Unlock the future";
-  static const String skip = "Skip";
+  static const String mainTitle = "Unlock the future"; //TODO
   static const String description =
       "Fincher is a over expanding network of many interlinked applications and services for building an ecosystem of decenteralized future.";
-  static const String exploreMore = 'Explore more';
+
 
   @override
   Widget build(BuildContext context) {

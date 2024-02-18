@@ -35,7 +35,7 @@ class PostActionsBottomSheet extends StatelessWidget {
             height: 16,
           ),
           CustomTextButton(
-            text: 'Delete',
+            text: 'Delete', //TODO
             onTap: () {
               context.read<DeletePostCubit>().deletePost(post.postId);
               Navigator.pop(context);

@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_first.
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_fourth.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_second.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_third.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,6 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  Map<int, String> exploreMoreData = {
-    0: "Explore more",
-    1: "Next",
-    2: "Next",
-    3: "Start"
-  };
   final PageController _pageController = PageController();
 
   late OnboardingCubit bloc;
@@ -62,6 +57,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
+    Map<int, String> exploreMoreData = {
+      0: localize.explore_more,
+      1: localize.next,
+      2: localize.next,
+      3: "Start" //TODO
+    };
+
     return BlocConsumer<OnboardingCubit, OnboardingState>(
       listener: (context, state) {
         animateToPage();
@@ -116,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 right: 23,
                 left: 23,
                 child: CustomTextButton(
-                    text: exploreMoreData[bloc.currentPageIndex] ?? "Next",
+                    text: exploreMoreData[bloc.currentPageIndex] ?? localize.next,
                     onTap: nextPage,
                     isActive: true),
               )
