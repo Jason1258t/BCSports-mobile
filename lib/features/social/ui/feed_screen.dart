@@ -75,20 +75,17 @@ class FeedScreen extends StatelessWidget {
                 onRefresh: () async {
                   repository.refreshPosts();
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                        (context, index) => FeedPostWidget(
-                          postId: repository.posts[index].postModel.id,
-                          source: repository,
-                        ),
-                        childCount: repository.posts.length,
-                      ))
-                    ],
-                  ),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      (context, index) => FeedPostWidget(
+                        postId: repository.posts[index].postModel.id,
+                        source: repository,
+                      ),
+                      childCount: repository.posts.length,
+                    ))
+                  ],
                 ),
               );
             } else if (state is HomeSocialSuccessState &&
