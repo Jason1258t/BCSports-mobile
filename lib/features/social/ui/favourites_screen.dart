@@ -38,7 +38,6 @@ class FavouritesScreen extends StatelessWidget {
                       return SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
-                          userId: repository.posts[index].user.id,
                           postId: repository.posts[index].postModel.id,
                           source: repository,
                         ),

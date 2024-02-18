@@ -48,65 +48,60 @@ class CommentsScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: BlocConsumer<PostCommentsCubit, PostCommentsState>(
-                listener: (context, state) {
-                  if (state is CreatingComment) {
-                    Dialogs.showModal(
-                        context,
-                        Center(
-                          child: AppAnimations.circleIndicator,
-                        ));
-                  } else {
-                    Dialogs.hide(context);
-                  }
-                },
-                builder: (context, state) {
-                  return CustomScrollView(
-                    slivers: [
+            child: BlocConsumer<PostCommentsCubit, PostCommentsState>(
+              listener: (context, state) {
+                if (state is CreatingComment) {
+                  Dialogs.showModal(
+                      context,
+                      Center(
+                        child: AppAnimations.circleIndicator,
+                      ));
+                } else {
+                  Dialogs.hide(context);
+                }
+              },
+              builder: (context, state) {
+                return CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: FeedPostWidget(
+                        postId: bloc.post!.postModel.id,
+                        source: bloc.source!,
+                        commentsActive: false,
+                      ),
+                    ),
+                    if (state is PostCommentsSuccessState ||
+                        state is CommentCreateSuccess) ...[
                       SliverToBoxAdapter(
-                        child: FeedPostWidget(
-                          userId: bloc.post!.user.id,
-                          postId: bloc.post!.postModel.id,
-                          source: bloc.source!,
-                          commentsActive: false,
+                        child: Center(
+                          child: Text(
+                            'COMMENTS (${bloc.comments.length})',
+                            style: AppFonts.font12w400,
+                          ),
                         ),
                       ),
-                      if (state is PostCommentsSuccessState ||
-                          state is CommentCreateSuccess) ...[
-                        SliverToBoxAdapter(
-                          child: Center(
-                            child: Text(
-                              'COMMENTS (${bloc.comments.length})',
-                              style: AppFonts.font12w400,
-                            ),
-                          ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 16,
                         ),
-                        const SliverToBoxAdapter(
-                          child: SizedBox(
-                            height: 16,
-                          ),
+                      ),
+                      SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                        (context, index) => CommentWidget(bloc.comments[index]),
+                        childCount: bloc.comments.length,
+                      ))
+                    ] else if (!(state is PostCommentsSuccessState ||
+                            state is CommentCreateSuccess) &&
+                        state is! CreatingComment) ...[
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: AppAnimations.circleIndicator,
                         ),
-                        SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                          (context, index) =>
-                              CommentWidget(bloc.comments[index]),
-                          childCount: bloc.comments.length,
-                        ))
-                      ] else if (!(state is PostCommentsSuccessState ||
-                              state is CommentCreateSuccess) &&
-                          state is! CreatingComment) ...[
-                        SliverToBoxAdapter(
-                          child: Center(
-                            child: AppAnimations.circleIndicator,
-                          ),
-                        )
-                      ]
-                    ],
-                  );
-                },
-              ),
+                      )
+                    ]
+                  ],
+                );
+              },
             ),
           ),
           Container(
@@ -124,6 +119,7 @@ class CommentsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20)),
               padding: const EdgeInsets.all(4),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     width: 16,
@@ -132,12 +128,13 @@ class CommentsScreen extends StatelessWidget {
                     width: MediaQuery.sizeOf(context).width * 290 / 375,
                     child: TextField(
                       minLines: 1,
-                      maxLines: 4,
+                      maxLines: 6,
                       maxLength: 250,
                       controller: messageController,
                       style: AppFonts.font14w400,
                       decoration: InputDecoration(
-                          counter: Container(),
+                          counterStyle: const TextStyle(height: 0),
+                          counterText: "",
                           isDense: true,
                           hintStyle: AppFonts.font14w400,
                           hintText: 'Type your comment here...',

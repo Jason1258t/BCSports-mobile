@@ -4,26 +4,30 @@ import 'dart:ui';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
+import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/image_post_body.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post_actions_bottom_sheet.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/text_post_body.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/time_difference.dart';
-import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
-import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:bcsports_mobile/widgets/buttons/button.dart';
+import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_view/photo_view.dart';
 
 enum PostType { withImage, text }
 
@@ -33,13 +37,13 @@ class FeedPostWidget extends StatefulWidget {
     required this.postId,
     required this.source,
     this.commentsActive = true,
-    this.userId,
+    this.actionsAllowed = false,
   });
 
   final String postId;
   final PostSource source;
   final bool commentsActive;
-  final String? userId;
+  final bool actionsAllowed;
 
   @override
   State<FeedPostWidget> createState() => _FeedPostWidgetState();
@@ -54,11 +58,25 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
     super.initState();
   }
 
+  void subscribeChanges() async {
+    widget.source.likeChanges.stream.listen((event) async {
+      if (event.postId == widget.postId) {
+        needUpdate = true;
+        try {
+          setState(() {});
+        } catch (e) {
+          log('setState error');
+        }
+      }
+    });
+  }
+
   void onLikeTapped() async {
     final bloc = context.read<LikeCubit>();
     final post = widget.source.getCachedPost(widget.postId)!;
 
     bool like = post.postModel.like;
+
     bloc.changePostLiked(
         post.postModel.id, !post.postModel.like, widget.source);
     setState(() {});
@@ -71,17 +89,15 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
     setState(() {});
   }
 
-  void subscribeChanges() async {
-    widget.source.likeChanges.stream.listen((event) async {
-      if (event.postId == widget.postId) {
-        needUpdate = true;
-        try {
-          setState(() {});
-        } catch (e) {
-          log('setState error');
-        }
-      }
-    });
+  void viewCreator(String userId) {
+    final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
+
+    if (userId != profileRepository.user.id) {
+      context.read<ProfileViewRepository>().setUser(userId);
+      Navigator.pushNamed(context, AppRouteNames.profileView);
+    } else if (userId == profileRepository.user.id) {
+      context.read<MainCubit>().changePageIndexTo(3);
+    }
   }
 
   @override
@@ -98,45 +114,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SizedBox(
-            height: 32,
-            child: InkWell(
-              onTap: () {
-                if (widget.userId != profileRepository.user.id &&
-                    widget.userId != null) {
-                  context.read<ProfileViewRepository>().setUser(widget.userId!);
-                  Navigator.pushNamed(context, AppRouteNames.profileView);
-                } else if (widget.userId == profileRepository.user.id) {
-                  context.read<MainCubit>().changePageIndexTo(3);
-                }
-              },
-              child: Row(
-                children: [
-                  SmallAvatarWidget(user: post.user),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          child: Text(
-                        post.user.displayName ?? post.user.username,
-                        style: AppFonts.font14w400
-                            .copyWith(color: AppColors.white_F4F4F4),
-                      )),
-                      Text(
-                        DateTimeDifferenceConverter.diffToString(
-                            post.postModel.createdAt),
-                        style: AppFonts.font12w400
-                            .copyWith(color: const Color(0xFF717477)),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
+          child: buildPostHeader(post),
         ),
         const SizedBox(
           height: 16,
@@ -213,5 +191,91 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         ),
       ],
     );
+  }
+
+  Widget buildPostHeader(PostViewModel post) {
+    return SizedBox(
+      height: 32,
+      child: InkWell(
+        onTap: () => viewCreator(post.user.id),
+        child: Row(
+          children: [
+            SmallAvatarWidget(user: post.user),
+            const SizedBox(
+              width: 8,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    child: Text(
+                  post.authorName,
+                  style: AppFonts.font14w400
+                      .copyWith(color: AppColors.white_F4F4F4),
+                )),
+                Text(
+                  DateTimeDifferenceConverter.diffToString(
+                      post.postModel.createdAt),
+                  style: AppFonts.font12w400
+                      .copyWith(color: const Color(0xFF717477)),
+                )
+              ],
+            ),
+            const Spacer(),
+            if (widget.actionsAllowed) ...[
+              BlocListener<DeletePostCubit, DeletePostState>(
+                listener: (context, state) =>
+                    deleteListener(context, state, post),
+                child: InkWell(
+                    onTap: () => showPostActions(post),
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: SvgPicture.asset(
+                        Assets.icons('three-dots-horizontal.svg'),
+                        width: 20,
+                        height: 20,
+                      ),
+                    )),
+              )
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+
+  void deleteListener(
+      BuildContext context, DeletePostState state, PostViewModel post) {
+    if (state is DeleteProcessState && state.postId == post.postId) {
+      Dialogs.showModal(
+          context,
+          Center(
+            child: AppAnimations.circleIndicator,
+          ));
+    } else {
+      Dialogs.hide(context);
+    }
+
+    if (state is DeleteSuccessState && state.postId == post.postId) {
+      context.read<ProfileRepository>().getUserPosts();
+    }
+    if (state is DeleteFailState && state.postId == post.postId) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(AppSnackBars.snackBar('Delete fail, try again later'));
+    }
+  }
+
+  void showPostActions(PostViewModel post) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
+        builder: (_) => PostActionsBottomSheet(post: post));
   }
 }

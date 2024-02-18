@@ -26,11 +26,9 @@ class _CommentWidgetState extends State<CommentWidget> {
   Widget build(BuildContext context) {
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: InkWell(
         onTap: (){
-          print(widget.comment.user.id);
-          print(profileRepository.user.id);
           if(widget.comment.user.id != profileRepository.user.id){
             context.read<ProfileViewRepository>().setUser(widget.comment.user.id);
             Navigator.pushNamed(context, AppRouteNames.profileView);

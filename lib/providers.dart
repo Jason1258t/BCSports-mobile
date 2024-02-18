@@ -21,6 +21,7 @@ import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.da
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
@@ -129,6 +130,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
+        BlocProvider(create: (context) => DeletePostCubit(profileRepository)),
       ],
       child: const MyApp(),
     );

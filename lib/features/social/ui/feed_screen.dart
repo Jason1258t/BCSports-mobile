@@ -71,7 +71,6 @@ class FeedScreen extends StatelessWidget {
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
                         (context, index) => FeedPostWidget(
-                          userId: repository.posts[index].user.id,
                           postId: repository.posts[index].postModel.id,
                           source: repository,
                         ),

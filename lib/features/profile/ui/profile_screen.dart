@@ -265,8 +265,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return SliverList(
                 delegate: SliverChildBuilderDelegate(
               (context, index) => FeedPostWidget(
-                postId: repository.posts[index].postModel.id,
+                postId: repository.posts[index].postId,
                 source: repository,
+                actionsAllowed: true,
               ),
               childCount: repository.posts.length,
             ));

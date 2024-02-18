@@ -77,6 +77,10 @@ class ProfileRepository extends PostSource {
     commentLikes.addAll(((res.data() as Map)['commentLikes'] ?? []) as List);
   }
 
+  Future<void> deletePost(String postId) async {
+    await _postsCollection.doc(postId).delete();
+  }
+
   void getUserPosts() async {
     userPostsState.add(LoadingStateEnum.loading);
     posts.clear();

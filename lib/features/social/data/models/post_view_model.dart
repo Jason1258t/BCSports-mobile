@@ -5,5 +5,11 @@ class PostViewModel {
   final PostModel postModel;
   final UserModel user;
 
+  String? get imageUrl => postModel.imageUrl;
+  String? get compressedImageUrl => postModel.compressedImageUrl;
+
+  String get authorName => user.displayName ?? user.username;
+  String get postId => postModel.id;
+
   PostViewModel(this.user, this.postModel);
 }
