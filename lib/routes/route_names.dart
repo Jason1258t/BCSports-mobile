@@ -15,6 +15,7 @@ abstract class AppRouteNames {
   static const String marketLots = '/market/lots';
 
   static const String login = '/login';
+  static const String createName = '/create_name';
   static const String registration = '/register';
   static const String wallet = '/wallet';
   static const String recovery = '/recovery';

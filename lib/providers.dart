@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/app.dart';
 import 'package:bcsports_mobile/features/auth/bloc/app/app_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/bloc/reset_password/reset_password_cubit.dart';
+import 'package:bcsports_mobile/features/auth/bloc/set_name/create_display_name_cubit.dart';
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
@@ -139,6 +140,7 @@ class MyBlocProviders extends StatelessWidget {
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
         BlocProvider(create: (context) => DeletePostCubit(profileRepository)),
+        BlocProvider(create: (context) => CreateDisplayNameCubit(profileRepository)),
         BlocProvider(
             create: (context) => LocalizationCubit(localizationService))
       ],

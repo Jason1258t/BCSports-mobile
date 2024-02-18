@@ -104,6 +104,14 @@ class ProfileRepository extends PostSource {
     }
   }
 
+  Future saveDisplayName(String name) async {
+    await _users
+        .doc(user.id)
+        .set({'displayName': name}, SetOptions(merge: true));
+
+    setUser(user.id);
+  }
+
   Future<void> editUser(
       String username, String displayName, String? avatar) async {
     try {
@@ -250,7 +258,6 @@ class ProfileRepository extends PostSource {
     userNftStream.add(LoadingStateEnum.success);
     log("Loaded user nft list: $userNftList");
   }
-
 
   void setProfileActiveTab(ProfileTabsEnum tab) {
     activeTab = tab;

@@ -14,6 +14,7 @@ class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       title: title,

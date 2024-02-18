@@ -28,10 +28,14 @@ class FeedScreen extends StatelessWidget {
         padding: EdgeInsets.zero,
         appBar: EmptyAppBar(
           title: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Image.asset(
+                  Assets.images('logo.png'),
+                  height: 28,
+                ),
+                const Spacer(),
                 InkWell(
                   onTap: () {
                     BlocProvider.of<LikeCubit>(context).getFavourites();
@@ -43,10 +47,14 @@ class FeedScreen extends StatelessWidget {
                     height: 24,
                   ),
                 ),
+                const SizedBox(
+                  width: 16,
+                ),
                 InkWell(
-                  onTap: () async{
-                    await context.read<UserSearchCubit>().init();
-                    Navigator.pushNamed(context, AppRouteNames.chatContacts);
+                  onTap: () {
+                    context.read<UserSearchCubit>().init().then((value) =>
+                        Navigator.pushNamed(
+                            context, AppRouteNames.chatContacts));
                   },
                   child: SvgPicture.asset(
                     Assets.icons('message.svg'),
@@ -83,13 +91,15 @@ class FeedScreen extends StatelessWidget {
                   ),
                 ),
               );
-            }
-            else if (state is HomeSocialSuccessState && repository.posts.isEmpty){
+            } else if (state is HomeSocialSuccessState &&
+                repository.posts.isEmpty) {
               return Center(
-                child: Text('There is no post yet',style: AppFonts.font36w800,), //TODO
+                child: Text(
+                  'There is no post yet',
+                  style: AppFonts.font36w800,
+                ), //TODO
               );
-            }
-            else {
+            } else {
               return CustomScaffold(
                   body: Center(
                 child: AppAnimations.circleIndicator,
