@@ -49,7 +49,7 @@ class _ArScreenState extends State<ArScreen> {
                 assetIcon: 'people_with_rows.svg',
                 title: localize.player,
                 text:
-                    'Сделай селфи или видео с любимым спортсменом,  с помощью AR',
+                    localize.make_selfie,
                 backGroundImage: 'ar/ar_pepole.png',
                 onTap: () {
                   Navigator.pushNamed(context, AppRouteNames.arUserNft);
@@ -63,7 +63,7 @@ class _ArScreenState extends State<ArScreen> {
                 height: sizeOf.width * 0.456,
                 assetIcon: 'game-icons_soccer-ball.svg',
                 title: localize.academy,
-                text: 'AR визуализация Бразильской академии',
+                text: localize.ar_visual,
                 backGroundImage: 'ar/dybai.png',
               ),
               const SizedBox(
@@ -74,7 +74,7 @@ class _ArScreenState extends State<ArScreen> {
                 height: sizeOf.width * 0.456,
                 assetIcon: 'bxs_joystick.svg',
                 title: localize.mini_games,
-                text: 'Выбери, сыгрый, победи',
+                text: localize.choose_play,
                 backGroundImage: 'ar/footboll_field.png',
                 onTap: () {
                   Navigator.pushNamed(context, AppRouteNames.arMiniGames);

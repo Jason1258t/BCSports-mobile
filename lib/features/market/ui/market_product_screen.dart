@@ -97,7 +97,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                     floatingActionButton: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: CustomTextButton(
-                        text: "Buy",
+                        text: localize.buy,
                         onTap: onBuyTap,
                         isActive: true,
                         height: 52,

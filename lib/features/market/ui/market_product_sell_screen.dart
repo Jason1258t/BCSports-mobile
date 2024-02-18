@@ -66,7 +66,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: CustomTextButton(
                         height: 52,
-                        text: "Sell",
+                        text: localize.sell,
                         onTap: onBuyTap,
                         isActive: true),
                   ),

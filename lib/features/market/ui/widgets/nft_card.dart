@@ -130,7 +130,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Country",
+                                localize.country,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppFonts.font9w300
                                     .copyWith(color: AppColors.white),
@@ -161,7 +161,7 @@ class MarketNftCardState extends State<MarketNftCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Born",
+                                localize.born,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppFonts.font9w300
                                     .copyWith(color: AppColors.white),

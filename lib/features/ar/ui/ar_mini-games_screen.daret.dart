@@ -46,7 +46,7 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                       height: sizeOf.width * 0.456,
                       assetIcon: 'bxs_joystick.svg',
                       title: localize.mini_games,
-                      text: 'Выбери, сыгрый, победи',
+                      text: localize.choose_play,
                       backGroundImage: 'ar/footboll_field.png',
                     ),
                     Container(

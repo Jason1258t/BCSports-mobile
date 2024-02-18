@@ -68,7 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       child: CustomScaffold(
           body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             const Padding(
@@ -84,8 +84,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                     validator: Validator.emailValidator,
                     controller: emailController,
-                    labelText: 'Email address',
-                    hintText: 'Email',
+                    labelText: localize.email_address,
+                    hintText: localize.email,
                     keyboardType: TextInputType.emailAddress,
                     prefixIcon: Container(
                       padding: const EdgeInsets.only(right: 5),
@@ -161,7 +161,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 55,
                   ),
                   CustomTextButton(
-                    text: 'Sign up',// TODO
+                    text: localize.sign_up,// TODO
                     onTap: () {
                       context.read<AuthCubit>().signUpWithEmailAndPassword(
                           email: emailController.text.trim(),
@@ -204,7 +204,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                        text: 'Already have an account? ', // TODO
+                        text: localize.already_have_acc, // TODO
                         style: AppFonts.font12w400),
                     TextSpan(
                         text: 'Sign in',// TODO

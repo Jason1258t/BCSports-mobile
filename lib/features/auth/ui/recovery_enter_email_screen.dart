@@ -81,7 +81,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 height: 40,
               ),
               Text(
-                'Forgot your password?',
+                localize.forgot_your_password,
                 style: AppFonts.font23w500,
               ),
               const SizedBox(
@@ -106,7 +106,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                   },
                   controller: emailController,
                   validator: Validator.emailValidator,
-                  hintText: 'Email',
+                  hintText: localize.email,
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: Container(
                     padding: const EdgeInsets.only(right: 5),

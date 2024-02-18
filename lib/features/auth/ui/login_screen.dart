@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: CustomScaffold(
           canPop: false,
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 const Padding(
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text.rich(TextSpan(
-                              text: 'forgot password?',
+                              text: localize.forgot_password,
                               style: AppFonts.font12w400,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 55,
                       ),
                       CustomTextButton(
-                        text: 'Sign in',
+                        text: localize.sign_in,
                         onTap: () {
                           context.read<AuthCubit>().signInWithEmailAndPassword(
                               email: emailController.text.trim(),
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'Don’t have an account?  ', // TODO
+                            text: "${localize.no_acc} ", // TODO
                             style: AppFonts.font12w400),
                         TextSpan(
                             text: 'Sign up', //TODO
