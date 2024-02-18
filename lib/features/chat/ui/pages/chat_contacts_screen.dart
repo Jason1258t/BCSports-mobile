@@ -4,6 +4,7 @@ import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart
 import 'package:bcsports_mobile/features/chat/ui/widgets/chat_preview.dart';
 import 'package:bcsports_mobile/features/chat/ui/widgets/small_user_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -24,8 +25,6 @@ class ChatContactsScreen extends StatefulWidget {
 class _ChatContactsScreenState extends State<ChatContactsScreen> {
   final TextEditingController searchController = TextEditingController();
 
-  final String title = "Messages";
-
   bool isOpenSearch = false;
 
   @override
@@ -34,6 +33,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
         context.read<ProfileRepository>();
 
     final ChatRepository chatRepository = context.read<ChatRepository>();
+
+    final localize = AppLocalizations.of(context)!;
 
     return CustomScaffold(
       onTap: () {
@@ -55,7 +56,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
             ),
             Center(
               child: Text(
-                title,
+                localize.messages,
                 style: AppFonts.font18w500.copyWith(
                   color: AppColors.white,
                 ),
@@ -134,9 +135,6 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
             if (state is UserSearchSuccessState &&
                 repository.filteredUserList.isNotEmpty) {
               return Column(children: generateFoundUsers());
-            } else if (state is UserSearchSuccessState &&
-                repository.filteredUserList.isEmpty) {
-              return const Text('Тo result');
             } else {
               return Center(
                 child: AppAnimations.circleIndicator,
