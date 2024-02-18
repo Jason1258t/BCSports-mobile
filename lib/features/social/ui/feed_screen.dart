@@ -86,7 +86,7 @@ class FeedScreen extends StatelessWidget {
             }
             else if (state is HomeSocialSuccessState && repository.posts.isEmpty){
               return Center(
-                child: Text('There is no post yet',style: AppFonts.font36w800,), //TODO
+                child: Text(localize.no_post,style: AppFonts.font36w800,), 
               );
             }
             else {

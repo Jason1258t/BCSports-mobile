@@ -249,6 +249,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
 
   void deleteListener(
       BuildContext context, DeletePostState state, PostViewModel post) {
+    final localize = AppLocalizations.of(context)!;
+
     if (state is DeleteProcessState && state.postId == post.postId) {
       Dialogs.showModal(
           context,
@@ -263,8 +265,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
       context.read<ProfileRepository>().getUserPosts();
     }
     if (state is DeleteFailState && state.postId == post.postId) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(AppSnackBars.snackBar('Delete fail, try again later'));//TODO
+      ScaffoldMessenger.of(context).showSnackBar(
+          AppSnackBars.snackBar(localize.delete_fail)); 
     }
   }
 

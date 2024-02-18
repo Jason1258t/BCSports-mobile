@@ -38,7 +38,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 CustomSliverAppBar(
                   height: 90,
                   isBack: true,
-                  title: 'Wallet', //TODO
+                  title: localize.wallet, 
                   isSetting: true,
                   color: AppColors.black_3A3A3A,
                 ),

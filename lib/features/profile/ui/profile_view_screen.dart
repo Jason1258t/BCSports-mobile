@@ -21,8 +21,6 @@ class ProfileViewScreen extends StatefulWidget {
 }
 
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final sizeof = MediaQuery.sizeOf(context);
@@ -179,11 +177,13 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
   }
 
   Widget buildNftTab(ProfileViewRepository repository) {
+    final localize = AppLocalizations.of(context)!;
+
     if (repository.userNftList.isEmpty) {
       return SliverToBoxAdapter(
           child: Center(
               child: Text(
-        'This user does not have NFTs', // TODO
+        localize.you_dont_nfts,
         style: AppFonts.font20w600,
       )));
     }
@@ -206,6 +206,8 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
   }
 
   Widget buildPostsTab(ProfileViewRepository repository) {
+    final localize = AppLocalizations.of(context)!;
+
     return StreamBuilder(
         stream: repository.userPostsState.stream,
         builder: (context, snapshot) {
@@ -223,7 +225,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              'This user does not have Posts', // TODO
+              localize.you_dont_posts, 
               style: AppFonts.font20w600,
             )));
           } else {

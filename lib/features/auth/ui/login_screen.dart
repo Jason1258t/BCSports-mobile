@@ -181,10 +181,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: "${localize.no_acc} ", // TODO
+                            text: "${localize.no_acc} ", 
                             style: AppFonts.font12w400),
                         TextSpan(
-                            text: 'Sign up', //TODO
+                            text: localize.sign_up, 
                             style: AppFonts.font12w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

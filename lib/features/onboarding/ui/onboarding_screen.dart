@@ -63,7 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       0: localize.explore_more,
       1: localize.next,
       2: localize.next,
-      3: "Start" //TODO
+      3: localize.start 
     };
 
     return BlocConsumer<OnboardingCubit, OnboardingState>(

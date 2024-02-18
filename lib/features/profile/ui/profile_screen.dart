@@ -190,7 +190,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           enumTap: ProfileTabsEnum.posts,
                           text: localize.posts,
                           onTap: () {
-                            repository.setProfileActiveTab(ProfileTabsEnum.posts);
+                            repository
+                                .setProfileActiveTab(ProfileTabsEnum.posts);
                             setState(() {});
                           },
                         ),
@@ -218,6 +219,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildNftTab() {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocBuilder<UserNftCubit, UserNftState>(
       builder: (context, state) {
         if (state is UserNftLoading) {
@@ -255,7 +258,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return SliverToBoxAdapter(
             child: Center(
                 child: Text(
-          'Sorry, you don\'t have NFTs.', // TODO
+          localize.you_dont_nfts,
           style: AppFonts.font18w400,
         )));
       },
@@ -263,6 +266,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildPostsTab(ProfileRepository repository) {
+        final localize = AppLocalizations.of(context)!;
+
     return StreamBuilder(
         stream: repository.userPostsState.stream,
         builder: (context, snapshot) {
@@ -281,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              'Sorry, you don\'t have Posts.', // TODO
+              localize.you_dont_posts, 
               style: AppFonts.font18w400,
             )));
           } else {
