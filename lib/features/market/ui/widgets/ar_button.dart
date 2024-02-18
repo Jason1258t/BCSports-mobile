@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/gradients.dart';
@@ -5,12 +6,14 @@ import 'package:flutter/material.dart';
 
 class NftArButton extends StatelessWidget {
   final bool isActive;
-  String arButton = "Go to AR";
 
   NftArButton({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+    String arButton = localize.go_ar;
+
     return InkWell(
       onTap: () {},
       child: Ink(
@@ -24,8 +27,9 @@ class NftArButton extends StatelessWidget {
         child: Center(
           child: Text(
             arButton.toUpperCase(),
-            style: AppFonts.font36w800ItalicAS
-                .copyWith(color: isActive ? AppColors.black_s2new_1A1A1A : AppColors.white),
+            style: AppFonts.font36w800ItalicAS.copyWith(
+                color:
+                    isActive ? AppColors.black_s2new_1A1A1A : AppColors.white),
           ),
         ),
       ),

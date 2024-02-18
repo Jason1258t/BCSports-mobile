@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -9,6 +10,8 @@ class MarketDetailsAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return SliverAppBar(
         backgroundColor: AppColors.black,
         surfaceTintColor: Colors.transparent,
@@ -26,7 +29,7 @@ class MarketDetailsAppBar extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "Details",
+                localize.details,
                 style: AppFonts.font18w500.copyWith(
                   color: AppColors.white,
                 ),

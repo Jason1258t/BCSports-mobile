@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -15,10 +16,6 @@ class CanselLotPopup extends StatefulWidget {
 }
 
 class _CanselLotPopupState extends State<CanselLotPopup> {
-  final String message = "Are you sure you want to cancel the sale?";
-  final String message2 =
-      "The NFT will be removed from the marketplace and returned to your inventory.";
-
   void _onCansel() {
     Navigator.of(context).pop();
   }
@@ -29,6 +26,10 @@ class _CanselLotPopupState extends State<CanselLotPopup> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+    final String message = localize.cansel_sale;
+    final String message2 = localize.nft_will_removed;
+
     final size = MediaQuery.sizeOf(context);
 
     return BackdropFilter(

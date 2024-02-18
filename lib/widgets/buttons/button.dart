@@ -22,6 +22,7 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+        
         onPressed: isActive ? onTap : () {},
         style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
@@ -35,6 +36,7 @@ class CustomTextButton extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             text,
+            textAlign: TextAlign.center,
             style: AppFonts.font18w500
                 .copyWith(color: isActive ? Colors.black : Colors.white),
           ),

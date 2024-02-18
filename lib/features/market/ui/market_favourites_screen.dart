@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.d
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -18,8 +19,6 @@ class MarketFavouritesScreen extends StatefulWidget {
 }
 
 class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
-  String text = "Favourites";
-
   void onNftCardTap(MarketItemModel product) {
     Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': product});
   }
@@ -36,6 +35,9 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   }
 
   Widget buildMainInfoWidget() {
+    final localize = AppLocalizations.of(context)!;
+    String text = localize.favs;
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -105,6 +107,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   }
 
   Widget buildEmptyDataMessage() {
+    final localize = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: SizedBox(
         height: MediaQuery.sizeOf(context).height - 250,
@@ -121,7 +124,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
               height: 8,
             ),
             Text(
-              "Looks like you have no favourites cards",
+              localize.no_favs,
               overflow: TextOverflow.ellipsis,
               style: AppFonts.font16w300
                   .copyWith(color: AppColors.grey_B4B4B4, height: 1.2),

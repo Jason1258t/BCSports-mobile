@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -36,6 +37,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
     final ProfileRepository profileRepository =
         context.read<ProfileRepository>();
@@ -59,7 +61,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Buy",
+                  "Buy", // TODO
                   style: AppFonts.font24w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
@@ -89,24 +91,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                           ),
                         ],
                       ),
-                      // Material(
-                      //   color: AppColors.primary,
-                      //   borderRadius: BorderRadius.circular(1000),
-                      //   child: InkWell(
-                      //     borderRadius: BorderRadius.circular(1000),
-                      //     onTap: increaseBet,
-                      //     child: Container(
-                      //       alignment: Alignment.center,
-                      //       width: 39,
-                      //       height: 39,
-                      //       child: Text(
-                      //         "+",
-                      //         style: AppFonts.font24w500
-                      //             .copyWith(color: AppColors.black),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                     
                     ],
                   ),
                 ),
@@ -114,7 +99,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                   height: 15,
                 ),
                 Text(
-                  "Available balance",
+                  "Available balance", // TODO
                   style: AppFonts.font12w400.copyWith(color: AppColors.white),
                 ),
                 Text(
@@ -147,7 +132,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                       width: 10,
                     ),
                     Text(
-                      "I agree to the terms and conditions",
+                      localize.agree_terms,
                       style:
                           AppFonts.font10w500.copyWith(color: AppColors.white),
                     ),
@@ -159,7 +144,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                 CustomTextButton(
                     width: 170,
                     height: 49,
-                    text: "Place a Bid",
+                    text: "Place a Bid", // TODO
                     onTap: onBuyTap,
                     isActive: isActive())
               ],

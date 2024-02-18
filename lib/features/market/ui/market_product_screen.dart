@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.da
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -61,6 +62,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocConsumer<BuyNftCubit, BuyNftState>(
       listener: (context, state) {
         if (state is BuyNftSuccess || state is BuyNftFail) {
@@ -117,6 +120,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
     final nft = marketRepository.nftService.lastLoadedNft;
+        final localize = AppLocalizations.of(context)!;
+
 
     return CustomScrollView(
       slivers: [
@@ -184,12 +189,12 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                   children: [
                     PlayerAppStatsWidget(
                       value: 0,
-                      statsName: "Favorites",
+                      statsName: localize.favourite,
                       iconPath: 'assets/icons/like.svg',
                     ),
                     PlayerAppStatsWidget(
                       value: nft.views,
-                      statsName: "Views",
+                      statsName: localize.views,
                       iconPath: 'assets/icons/ar.svg',
                     ),
                   ],

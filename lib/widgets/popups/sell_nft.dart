@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -63,6 +64,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final localize = AppLocalizations.of(context)!;
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -83,7 +85,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Set a price",
+                  localize.set_price,
                   style: AppFonts.font24w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
@@ -107,7 +109,8 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+
                   children: [
                     FlutterSwitch(
                         width: 40,
@@ -126,10 +129,15 @@ class _SellNftPopupState extends State<SellNftPopup> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      "I agree to the terms and conditions",
-                      style:
-                          AppFonts.font10w500.copyWith(color: AppColors.white),
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: Text(
+                        localize.agree_terms,
+                        overflow: TextOverflow.ellipsis,
+                      
+                        style:
+                            AppFonts.font10w500.copyWith(color: AppColors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -139,7 +147,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 CustomTextButton(
                     width: 170,
                     height: 49,
-                    text: "Put up for sale",
+                    text: localize.put_up_for_sale,
                     onTap: onBuyNftTap,
                     isActive: isActive())
               ],

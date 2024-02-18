@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -17,8 +18,6 @@ class NftUserAr extends StatefulWidget {
 }
 
 class NftUserLotState extends State<NftUserAr> {
-  final bottomBtnText = "Choose this";
-
   void _onTap() {
     widget.onTap();
   }
@@ -29,6 +28,8 @@ class NftUserLotState extends State<NftUserAr> {
     final cardSize = (size.width - 18 * 2 - 17) / 2;
     final imgSize = cardSize - 8;
     final topMargin = imgSize * 0.17;
+    final localize = AppLocalizations.of(context)!;
+    final bottomBtnText = localize.choose_this;
 
     final nft = widget.nft;
 

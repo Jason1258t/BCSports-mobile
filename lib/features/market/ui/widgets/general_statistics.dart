@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/market/ui/widgets/player_details_article.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_details_line.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_match_stats.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -19,6 +20,8 @@ class GeneralStatistics extends StatefulWidget {
 class _GeneralStatisticsState extends State<GeneralStatistics> {
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+    
     return SliverToBoxAdapter(
       child: Container(
         decoration: BoxDecoration(
@@ -30,63 +33,63 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Description",
+              localize.description,
               style: AppFonts.font24w600.copyWith(color: AppColors.white),
             ),
             const SizedBox(
               height: 32,
             ),
-            const PlayerDetailsArticleWidget(
-              title: "About player",
+             PlayerDetailsArticleWidget(
+              title: localize.about,
             ),
             const SizedBox(
               height: 8,
             ),
             Text(
-              "Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.",
+              localize.fast_player_good_dribbling,
               style: AppFonts.font12w400.copyWith(color: AppColors.grey_B3B3B3),
             ),
             const SizedBox(
               height: 32,
             ),
-            const PlayerDetailsArticleWidget(
-              title: "Player detailis",
+             PlayerDetailsArticleWidget(
+              title: localize.player_details,
             ),
             const SizedBox(
               height: 20,
             ),
             PlayerDetailsLineWidget(
-              attr: "Name",
+              attr: localize.name,
               value: widget.nft.name,
             ),
             PlayerDetailsLineWidget(
-              attr: "Date of birth",
+              attr: localize.birth,
               value: DateFormat('dd.MM.yyyy')
                   .format(widget.nft.birthday)
                   .toString(),
             ),
             PlayerDetailsLineWidget(
-              attr: "Club name",
+              attr: localize.club_name,
               value: widget.nft.club,
             ),
             PlayerDetailsLineWidget(
-              attr: "Citizenship",
+              attr: localize.citizen,
               value: widget.nft.citizenship,
             ),
             PlayerDetailsLineWidget(
-              attr: "Height",
+              attr: localize.height,
               value: widget.nft.height.toString(),
             ),
             PlayerDetailsLineWidget(
-              attr: "Position",
+              attr: localize.position,
               value: widget.nft.position,
             ),
             PlayerDetailsLineWidget(
-              attr: "Weight",
+              attr: localize.weight,
               value: widget.nft.weight.toString(),
             ),
             PlayerDetailsLineWidget(
-              attr: "Foot",
+              attr: localize.foot,
               value: widget.nft.isRightFoot ? "Right foot" : "Left foot",
             ),
             const SizedBox(
@@ -98,49 +101,49 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
             const SizedBox(
               height: 8,
             ),
-            const Wrap(
+             Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.spaceEvenly,
               runSpacing: 8,
               spacing: 7,
               children: [
                 PlayerMatchStatsWidget(
-                  attr: 'Quantity of matches',
+                  attr: localize.quantity_matches,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Minutes played',
+                  attr: localize.minuts_played,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Goals',
+                  attr: localize.goals,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Assists',
+                  attr: localize.assists,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Penalties',
+                  attr: localize.assists,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Duel air',
+                  attr: localize.duel_air,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Dribbling suffered',
+                  attr: localize.dribbling_siffered,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Duel tackle',
+                  attr: localize.duel_tackle,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Ball recovery',
+                  attr: localize.ball_recovery,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Killer passes',
+                  attr: localize.killer_passes,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Duel lost',
+                  attr: localize.duel_lost,
                 ),
                 PlayerMatchStatsWidget(
-                  attr: 'Fouls',
+                  attr: localize.fouls,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
               ],

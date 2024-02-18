@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -24,6 +25,8 @@ class MarketNftCardState extends State<MarketNftCard> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     final size = MediaQuery.sizeOf(context);
     final cardSize = (size.width - 18 * 2 - 17) / 2;
     final imgSize = cardSize - 8;

@@ -1,6 +1,8 @@
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_user_ar.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/l10n/l10n.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -18,7 +20,6 @@ class ArPlayersScreen extends StatefulWidget {
 }
 
 class _MarketLotsScreenState extends State<ArPlayersScreen> {
-  String text = "My players";
   late final ProfileRepository profileRepository;
 
   @override
@@ -40,6 +41,10 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
   }
 
   Widget buildMainInfoWidget() {
+    final localize = AppLocalizations.of(context)!;
+
+    String text = localize.my_players;
+
     return BlocBuilder<UserNftCubit, UserNftState>(
       builder: (context, state) {
         if (state is UserNftLoading) {

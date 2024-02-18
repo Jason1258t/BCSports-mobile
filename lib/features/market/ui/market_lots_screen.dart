@@ -2,6 +2,7 @@ import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit
 import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_user_lot.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -20,7 +21,6 @@ class MarketLotsScreen extends StatefulWidget {
 }
 
 class _MarketLotsScreenState extends State<MarketLotsScreen> {
-  String text = "My active lots";
   late final MarketRepository marketRepository;
 
   @override
@@ -51,6 +51,9 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
   }
 
   Widget buildMainInfoWidget() {
+    final localize = AppLocalizations.of(context)!;
+    String text = localize.my_active_lots;
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -65,7 +68,9 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                 ButtonBack(
                   onTap: () => Navigator.pop(context),
                 ),
-                const SizedBox(width:16,),
+                const SizedBox(
+                  width: 16,
+                ),
                 Text(
                   text,
                   style: AppFonts.font18w600,
@@ -105,7 +110,7 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                               height: 8,
                             ),
                             Text(
-                              "Looks like you have no active lots",
+                              localize.no_lots,
                               overflow: TextOverflow.ellipsis,
                               style: AppFonts.font16w300.copyWith(
                                   color: AppColors.grey_B4B4B4, height: 1.2),

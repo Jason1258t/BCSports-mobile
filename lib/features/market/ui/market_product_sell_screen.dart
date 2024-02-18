@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -51,6 +52,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
     return Container(
       color: AppColors.black,
       child: SafeArea(
@@ -83,6 +85,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
 
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
+    final localize = AppLocalizations.of(context)!;
 
     return BlocListener<SellCubit, SellState>(
       listener: (context, state) {
@@ -128,41 +131,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                                 "assets/images/noname_det.png"),
                             image: NetworkImage(marketRepository
                                 .nftService.lastLoadedNft.imagePath)),
-                        // Positioned(
-                        //   top: 20,
-                        //   right: 20,
-                        //   child: BlocBuilder<FavouriteCubit, FavouriteState>(
-                        //     builder: (context, state) {
-                        //       final user =
-                        //           context.read<ProfileRepository>().user;
-                        //       final userNfts = user.favouritesNftList;
-                        //       final bool isLiked = userNfts.contains(
-                        //           marketRepository
-                        //               .nftService.lastLoadedNft.documentId);
-
-                        //       if (state is FavouriteLoading) {
-                        //         return Padding(
-                        //           padding: const EdgeInsets.all(10.0),
-                        //           child: AppAnimations.circleIndicator,
-                        //         );
-                        //       }
-
-                        //       return InkWell(
-                        //         onTap: () => onLikeTap(isLiked),
-                        //         borderRadius: BorderRadius.circular(10000),
-                        //         child: Container(
-                        //           alignment: Alignment.center,
-                        //           padding: const EdgeInsets.all(10),
-                        //           child: SvgPicture.asset(
-                        //             "assets/icons/${isLiked ? "filled_like" : 'like'}.svg",
-                        //             color: AppColors.primary,
-                        //             width: 20,
-                        //           ),
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                 
                       ],
                     ),
                   ),
@@ -174,12 +143,12 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                     children: [
                       PlayerAppStatsWidget(
                         value: 0,
-                        statsName: "Favorites",
+                        statsName: localize.favourite,
                         iconPath: 'assets/icons/like.svg',
                       ),
                       PlayerAppStatsWidget(
                         value: marketRepository.nftService.lastLoadedNft.views,
-                        statsName: "Views",
+                        statsName: localize.views,
                         iconPath: 'assets/icons/ar.svg',
                       ),
                     ],
