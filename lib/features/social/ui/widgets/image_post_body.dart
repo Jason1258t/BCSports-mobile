@@ -20,6 +20,12 @@ class ImagePostBody extends StatefulWidget {
 class _ImagePostBodyState extends State<ImagePostBody> {
   bool showMore = false;
 
+  int totalTextLength() {
+    if ((widget.post.postModel.text ?? '').isEmpty) return 0;
+
+    return '${widget.post.authorName} ${widget.post.postModel.text}'.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,10 +37,10 @@ class _ImagePostBodyState extends State<ImagePostBody> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      PhotoViewScreen(url: widget.post.postModel.imageUrl!))),
+                      PhotoViewScreen(url: widget.post.imageUrl!))),
           child: CustomNetworkImage(
-            url: widget.post.postModel.compressedImageUrl!,
-            child: CustomNetworkImage(url: widget.post.postModel.imageUrl!),
+            url: widget.post.compressedImageUrl!,
+            child: CustomNetworkImage(url: widget.post.imageUrl!),
           ),
         ),
         if ((widget.post.postModel.text ?? '').isNotEmpty) ...[
@@ -51,30 +57,34 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                   child: Text.rich(
                     TextSpan(children: [
                       TextSpan(
-                          text: widget.post.user.displayName ??
-                              widget.post.user.username,
+                          text: widget.post.authorName,
                           style: AppFonts.font12w600),
                       TextSpan(
-                          text:' ${widget.post.postModel.text}',
-                          style: AppFonts.font12w300.copyWith(color: const Color(0xFFEBEAEC), height: 1.2)),
+                          text: ' ${widget.post.postModel.text}',
+                          style: AppFonts.font12w300.copyWith(
+                              color: const Color(0xFFEBEAEC), height: 1.2)),
                     ]),
                     maxLines: showMore ? 10 : 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(width: 4,),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      showMore = !showMore;
-                    });
-                  },
-                  child: Text(
-                    !showMore ? 'more' : 'hide',
-                    style: AppFonts.font12w300
-                        .copyWith(color: const Color(0xFF717477)),
+                if (totalTextLength() > 60) ...[
+                  const SizedBox(
+                    width: 4,
                   ),
-                )
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showMore = !showMore;
+                      });
+                    },
+                    child: Text(
+                      !showMore ? 'more' : 'hide',
+                      style: AppFonts.font12w300
+                          .copyWith(color: const Color(0xFF717477)),
+                    ),
+                  )
+                ]
               ],
             ),
           )
