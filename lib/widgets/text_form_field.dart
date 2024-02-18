@@ -42,7 +42,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (labelText != null) ...[
           Text(
@@ -57,9 +57,10 @@ class CustomTextFormField extends StatelessWidget {
           decoration: BoxDecoration(
               color: backgroundColor ?? AppColors.black_s2new_1A1A1A,
               borderRadius:borderRadius ??  BorderRadius.circular(9)),
-          padding: padding ?? EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           alignment: Alignment.center,
           child: TextFormField(
+            textAlign: TextAlign.left,
             showCursor: showCursor,
             onTap: onTap,
             onChanged: onChange,
@@ -71,7 +72,7 @@ class CustomTextFormField extends StatelessWidget {
             style: AppFonts.font16w500,
             decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 10),
                   child: prefixIcon,
                 ),
                 errorStyle: const TextStyle(
