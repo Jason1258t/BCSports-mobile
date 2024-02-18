@@ -107,11 +107,15 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                 StreamBuilder<List<Room>>(
                     stream: context.read<ChatRepository>().roomsStream,
                     builder: (context, snapshot) {
-                      return Column(
-                        children: [
-                          if (snapshot.hasData) ...generateChats(snapshot)
-                        ],
-                      );
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: [
+                            if (snapshot.hasData) ...generateChats(snapshot)
+                          ],
+                        );
+                      }
+
+                      return Center(child: AppAnimations.circleIndicator,);
                     }),
                 buildSearch()
               ],
@@ -176,7 +180,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               child: SmallUserCard(
                 onTap: () async {
                   if (e.id != currentUserId) {
-                    Dialogs.show(context, Center(child: AppAnimations.circleIndicator));
+                    Dialogs.show(
+                        context, Center(child: AppAnimations.circleIndicator));
 
                     Room? room = await chatRepository.roomWithUserExists(e.id);
                     room ??= await chatRepository.createRoomWithUser(e);
