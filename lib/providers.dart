@@ -138,8 +138,6 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
-        BlocProvider(create: (context) => LocalizationCubit(localizationService), lazy: false,),
-        BlocProvider(create: (context) => DeletePostCubit(profileRepository)),
       ],
       child: const MyApp(),
     );
