@@ -72,7 +72,7 @@ class CustomTextFormField extends StatelessWidget {
             style: AppFonts.font16w500,
             decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 10),
                   child: prefixIcon,
                 ),
                 errorStyle: const TextStyle(

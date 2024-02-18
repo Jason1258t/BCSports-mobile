@@ -42,6 +42,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
           return CustomScaffold(
             padding: EdgeInsets.zero,
             appBar: AppBar(
+                surfaceTintColor: Colors.transparent,
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 title: Row(
@@ -225,7 +226,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              localize.you_dont_posts, 
+              localize.you_dont_posts,
               style: AppFonts.font20w600,
             )));
           } else {
