@@ -77,8 +77,8 @@ class MyBlocProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LocalizationService localizationService = LocalizationService(preferencesService);
-    
+    final LocalizationService localizationService =
+        LocalizationService(preferencesService);
 
     final authRepository = RepositoryProvider.of<AuthRepository>(context);
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
@@ -138,6 +138,8 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
+        BlocProvider(
+            create: (context) => LocalizationCubit(localizationService))
       ],
       child: const MyApp(),
     );
