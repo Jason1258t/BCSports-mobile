@@ -66,7 +66,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                   },
                 ),
                 Text(
-                  localize.forgot_paassword,
+                  localize.forgot_password,
                   style: AppFonts.font18w600,
                 ),
                 const SizedBox(
