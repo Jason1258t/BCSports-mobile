@@ -77,6 +77,11 @@ class FeedScreen extends StatelessWidget {
                 },
                 child: CustomScrollView(
                   slivers: [
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 18,
+                      ),
+                    ),
                     SliverList(
                         delegate: SliverChildBuilderDelegate(
                       (context, index) => FeedPostWidget(
@@ -91,7 +96,10 @@ class FeedScreen extends StatelessWidget {
             } else if (state is HomeSocialSuccessState &&
                 repository.posts.isEmpty) {
               return Center(
-                child: Text(localize.no_post,style: AppFonts.font36w800,), 
+                child: Text(
+                  localize.no_post,
+                  style: AppFonts.font36w800,
+                ),
               );
             } else {
               return CustomScaffold(
