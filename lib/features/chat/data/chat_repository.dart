@@ -11,7 +11,7 @@ class ChatRepository {
 
   List<Room> rooms = [];
 
-  final Stream<List<Room>> roomsStream = chatCore.rooms();
+  Stream<List<Room>> roomsStream = chatCore.rooms();
 
   List<UserModel> socialUserList = [];
 
@@ -35,6 +35,7 @@ class ChatRepository {
   void init(){
     FirebaseChatCore.instance
         .setConfig(const FirebaseChatCoreConfig(null, 'rooms', 'chat_users'));
+    roomsStream = chatCore.rooms();
     subscribeRoomsUpdates();
   }
 
