@@ -15,7 +15,7 @@ class PreferencesService {
     final pref = await _pref;
     final locale = pref.get(_localeKey);
     if (locale == null) {
-      return LocaleNames.ru;
+      return LocaleNames.en;
     }
   
     return locale as String;
