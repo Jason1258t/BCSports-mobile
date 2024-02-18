@@ -378,4 +378,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get you_dont_posts => 'Изините, у вас нет постов.';
+
+  @override
+  String get stats => 'Статистика';
 }

@@ -378,4 +378,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get you_dont_posts => 'Sorry, you don\'t have Posts.';
+
+  @override
+  String get stats => 'Statistic';
 }

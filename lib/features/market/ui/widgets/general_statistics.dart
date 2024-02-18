@@ -95,8 +95,8 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
             const SizedBox(
               height: 36,
             ),
-            const PlayerDetailsArticleWidget(
-              title: "Statistic",
+             PlayerDetailsArticleWidget(
+              title: localize.stats,
             ),
             const SizedBox(
               height: 8,

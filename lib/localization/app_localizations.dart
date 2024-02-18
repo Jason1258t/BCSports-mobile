@@ -842,6 +842,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sorry, you don\'t have Posts.'**
   String get you_dont_posts;
+
+  /// No description provided for @stats.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistic'**
+  String get stats;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
