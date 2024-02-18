@@ -86,7 +86,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get country => 'СТРАНА';
 
   @override
-  String get create => 'СОЗДАВАТЬ';
+  String get create => 'Создать';
 
   @override
   String get delete => 'Удалить';
@@ -104,7 +104,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get details => 'Подробности';
 
   @override
-  String get discard => 'Отказаться';
+  String get discard => 'Отмена';
 
   @override
   String get dribbling_siffered => 'Дриблинг';
@@ -176,13 +176,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get go_ar => 'Перейти в AR';
 
   @override
-  String get goals => 'Цели';
+  String get goals => 'Голы';
 
   @override
   String get height => 'Высота';
 
   @override
-  String get hide => 'Скрыть';
+  String get hide => 'скрыть';
 
   @override
   String get hit_the_max => 'Набей максимальное количество раз';
@@ -194,7 +194,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get language => 'Язык';
 
   @override
-  String get likes => 'Лайков';
+  String get likes => 'Лайки';
 
   @override
   String get log_out => 'Выйти';
@@ -350,7 +350,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get trust_way => 'Самый надежный способ';
 
   @override
-  String get type_comment => 'Напишите свой комментарий здесь...';
+  String get type_comment => 'Написать коммент..';
 
   @override
   String get unlock_feature => 'Разблокируй будущее';

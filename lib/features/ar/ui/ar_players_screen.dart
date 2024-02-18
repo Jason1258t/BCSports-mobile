@@ -64,18 +64,16 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
                     children: [
                       ButtonBack(
                         onTap: () => Navigator.pop(context),
-                      )
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        text,
+                        style: AppFonts.font18w600,
+                      ),
                     ],
                   )),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 23),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    text,
-                    style: AppFonts.font18w600,
-                  ),
-                ),
-              ),
               const SliverToBoxAdapter(
                 child: SizedBox(height: 16),
               ),
@@ -93,31 +91,7 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
                         List<NftModel> nftList = profileRepository.userNftList;
 
                         if (nftList.isEmpty) {
-                          return SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: MediaQuery.sizeOf(context).height - 250,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SvgPicture.asset("assets/icons/poop.svg"),
-                                  const SizedBox(
-                                    height: 13,
-                                  ),
-                                  SizedBox(
-                                      width: 181,
-                                      child: Text(
-                                        "Looks like you\nhave no NFT",
-                                        style: AppFonts.font20w400.copyWith(
-                                            color: AppColors.white,
-                                            height: 1.2),
-                                        textAlign: TextAlign.center,
-                                      ))
-                                ],
-                              ),
-                            ),
-                          );
+                          return buildEmptyDataMessage();
                         }
 
                         return SliverGrid(
@@ -145,6 +119,36 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
 
         return Container();
       },
+    );
+  }
+
+  Widget buildEmptyDataMessage() {
+    final localize = AppLocalizations.of(context)!;
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: MediaQuery.sizeOf(context).height - 250,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SvgPicture.asset(
+              "assets/icons/poop.svg",
+              color: AppColors.grey_B4B4B4,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              localize.you_dont_nfts,
+              overflow: TextOverflow.ellipsis,
+              style: AppFonts.font16w300
+                  .copyWith(color: AppColors.grey_B4B4B4, height: 1.2),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
