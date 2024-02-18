@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
+import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                   builder: (context) =>
                       PhotoViewScreen(url: widget.post.imageUrl!))),
           child: CustomNetworkImage(
+            color: AppColors.black_s2new_1A1A1A,
             url: widget.post.compressedImageUrl!,
             child: CustomNetworkImage(url: widget.post.imageUrl!),
           ),
