@@ -251,7 +251,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get no_acc => 'У вас нет учетной записи?';
 
   @override
-  String get no_favs => 'Похоже, у вас нет понравившиеся лотов';
+  String get no_favs => 'Похоже, у вас нет понравившихся';
 
   @override
   String get no_lots => 'Похоже, у вас нет активных лотов';
