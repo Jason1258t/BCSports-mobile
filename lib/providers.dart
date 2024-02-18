@@ -26,12 +26,17 @@ import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
+import 'package:bcsports_mobile/services/locale/localization/localization_cubit.dart';
+import 'package:bcsports_mobile/services/locale/localization/localization_service.dart';
+import 'package:bcsports_mobile/services/locale/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/social/bloc/home/home_social_cubit.dart';
 
 import 'features/profile/bloc/edit_user/edit_user_cubit.dart';
+
+PreferencesService preferencesService = PreferencesService();
 
 class MyRepositoryProviders extends StatelessWidget {
   const MyRepositoryProviders({Key? key}) : super(key: key);
@@ -71,6 +76,9 @@ class MyBlocProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LocalizationService localizationService = LocalizationService(preferencesService);
+    
+
     final authRepository = RepositoryProvider.of<AuthRepository>(context);
     final marketRepository = RepositoryProvider.of<MarketRepository>(context);
     final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
@@ -129,6 +137,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
+        BlocProvider(create: (context) => LocalizationCubit(localizationService), lazy: false,),
       ],
       child: const MyApp(),
     );
