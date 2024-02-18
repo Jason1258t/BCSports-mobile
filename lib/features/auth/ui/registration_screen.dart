@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -63,7 +64,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               .showSnackBar(AppSnackBars.snackBar(state.e.toString()));
         }
         if (state is AuthSuccessState) {
-          Navigator.pushReplacementNamed(context, '/onboarding');
+          Navigator.pushReplacementNamed(context, AppRouteNames.createName);
         }
       },
       child: CustomScaffold(

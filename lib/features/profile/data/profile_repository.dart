@@ -55,13 +55,18 @@ class ProfileRepository extends PostSource {
   UserModel get user => _userModel!;
 
   Future<void> setUser(String userId) async {
+    getUserData(userId);
+    getUserPosts();
+    getUserCommentLikes();
+  }
+
+  Future getUserData(String userId) async {
     profileState.add(LoadingStateEnum.loading);
+
     try {
       final res = await _users.doc(userId).get();
 
       _userModel = UserModel.fromJson(res.data() as Map<String, dynamic>);
-      getUserPosts();
-      getUserCommentLikes();
       profileState.add(LoadingStateEnum.success);
     } catch (e) {
       profileState.add(LoadingStateEnum.fail);
@@ -102,6 +107,14 @@ class ProfileRepository extends PostSource {
       userPostsState.add(LoadingStateEnum.fail);
       rethrow;
     }
+  }
+
+  Future saveDisplayName(String name) async {
+    await _users
+        .doc(user.id)
+        .set({'displayName': name}, SetOptions(merge: true));
+
+    getUserData(user.id);
   }
 
   Future<void> editUser(
@@ -250,7 +263,6 @@ class ProfileRepository extends PostSource {
     userNftStream.add(LoadingStateEnum.success);
     log("Loaded user nft list: $userNftList");
   }
-
 
   void setProfileActiveTab(ProfileTabsEnum tab) {
     activeTab = tab;
