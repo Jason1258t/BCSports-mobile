@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
-    
+
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInProcess) {
@@ -82,12 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: localize.email_address,
                         hintText: localize.email,
                         keyboardType: TextInputType.emailAddress,
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.only(right: 5),
-                          height: 20,
-                          child: SvgPicture.asset(
-                            Assets.icons('email.svg'),
-                          ),
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons('email.svg'),
                         ),
                       ),
                       const SizedBox(
@@ -102,14 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: localize.password,
                         hintText: localize.password,
                         keyboardType: TextInputType.visiblePassword,
-                        prefixIcon: Container(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: SvgPicture.asset(
-                            Assets.icons('lock.svg'),
-                          ),
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons('lock.svg'),
                         ),
                         suffixIcon: InkWell(
-                          child: SvgPicture.asset(Assets.icons('eye-close.svg')),
+                          child:
+                              SvgPicture.asset(Assets.icons('eye-close.svg')),
                           onTap: () {
                             setState(() {
                               passwordObscured = !passwordObscured;
@@ -181,10 +175,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: "${localize.no_acc} ", 
+                            text: "${localize.no_acc} ",
                             style: AppFonts.font12w400),
                         TextSpan(
-                            text: localize.sign_up, 
+                            text: localize.sign_up,
                             style: AppFonts.font12w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {

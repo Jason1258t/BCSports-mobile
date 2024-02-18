@@ -60,7 +60,8 @@ class MediumActivityWidget extends StatelessWidget {
                 Text(
                   text,
                   style: AppFonts.font14w300
-                      .copyWith(color: AppColors.grey_B3B3B3),
+                      .copyWith(color: AppColors.grey_B3B3B3,overflow: TextOverflow.ellipsis),
+                  maxLines: 3,
                 ),
               ],
             )
