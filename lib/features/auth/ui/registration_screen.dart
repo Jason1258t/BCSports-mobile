@@ -162,7 +162,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 55,
                   ),
                   CustomTextButton(
-                    text: localize.sign_up,// TODO
+                    text: localize.sign_up,
                     onTap: () {
                       context.read<AuthCubit>().signUpWithEmailAndPassword(
                           email: emailController.text.trim(),
@@ -205,10 +205,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                        text: localize.already_have_acc, // TODO
+                        text: localize.already_have_acc, 
                         style: AppFonts.font12w400),
                     TextSpan(
-                        text: 'Sign in',// TODO
+                        text: localize.sign_in,
                         style: AppFonts.font12w600,
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {

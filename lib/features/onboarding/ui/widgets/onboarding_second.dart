@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,14 @@ class OnboardingSecondWidget extends StatelessWidget {
     super.key,
   });
 
-  static const String mainTitle = "Unlock the future"; //TODO
-  static const String description =
-      "Fincher is a over expanding network of many interlinked applications and services for building an ecosystem of decenteralized future.";
-
-
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
+    String mainTitle = localize.unlock_feature;
+    String description = localize.fincher_over;
+
+    
     return Stack(
       children: [
         Positioned(

@@ -84,7 +84,7 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                       });
                     },
                     child: Text(
-                      !showMore ? 'more' : 'hide', //TODO
+                      !showMore ? localize.more : localize.hide, 
                       style: AppFonts.font12w300
                           .copyWith(color: const Color(0xFF717477)),
                     ),

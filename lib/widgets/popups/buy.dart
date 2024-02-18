@@ -61,7 +61,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Buy", // TODO
+                  localize.buy, 
                   style: AppFonts.font24w500.copyWith(color: AppColors.white),
                 ),
                 const SizedBox(
@@ -99,7 +99,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                   height: 15,
                 ),
                 Text(
-                  "Available balance", // TODO
+                  localize.available_bill, 
                   style: AppFonts.font12w400.copyWith(color: AppColors.white),
                 ),
                 Text(
@@ -131,10 +131,14 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      localize.agree_terms,
-                      style:
-                          AppFonts.font10w500.copyWith(color: AppColors.white),
+                    SizedBox(
+                      width: size.width * 0.5,
+                      child: Text(
+                        localize.agree_terms,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            AppFonts.font10w500.copyWith(color: AppColors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -144,7 +148,7 @@ class _BuyNftPopupState extends State<BuyNftPopup> {
                 CustomTextButton(
                     width: 170,
                     height: 49,
-                    text: "Place a Bid", // TODO
+                    text: localize.buy, 
                     onTap: onBuyTap,
                     isActive: isActive())
               ],

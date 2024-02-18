@@ -70,7 +70,7 @@ class _CanselLotPopupState extends State<CanselLotPopup> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomTextButton(
-                      text: "No",
+                      text: localize.no,
                       onTap: _onCansel,
                       width: size.width * 0.35,
                       height: 52,
@@ -80,7 +80,7 @@ class _CanselLotPopupState extends State<CanselLotPopup> {
                       width: 8,
                     ),
                     CustomTextButton(
-                      text: "yes",
+                      text: localize.yes,
                       color: AppColors.white,
                       onTap: _onAccept,
                       width: size.width * 0.35,

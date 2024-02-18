@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ class PostActionsBottomSheet extends StatelessWidget {
   final PostViewModel post;
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 64),
       // height: 140,
@@ -35,7 +38,7 @@ class PostActionsBottomSheet extends StatelessWidget {
             height: 16,
           ),
           CustomTextButton(
-            text: 'Delete', //TODO
+            text: localize.delete,
             onTap: () {
               context.read<DeletePostCubit>().deletePost(post.postId);
               Navigator.pop(context);

@@ -72,7 +72,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                   ),
                   Text(
                     '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount} ' +
-                        'Likes' , //TODO
+                        localize.likes,
                     style: AppFonts.font14w400
                         .copyWith(color: const Color(0xFF717477)),
                   )

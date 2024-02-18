@@ -8,7 +8,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get about => 'О игроке';
 
   @override
-  String get academy => 'академия';
+  String get academy => 'Академия';
 
   @override
   String get agree_terms => 'Я принимаю условия пользовательского соглашения';
@@ -20,31 +20,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get already_have_acc => 'Уже есть аккаунт?';
 
   @override
-  String get ar => 'АР';
+  String get ar => 'AR';
 
   @override
   String get ar_visual => 'AR визуализация Бразильской академии';
 
   @override
-  String get assists => 'Помогает';
+  String get assists => 'Передачи';
 
   @override
-  String get available_bill => 'Доступные средства';
+  String get available_bill => 'Доступный баланс';
 
   @override
-  String get ball_recovery => 'Восстановление мяча';
+  String get ball_recovery => 'Возврат владения';
 
   @override
   String get basketball => 'Баскетбол';
 
   @override
-  String get be_first_to_write_a_message => 'Будьте первым, чтобы написать сообщение';
+  String get be_first_to_write_a_message => 'Будьте первым, кто напишет сообщение';
 
   @override
   String get birth => 'Дата рождения';
 
   @override
-  String get born => 'рожденный';
+  String get born => 'ДР';
 
   @override
   String get buy => 'Купить';
@@ -59,7 +59,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get capture_matrics => 'Захват показателей из футбольных матчей и физических показателей игроков нашими партнерами.';
 
   @override
-  String get change_lang => 'Изменение языка';
+  String get change_lang => 'Изменить язык';
 
   @override
   String get change_password => 'Изменить пароль';
@@ -68,13 +68,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get choose_play => 'Выбери, сыграй, победи';
 
   @override
-  String get choose_this => 'Выберите это';
+  String get choose_this => 'Выбрать';
 
   @override
   String get citizen => 'Гражданство';
 
   @override
-  String get club_name => 'Название клуба';
+  String get club_name => 'Клуб';
 
   @override
   String get collection_stats => 'Сбор статистики игрока';
@@ -83,7 +83,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get comments => 'КОММЕНТАРИИ';
 
   @override
-  String get country => 'страна';
+  String get country => 'СТРАНА';
 
   @override
   String get create => 'СОЗДАВАТЬ';
@@ -107,22 +107,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get discard => 'Отказаться';
 
   @override
-  String get dribbling_siffered => 'Дриблинг страдал';
+  String get dribbling_siffered => 'Дриблинг';
 
   @override
-  String get duel_air => 'Дуэльный воздух';
+  String get duel_air => 'Дуэли в воздухе';
 
   @override
-  String get duel_lost => 'Дуэль проиграл';
+  String get duel_lost => 'Дуэлей проиграно';
 
   @override
-  String get duel_tackle => 'Duel Skele';
+  String get duel_tackle => 'Дуэль-такл';
 
   @override
   String get edit_profile => 'Редактировать профиль';
 
   @override
-  String get email => 'электронная почта';
+  String get email => 'Электронная почта';
 
   @override
   String get email_address => 'Адрес электронной почты';
@@ -134,16 +134,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exclusive_colls => 'Эксклюзивные цифровые колленкции';
 
   @override
-  String get explore_more => 'Изучите больше';
+  String get explore_more => 'Подробнее';
 
   @override
-  String get fast_player_good_dribbling => '%Быстрого игрока с хорошим дриблингом и прохождением. Хорошо смотрится в атаке, но есть некоторая работа в защите.%';
+  String get fast_player_good_dribbling => 'Быстрого игрока с хорошим дриблингом и прохождением. Хорошо смотрится в атаке, но есть некоторая работа в защите.';
 
   @override
-  String get favourite => 'Любимый';
+  String get favourite => 'Лайков';
 
   @override
-  String get favs => 'фавориты';
+  String get favs => 'Понравившиеся';
 
   @override
   String get feel_professional => 'Почувствуй себя проффесиональным гонщиком';
@@ -158,10 +158,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get first_nft => 'Первые NFT, которые зависят не от рынка, а от упехов футболистов.';
 
   @override
-  String get foot => 'Ступня';
+  String get foot => 'Нога';
 
   @override
-  String get footbag => 'Сумка для ног';
+  String get footbag => 'Footbag';
 
   @override
   String get forgot_password => 'Забыли пароль';
@@ -173,7 +173,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fouls => 'Фолы';
 
   @override
-  String get go_ar => 'Пойти в AR';
+  String get go_ar => 'Перейти в AR';
 
   @override
   String get goals => 'Цели';
@@ -182,19 +182,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get height => 'Высота';
 
   @override
-  String get hide => 'скрывать';
+  String get hide => 'Скрыть';
 
   @override
   String get hit_the_max => 'Набей максимальное количество раз';
 
   @override
-  String get killer_passes => 'Убийца проходит';
+  String get killer_passes => 'Решающие передачи';
 
   @override
-  String get language => 'язык';
+  String get language => 'Язык';
 
   @override
-  String get likes => 'Нравится';
+  String get likes => 'Лайков';
 
   @override
   String get log_out => 'Выйти';
@@ -203,7 +203,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get make_selfie => 'Сделай селфи или видео с любимым спортсменом, с помощью AR';
 
   @override
-  String get market => 'рынок';
+  String get market => 'Маркет';
 
   @override
   String get message => 'Сообщение';
@@ -215,16 +215,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mind => 'Что у тебя на уме?';
 
   @override
-  String get mini_games => 'мини игры';
+  String get mini_games => 'Мини-игры';
 
   @override
-  String get minuts_played => 'Протоколы сыграли';
+  String get minuts_played => 'Сыграно мин.';
 
   @override
-  String get more => 'более';
+  String get more => 'ещё';
 
   @override
-  String get moto_pg => 'Motogp';
+  String get moto_pg => 'MotoPG';
 
   @override
   String get my_active_lots => 'Мои активные лоты';
@@ -239,7 +239,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get next => 'Следующий';
 
   @override
-  String get nft => 'Не';
+  String get nft => 'NFT';
 
   @override
   String get nft_will_removed => 'NFT будет удален с рынка и возвращен в ваш инвентарь.';
@@ -251,7 +251,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get no_acc => 'У вас нет учетной записи?';
 
   @override
-  String get no_favs => 'Похоже, у тебя нет любимого';
+  String get no_favs => 'Похоже, у вас нет понравившиеся лотов';
 
   @override
   String get no_lots => 'Похоже, у вас нет активных лотов';
@@ -260,16 +260,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get no_post => 'Пока еще нет';
 
   @override
-  String get password => 'пароль';
+  String get password => 'Пароль';
 
   @override
-  String get penalties => 'Штрафы';
+  String get penalties => 'Пенальти';
 
   @override
   String get photo => 'Фото';
 
   @override
-  String get player => 'игрок';
+  String get player => 'Игрок';
 
   @override
   String get player_details => 'Детали игрока';
@@ -284,31 +284,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get posts => 'Посты';
 
   @override
-  String get profile => 'профиль';
+  String get profile => 'Профиль';
 
   @override
   String get project_mission => 'Проектная миссия';
 
   @override
-  String get publish => 'Публиковать';
+  String get publish => 'Опубликовать';
 
   @override
   String get put_up_for_sale => 'Выставлен на продажу';
 
   @override
-  String get quantity_matches => 'Количество совпадений';
+  String get quantity_matches => 'Кол-во матчей';
 
   @override
   String get replanish => 'Пополнить';
 
   @override
-  String get save => 'сохранять';
+  String get save => 'Сохранить';
 
   @override
-  String get sell => 'продать';
+  String get sell => 'Продать';
 
   @override
-  String get send => 'Отправлять';
+  String get send => 'Отправить';
 
   @override
   String get send_recovery => 'Отправить почту для восстановления';
@@ -329,10 +329,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sign_up => 'Зарегистрироваться';
 
   @override
-  String get skip => 'Пропускать';
+  String get skip => 'Пропустить';
 
   @override
-  String get start => 'Начинать';
+  String get start => 'Начать';
 
   @override
   String get successful_return => 'Успешно, можете вернуться';
@@ -353,22 +353,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get type_comment => 'Напишите свой комментарий здесь...';
 
   @override
-  String get unlock_feature => 'Разблокировать будущее';
+  String get unlock_feature => 'Разблокируй будущее';
 
   @override
-  String get username => 'имя пользователя';
+  String get username => 'Имя пользователя';
 
   @override
-  String get views => 'Взгляды';
+  String get views => 'Просмотры';
 
   @override
   String get wallet => 'Кошелек';
 
   @override
-  String get we_spot_talents => 'Мы обнаруживаем таланты';
+  String get we_spot_talents => 'Мы поддерживаем таланты';
 
   @override
-  String get weight => 'Масса';
+  String get weight => 'Вес';
 
   @override
   String get yes => 'Да';
@@ -377,5 +377,5 @@ class AppLocalizationsRu extends AppLocalizations {
   String get you_dont_nfts => 'Извините, у вас нет NFT.';
 
   @override
-  String get you_dont_posts => 'Изините, у вас нету постов.';
+  String get you_dont_posts => 'Изините, у вас нет постов.';
 }

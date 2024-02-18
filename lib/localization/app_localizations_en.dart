@@ -14,7 +14,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get agree_terms => 'I agree to the terms and conditions';
 
   @override
-  String get all_collection => 'all collections';
+  String get all_collection => 'All collections';
 
   @override
   String get already_have_acc => 'Already have an account?';
@@ -191,7 +191,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get killer_passes => 'Killer passes';
 
   @override
-  String get language => 'language';
+  String get language => 'Language';
 
   @override
   String get likes => 'Likes';
@@ -209,7 +209,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get message => 'Message';
 
   @override
-  String get messages => 'messages';
+  String get messages => 'Messages';
 
   @override
   String get mind => 'What\'s on your mind?';
@@ -284,7 +284,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posts => 'Posts';
 
   @override
-  String get profile => 'profile';
+  String get profile => 'Profile';
 
   @override
   String get project_mission => 'Project mission';

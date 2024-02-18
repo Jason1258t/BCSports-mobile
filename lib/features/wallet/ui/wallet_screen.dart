@@ -38,7 +38,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 CustomSliverAppBar(
                   height: 90,
                   isBack: true,
-                  title: 'Wallet', //TODO
+                  title: localize.wallet, 
                   isSetting: true,
                   color: AppColors.black_3A3A3A,
                 ),
@@ -97,17 +97,17 @@ class _WalletScreenState extends State<WalletScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             WalletAction(
-                              title: 'Send',
+                              title: 'Send',// TODO
                               icon: 'assets/icons/send.svg',
                               onTap: () {},
                             ),
                             WalletAction(
-                              title: 'Replanish',
+                              title: 'Replanish',// TODO
                               icon: 'assets/icons/get.svg',
                               onTap: () {},
                             ),
                             WalletAction(
-                              title: 'Swap',
+                              title: 'Swap',// TODO
                               icon: 'assets/icons/transfer_arrows_bold.svg',
                               onTap: () {},
                             ),

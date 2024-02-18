@@ -50,7 +50,7 @@ class FavouritesScreen extends StatelessWidget {
                     else if(snapshot.data == LoadingStateEnum.success && repository.posts.isEmpty){
                       return SliverToBoxAdapter(
                         child: Center(
-                          child: Text('You haven\'t favorites', style: AppFonts.font18w400,), //TODO
+                          child: Text(localize.no_favs, style: AppFonts.font18w400,), 
                         ),
                       );
                     }

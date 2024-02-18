@@ -39,7 +39,7 @@ class CommentsScreen extends StatelessWidget {
                 Navigator.pop(context);
               }),
               Text(
-                'Post', // Todo
+                localize.post, // Todo
                 style: AppFonts.font18w500,
               ),
               const SizedBox(
@@ -79,7 +79,7 @@ class CommentsScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: Center(
                           child: Text(
-                            'COMMENTS ' + '(${bloc.comments.length})', //TODO
+                            '${localize.comments} ' + '(${bloc.comments.length})',
                             style: AppFonts.font12w400,
                           ),
                         ),
@@ -141,7 +141,7 @@ class CommentsScreen extends StatelessWidget {
                           counterText: "",
                           isDense: true,
                           hintStyle: AppFonts.font14w400,
-                          hintText: 'Type your comment here...',//TODO
+                          hintText: localize.type_comment,
                           border: InputBorder.none),
                     ),
                   ),

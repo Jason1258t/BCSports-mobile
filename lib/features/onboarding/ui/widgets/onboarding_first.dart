@@ -8,13 +8,13 @@ class OnboardingFirstWidget extends StatelessWidget {
     super.key,
   });
 
-  static const String mainTitle = "Эксклюзивные цифровые колленкции"; //TODO
-  static const String description =
-      "Первые NFT, которые зависят не от рынка, а от упехов футболистов.";
-
   @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
+
+    String mainTitle = localize.exclusive_colls;
+    String description = localize.first_nft;
+
     return Stack(
       children: [
         Positioned(
@@ -50,7 +50,6 @@ class OnboardingFirstWidget extends StatelessWidget {
             ],
           ),
         ),
-
       ],
     );
   }

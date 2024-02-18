@@ -102,16 +102,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmallTextButton(
-                text: 'Discard', //TODO
+                text: localize.discard, 
                 onTap: () => Navigator.pop(context),
                 type: SmallTextButtonType.withoutBackground,
               ),
               Text(
-                'CREATE', // TODO
+                localize.create,
                 style: AppFonts.font14w400,
               ),
               SmallTextButton(
-                text: 'Publish', //TODO
+                text: localize.publish, 
                 onTap: () => context
                     .read<CreatePostCubit>()
                     .createPost(textController.text, croppedImagesBytes),
@@ -144,7 +144,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     controller: textController,
                     style: AppFonts.font16w400,
                     decoration: InputDecoration(
-                        hintText: "What's on your mind?", //TODO
+                        hintText: localize.mind, 
                         hintStyle: AppFonts.font16w400
                             .copyWith(color: AppColors.grey_727477),
                         border: InputBorder.none),
@@ -189,7 +189,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       SmallTextButton(
                         type: SmallTextButtonType.withBackground,
                         backgroundColor: Colors.white,
-                        text: 'Delete', //TODO
+                        text: localize.delete, 
                         onTap: () {
                           image = null;
                           croppedImage = null;

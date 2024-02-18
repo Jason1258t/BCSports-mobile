@@ -149,7 +149,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                   decoration: InputDecoration(
                                       isDense: true,
                                       hintStyle: AppFonts.font14w400,
-                                      hintText: 'Message', //Todo
+                                      hintText: localize.message,
                                       border: InputBorder.none),
                                 ),
                               ),

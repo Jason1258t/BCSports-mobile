@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -17,8 +18,6 @@ class NftUserLot extends StatefulWidget {
 }
 
 class NftUserLotState extends State<NftUserLot> {
-  final bottomBtnText = "Cancel lot";
-
   void _onTap() {
     widget.onTap();
   }
@@ -29,8 +28,10 @@ class NftUserLotState extends State<NftUserLot> {
     final cardSize = (size.width - 18 * 2 - 17) / 2;
     final imgSize = cardSize - 8;
     final topMargin = imgSize * 0.17;
-
     final nft = widget.product.nft;
+
+    final localize = AppLocalizations.of(context)!;
+    final bottomBtnText = localize.cancel_lot;
 
     return GestureDetector(
       onTap: _onTap,
