@@ -55,7 +55,7 @@ class ProfileRepository extends PostSource {
   UserModel get user => _userModel!;
 
   Future<void> setUser(String userId) async {
-    getUserData(userId);
+    await getUserData(userId);
     getUserPosts();
     getUserCommentLikes();
   }
