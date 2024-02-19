@@ -123,7 +123,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         ),
         postType == PostType.text
             ? TextPostBody(text: post.postModel.text!)
-            : ImagePostBody(post: post),
+            : ImagePostBody(post: post, onDoubleTap: onLikeTapped,),
         const SizedBox(
           height: 16,
         ),
