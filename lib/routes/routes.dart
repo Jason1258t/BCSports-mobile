@@ -108,8 +108,7 @@ class AppRoutes {
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const CreateDisplayNameScreen());
       case AppRouteNames.arUserNft:
-        return NoAnimationMaterialPageRoute(
-            builder: (ctx) => const ArPlayersScreen());
+        return AnimatedRoute(builder: (ctx) => const ArPlayersScreen());
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
@@ -162,7 +161,6 @@ class AnimatedRoute<T> extends MaterialPageRoute<T> {
     const begin = Offset(1, 0);
     const end = Offset.zero;
     final tween = Tween(begin: begin, end: end);
-
 
     final curvedAnimation = CurvedAnimation(
       parent: animation,
