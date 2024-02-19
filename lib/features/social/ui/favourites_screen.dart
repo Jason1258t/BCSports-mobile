@@ -21,8 +21,6 @@ class FavouritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final repository = RepositoryProvider.of<FavouritePostsRepository>(context);
 
-    final localize = AppLocalizations.of(context)!;
-
     Widget buildEmptyDataMessage() {
       final localize = AppLocalizations.of(context)!;
 
