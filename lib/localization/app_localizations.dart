@@ -102,7 +102,7 @@ abstract class AppLocalizations {
   /// No description provided for @academy.
   ///
   /// In en, this message translates to:
-  /// **'academy'**
+  /// **'Academy'**
   String get academy;
 
   /// No description provided for @agree_terms.
@@ -174,7 +174,7 @@ abstract class AppLocalizations {
   /// No description provided for @born.
   ///
   /// In en, this message translates to:
-  /// **'born'**
+  /// **'BORN'**
   String get born;
 
   /// No description provided for @buy.
@@ -252,7 +252,7 @@ abstract class AppLocalizations {
   /// No description provided for @country.
   ///
   /// In en, this message translates to:
-  /// **'country'**
+  /// **'COUNTRY'**
   String get country;
 
   /// No description provided for @create.
@@ -330,13 +330,13 @@ abstract class AppLocalizations {
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
-  /// **'email'**
+  /// **'Email'**
   String get email;
 
   /// No description provided for @email_address.
   ///
   /// In en, this message translates to:
-  /// **'email address'**
+  /// **'Email address'**
   String get email_address;
 
   /// No description provided for @enter_registered_email.
@@ -360,7 +360,7 @@ abstract class AppLocalizations {
   /// No description provided for @fast_player_good_dribbling.
   ///
   /// In en, this message translates to:
-  /// **'%Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.%'**
+  /// **'Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.'**
   String get fast_player_good_dribbling;
 
   /// No description provided for @favourite.
@@ -492,7 +492,7 @@ abstract class AppLocalizations {
   /// No description provided for @market.
   ///
   /// In en, this message translates to:
-  /// **'market'**
+  /// **'Market'**
   String get market;
 
   /// No description provided for @message.
@@ -516,7 +516,7 @@ abstract class AppLocalizations {
   /// No description provided for @mini_games.
   ///
   /// In en, this message translates to:
-  /// **'mini-games'**
+  /// **'Mini-games'**
   String get mini_games;
 
   /// No description provided for @minuts_played.
@@ -606,7 +606,7 @@ abstract class AppLocalizations {
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
-  /// **'password'**
+  /// **'Password'**
   String get password;
 
   /// No description provided for @penalties.
@@ -618,7 +618,7 @@ abstract class AppLocalizations {
   /// No description provided for @photo.
   ///
   /// In en, this message translates to:
-  /// **'photo'**
+  /// **'Photo'**
   String get photo;
 
   /// No description provided for @player.
@@ -690,13 +690,13 @@ abstract class AppLocalizations {
   /// No description provided for @save.
   ///
   /// In en, this message translates to:
-  /// **'save'**
+  /// **'Save'**
   String get save;
 
   /// No description provided for @sell.
   ///
   /// In en, this message translates to:
-  /// **'sell'**
+  /// **'Sell'**
   String get sell;
 
   /// No description provided for @send.
@@ -798,7 +798,7 @@ abstract class AppLocalizations {
   /// No description provided for @username.
   ///
   /// In en, this message translates to:
-  /// **'username'**
+  /// **'Username'**
   String get username;
 
   /// No description provided for @views.

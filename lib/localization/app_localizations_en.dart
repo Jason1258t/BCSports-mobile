@@ -8,7 +8,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get about => 'About player';
 
   @override
-  String get academy => 'academy';
+  String get academy => 'Academy';
 
   @override
   String get agree_terms => 'I agree to the terms and conditions';
@@ -44,7 +44,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get birth => 'Date of birth';
 
   @override
-  String get born => 'born';
+  String get born => 'BORN';
 
   @override
   String get buy => 'Buy';
@@ -83,7 +83,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comments => 'COMMENTS';
 
   @override
-  String get country => 'country';
+  String get country => 'COUNTRY';
 
   @override
   String get create => 'CREATE';
@@ -122,10 +122,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit_profile => 'Edit profile';
 
   @override
-  String get email => 'email';
+  String get email => 'Email';
 
   @override
-  String get email_address => 'email address';
+  String get email_address => 'Email address';
 
   @override
   String get enter_registered_email => 'Please enter your registered email address.';
@@ -137,7 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get explore_more => 'Explore more';
 
   @override
-  String get fast_player_good_dribbling => '%Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.%';
+  String get fast_player_good_dribbling => 'Fast player with good dribbling and passing. Looks good in attack but has some work to do in defence.';
 
   @override
   String get favourite => 'Favorite';
@@ -203,7 +203,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get make_selfie => 'Make a selfie or video with your favorite athlete using AR';
 
   @override
-  String get market => 'market';
+  String get market => 'Market';
 
   @override
   String get message => 'Message';
@@ -215,7 +215,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mind => 'What\'s on your mind?';
 
   @override
-  String get mini_games => 'mini-games';
+  String get mini_games => 'Mini-games';
 
   @override
   String get minuts_played => 'Minutes played';
@@ -260,13 +260,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_post => 'There is no post yet';
 
   @override
-  String get password => 'password';
+  String get password => 'Password';
 
   @override
   String get penalties => 'Penalties';
 
   @override
-  String get photo => 'photo';
+  String get photo => 'Photo';
 
   @override
   String get player => 'player';
@@ -302,10 +302,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get replanish => 'Replanish';
 
   @override
-  String get save => 'save';
+  String get save => 'Save';
 
   @override
-  String get sell => 'sell';
+  String get sell => 'Sell';
 
   @override
   String get send => 'Send';
@@ -356,7 +356,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unlock_feature => 'Unlock the future';
 
   @override
-  String get username => 'username';
+  String get username => 'Username';
 
   @override
   String get views => 'Views';
