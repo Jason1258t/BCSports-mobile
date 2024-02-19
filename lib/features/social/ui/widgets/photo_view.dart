@@ -1,4 +1,3 @@
-
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +14,16 @@ class PhotoViewScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          title: ButtonBack(
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ButtonBack(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          )
         ),
         body: PhotoView(
           maxScale: 0.4,

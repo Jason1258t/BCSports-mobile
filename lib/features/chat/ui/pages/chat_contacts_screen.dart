@@ -79,7 +79,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                       profileRepository.user.id);
                   setState(() {
                     isOpenSearch =
-                        MediaQuery.of(context).viewInsets.bottom != 0 &&
+                        MediaQuery.of(context).viewInsets.bottom != 0 ||
                             chatRepository.filteredUserList.isNotEmpty;
                   });
                 },
@@ -115,7 +115,9 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                         );
                       }
 
-                      return Center(child: AppAnimations.circleIndicator,);
+                      return Center(
+                        child: AppAnimations.circleIndicator,
+                      );
                     }),
                 buildSearch()
               ],
@@ -131,8 +133,10 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
     final sizeOf = MediaQuery.sizeOf(context);
 
     return Container(
+      alignment: Alignment.center,
       color: AppColors.black,
       child: AnimatedContainer(
+        alignment: Alignment.center,
         margin: isOpenSearch ? const EdgeInsets.only(top: 20) : EdgeInsets.zero,
         padding: isOpenSearch
             ? const EdgeInsets.symmetric(horizontal: 15, vertical: 10)
@@ -153,7 +157,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
               return Column(children: generateFoundUsers());
             } else {
               return Center(
-                child: AppAnimations.circleIndicator,
+                child: Container(),
               );
             }
           },
