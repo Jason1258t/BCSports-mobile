@@ -123,7 +123,10 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         ),
         postType == PostType.text
             ? TextPostBody(text: post.postModel.text!)
-            : ImagePostBody(post: post, onDoubleTap: onLikeTapped,),
+            : ImagePostBody(
+                post: post,
+                onDoubleTap: onLikeTapped,
+              ),
         const SizedBox(
           height: 16,
         ),
@@ -134,19 +137,24 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
               InkWell(
                 borderRadius: BorderRadius.circular(100),
                 onTap: onLikeTapped,
-                child: SvgPicture.asset(
-                  Assets.icons(
-                      post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
-                  width: 20,
-                  height: 20,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgPicture.asset(
+                      Assets.icons(
+                          post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      post.postModel.likesCount.toString(),
+                      style: AppFonts.font12w400,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                post.postModel.likesCount.toString(),
-                style: AppFonts.font12w400,
               ),
               const SizedBox(
                 width: 20,
@@ -162,18 +170,23 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                         MaterialPageRoute(builder: (_) => CommentsScreen()));
                   }
                 },
-                child: SvgPicture.asset(
-                  Assets.icons('comment.svg'),
-                  width: 20,
-                  height: 20,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgPicture.asset(
+                      Assets.icons('comment.svg'),
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      post.postModel.commentsCount.toString(),
+                      style: AppFonts.font12w400,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(
-                post.postModel.commentsCount.toString(),
-                style: AppFonts.font12w400,
               ),
             ],
           ),
@@ -265,8 +278,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
       context.read<ProfileRepository>().getUserPosts();
     }
     if (state is DeleteFailState && state.postId == post.postId) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          AppSnackBars.snackBar(localize.delete_fail)); 
+      ScaffoldMessenger.of(context)
+          .showSnackBar(AppSnackBars.snackBar(localize.delete_fail));
     }
   }
 
