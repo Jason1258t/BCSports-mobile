@@ -97,17 +97,17 @@ class _WalletScreenState extends State<WalletScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             WalletAction(
-                              title: 'Send',// TODO
+                              title: localize.send,
                               icon: 'assets/icons/send.svg',
                               onTap: () {},
                             ),
                             WalletAction(
-                              title: 'Replanish',// TODO
+                              title: localize.replanish,
                               icon: 'assets/icons/get.svg',
                               onTap: () {},
                             ),
                             WalletAction(
-                              title: 'Swap',// TODO
+                              title: localize.swap,
                               icon: 'assets/icons/transfer_arrows_bold.svg',
                               onTap: () {},
                             ),

@@ -59,8 +59,13 @@ class FavouritesScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
-          title: ButtonBack(
-            onTap: () => Navigator.pop(context),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ButtonBack(
+                onTap: () => Navigator.pop(context),
+              ),
+            ],
           ),
         ),
         body: RefreshIndicator(
