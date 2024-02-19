@@ -137,8 +137,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 child: SvgPicture.asset(
                   Assets.icons(
                       post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
-                  width: 16,
-                  height: 16,
+                  width: 20,
+                  height: 20,
                 ),
               ),
               const SizedBox(
@@ -164,8 +164,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 },
                 child: SvgPicture.asset(
                   Assets.icons('comment.svg'),
-                  width: 16,
-                  height: 16,
+                  width: 20,
+                  height: 20,
                 ),
               ),
               const SizedBox(
