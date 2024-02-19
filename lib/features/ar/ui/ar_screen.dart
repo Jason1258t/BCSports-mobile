@@ -31,7 +31,7 @@ class _ArScreenState extends State<ArScreen> {
             children: [
               Text(
                 localize.ar,
-                style: AppFonts.font18w400,
+                style: AppFonts.font18w600,
               ),
             ],
           ),
