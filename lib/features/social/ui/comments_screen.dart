@@ -39,7 +39,7 @@ class CommentsScreen extends StatelessWidget {
                 Navigator.pop(context);
               }),
               Text(
-                localize.post, // Todo
+                localize.post,
                 style: AppFonts.font18w500,
               ),
               const SizedBox(
