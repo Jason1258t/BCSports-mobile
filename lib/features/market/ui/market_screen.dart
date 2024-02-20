@@ -1,10 +1,8 @@
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
-import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/mini_appbar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/l10n/l10n.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
@@ -80,60 +78,44 @@ class _MarketScreenState extends State<MarketScreen> {
               surfaceTintColor: Colors.transparent,
               elevation: 0,
               floating: true,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              title: Stack(
+                alignment: Alignment.center,
                 children: [
-                  MiniAppBarButton(
-                    onTap: onFavouritesTap,
-                    iconPath: 'assets/icons/like.svg',
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        MiniAppBarButton(
+                          onTap: onFavouritesTap,
+                          iconPath: 'assets/icons/like.svg',
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        MiniAppBarButton(
+                          onTap: onMyLotsTap,
+                          iconPath: 'assets/icons/lots.svg',
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    width: 16,
+                
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      localize.all_collection,
+                      style: AppFonts.font18w600,
+                    ),
                   ),
-                  MiniAppBarButton(
-                    onTap: onMyLotsTap,
-                    iconPath: 'assets/icons/lots.svg',
-                  ),
-                  Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRouteNames.wallet);
-                    },
-                    borderRadius: BorderRadius.circular(31),
-                    child: Container(
-                      height: 28,
-                      padding: const EdgeInsets.symmetric(horizontal: 17),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.black_s2new_1A1A1A,
-                          borderRadius: BorderRadius.circular(31)),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset('assets/icons/wallet2.svg'),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          BlocBuilder<BuyNftCubit, BuyNftState>(
-                            builder: (context, state) {
-                              return Text(
-                                context
-                                    .read<ProfileRepository>()
-                                    .user
-                                    .evmBill
-                                    .toStringAsFixed(2),
-                                style: AppFonts.font14w400
-                                    .copyWith(color: AppColors.white),
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text("ETH",
-                              style: AppFonts.font14w400
-                                  .copyWith(color: AppColors.primary))
-                        ],
-                      ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouteNames.wallet);
+                      },
+                      borderRadius: BorderRadius.circular(31),
+                      child: SvgPicture.asset('assets/icons/wallet2.svg'),
                     ),
                   ),
                 ],

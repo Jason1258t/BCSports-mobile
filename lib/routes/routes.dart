@@ -31,7 +31,9 @@ import '../features/auth/ui/recovery_enter_email_screen.dart';
 
 class AppRoutes {
   static List<Widget> mainPages = [
-    Container(color: AppColors.black,),
+    Container(
+      color: AppColors.black,
+    ),
     const MarketScreen(),
     const ArScreen(),
     const FeedScreen(),
@@ -134,6 +136,9 @@ class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
             maintainState: maintainState,
             settings: settings,
             fullscreenDialog: fullscreenDialog);
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 0);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

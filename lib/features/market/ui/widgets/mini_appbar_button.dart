@@ -18,7 +18,7 @@ class _MiniAppBarButtonState extends State<MiniAppBarButton> {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(16),
-      color: AppColors.black_s2new_1A1A1A,
+      color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
@@ -26,8 +26,7 @@ class _MiniAppBarButtonState extends State<MiniAppBarButton> {
         },
         child: Container(
           alignment: Alignment.center,
-          width: 52,
-          height: 28,
+  
           child: SvgPicture.asset(
             widget.iconPath,
             width: 19,
