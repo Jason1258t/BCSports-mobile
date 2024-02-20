@@ -30,7 +30,8 @@ class CustomButtonNavBar extends StatelessWidget {
           },
           items: [
             NavItem(iconPath: Assets.icons('home.svg'), label: "Home"),
-            NavItem(iconPath: Assets.icons('market.svg'), label: localize.market),
+            NavItem(
+                iconPath: Assets.icons('market.svg'), label: localize.market),
             NavItem(iconPath: Assets.icons('ar.svg'), label: localize.ar),
             NavItem(iconPath: Assets.icons('chat.svg'), label: "Chat"),
             NavItem(
@@ -46,7 +47,7 @@ class NavItem extends BottomNavigationBarItem {
   NavItem({required this.iconPath, super.label})
       : super(
             icon: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 4),
                 child: SvgPicture.asset(
                   iconPath,
                   color: AppColors.white_F4F4F4,
@@ -54,7 +55,7 @@ class NavItem extends BottomNavigationBarItem {
                   height: 24,
                 )),
             activeIcon: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 4),
               child: SvgPicture.asset(
                 iconPath,
                 fit: BoxFit.fitHeight,
