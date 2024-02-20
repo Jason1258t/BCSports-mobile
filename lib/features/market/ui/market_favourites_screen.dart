@@ -4,8 +4,10 @@ import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
+import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,13 +25,40 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
     Navigator.of(context).pushNamed('/market/buy', arguments: {'nft': product});
   }
 
+  List<MarketItemModel> getFavouritesNftList() {
+    return context.read<FavouriteCubit>().getFavouritesUserList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+
     return Container(
       color: AppColors.black,
       child: SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
+          backgroundColor: Colors.transparent,
+          body: buildMainInfoWidget(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: BlocBuilder<FavouriteCubit, FavouriteState>(
+            builder: (context, state) {
+              final favouritesList = getFavouritesNftList();
+              if (favouritesList.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: CustomTextButton(
+                    isActive: true,
+                    onTap: () => Navigator.pop(context),
+                    text: "Add NFT",
+                    height: 52,
+                  ),
+                );
+              }
+              return Container();
+            },
+          ),
+        ),
       ),
     );
   }
@@ -68,18 +97,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 23),
             sliver: BlocBuilder<FavouriteCubit, FavouriteState>(
               builder: (context, state) {
-                final ProfileRepository profileRepository =
-                    context.read<ProfileRepository>();
-                final MarketRepository marketRepository =
-                    context.read<MarketRepository>();
-
-                final List<dynamic> likedNftIdList =
-                    profileRepository.user.favouritesNftList;
-
-                final List<MarketItemModel> favouriteNftList = marketRepository
-                    .productList
-                    .where((product) => likedNftIdList.contains(product.id))
-                    .toList();
+                final favouriteNftList = getFavouritesNftList();
 
                 if (favouriteNftList.isEmpty) {
                   return buildEmptyDataMessage();

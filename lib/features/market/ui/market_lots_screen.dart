@@ -7,7 +7,9 @@ import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/cansel_lot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,11 +43,51 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.black,
-      child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Colors.transparent, body: buildMainInfoWidget()),
+    return BlocListener<CanselLotCubit, CanselLotState>(
+      listener: (context, state) {
+        if (state is CanselLotFailure || state is CanselLotSuccess) {
+          Navigator.pop(context);
+        }
+
+        if (state is CanselLotLoading) {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) =>
+                  Center(child: AppAnimations.circleIndicator));
+        } else if (state is CanselLotFailure) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(AppSnackBars.snackBar("Sth went wrong!"));
+        }
+      },
+      child: Container(
+        color: AppColors.black,
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: buildMainInfoWidget(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: BlocBuilder<LotsCubit, LotsState>(
+              builder: (context, state) {
+                List<MarketItemModel> lotsList = marketRepository.lotsList;
+
+                if (lotsList.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: CustomTextButton(
+                      isActive: true,
+                      onTap: () => Navigator.pop(context),
+                      text: "Add NFT",
+                      height: 52,
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

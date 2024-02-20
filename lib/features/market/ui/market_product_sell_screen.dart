@@ -97,6 +97,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
 
         if (state is SellLoading) {
           showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (context) =>
                   Center(child: AppAnimations.circleIndicator));

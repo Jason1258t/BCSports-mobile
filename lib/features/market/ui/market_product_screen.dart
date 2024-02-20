@@ -74,6 +74,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
 
         if (state is BuyNftLoading) {
           showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (context) =>
                   Center(child: AppAnimations.circleIndicator));
@@ -120,8 +121,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
     final nft = marketRepository.nftService.lastLoadedNft;
-        final localize = AppLocalizations.of(context)!;
-
+    final localize = AppLocalizations.of(context)!;
 
     return CustomScrollView(
       slivers: [
