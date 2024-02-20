@@ -120,15 +120,15 @@ class _MarketScreenState extends State<MarketScreen> {
                   ),
                 ],
               )),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 23),
-            sliver: SliverToBoxAdapter(
-              child: Text(
-                localize.all_collection,
-                style: AppFonts.font18w600,
-              ),
-            ),
-          ),
+          // SliverPadding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 23),
+          //   sliver: SliverToBoxAdapter(
+          //     child: Text(
+          //       localize.all_collection,
+          //       style: AppFonts.font18w600,
+          //     ),
+          //   ),
+          // ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 16),
           ),
