@@ -9,9 +9,11 @@ import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
@@ -43,27 +45,14 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
           isOpenSearch = false;
         });
       },
-      appBar: AppBar(
-        backgroundColor: AppColors.black,
-        automaticallyImplyLeading: false,
-        title: Stack(
-          alignment: Alignment.center,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ButtonBack(
-                onTap: () => Navigator.pop(context),
-              ),
+      appBar: EmptyAppBar(
+        title: Center(
+          child: Text(
+            localize.messages,
+            style: AppFonts.font18w500.copyWith(
+              color: AppColors.white,
             ),
-            Center(
-              child: Text(
-                localize.messages,
-                style: AppFonts.font18w500.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
       color: AppColors.background,
@@ -112,6 +101,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
                         rooms.sort((room1, room2) => (room1.updatedAt ?? 0)
                             .compareTo(room2.updatedAt ?? 0));
+
+                        rooms = rooms.where((element) => element.updatedAt != element.createdAt).toList();
                         return Column(
                           children: [
                             if (snapshot.hasData) ...generateChats(rooms)
@@ -200,7 +191,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
+                        CupertinoPageRoute(
                             builder: (_) => ChatMessagesScreen(room: room!)));
                   }
                 },

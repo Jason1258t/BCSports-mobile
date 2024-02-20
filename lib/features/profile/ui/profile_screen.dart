@@ -16,6 +16,7 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -62,41 +63,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             appBar: AppBar(
                 surfaceTintColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
-                title: Stack(
-                  alignment: Alignment.center,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    const SizedBox(width: 52,),
                     Text(
                       localize.profile,
                       style: AppFonts.font18w600,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.add,
-                                color: AppColors.white,
-                              ),
-                              onPressed: () => Navigator.pushNamed(
-                                  context, AppRouteNames.createPost),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            IconButton(
-                              icon:
-                                  SvgPicture.asset("assets/icons/settings.svg"),
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, AppRouteNames.profileSettings);
-                              },
-                            ),
-                          ],
-                        )
-                      ],
+                    IconButton(
+                      icon:
+                          SvgPicture.asset("assets/icons/settings.svg"),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, AppRouteNames.profileSettings);
+                      },
                     ),
                   ],
                 )),
@@ -283,7 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         repository.posts[index],
                         RepositoryProvider.of<ProfileRepository>(context));
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => CommentsScreen()));
+                        CupertinoPageRoute(builder: (_) => CommentsScreen()));
                   },
                   child: SizedBox(
                     width: (sizeOf.width - 4) / 3,

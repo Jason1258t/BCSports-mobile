@@ -1,3 +1,5 @@
+import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
+import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
@@ -24,6 +26,11 @@ class CustomButtonNavBar extends StatelessWidget {
         selectedLabelStyle: AppFonts.font11w300,
         unselectedLabelStyle: AppFonts.font11w300,
         onTap: (newPageIndex) {
+          if(newPageIndex == 3){
+            context.read<UserSearchCubit>().init();
+            context.read<MainCubit>().changePageIndexTo(newPageIndex);
+            return;
+          }
           context.read<MainCubit>().changePageIndexTo(newPageIndex);
         },
         items: [
