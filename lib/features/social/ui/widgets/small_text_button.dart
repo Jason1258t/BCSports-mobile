@@ -52,7 +52,7 @@ class SmallTextButton extends StatelessWidget {
     return SizedBox(
       height: 24,
       child: TextButton(
-        onPressed: onTap,
+        onPressed: active ? onTap : () {},
         style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor ?? background,
             foregroundColor: backgroundColor ?? background,

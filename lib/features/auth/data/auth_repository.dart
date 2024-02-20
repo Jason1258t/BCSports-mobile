@@ -52,9 +52,7 @@ class AuthRepository {
         userId,
         _generateTempUserName(),
         BannerModel.create(
-            userColors[Random().nextInt(userColors.length)].value,
-            AppStrings.listBannerImages[
-                Random().nextInt(AppStrings.listBannerImages.length)]));
+            userColors[Random().nextInt(userColors.length)].value));
 
     await collection.doc(userId).set(user.toJson());
     await ChatRepository.createUserInFirestore(user);

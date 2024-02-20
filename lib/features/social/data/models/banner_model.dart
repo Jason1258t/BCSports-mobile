@@ -1,12 +1,10 @@
 class BannerModel {
-  final String? url;
   final int color;
 
   BannerModel.fromJson(Map<String, dynamic> json)
-      : url = json['url'],
-        color = json['color'];
+      : color = json['color'];
 
-  BannerModel.create(this.color, this.url);
+  BannerModel.create(this.color);
 
-  Map<String, dynamic> toJson() => {'url': url, 'color': color};
+  Map<String, dynamic> toJson() => {'color': color};
 }

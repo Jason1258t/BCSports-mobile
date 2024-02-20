@@ -50,17 +50,13 @@ class FeedScreen extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                 ),
-                InkWell(
-                  onTap: () {
-                    context.read<UserSearchCubit>().init().then((value) =>
-                        Navigator.pushNamed(
-                            context, AppRouteNames.chatContacts));
-                  },
-                  child: SvgPicture.asset(
-                    Assets.icons('message.svg'),
-                    width: 24,
-                    height: 24,
+                IconButton(
+                  icon: Icon(
+                    Icons.add_circle_outline,
+                    color: AppColors.white,
                   ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AppRouteNames.createPost),
                 ),
               ],
             ),

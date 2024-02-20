@@ -13,31 +13,28 @@ class CustomButtonNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
-    return SizedBox(
-      height: 64,
-      child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          backgroundColor: AppColors.black_252525,
-          currentIndex: context.watch<MainCubit>().currentPageIndex,
-          showUnselectedLabels: true,
-          unselectedItemColor: AppColors.grey_B4B4B4,
-          selectedItemColor: AppColors.primary,
-          selectedLabelStyle: AppFonts.font11w300,
-          unselectedLabelStyle: AppFonts.font11w300,
-          onTap: (newPageIndex) {
-            context.read<MainCubit>().changePageIndexTo(newPageIndex);
-          },
-          items: [
-            NavItem(iconPath: Assets.icons('home.svg'), label: "Home"),
-            NavItem(
-                iconPath: Assets.icons('market.svg'), label: localize.market),
-            NavItem(iconPath: Assets.icons('ar.svg'), label: localize.ar),
-            NavItem(iconPath: Assets.icons('chat.svg'), label: "Chat"),
-            NavItem(
-                iconPath: Assets.icons('profile.svg'), label: localize.profile),
-          ]),
-    );
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        backgroundColor: AppColors.black_252525,
+        currentIndex: context.watch<MainCubit>().currentPageIndex,
+        showUnselectedLabels: true,
+        unselectedItemColor: AppColors.grey_B4B4B4,
+        selectedItemColor: AppColors.primary,
+        selectedLabelStyle: AppFonts.font11w300,
+        unselectedLabelStyle: AppFonts.font11w300,
+        onTap: (newPageIndex) {
+          context.read<MainCubit>().changePageIndexTo(newPageIndex);
+        },
+        items: [
+          NavItem(iconPath: Assets.icons('home.svg'), label: "Home"),
+          NavItem(
+              iconPath: Assets.icons('market.svg'), label: localize.market),
+          NavItem(iconPath: Assets.icons('ar.svg'), label: localize.ar),
+          NavItem(iconPath: Assets.icons('chat.svg'), label: "Chat"),
+          NavItem(
+              iconPath: Assets.icons('profile.svg'), label: localize.profile),
+        ]);
   }
 }
 

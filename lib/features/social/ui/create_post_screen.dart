@@ -10,6 +10,7 @@ import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,17 +45,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       ],
       uiSettings: [
         AndroidUiSettings(
-            toolbarTitle: 'Cropper',
+            toolbarTitle: 'Кадрирование', // TODO localize
             toolbarColor: AppColors.background,
             toolbarWidgetColor: AppColors.white,
             initAspectRatio: CropAspectRatioPreset.square,
             statusBarColor: AppColors.background,
-            dimmedLayerColor: AppColors.background,
             backgroundColor: AppColors.background,
             hideBottomControls: true,
             lockAspectRatio: true),
         IOSUiSettings(
-          title: 'Cropper',
+          title: 'Кадрирование', // TODO localize
           aspectRatioLockEnabled: true,
           minimumAspectRatio: 1,
         ),
@@ -70,7 +70,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   }
 
   void validate() {
-    buttonActive = image != null || textController.text.isNotEmpty;
+    buttonActive = image != null;
     setState(() {});
   }
 
@@ -94,6 +94,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         }
       },
       child: CustomScaffold(
+        resize: true,
         padding: const EdgeInsets.symmetric(horizontal: 24),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -102,7 +103,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SmallTextButton(
-                text: localize.discard, 
+                text: localize.discard,
                 onTap: () => Navigator.pop(context),
                 type: SmallTextButtonType.withoutBackground,
               ),
@@ -111,7 +112,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 style: AppFonts.font14w400,
               ),
               SmallTextButton(
-                text: localize.publish, 
+                text: localize.publish,
                 onTap: () => context
                     .read<CreatePostCubit>()
                     .createPost(textController.text, croppedImagesBytes),
@@ -141,10 +142,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     maxLines: 12,
                     minLines: 1,
                     maxLength: 300,
+                    autofocus: true,
                     controller: textController,
                     style: AppFonts.font16w400,
                     decoration: InputDecoration(
-                        hintText: localize.mind, 
+                        hintText: localize.mind,
                         hintStyle: AppFonts.font16w400
                             .copyWith(color: AppColors.grey_727477),
                         border: InputBorder.none),
@@ -156,18 +158,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               height: 12,
             ),
             image == null
-                ? SizedBox(
-                    height: 32,
-                    child: TextButton(
-                      onPressed: pickImage,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.black_s2new_1A1A1A,
-                          foregroundColor: AppColors.black_s2new_1A1A1A,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 32, vertical: 6)),
-                      child: SvgPicture.asset(Assets.icons('attachment.svg')),
-                    ),
-                  )
+                ? Container()
                 : Container(
                     width: MediaQuery.sizeOf(context).width - 48,
                     height: MediaQuery.sizeOf(context).width - 48,
@@ -179,27 +170,40 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     padding: const EdgeInsets.all(8),
                     alignment: Alignment.bottomLeft,
                   ),
-            const SizedBox(
-              height: 12,
+            image == null
+                ? const Spacer()
+                : const SizedBox(
+                    height: 24,
+                  ),
+            CustomTextButton(
+              prefixIcon: SvgPicture.asset(Assets.icons('attachment.svg'), color: AppColors.background, width: 24, height: 24,),
+              text: 'Choose photo', // TODO localize
+              onTap: pickImage,
+              isActive: true,
+              color: image == null ? AppColors.primary : AppColors.white,
+              height: 52,
             ),
-            image != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SmallTextButton(
-                        type: SmallTextButtonType.withBackground,
-                        backgroundColor: Colors.white,
-                        text: localize.delete, 
-                        onTap: () {
-                          image = null;
-                          croppedImage = null;
-                          croppedImagesBytes = null;
-                          validate();
-                        },
-                      ),
-                    ],
-                  )
-                : Container()
+            const SizedBox(
+              height: 32,
+            ),
+            // image != null
+            //     ? Row(
+            //         mainAxisAlignment: MainAxisAlignment.end,
+            //         children: [
+            //           SmallTextButton(
+            //             type: SmallTextButtonType.withBackground,
+            //             backgroundColor: Colors.white,
+            //             text: localize.delete,
+            //             onTap: () {
+            //               image = null;
+            //               croppedImage = null;
+            //               croppedImagesBytes = null;
+            //               validate();
+            //             },
+            //           ),
+            //         ],
+            //       )
+            //     : Container()
           ],
         ),
       ),

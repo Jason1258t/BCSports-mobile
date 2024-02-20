@@ -14,8 +14,6 @@ class UserModel {
 
   Color get avatarColor => Color(banner.color);
 
-  Color get bannerColor => Color(banner.color);
-
   UserModel(this.id, this.displayName, this.username, this.banner,
       this.avatarUrl, this.evmBill, this.favouritesNftList, this.userNftList);
 

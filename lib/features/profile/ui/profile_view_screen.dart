@@ -1,10 +1,15 @@
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
 import 'package:bcsports_mobile/features/profile/bloc/profile_view/profile_view_cubit.dart';
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_view_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
+import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
+import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -74,13 +79,9 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                           maxHeight: sizeof.width * 0.50,
                         ),
                         width: double.infinity,
-                        decoration: user.banner.url == null
-                            ? BoxDecoration(
-                                color: user.bannerColor,
-                              )
-                            : BoxDecoration(
+                        decoration:  BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(user.banner.url!),
+                                    image: AssetImage(Assets.images('profile/profile_photo.png')),
                                     fit: BoxFit.cover),
                               ),
                       ),
@@ -208,20 +209,43 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
 
   Widget buildPostsTab(ProfileViewRepository repository) {
     final localize = AppLocalizations.of(context)!;
+    final sizeOf = MediaQuery.sizeOf(context);
 
     return StreamBuilder(
         stream: repository.userPostsState.stream,
         builder: (context, snapshot) {
           if (snapshot.data == LoadingStateEnum.success &&
               repository.posts.isNotEmpty) {
-            return SliverList(
-                delegate: SliverChildBuilderDelegate(
-              (context, index) => FeedPostWidget(
-                postId: repository.posts[index].postModel.id,
-                source: repository,
+            return SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) => InkWell(
+                  onTap: () {
+                    context.read<PostCommentsCubit>().setPost(
+                        repository.posts[index],
+                        RepositoryProvider.of<ProfileViewRepository>(context));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => CommentsScreen()));
+                  },
+                  child: SizedBox(
+                    width: (sizeOf.width - 4) / 3,
+                    height: (sizeOf.width - 4) / 3,
+                    child: CustomNetworkImage(
+                      color: AppColors.black_s2new_1A1A1A,
+                      url: repository.posts[index].compressedImageUrl!,
+                      child: CustomNetworkImage(
+                          url: repository.posts[index].imageUrl!),
+                    ),
+                  ),
+                ),
+                childCount: repository.posts.length,
               ),
-              childCount: repository.posts.length,
-            ));
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 2,
+                crossAxisSpacing: 2,
+                childAspectRatio: 1,
+              ),
+            );
           } else if (repository.posts.isEmpty) {
             return SliverToBoxAdapter(
                 child: Center(

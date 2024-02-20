@@ -59,8 +59,8 @@ class AppFonts {
   static final font14w400 =
       _font.copyWith(fontSize: 14, fontWeight: FontWeight.w400);
 
-  static final font14w500 = _font.copyWith(
-      fontSize: 14, fontWeight: FontWeight.w300, color: AppColors.white);
+  static final font14w500 =
+      _font.copyWith(fontSize: 14, fontWeight: FontWeight.w500);
 
   static final font11w300 =
       _font.copyWith(fontSize: 11, fontWeight: FontWeight.w300);
@@ -75,7 +75,6 @@ class AppFonts {
   static final font16w300 = _font.copyWith(
       color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300);
 
-    
   static final font64w400 = _font.copyWith(
       color: Colors.white, fontSize: 64, fontWeight: FontWeight.w400);
 
