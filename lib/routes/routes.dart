@@ -24,12 +24,16 @@ import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
+import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/recovery_enter_email_screen.dart';
 
 class AppRoutes {
   static List<Widget> mainPages = [
+    Container(
+      color: AppColors.black,
+    ),
     const MarketScreen(),
     const ArScreen(),
     const FeedScreen(),
@@ -132,6 +136,9 @@ class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
             maintainState: maintainState,
             settings: settings,
             fullscreenDialog: fullscreenDialog);
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 0);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
