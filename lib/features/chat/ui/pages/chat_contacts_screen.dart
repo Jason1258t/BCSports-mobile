@@ -9,6 +9,7 @@ import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
@@ -44,9 +45,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
           isOpenSearch = false;
         });
       },
-      appBar: AppBar(
-        backgroundColor: AppColors.black,
-        automaticallyImplyLeading: false,
+      appBar: EmptyAppBar(
         title: Center(
           child: Text(
             localize.messages,

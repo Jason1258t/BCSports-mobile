@@ -6,7 +6,6 @@ import 'package:bcsports_mobile/features/auth/ui/create_display_name.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_contacts_screen.dart';
-import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_lots_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
@@ -25,7 +24,7 @@ import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/recovery_enter_email_screen.dart';
@@ -124,7 +123,7 @@ class AppRoutes {
   }
 }
 
-class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
+class NoAnimationMaterialPageRoute<T> extends CupertinoPageRoute<T> {
   NoAnimationMaterialPageRoute({
     required WidgetBuilder builder,
     RouteSettings? settings,
@@ -146,7 +145,7 @@ class NoAnimationMaterialPageRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-class AnimatedRoute<T> extends MaterialPageRoute<T> {
+class AnimatedRoute<T> extends CupertinoPageRoute<T> {
   AnimatedRoute({
     required WidgetBuilder builder,
     RouteSettings? settings,
