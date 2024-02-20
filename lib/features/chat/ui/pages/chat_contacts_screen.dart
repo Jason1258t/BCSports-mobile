@@ -102,6 +102,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
                         rooms.sort((room1, room2) => (room1.updatedAt ?? 0)
                             .compareTo(room2.updatedAt ?? 0));
+
+                        rooms = rooms.where((element) => element.updatedAt != element.createdAt).toList();
                         return Column(
                           children: [
                             if (snapshot.hasData) ...generateChats(rooms)

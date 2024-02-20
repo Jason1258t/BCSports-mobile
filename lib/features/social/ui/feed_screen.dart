@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/chat/bloc/user_search_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/home/home_social_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
