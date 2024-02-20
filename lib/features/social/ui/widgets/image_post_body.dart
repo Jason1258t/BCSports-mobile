@@ -46,7 +46,7 @@ class _ImagePostBodyState extends State<ImagePostBody> {
     });
     await Future.delayed(heartScaleDuration);
     setState(() {
-      heartOpacity = heartOpacity == 0 ?  0.8 : 0;
+      heartOpacity = heartOpacity == 0 ? 0.8 : 0;
       heartScale = heartScale == 1 ? 4 : 1;
     });
   }
@@ -100,28 +100,31 @@ class _ImagePostBodyState extends State<ImagePostBody> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                          text: widget.post.authorName,
-                          style: AppFonts.font12w600),
-                      TextSpan(
-                          text: ' ${widget.post.postModel.text}',
-                          style: AppFonts.font12w300.copyWith(
-                              color: const Color(0xFFEBEAEC), height: 1.2)),
-                    ]),
-                    maxLines: showMore ? 10 : 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(children: [
+                          TextSpan(
+                              text: widget.post.authorName,
+                              style: AppFonts.font14w500),
+                          TextSpan(
+                              text: '  ${widget.post.postModel.text}',
+                              style: AppFonts.font14w300.copyWith(
+                                  color: const Color(0xFFEAEAEA), height: 1.2, fontWeight: FontWeight.w100)),
+                        ]),
+                        maxLines: showMore ? 10 : 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
-                if (totalTextLength() > 60) ...[
+                if (totalTextLength() > 80) ...[
                   const SizedBox(
-                    width: 4,
+                    height: 4,
                   ),
                   GestureDetector(
                     onTap: () {
