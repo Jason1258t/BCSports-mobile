@@ -3,11 +3,15 @@ import 'package:bcsports_mobile/features/profile/bloc/user/user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
+import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
+import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -113,15 +117,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             maxHeight: sizeof.width * 0.50,
                           ),
                           width: double.infinity,
-                          decoration: user.banner.url == null
-                              ? BoxDecoration(
-                                  color: user.bannerColor,
-                                )
-                              : BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(user.banner.url!),
-                                      fit: BoxFit.cover),
-                                ),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    Assets.images('profile/profile_photo.png')),
+                                fit: BoxFit.cover),
+                          ),
                         ),
                         Container(
                           alignment: Alignment.bottomCenter,
@@ -266,27 +267,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget buildPostsTab(ProfileRepository repository) {
-        final localize = AppLocalizations.of(context)!;
+    final localize = AppLocalizations.of(context)!;
+    final sizeOf = MediaQuery.sizeOf(context);
 
     return StreamBuilder(
         stream: repository.userPostsState.stream,
         builder: (context, snapshot) {
           if (snapshot.data == LoadingStateEnum.success &&
               repository.posts.isNotEmpty) {
-            return SliverList(
-                delegate: SliverChildBuilderDelegate(
-              (context, index) => FeedPostWidget(
-                postId: repository.posts[index].postId,
-                source: repository,
-                actionsAllowed: true,
+            return SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => InkWell(
+                  onTap: () {
+                    context.read<PostCommentsCubit>().setPost(
+                        repository.posts[index],
+                        RepositoryProvider.of<ProfileRepository>(context));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => CommentsScreen()));
+                  },
+                  child: SizedBox(
+                    width: (sizeOf.width - 4) / 3,
+                    height: (sizeOf.width - 4) / 3,
+                    child: CustomNetworkImage(
+                      color: AppColors.black_s2new_1A1A1A,
+                      url: repository.posts[index].compressedImageUrl!,
+                      child: CustomNetworkImage(
+                          url: repository.posts[index].imageUrl!),
+                    ),
+                  ),
+                ),
+                childCount: repository.posts.length,
               ),
-              childCount: repository.posts.length,
-            ));
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 2,
+                crossAxisSpacing: 2,
+                childAspectRatio: 1,
+              ),
+            );
           } else if (repository.posts.isEmpty) {
             return SliverToBoxAdapter(
                 child: Center(
                     child: Text(
-              localize.you_dont_posts, 
+              localize.you_dont_posts,
               style: AppFonts.font18w400,
             )));
           } else {
