@@ -117,16 +117,34 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 ),
               ),
               const Spacer(),
-              CustomTextButton(
-                text: localize.send_recovery,
-                onTap: () {
-                  context
-                      .read<ResetPasswordCubit>()
-                      .resetPassword(emailController.text.trim());
+              BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+                builder: (context, state) {
+                  bool stateIsActive = true;
+                  int remain = 0;
+                  if (state is ResetPasswordSuccess && state.remain > 0) {
+                    stateIsActive = false;
+                    remain = state.remain;
+                  }
+                  if (state is ResetWaitState) {
+                    stateIsActive = false;
+                    remain = state.remain;
+                  }
+
+                  return CustomTextButton(
+                    text:
+                        stateIsActive ? localize.send_recovery : '$remain sec',
+                    onTap: () {
+                      context
+                          .read<ResetPasswordCubit>()
+                          .resetPassword(emailController.text.trim());
+                    },
+                    isActive: buttonActive && stateIsActive,
+                  );
                 },
-                isActive: buttonActive,
               ),
-              const SizedBox(height: 20,)
+              const SizedBox(
+                height: 20,
+              )
             ],
           )),
     );
