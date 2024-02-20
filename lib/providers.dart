@@ -113,7 +113,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 BuyNftCubit(profileRepository, marketRepository)),
-        BlocProvider(create: (context) => FavouriteCubit(profileRepository)),
+        BlocProvider(create: (context) => FavouriteCubit(profileRepository, marketRepository)),
         BlocProvider(
             create: (context) =>
                 CreatePostCubit(socialRepository, profileRepository)),

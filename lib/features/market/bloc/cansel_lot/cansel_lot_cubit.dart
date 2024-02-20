@@ -13,9 +13,14 @@ class CanselLotCubit extends Cubit<CanselLotState> {
       : super(CanselLotInitial());
 
   Future<void> canselLot(MarketItemModel product) async {
-    await _marketRepository.removeProductFromMarket(product);
-    await _profileRepository.placeNftIntoInventory(product);
-    await _marketRepository.getUserLots();
-    emit(CanselLotInitial());
+    emit(CanselLotLoading());
+    try {
+      await _marketRepository.removeProductFromMarket(product);
+      await _profileRepository.placeNftIntoInventory(product);
+      await _marketRepository.getUserLots();
+      emit(CanselLotSuccess());
+    } catch (e) {
+      emit(CanselLotFailure());
+    }
   }
 }
