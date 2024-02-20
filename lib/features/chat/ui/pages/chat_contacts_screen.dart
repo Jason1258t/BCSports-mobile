@@ -108,9 +108,13 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                     stream: context.read<ChatRepository>().roomsStream,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        List<Room> rooms = snapshot.data as List<Room>;
+
+                        rooms.sort((room1, room2) => (room1.updatedAt ?? 0)
+                            .compareTo(room2.updatedAt ?? 0));
                         return Column(
                           children: [
-                            if (snapshot.hasData) ...generateChats(snapshot)
+                            if (snapshot.hasData) ...generateChats(rooms)
                           ],
                         );
                       }
@@ -166,8 +170,8 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
     );
   }
 
-  List<Widget> generateChats(AsyncSnapshot<List<Room>> snapshot) {
-    return snapshot.data!
+  List<Widget> generateChats(List<Room> rooms) {
+    return rooms
         .map((e) => ChatCardPreviewWidget(
               room: e,
             ))
