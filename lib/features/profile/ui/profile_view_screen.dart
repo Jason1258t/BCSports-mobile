@@ -15,6 +15,7 @@ import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -224,7 +225,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                         repository.posts[index],
                         RepositoryProvider.of<ProfileViewRepository>(context));
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => CommentsScreen()));
+                        CupertinoPageRoute(builder: (_) => CommentsScreen()));
                   },
                   child: SizedBox(
                     width: (sizeOf.width - 4) / 3,

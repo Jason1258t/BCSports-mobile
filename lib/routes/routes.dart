@@ -6,6 +6,7 @@ import 'package:bcsports_mobile/features/auth/ui/create_display_name.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_contacts_screen.dart';
+import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_favourites_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_lots_screen.dart';
 import 'package:bcsports_mobile/features/market/ui/market_product_screen.dart';
@@ -31,12 +32,10 @@ import '../features/auth/ui/recovery_enter_email_screen.dart';
 
 class AppRoutes {
   static List<Widget> mainPages = [
-    Container(
-      color: AppColors.black,
-    ),
+    const FeedScreen(),
     const MarketScreen(),
     const ArScreen(),
-    const FeedScreen(),
+    const ChatContactsScreen(),
     const ProfileScreen()
   ];
 

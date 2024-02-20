@@ -25,6 +25,7 @@ import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/time_difference.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -167,7 +168,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                         .read<PostCommentsCubit>()
                         .setPost(post, widget.source);
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => CommentsScreen()));
+                        CupertinoPageRoute(builder: (_) => CommentsScreen()));
                   }
                 },
                 child: Row(

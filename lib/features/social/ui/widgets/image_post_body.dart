@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -63,7 +64,7 @@ class _ImagePostBodyState extends State<ImagePostBody> {
             GestureDetector(
               onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  CupertinoPageRoute(
                       builder: (context) =>
                           PhotoViewScreen(url: widget.post.imageUrl!))),
               onDoubleTap: () {
