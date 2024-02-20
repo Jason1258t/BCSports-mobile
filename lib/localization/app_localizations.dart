@@ -372,7 +372,7 @@ abstract class AppLocalizations {
   /// No description provided for @favs.
   ///
   /// In en, this message translates to:
-  /// **'favourites'**
+  /// **'Favourites'**
   String get favs;
 
   /// No description provided for @feel_professional.
@@ -624,7 +624,7 @@ abstract class AppLocalizations {
   /// No description provided for @player.
   ///
   /// In en, this message translates to:
-  /// **'player'**
+  /// **'Player'**
   String get player;
 
   /// No description provided for @player_details.

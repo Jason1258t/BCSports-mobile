@@ -143,7 +143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get favourite => 'Favorite';
 
   @override
-  String get favs => 'favourites';
+  String get favs => 'Favourites';
 
   @override
   String get feel_professional => 'Feel professional racer';
@@ -269,7 +269,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get photo => 'Photo';
 
   @override
-  String get player => 'player';
+  String get player => 'Player';
 
   @override
   String get player_details => 'Player Details';
