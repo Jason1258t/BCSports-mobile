@@ -87,12 +87,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     labelText: localize.email_address,
                     hintText: localize.email,
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.only(right: 5),
-                      height: 20,
-                      child: SvgPicture.asset(
-                        Assets.icons('email.svg'),
-                      ),
+                    prefixIcon: SvgPicture.asset(
+                      Assets.icons('email.svg'),
                     ),
                   ),
                   const SizedBox(
@@ -107,11 +103,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     labelText: localize.password,
                     hintText: localize.password,
                     keyboardType: TextInputType.visiblePassword,
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: SvgPicture.asset(
-                        Assets.icons('lock.svg'),
-                      ),
+                    prefixIcon: SvgPicture.asset(
+                      Assets.icons('lock.svg'),
                     ),
                     suffixIcon: InkWell(
                       child: SvgPicture.asset(

@@ -95,7 +95,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
       context.read<ProfileViewRepository>().setUser(userId);
       Navigator.pushNamed(context, AppRouteNames.profileView);
     } else if (userId == profileRepository.user.id) {
-      context.read<MainCubit>().changePageIndexTo(3);
+      context.read<MainCubit>().changePageIndexTo(4);
     }
   }
 
