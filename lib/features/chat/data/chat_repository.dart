@@ -80,13 +80,10 @@ class ChatRepository {
   }
 
   Future<void> getAllUsers() async {
+    socialUserListState.add(LoadingStateEnum.loading);
     final res = (await _users.get()).docs;
-    print(res);
-    res.forEach((element) {
-      print(element.data());
-    });
-
     socialUserList = res.map((doc) => UserModel.fromJson(doc.data())).toList();
+    socialUserListState.add(LoadingStateEnum.success);
   }
 
   void filterUserByInputText(String name, String youId) {
