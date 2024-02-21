@@ -10,9 +10,7 @@ import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/image_post_body.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_actions_bottom_sheet.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/text_post_body.dart';
@@ -104,12 +102,9 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
   @override
   Widget build(BuildContext context) {
     final post = widget.source.getCachedPost(widget.postId)!;
-    final profileRepository = RepositoryProvider.of<ProfileRepository>(context);
-
     final postType =
         post.postModel.imageUrl != null ? PostType.withImage : PostType.text;
 
-    final localize = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
