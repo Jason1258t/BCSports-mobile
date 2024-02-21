@@ -4,7 +4,6 @@ import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/general_statistics.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/market_details_appbar.dart';
-import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
@@ -85,7 +84,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
 
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
-    final localize = AppLocalizations.of(context)!;
 
     return BlocListener<SellCubit, SellState>(
       listener: (context, state) {
