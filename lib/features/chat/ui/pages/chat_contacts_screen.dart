@@ -11,7 +11,6 @@ import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
-import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:bcsports_mobile/widgets/text_form_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,7 +49,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
         title: Center(
           child: Text(
             localize.messages,
-            style: AppFonts.font18w500.copyWith(
+            style: AppFonts.font18w600.copyWith(
               color: AppColors.white,
             ),
           ),
