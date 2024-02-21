@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class NftArButton extends StatelessWidget {
   final bool isActive;
 
-  NftArButton({super.key, required this.isActive});
+  const NftArButton({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
