@@ -25,6 +25,12 @@ class FeedScreen extends StatelessWidget {
 
     return CustomScaffold(
         padding: EdgeInsets.zero,
+        floatingButton: FloatingActionButton(
+          backgroundColor: AppColors.primary,
+          onPressed: () =>
+              Navigator.pushNamed(context, AppRouteNames.createPost),
+          child: Icon(Icons.add, color: AppColors.background, size: 28,),
+        ),
         appBar: EmptyAppBar(
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -45,17 +51,6 @@ class FeedScreen extends StatelessWidget {
                     width: 24,
                     height: 24,
                   ),
-                ),
-                const SizedBox(
-                  width: 16,
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add_circle_outline,
-                    color: AppColors.white,
-                  ),
-                  onPressed: () =>
-                      Navigator.pushNamed(context, AppRouteNames.createPost),
                 ),
               ],
             ),
