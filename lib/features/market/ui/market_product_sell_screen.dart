@@ -132,8 +132,27 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                                 "assets/images/noname_det.png"),
                             image: NetworkImage(marketRepository
                                 .nftService.lastLoadedNft.imagePath)),
+                 
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      PlayerAppStatsWidget(
+                        value: 0,
+                        statsName: localize.favourite,
+                        iconPath: 'assets/icons/like.svg',
+                      ),
+                      PlayerAppStatsWidget(
+                        value: marketRepository.nftService.lastLoadedNft.views,
+                        statsName: localize.views,
+                        iconPath: 'assets/icons/ar.svg',
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 16,

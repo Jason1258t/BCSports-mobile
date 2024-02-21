@@ -12,18 +12,13 @@ import 'package:rxdart/rxdart.dart';
 class MarketRepository {
   late final NftService nftService;
   late final ProfileRepository profileRepository;
-
   List<MarketItemModel> productList = [];
   List<MarketItemModel> lotsList = [];
-  int lastProductFavouritesValue = 0;
 
   Stream<QuerySnapshot> marketStream =
       FirebaseCollections.marketCollection.snapshots();
 
   BehaviorSubject<LoadingStateEnum> lotsStream =
-      BehaviorSubject.seeded(LoadingStateEnum.wait);
-
-  BehaviorSubject<LoadingStateEnum> favouritesValueStream =
       BehaviorSubject.seeded(LoadingStateEnum.wait);
 
   MarketRepository({required this.nftService, required this.profileRepository});
@@ -70,6 +65,7 @@ class MarketRepository {
 
   MarketItemModel parseMarketDocument(doc) {
     Map productMap = doc.data() as Map;
+    print(productMap);
     final nftId = productMap['nft_id'];
     final NftModel productNft = nftService.nftCollectionList
         .where((nftItem) => nftItem.documentId == nftId)
@@ -80,23 +76,18 @@ class MarketRepository {
     return marketItemModel;
   }
 
-  Future<void> getLotFavouritesValue(String lotId) async {
+  Future<int> getLotFavouritesValue(String lotId) async {
     final userColl = await FirebaseCollections.usersCollection.get();
-    try {
-      int total = 0;
-      userColl.docs.forEach((doc) {
-        final userFavs = doc.data()["favourites_list"] ?? [];
+    int total = 0;
 
-        if (userFavs.contains(lotId)) {
-          total += 1;
-        }
-      });
+    userColl.docs.forEach((doc) {
+      final userFavs = doc.data()["favourites_list"] ?? [];
 
-      lastProductFavouritesValue = total;
-      favouritesValueStream.add(LoadingStateEnum.success);
-    } catch (e) {
-      favouritesValueStream.add(LoadingStateEnum.fail);
-      log("Failed to load fav-s value, lot id $lotId");
-    }
+      if (userFavs.contains(lotId)) {
+        total += 1;
+      }
+    });
+
+    return total;
   }
 }
