@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\Users\noano\flutter_sdk\flutter
-FLUTTER_APPLICATION_PATH=C:\Users\noano\BCSports-mobile
+FLUTTER_ROOT=C:\flutter\flutter
+FLUTTER_APPLICATION_PATH=C:\flutter_projects\bcsports_mobile
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
