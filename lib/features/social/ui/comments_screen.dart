@@ -1,5 +1,4 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/comment_widget.dart';
@@ -19,9 +18,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentsScreen extends StatelessWidget {
-  CommentsScreen({super.key, this.isYours});
+  CommentsScreen({super.key, this.isYours = false});
 
-  bool? isYours;
+  bool isYours;
 
   final messageController = TextEditingController();
 
@@ -64,24 +63,28 @@ class CommentsScreen extends StatelessWidget {
                 localize.post,
                 style: AppFonts.font18w500,
               ),
-              InkWell(
-                  onTap: () async {
-                    await showPostActions(bloc.post!, (){
-                      repository.getUserPosts();
+              isYours
+                  ? InkWell(
+                      onTap: () async {
+                        await showPostActions(bloc.post!, () {
+                          repository.getUserPosts();
 
-                      Navigator.pop(context);
-                      print(1);
-                    });
-                  },
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: SvgPicture.asset(
-                      Assets.icons('three-dots-horizontal.svg'),
-                      width: 20,
-                      height: 20,
+                          Navigator.pop(context);
+                          print(1);
+                        });
+                      },
+                      child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          Assets.icons('three-dots-horizontal.svg'),
+                          width: 20,
+                          height: 20,
+                        ),
+                      ))
+                  : const SizedBox(
+                      width: 36,
                     ),
-                  )),
             ],
           ),
         ),
@@ -109,6 +112,7 @@ class CommentsScreen extends StatelessWidget {
                         postId: bloc.post!.postModel.id,
                         source: bloc.source!,
                         commentsActive: false,
+                        actionsAllowed: !isYours,
                       ),
                     ),
                     if (state is PostCommentsSuccessState ||
@@ -129,8 +133,7 @@ class CommentsScreen extends StatelessWidget {
                       ),
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
-                        (context, index) =>
-                            CommentWidget(bloc.comments[index]),
+                        (context, index) => CommentWidget(bloc.comments[index]),
                         childCount: bloc.comments.length,
                       ))
                     ] else if (!(state is PostCommentsSuccessState ||
@@ -198,8 +201,8 @@ class CommentsScreen extends StatelessWidget {
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(100)),
                         padding: const EdgeInsets.all(6),
-                        child: SvgPicture.asset(
-                            Assets.icons('send_comment.svg')),
+                        child:
+                            SvgPicture.asset(Assets.icons('send_comment.svg')),
                       ),
                     ),
                   )
