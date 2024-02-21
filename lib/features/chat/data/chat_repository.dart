@@ -16,7 +16,7 @@ class ChatRepository {
   List<UserModel> socialUserList = [];
 
   BehaviorSubject<LoadingStateEnum> socialUserListState =
-  BehaviorSubject.seeded(LoadingStateEnum.wait);
+      BehaviorSubject.seeded(LoadingStateEnum.wait);
 
   List<UserModel> filteredUserList = [];
 
@@ -28,11 +28,11 @@ class ChatRepository {
     subscribeRoomsUpdates();
   }
 
-  void setActiveUser(UserModel user){
+  void setActiveUser(UserModel user) {
     activeUser = user;
   }
 
-  void init(){
+  void init() {
     FirebaseChatCore.instance
         .setConfig(const FirebaseChatCoreConfig(null, 'rooms', 'chat_users'));
     roomsStream = chatCore.rooms();
@@ -80,17 +80,15 @@ class ChatRepository {
   }
 
   Future<void> getAllUsers() async {
+    socialUserListState.add(LoadingStateEnum.loading);
     final res = (await _users.get()).docs;
-    print(res);
-    res.forEach((element) {
-      print(element.data());
-    });
-
     socialUserList = res.map((doc) => UserModel.fromJson(doc.data())).toList();
+    socialUserListState.add(LoadingStateEnum.success);
   }
 
   void filterUserByInputText(String name, String youId) {
-    filteredUserList =
-        socialUserList.where((user) => (user.username).contains(name) && user.id != youId).toList();
+    filteredUserList = socialUserList
+        .where((user) => (user.username).contains(name) && user.id != youId)
+        .toList();
   }
 }

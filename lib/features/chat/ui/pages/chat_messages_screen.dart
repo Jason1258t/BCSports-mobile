@@ -137,9 +137,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                 width: 16,
                               ),
                               Container(
-                                width: MediaQuery.sizeOf(context).width *
-                                    290 /
-                                    375,
+                                width: MediaQuery.sizeOf(context).width - 88,
                                 alignment: Alignment.centerLeft,
                                 child: TextField(
                                   minLines: 1,
@@ -160,6 +158,8 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                     sendMessage();
                                   },
                                   child: Ink(
+                                    width: 32,
+                                    height: 32,
                                     decoration: BoxDecoration(
                                         color: AppColors.primary,
                                         borderRadius:
