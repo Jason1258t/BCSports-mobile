@@ -10,7 +10,6 @@ import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/favourites_value/favourites_value_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/sell/sell_cubit.dart';
@@ -100,13 +99,8 @@ class MyBlocProviders extends StatelessWidget {
           lazy: false,
         ),
         BlocProvider(
-            create: (context) => AppCubit(
-                authRepository,
-                profileRepository,
-                socialRepository,
-                favouritesRepository,
-                marketRepository,
-                chatRepository),
+            create: (context) => AppCubit(authRepository, profileRepository,
+                socialRepository, favouritesRepository, marketRepository,chatRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(
@@ -119,9 +113,7 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 BuyNftCubit(profileRepository, marketRepository)),
-        BlocProvider(
-            create: (context) =>
-                FavouriteCubit(profileRepository, marketRepository)),
+        BlocProvider(create: (context) => FavouriteCubit(profileRepository, marketRepository)),
         BlocProvider(
             create: (context) =>
                 CreatePostCubit(socialRepository, profileRepository)),
@@ -148,12 +140,9 @@ class MyBlocProviders extends StatelessWidget {
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
         BlocProvider(create: (context) => DeletePostCubit(profileRepository)),
+        BlocProvider(create: (context) => CreateDisplayNameCubit(profileRepository)),
         BlocProvider(
-            create: (context) => CreateDisplayNameCubit(profileRepository)),
-        BlocProvider(
-            create: (context) => LocalizationCubit(localizationService)),
-        BlocProvider(
-            create: (context) => FavouritesValueCubit(marketRepository))
+            create: (context) => LocalizationCubit(localizationService))
       ],
       child: const MyApp(),
     );

@@ -1,6 +1,5 @@
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
-import 'package:bcsports_mobile/features/market/bloc/favourites_value/favourites_value_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
@@ -12,7 +11,6 @@ import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:bcsports_mobile/widgets/popups/buy.dart';
@@ -37,7 +35,6 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   void initState() {
     initProviders();
     nftCubit.getNftDetails(widget.product.nft);
-    marketRepository.getLotFavouritesValue(widget.product.id);
 
     super.initState();
   }
@@ -58,10 +55,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   void onLikeTap(bool isLiked) {
     if (isLiked) {
       context.read<FavouriteCubit>().removeFromFavourites(widget.product);
-      context.read<FavouritesValueCubit>().decrementFavouriteValue();
     } else {
       context.read<FavouriteCubit>().markAsFavourite(widget.product);
-      context.read<FavouritesValueCubit>().incrementFavouriteValue();
     }
   }
 
@@ -192,73 +187,10 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(2),
-                      width: size.width * 0.43,
-                      height: 56,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColors.black_262627,
-                          border: Border.all(
-                              width: 1, color: AppColors.black_3A3A3A)),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                              top: 8,
-                              right: 8,
-                              child: SvgPicture.asset(
-                                "assets/icons/like.svg",
-                                color: AppColors.brown_6C6226,
-                              )),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                BlocBuilder<FavouritesValueCubit,
-                                    FavouritesValueState>(
-                                  builder: (context, state) {
-                                    if (state is FavouritesValueLoading) {
-                                      return Center(
-                                        child: AppAnimations.circleIndicator,
-                                      );
-                                    } else if (state
-                                        is FavouritesValueSuccess) {
-                                      return Text(
-                                        marketRepository
-                                            .lastProductFavouritesValue
-                                            .toString(),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: AppFonts.font16w500
-                                            .copyWith(color: AppColors.white),
-                                      );
-                                    }
-
-                                    return Text(
-                                      '-',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: AppFonts.font16w500
-                                          .copyWith(color: AppColors.white),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  localize.favourite.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: AppFonts.font12w400
-                                      .copyWith(color: AppColors.white),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                    PlayerAppStatsWidget(
+                      value: 0,
+                      statsName: localize.favourite,
+                      iconPath: 'assets/icons/like.svg',
                     ),
                     PlayerAppStatsWidget(
                       value: nft.views,

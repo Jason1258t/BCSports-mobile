@@ -28,7 +28,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.blockchain.sports"
+    namespace "com.example.bcsports_mobile"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.blockchain.sports"
+        applicationId "com.example.bcsports_mobile"
         multiDexEnabled true
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion

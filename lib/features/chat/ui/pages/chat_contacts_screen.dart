@@ -8,7 +8,6 @@ import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
-import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -92,47 +91,36 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
             const SizedBox(
               height: 20,
             ),
-            StreamBuilder<LoadingStateEnum>(
-                stream: context.read<ChatRepository>().socialUserListState,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data! == LoadingStateEnum.success) {
-                    return Stack(
-                      children: [buildRooms(), buildSearch()],
-                    );
-                  }
-                  return Center(
-                    child: AppAnimations.circleIndicator,
-                  );
-                }),
+            Stack(
+              children: [
+                StreamBuilder<List<Room>>(
+                    stream: context.read<ChatRepository>().roomsStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Room> rooms = snapshot.data as List<Room>;
+
+                        rooms.sort((room1, room2) => (room1.updatedAt ?? 0)
+                            .compareTo(room2.updatedAt ?? 0));
+
+                        rooms = rooms.where((element) => element.updatedAt != element.createdAt).toList();
+                        return Column(
+                          children: [
+                            if (snapshot.hasData) ...generateChats(rooms)
+                          ],
+                        );
+                      }
+
+                      return Center(
+                        child: AppAnimations.circleIndicator,
+                      );
+                    }),
+                buildSearch()
+              ],
+            ),
           ],
         ),
       ),
     );
-  }
-
-  Widget buildRooms() {
-    return StreamBuilder<List<Room>>(
-        stream: context.read<ChatRepository>().roomsStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Room> rooms = snapshot.data as List<Room>;
-
-            rooms.sort((room1, room2) =>
-                (room1.updatedAt ?? 0).compareTo(room2.updatedAt ?? 0));
-
-            rooms = rooms
-                .where((element) => element.updatedAt != element.createdAt)
-                .toList();
-            return Column(
-              children: [if (snapshot.hasData) ...generateChats(rooms)],
-            );
-          }
-
-          return Center(
-            child: AppAnimations.circleIndicator,
-          );
-        });
   }
 
   Widget buildSearch() {

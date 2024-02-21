@@ -124,10 +124,5 @@
 "yes" : "Yes",
 "you_dont_nfts" : "Sorry, you don't have NFTs.",
 "you_dont_posts" : "Sorry, you don't have Posts.",
-"stats" : "Statistic",
-"chats" : "Chats",
-"home" : "Home",
-"add_nft" : "Add NFT",
-"choose_photo": "Choose photo",
-"crop": "Crop"
+"stats" : "Statistic"
 }
