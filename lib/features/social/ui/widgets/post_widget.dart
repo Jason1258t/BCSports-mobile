@@ -23,6 +23,7 @@ import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/utils/time_difference.dart';
 import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
+import 'package:bcsports_mobile/widgets/modal_bottom_sheets/app_modal_bottom_sheets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,7 +105,6 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
     final post = widget.source.getCachedPost(widget.postId)!;
     final postType =
         post.postModel.imageUrl != null ? PostType.withImage : PostType.text;
-
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,15 +280,6 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
   }
 
   void showPostActions(PostViewModel post) {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-        ),
-        builder: (_) => PostActionsBottomSheet(post: post));
+    AppModalBottomSheet.show(context, PostActionsBottomSheet(post: post));
   }
 }
