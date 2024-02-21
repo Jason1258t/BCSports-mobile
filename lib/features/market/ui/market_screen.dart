@@ -91,7 +91,7 @@ class _MarketScreenState extends State<MarketScreen> {
                           iconPath: 'assets/icons/like.svg',
                         ),
                         const SizedBox(
-                          width: 16,
+                          width: 24,
                         ),
                         MiniAppBarButton(
                           onTap: onMyLotsTap,
@@ -115,20 +115,11 @@ class _MarketScreenState extends State<MarketScreen> {
                         Navigator.pushNamed(context, AppRouteNames.wallet);
                       },
                       borderRadius: BorderRadius.circular(31),
-                      child: SvgPicture.asset('assets/icons/wallet2.svg'),
+                      child: SvgPicture.asset('assets/icons/wallet2.svg', width: 21,),
                     ),
                   ),
                 ],
               )),
-          // SliverPadding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 23),
-          //   sliver: SliverToBoxAdapter(
-          //     child: Text(
-          //       localize.all_collection,
-          //       style: AppFonts.font18w600,
-          //     ),
-          //   ),
-          // ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 16),
           ),
