@@ -26,6 +26,7 @@ class FeedScreen extends StatelessWidget {
     return CustomScaffold(
         padding: EdgeInsets.zero,
         floatingButton: FloatingActionButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1000)),
           backgroundColor: AppColors.primary,
           onPressed: () =>
               Navigator.pushNamed(context, AppRouteNames.createPost),
