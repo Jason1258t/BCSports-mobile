@@ -23,7 +23,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void signInWithGoogle() async {
-    emit(AuthInProcess());
     try {
       await _authRepository.signInWithGoogle();
       emit(AuthSuccessState());
@@ -34,7 +33,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void signInWithApple() async {
-    emit(AuthInProcess());
     try {
       await _authRepository.signInWithApple();
       emit(AuthSuccessState());
