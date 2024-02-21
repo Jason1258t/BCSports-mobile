@@ -154,24 +154,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ToggleButton(
                           activeTap: repository.activeTab,
                           width: sizeof.width * 0.4,
-                          enumTap: ProfileTabsEnum.nft,
-                          text: 'NFT',
-                          onTap: () {
+                          enumTap1: ProfileTabsEnum.nft,
+                          enumTap2: ProfileTabsEnum.posts,
+                          text1: 'NFT',
+                          text2: localize.posts,
+                          onTap1: () {
                             repository.setProfileActiveTab(ProfileTabsEnum.nft);
                             setState(() {});
                           },
-                        ),
-                        ToggleButton(
-                          activeTap: repository.activeTab,
-                          width: sizeof.width * 0.4,
-                          enumTap: ProfileTabsEnum.posts,
-                          text: localize.posts,
-                          onTap: () {
+                          onTap2: () {
                             repository
                                 .setProfileActiveTab(ProfileTabsEnum.posts);
                             setState(() {});

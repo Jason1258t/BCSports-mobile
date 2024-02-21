@@ -1,6 +1,5 @@
 import 'package:bcsports_mobile/features/auth/bloc/set_name/create_display_name_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
-import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
