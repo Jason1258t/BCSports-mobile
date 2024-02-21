@@ -44,7 +44,6 @@ class CustomButtonNavBar extends StatelessWidget {
         ]);
   }
 }
-
 class NavItem extends BottomNavigationBarItem {
   final String iconPath;
 
