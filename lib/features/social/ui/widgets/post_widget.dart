@@ -12,6 +12,7 @@ import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/image_post_body.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_actions_bottom_sheet.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/report_modal_bottom_sheet.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/small_avatar.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/text_post_body.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
@@ -37,7 +38,7 @@ class FeedPostWidget extends StatefulWidget {
     required this.postId,
     required this.source,
     this.commentsActive = true,
-    this.actionsAllowed = false,
+    this.actionsAllowed = true,
   });
 
   final String postId;
@@ -279,7 +280,43 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
     }
   }
 
+//  TODO rename
   void showPostActions(PostViewModel post) {
+    AppModalBottomSheet.show(context, ReportModalBottomSheet());
+  }
+// TODO rename 
+  void showPostActions1(PostViewModel post) {
     AppModalBottomSheet.show(context, PostActionsBottomSheet(post: post));
+  }
+}
+
+class PostReportLineWidget extends StatelessWidget {
+  final String iconPath;
+  final String text;
+
+  const PostReportLineWidget(
+      {super.key, required this.iconPath, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            iconPath,
+            color: AppColors.white,
+            width: 24,
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Text(
+            text,
+            style: AppFonts.font14w300.copyWith(color: AppColors.white),
+          )
+        ],
+      ),
+    );
   }
 }
