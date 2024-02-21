@@ -381,4 +381,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stats => 'Statistic';
+
+  @override
+  String get chats => 'Chats';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get add_nft => 'Add NFT';
+
+  @override
+  String get choose_photo => 'Choose photo';
+
+  @override
+  String get crop => 'Crop';
 }

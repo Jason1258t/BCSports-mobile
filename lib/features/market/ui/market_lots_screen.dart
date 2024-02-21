@@ -43,6 +43,8 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocListener<CanselLotCubit, CanselLotState>(
       listener: (context, state) {
         if (state is CanselLotFailure || state is CanselLotSuccess) {
@@ -78,7 +80,7 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                     child: CustomTextButton(
                       isActive: true,
                       onTap: () => Navigator.pop(context),
-                      text: "Add NFT",
+                      text: localize.add_nft,
                       height: 52,
                     ),
                   );

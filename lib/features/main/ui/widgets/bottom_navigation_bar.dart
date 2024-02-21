@@ -34,11 +34,11 @@ class CustomButtonNavBar extends StatelessWidget {
           context.read<MainCubit>().changePageIndexTo(newPageIndex);
         },
         items: [
-          NavItem(iconPath: Assets.icons('home.svg'), label: "Home"),
+          NavItem(iconPath: Assets.icons('home.svg'), label: localize.home),
           NavItem(
               iconPath: Assets.icons('market.svg'), label: localize.market),
           NavItem(iconPath: Assets.icons('ar.svg'), label: localize.ar),
-          NavItem(iconPath: Assets.icons('chat.svg'), label: "Chat"),
+          NavItem(iconPath: Assets.icons('chat.svg'), label: localize.chats),
           NavItem(
               iconPath: Assets.icons('profile.svg'), label: localize.profile),
         ]);
