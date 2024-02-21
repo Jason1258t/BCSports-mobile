@@ -132,7 +132,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                                 "assets/images/noname_det.png"),
                             image: NetworkImage(marketRepository
                                 .nftService.lastLoadedNft.imagePath)),
-                 
                       ],
                     ),
                   ),
