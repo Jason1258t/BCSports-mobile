@@ -402,4 +402,28 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get try_again => 'Попробуйте снова';
+
+  @override
+  String get spam => 'Спам';
+
+  @override
+  String get violence => 'Насилие';
+
+  @override
+  String get child_abuse => 'Абъюз детей';
+
+  @override
+  String get porn => 'Порнография';
+
+  @override
+  String get copy => 'Кража';
+
+  @override
+  String get drugs => 'Наркотики';
+
+  @override
+  String get personal_details => 'Персональные данные';
+
+  @override
+  String get other => 'Другое';
 }

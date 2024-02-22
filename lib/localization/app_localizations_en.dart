@@ -402,4 +402,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get try_again => 'Try again';
+
+  @override
+  String get spam => 'Spam';
+
+  @override
+  String get violence => 'Violence';
+
+  @override
+  String get child_abuse => 'Child Abuse';
+
+  @override
+  String get porn => 'Pornography';
+
+  @override
+  String get copy => 'Copyright';
+
+  @override
+  String get drugs => 'Illegal drugs';
+
+  @override
+  String get personal_details => 'Personal details';
+
+  @override
+  String get other => 'Other';
 }

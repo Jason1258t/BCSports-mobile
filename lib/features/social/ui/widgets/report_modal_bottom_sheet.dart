@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/social/bloc/report/report_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
+import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,14 @@ class ReportModalBottomSheet extends StatefulWidget {
 
 class _ReportModalBottomSheetState extends State<ReportModalBottomSheet> {
   void onTap(String reportType) {
-    context
-        .read<ReportCubit>()
-        .report(postId: widget.postId, type: reportType);
+    context.read<ReportCubit>().report(postId: widget.postId, type: reportType);
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
       decoration: BoxDecoration(
@@ -49,42 +50,42 @@ class _ReportModalBottomSheetState extends State<ReportModalBottomSheet> {
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/trash.svg',
-            text: "Spam",
+            text: localize.spam,
             onTap: () => onTap(ReportType.spam),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/gun.svg',
-            text: "Violence",
+            text: localize.violence,
             onTap: () => onTap(ReportType.violence),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/hand.svg',
-            text: "Child Abuse",
+            text: localize.child_abuse,
             onTap: () => onTap(ReportType.childAbuse),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/porno.svg',
-            text: "Pornograpghy",
+            text: localize.porn,
             onTap: () => onTap(ReportType.porn),
           ),
           PostReportLineWidget(
-            iconPath: 'assets/icons/trash.svg',
-            text: "Copyright",
+            iconPath: 'assets/icons/copyright.svg',
+            text: localize.copy,
             onTap: () => onTap(ReportType.copyright),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/pills.svg',
-            text: "Illegal Drugs",
+            text: localize.drugs,
             onTap: () => onTap(ReportType.drugs),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/person_details.svg',
-            text: "Personal Details",
+            text: localize.personal_details,
             onTap: () => onTap(ReportType.personalDetails),
           ),
           PostReportLineWidget(
             iconPath: 'assets/icons/info.svg',
-            text: "Other",
+            text: localize.other,
             onTap: () => onTap(ReportType.other),
           ),
         ],

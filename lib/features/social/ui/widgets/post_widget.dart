@@ -302,7 +302,7 @@ class PostReportLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () => onTap(),
       child: Container(
         margin: const EdgeInsets.only(bottom: 8),

@@ -890,6 +890,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get try_again;
+
+  /// No description provided for @spam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get spam;
+
+  /// No description provided for @violence.
+  ///
+  /// In en, this message translates to:
+  /// **'Violence'**
+  String get violence;
+
+  /// No description provided for @child_abuse.
+  ///
+  /// In en, this message translates to:
+  /// **'Child Abuse'**
+  String get child_abuse;
+
+  /// No description provided for @porn.
+  ///
+  /// In en, this message translates to:
+  /// **'Pornography'**
+  String get porn;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copyright'**
+  String get copy;
+
+  /// No description provided for @drugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Illegal drugs'**
+  String get drugs;
+
+  /// No description provided for @personal_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal details'**
+  String get personal_details;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

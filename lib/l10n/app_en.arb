@@ -132,5 +132,13 @@
 "crop": "Crop",
 "choose_photo": "Choose photo",
 "report_sended": "Report sended",
-"try_again": "Try again"
+"try_again": "Try again",
+"spam": "Spam",
+"violence": "Violence",
+"child_abuse": "Child Abuse",
+"porn": "Pornography",
+"copy": "Copyright",
+"drugs": "Illegal drugs",
+"personal_details": "Personal details",
+"other": "Other"
 }
