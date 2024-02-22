@@ -7,6 +7,7 @@ import 'package:bcsports_mobile/features/profile/data/profile_view_repository.da
 import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/report/report_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
@@ -282,9 +283,10 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
 
 //  TODO rename
   void showPostActions(PostViewModel post) {
-    AppModalBottomSheet.show(context, ReportModalBottomSheet());
+    AppModalBottomSheet.show(context, ReportModalBottomSheet(postId: widget.postId,));
   }
-// TODO rename 
+
+// TODO rename
   void showPostActions1(PostViewModel post) {
     AppModalBottomSheet.show(context, PostActionsBottomSheet(post: post));
   }
@@ -293,29 +295,33 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
 class PostReportLineWidget extends StatelessWidget {
   final String iconPath;
   final String text;
+  final Function onTap;
 
   const PostReportLineWidget(
-      {super.key, required this.iconPath, required this.text});
+      {super.key, required this.iconPath, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            iconPath,
-            color: AppColors.white,
-            width: 24,
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-          Text(
-            text,
-            style: AppFonts.font14w300.copyWith(color: AppColors.white),
-          )
-        ],
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        child: Row(
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              color: AppColors.white,
+              width: 24,
+            ),
+            const SizedBox(
+              width: 16,
+            ),
+            Text(
+              text,
+              style: AppFonts.font14w300.copyWith(color: AppColors.white),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ abstract class FirebaseCollectionNames {
   static const String playersNft = 'players_NFT';
   static const String chatUsers = 'chat_users';
   static const String market = 'market';
+  static const String reports = 'reports';
 }
 
 abstract class FirebaseCollections {
@@ -24,7 +25,8 @@ abstract class FirebaseCollections {
       _firestore.collection(FirebaseCollectionNames.playersNft);
   static final marketCollection =
       _firestore.collection(FirebaseCollectionNames.market);
-  
+  static final reportCollection =
+      _firestore.collection(FirebaseCollectionNames.reports);
 }
 
 abstract class CustomFilters {}
