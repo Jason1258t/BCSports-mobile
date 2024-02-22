@@ -1,3 +1,4 @@
+
 {
 "about" : "About player",
 "academy" : "Academy",
@@ -124,5 +125,10 @@
 "yes" : "Yes",
 "you_dont_nfts" : "Sorry, you don't have NFTs.",
 "you_dont_posts" : "Sorry, you don't have Posts.",
-"stats" : "Statistic"
+"stats" : "Statistic",
+"chats" : "Chats",
+"home" : "Home",
+"add_nft" : "Add NFT",
+"crop": "Crop",
+"choose_photo": "Choose photo"
 }

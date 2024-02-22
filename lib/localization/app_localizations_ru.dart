@@ -381,4 +381,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get stats => 'Статистика';
+
+  @override
+  String get chats => 'Чаты';
+
+  @override
+  String get home => 'Главная';
+
+  @override
+  String get add_nft => 'Добавить NFT';
+
+  @override
+  String get crop => 'Кадрирование';
+
+  @override
+  String get choose_photo => 'Выбрать фото';
 }

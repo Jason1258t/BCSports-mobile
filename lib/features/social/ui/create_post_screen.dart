@@ -34,6 +34,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Uint8List? croppedImagesBytes;
 
   void pickImage() async {
+    final localize = AppLocalizations.of(context)!;
+
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (image == null) return;
@@ -45,7 +47,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       ],
       uiSettings: [
         AndroidUiSettings(
-            toolbarTitle: 'Кадрирование', // TODO localize
+            toolbarTitle: localize.crop, 
             toolbarColor: AppColors.background,
             toolbarWidgetColor: AppColors.white,
             initAspectRatio: CropAspectRatioPreset.square,
@@ -54,7 +56,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             hideBottomControls: true,
             lockAspectRatio: true),
         IOSUiSettings(
-          title: 'Кадрирование', // TODO localize
+          title: localize.crop, 
           aspectRatioLockEnabled: true,
           minimumAspectRatio: 1,
         ),
@@ -176,8 +178,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     height: 24,
                   ),
             CustomTextButton(
-              prefixIcon: SvgPicture.asset(Assets.icons('attachment.svg'), color: AppColors.background, width: 24, height: 24,),
-              text: 'Choose photo', // TODO localize
+              prefixIcon: SvgPicture.asset(
+                Assets.icons('attachment.svg'),
+                color: AppColors.background,
+                width: 24,
+                height: 24,
+              ),
+              text: localize.choose_photo,
               onTap: pickImage,
               isActive: true,
               color: image == null ? AppColors.primary : AppColors.white,

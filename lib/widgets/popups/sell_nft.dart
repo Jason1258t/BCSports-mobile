@@ -147,7 +147,7 @@ class _SellNftPopupState extends State<SellNftPopup> {
                 CustomTextButton(
                     width: 170,
                     height: 49,
-                    text: localize.put_up_for_sale,
+                    text: localize.sell,
                     onTap: onBuyNftTap,
                     isActive: isActive())
               ],

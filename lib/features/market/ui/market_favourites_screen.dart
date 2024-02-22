@@ -32,6 +32,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final localize = AppLocalizations.of(context)!;
 
     return Container(
       color: AppColors.black,
@@ -50,7 +51,7 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
                   child: CustomTextButton(
                     isActive: true,
                     onTap: () => Navigator.pop(context),
-                    text: "Add NFT",
+                    text: localize.add_nft,
                     height: 52,
                   ),
                 );

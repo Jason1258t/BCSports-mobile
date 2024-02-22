@@ -848,6 +848,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Statistic'**
   String get stats;
+
+  /// No description provided for @chats.
+  ///
+  /// In en, this message translates to:
+  /// **'Chats'**
+  String get chats;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @add_nft.
+  ///
+  /// In en, this message translates to:
+  /// **'Add NFT'**
+  String get add_nft;
+
+  /// No description provided for @crop.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get crop;
+
+  /// No description provided for @choose_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get choose_photo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
