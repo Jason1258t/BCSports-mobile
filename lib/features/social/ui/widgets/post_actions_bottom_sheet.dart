@@ -7,8 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostActionsBottomSheet extends StatelessWidget {
-  const PostActionsBottomSheet({super.key, required this.post});
+  const PostActionsBottomSheet({super.key, required this.post, this.onDelete});
+
   final PostViewModel post;
+  final Function()? onDelete;
+
   @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
@@ -42,6 +45,10 @@ class PostActionsBottomSheet extends StatelessWidget {
             onTap: () {
               context.read<DeletePostCubit>().deletePost(post.postId);
               Navigator.pop(context);
+
+              if(onDelete != null){
+                onDelete!();
+              }
             },
             isActive: true,
             height: 40,
