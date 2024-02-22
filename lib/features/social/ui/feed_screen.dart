@@ -31,11 +31,11 @@ class FeedScreen extends StatelessWidget {
 
         if (state is ReportFailure) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar("Попробуйте еще раз ("));
+              .showSnackBar(AppSnackBars.snackBar(localize.try_again));
         }
         if (state is ReportSuccess) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar("Жалоба отправлена"));
+              .showSnackBar(AppSnackBars.snackBar(localize.report_sended));
         }
       },
       child: CustomScaffold(

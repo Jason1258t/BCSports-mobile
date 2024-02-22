@@ -396,4 +396,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get choose_photo => 'Выбрать фото';
+
+  @override
+  String get report_sended => 'Жалоба отправлена';
+
+  @override
+  String get try_again => 'Попробуйте снова';
 }

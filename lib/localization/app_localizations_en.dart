@@ -396,4 +396,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get choose_photo => 'Choose photo';
+
+  @override
+  String get report_sended => 'Report sended';
+
+  @override
+  String get try_again => 'Try again';
 }
