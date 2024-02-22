@@ -35,7 +35,9 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   @override
   void initState() {
     initProviders();
+    
     nftCubit.getNftDetails(widget.product.nft);
+    marketRepository.getLotFavouritesValue(widget.product.id);
 
     super.initState();
   }
@@ -193,7 +195,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                     BlocBuilder<FavouritesValueCubit, FavouritesValueState>(
                       builder: (context, state) {
                         return PlayerAppStatsWidget(
-                          value: marketRepository.lastProductFavouritesValue.toString(),
+                          value: marketRepository.lastProductFavouritesValue
+                              .toString(),
                           statsName: localize.favourite,
                           iconPath: 'assets/icons/like.svg',
                         );
