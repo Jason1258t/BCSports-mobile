@@ -260,7 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         repository.posts[index],
                         RepositoryProvider.of<ProfileRepository>(context));
                     Navigator.push(context,
-                        CupertinoPageRoute(builder: (_) => CommentsScreen()));
+                        CupertinoPageRoute(builder: (_) => CommentsScreen(isYours: true)));
                   },
                   child: SizedBox(
                     width: (sizeOf.width - 4) / 3,

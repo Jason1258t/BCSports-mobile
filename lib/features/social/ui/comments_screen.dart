@@ -1,5 +1,8 @@
+import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/comment_widget.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/post_actions_bottom_sheet.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
@@ -15,15 +18,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CommentsScreen extends StatelessWidget {
-  CommentsScreen({super.key});
+  CommentsScreen({super.key, this.isYours = false});
+
+  bool isYours;
 
   final messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<PostCommentsCubit>(context);
+    final repository = RepositoryProvider.of<ProfileRepository>(context);
 
     final localize = AppLocalizations.of(context)!;
+
+    Future<void> showPostActions(
+        PostViewModel post, Function() onDeleted) async {
+      await showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          builder: (_) => PostActionsBottomSheet(post: post));
+      onDeleted();
+    }
 
     return CustomScaffold(
       padding: EdgeInsets.zero,
@@ -42,9 +63,28 @@ class CommentsScreen extends StatelessWidget {
                 localize.post,
                 style: AppFonts.font18w500,
               ),
-              const SizedBox(
-                width: 46,
-              )
+              isYours
+                  ? InkWell(
+                      onTap: () async {
+                        await showPostActions(bloc.post!, () {
+                          repository.getUserPosts();
+
+                          Navigator.pop(context);
+                          print(1);
+                        });
+                      },
+                      child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: SvgPicture.asset(
+                          Assets.icons('three-dots-horizontal.svg'),
+                          width: 20,
+                          height: 20,
+                        ),
+                      ))
+                  : const SizedBox(
+                      width: 36,
+                    ),
             ],
           ),
         ),
@@ -72,6 +112,7 @@ class CommentsScreen extends StatelessWidget {
                         postId: bloc.post!.postModel.id,
                         source: bloc.source!,
                         commentsActive: false,
+                        actionsAllowed: !isYours,
                       ),
                     ),
                     if (state is PostCommentsSuccessState ||
@@ -79,7 +120,8 @@ class CommentsScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: Center(
                           child: Text(
-                            '${localize.comments} ' + '(${bloc.comments.length})',
+                            '${localize.comments} ' +
+                                '(${bloc.comments.length})',
                             style: AppFonts.font12w400,
                           ),
                         ),
