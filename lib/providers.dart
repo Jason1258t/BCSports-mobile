@@ -25,8 +25,10 @@ import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cub
 import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
+import 'package:bcsports_mobile/features/social/bloc/report/report_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/favourite_posts_repository.dart';
 import 'package:bcsports_mobile/features/social/data/likes_manager.dart';
+import 'package:bcsports_mobile/features/social/data/report_repository.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bcsports_mobile/services/locale/localization/localization_cubit.dart';
 import 'package:bcsports_mobile/services/locale/localization/localization_service.dart';
@@ -63,6 +65,7 @@ class MyRepositoryProviders extends StatelessWidget {
         RepositoryProvider(
             create: (context) => ProfileViewRepository(
                 likes, nftService, context.read<MarketRepository>())),
+        RepositoryProvider(create: (context) => ReportRepository()),
         RepositoryProvider(
           create: (context) => AuthRepository(),
           lazy: false,
@@ -90,6 +93,7 @@ class MyBlocProviders extends StatelessWidget {
     final favouritesRepository =
         RepositoryProvider.of<FavouritePostsRepository>(context);
     final chatRepository = RepositoryProvider.of<ChatRepository>(context);
+    final reportRepository = RepositoryProvider.of<ReportRepository>(context);
 
     return MultiBlocProvider(
       providers: [
@@ -99,8 +103,13 @@ class MyBlocProviders extends StatelessWidget {
           lazy: false,
         ),
         BlocProvider(
-            create: (context) => AppCubit(authRepository, profileRepository,
-                socialRepository, favouritesRepository, marketRepository,chatRepository),
+            create: (context) => AppCubit(
+                authRepository,
+                profileRepository,
+                socialRepository,
+                favouritesRepository,
+                marketRepository,
+                chatRepository),
             lazy: false),
         BlocProvider(create: (context) => ResetPasswordCubit(authRepository)),
         BlocProvider(
@@ -113,7 +122,9 @@ class MyBlocProviders extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 BuyNftCubit(profileRepository, marketRepository)),
-        BlocProvider(create: (context) => FavouriteCubit(profileRepository, marketRepository)),
+        BlocProvider(
+            create: (context) =>
+                FavouriteCubit(profileRepository, marketRepository)),
         BlocProvider(
             create: (context) =>
                 CreatePostCubit(socialRepository, profileRepository)),
@@ -140,9 +151,11 @@ class MyBlocProviders extends StatelessWidget {
             create: (context) =>
                 CanselLotCubit(marketRepository, profileRepository)),
         BlocProvider(create: (context) => DeletePostCubit(profileRepository)),
-        BlocProvider(create: (context) => CreateDisplayNameCubit(profileRepository)),
         BlocProvider(
-            create: (context) => LocalizationCubit(localizationService))
+            create: (context) => CreateDisplayNameCubit(profileRepository)),
+        BlocProvider(
+            create: (context) => LocalizationCubit(localizationService)),
+        BlocProvider(create: (context) => ReportCubit(reportRepository))
       ],
       child: const MyApp(),
     );

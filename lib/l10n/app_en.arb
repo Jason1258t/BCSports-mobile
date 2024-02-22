@@ -130,5 +130,7 @@
 "home" : "Home",
 "add_nft" : "Add NFT",
 "crop": "Crop",
-"choose_photo": "Choose photo"
+"choose_photo": "Choose photo",
+"report_sended": "Report sended",
+"try_again": "Try again"
 }

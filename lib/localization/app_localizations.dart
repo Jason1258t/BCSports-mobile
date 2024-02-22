@@ -878,6 +878,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose photo'**
   String get choose_photo;
+
+  /// No description provided for @report_sended.
+  ///
+  /// In en, this message translates to:
+  /// **'Report sended'**
+  String get report_sended;
+
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get try_again;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
