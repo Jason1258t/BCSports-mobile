@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 class PlayerAppStatsWidget extends StatelessWidget {
   final String iconPath;
   final String statsName;
-  final int value;
+  final String value;
 
   const PlayerAppStatsWidget({
     super.key,

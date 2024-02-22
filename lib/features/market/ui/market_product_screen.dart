@@ -1,5 +1,6 @@
 import 'package:bcsports_mobile/features/market/bloc/buy/buy_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
+import 'package:bcsports_mobile/features/market/bloc/favourites_value/favourites_value_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/nft_details/nft_details_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/ar_button.dart';
@@ -55,8 +56,10 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   void onLikeTap(bool isLiked) {
     if (isLiked) {
       context.read<FavouriteCubit>().removeFromFavourites(widget.product);
+      context.read<FavouritesValueCubit>().decrementFavouriteValue();
     } else {
       context.read<FavouriteCubit>().markAsFavourite(widget.product);
+      context.read<FavouritesValueCubit>().incrementFavouriteValue();
     }
   }
 
@@ -187,13 +190,17 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    PlayerAppStatsWidget(
-                      value: 0,
-                      statsName: localize.favourite,
-                      iconPath: 'assets/icons/like.svg',
+                    BlocBuilder<FavouritesValueCubit, FavouritesValueState>(
+                      builder: (context, state) {
+                        return PlayerAppStatsWidget(
+                          value: marketRepository.lastProductFavouritesValue.toString(),
+                          statsName: localize.favourite,
+                          iconPath: 'assets/icons/like.svg',
+                        );
+                      },
                     ),
                     PlayerAppStatsWidget(
-                      value: nft.views,
+                      value: nft.views.toString(),
                       statsName: localize.views,
                       iconPath: 'assets/icons/ar.svg',
                     ),
