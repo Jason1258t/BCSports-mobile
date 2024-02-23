@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/cansel_lot/cansel_lot_cubit.dart';
 import 'package:bcsports_mobile/features/market/bloc/lots/lots_cubit.dart';
 import 'package:bcsports_mobile/features/market/data/market_repository.dart';
@@ -43,6 +44,8 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localize = AppLocalizations.of(context)!;
+
     return BlocListener<CanselLotCubit, CanselLotState>(
       listener: (context, state) {
         if (state is CanselLotFailure || state is CanselLotSuccess) {
@@ -77,8 +80,11 @@ class _MarketLotsScreenState extends State<MarketLotsScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: CustomTextButton(
                       isActive: true,
-                      onTap: () => Navigator.pop(context),
-                      text: "Add NFT",
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.read<MainCubit>().changePageIndexTo(4);
+                      },
+                      text: localize.add_nft,
                       height: 52,
                     ),
                   );

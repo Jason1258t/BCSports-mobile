@@ -44,7 +44,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get birth => 'Дата рождения';
 
   @override
-  String get born => 'РОДИЛСЯ';
+  String get born => 'Родился';
 
   @override
   String get buy => 'Купить';
@@ -83,7 +83,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get comments => 'КОММЕНТАРИИ';
 
   @override
-  String get country => 'СТРАНА';
+  String get country => 'Страна';
 
   @override
   String get create => 'Создать';

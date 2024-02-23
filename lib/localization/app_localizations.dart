@@ -174,7 +174,7 @@ abstract class AppLocalizations {
   /// No description provided for @born.
   ///
   /// In en, this message translates to:
-  /// **'BORN'**
+  /// **'Born'**
   String get born;
 
   /// No description provided for @buy.
@@ -252,7 +252,7 @@ abstract class AppLocalizations {
   /// No description provided for @country.
   ///
   /// In en, this message translates to:
-  /// **'COUNTRY'**
+  /// **'Country'**
   String get country;
 
   /// No description provided for @create.
