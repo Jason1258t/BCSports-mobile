@@ -37,7 +37,8 @@ class CustomTextButton extends StatelessWidget {
           width: width ?? double.infinity,
           alignment: Alignment.center,
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (prefixIcon != null) ...[
                 prefixIcon!,
@@ -47,7 +48,6 @@ class CustomTextButton extends StatelessWidget {
               ],
               Text(
                 text,
-                textAlign: TextAlign.center,
                 style: AppFonts.font18w500
                     .copyWith(color: isActive ? Colors.black : Colors.white),
               ),

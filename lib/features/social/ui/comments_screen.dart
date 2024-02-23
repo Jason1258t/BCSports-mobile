@@ -42,7 +42,7 @@ class CommentsScreen extends StatelessWidget {
               topRight: Radius.circular(16),
             ),
           ),
-          builder: (_) => PostActionsBottomSheet(post: post, onDelete:  onDeleted(),));
+          builder: (_) => PostActionsBottomSheet(post: post, onDelete:  onDeleted,));
     }
 
     return CustomScaffold(

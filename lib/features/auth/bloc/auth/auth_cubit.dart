@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bcsports_mobile/features/auth/data/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -28,8 +30,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void signInWithApple() async {
-    await _authRepository.signInWithApple();
-    emit(AuthSuccessState());
+    if(Platform.isIOS) {
+      await _authRepository.signInWithApple();
+      emit(AuthSuccessState());
+    }
+    else{
+      emit(AuthFailState(Exception('Android is not designed for this')));
+    }
   }
 
   void signUpWithEmailAndPassword(

@@ -85,7 +85,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                   },
                 ),
                 Text(
-                  user.username,
+                  user.displayName ?? user.username,
                   style: AppFonts.font16w500,
                 ),
                 CircleAvatar(
