@@ -211,6 +211,8 @@ class AuthRepository {
 
   Future signOut() async {
     await _auth.signOut();
+    await GoogleSignIn().signOut();
+
     appState.add(AppAuthStateEnum.unAuth);
   }
 }
