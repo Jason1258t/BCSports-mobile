@@ -1,4 +1,4 @@
-package com.example.bcsports_mobile
+package com.blockchain.sports
 
 import io.flutter.embedding.android.FlutterActivity
 

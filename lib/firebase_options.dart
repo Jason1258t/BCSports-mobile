@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,20 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAtWmz0-dkS7_S43b01UH7sV0hwN1LhLZA',
-    appId: '1:626741015:web:1dd9654c0c24b38b20b152',
-    messagingSenderId: '626741015',
-    projectId: 'bcsports-mobile',
-    authDomain: 'bcsports-mobile.firebaseapp.com',
-    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
-    storageBucket: 'bcsports-mobile.appspot.com',
-    measurementId: 'G-YF4XX6TJBK',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAkBZ6eRSGvpfH1DJBgRGHlSDwVfViXvAA',
-    appId: '1:626741015:android:e521a32a674ca4d120b152',
+    appId: '1:626741015:android:f8c5fd1e9bbb10e020b152',
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
     databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
@@ -65,25 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD2Ni7eCvOjwPRFK-8W_rml9dxERkNjv-8',
-    appId: '1:626741015:ios:e0baf9381c21410e20b152',
+    appId: '1:626741015:ios:719e19333b3a2cb620b152',
     messagingSenderId: '626741015',
     projectId: 'bcsports-mobile',
     databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
     storageBucket: 'bcsports-mobile.appspot.com',
-    androidClientId: '626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com',
-    iosClientId: '626741015-d6o63onqsi693vba4nqvrh6e8pus37rq.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bcsportsMobile',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD2Ni7eCvOjwPRFK-8W_rml9dxERkNjv-8',
-    appId: '1:626741015:ios:5ec851ab8f857e8220b152',
-    messagingSenderId: '626741015',
-    projectId: 'bcsports-mobile',
-    databaseURL: 'https://bcsports-mobile-default-rtdb.firebaseio.com',
-    storageBucket: 'bcsports-mobile.appspot.com',
-    androidClientId: '626741015-9s20nn9i3ucke7bmm7che23sa4fhaqss.apps.googleusercontent.com',
-    iosClientId: '626741015-dld51ta1dl5sp6vi2n5ajvil4aeuto1n.apps.googleusercontent.com',
-    iosBundleId: 'com.example.bcsportsMobile.RunnerTests',
+    androidClientId: '626741015-1e68a6kc5g8b97qo3dk6egll1s77bs42.apps.googleusercontent.com',
+    iosClientId: '626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com',
+    iosBundleId: 'com.bcsportsMobile.nftApplicaion',
   );
 }
