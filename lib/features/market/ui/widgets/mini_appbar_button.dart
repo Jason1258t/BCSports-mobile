@@ -29,7 +29,7 @@ class _MiniAppBarButtonState extends State<MiniAppBarButton> {
   
           child: SvgPicture.asset(
             widget.iconPath,
-            width: 19,
+            width: 24,
             color: AppColors.white,
           ),
         ),

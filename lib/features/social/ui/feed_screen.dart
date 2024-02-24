@@ -71,7 +71,6 @@ class FeedScreen extends StatelessWidget {
                     child: SvgPicture.asset(
                       Assets.icons('heart.svg'),
                       width: 24,
-                      height: 24,
                     ),
                   ),
                 ],

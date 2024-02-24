@@ -100,7 +100,6 @@ class _MarketScreenState extends State<MarketScreen> {
                       ],
                     ),
                   ),
-                
                   Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -115,7 +114,7 @@ class _MarketScreenState extends State<MarketScreen> {
                         Navigator.pushNamed(context, AppRouteNames.wallet);
                       },
                       borderRadius: BorderRadius.circular(31),
-                      child: SvgPicture.asset('assets/icons/wallet2.svg', width: 21,),
+                      child: SvgPicture.asset('assets/icons/wallet2.svg', width: 24,),
                     ),
                   ),
                 ],
