@@ -9,17 +9,19 @@ class MediumActivityWidget extends StatelessWidget {
   const MediumActivityWidget(
       {super.key,
       required this.width,
-      required this.height,
+      this.height,
       required this.assetIcon,
       required this.title,
       required this.text,
+      this.padding,
       this.onTap});
 
   final double width;
-  final double height;
+  final double? height;
   final String assetIcon;
   final String title;
   final String text;
+  final EdgeInsets? padding;
   final Function()? onTap;
 
   @override
@@ -29,7 +31,7 @@ class MediumActivityWidget extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(width * 0.096),
+        padding: padding ?? EdgeInsets.all(width * 0.096),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: const LinearGradient(
@@ -56,11 +58,14 @@ class MediumActivityWidget extends StatelessWidget {
                   title,
                   style: AppFonts.font18w400.copyWith(color: AppColors.white),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   text,
-                  style: AppFonts.font14w300
-                      .copyWith(color: AppColors.grey_B3B3B3,overflow: TextOverflow.ellipsis),
+                  style: AppFonts.font14w300.copyWith(
+                      color: AppColors.grey_B3B3B3,
+                      overflow: TextOverflow.ellipsis),
                   maxLines: 3,
                 ),
               ],

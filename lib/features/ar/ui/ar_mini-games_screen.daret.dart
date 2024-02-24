@@ -77,28 +77,12 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                           SizedBox(
                             height: sizeOf.width * 0.037,
                           ),
-                          Row(
-                            children: [
-                              MediumActivityWidget(
-                                width: sizeOf.width * 0.3865,
-                                assetIcon: 'mdi_basketball.svg',
-                                height: sizeOf.width * 0.3865,
-                                title: localize.basketball,
-                                text: localize.show_aim,
-                              ),
-                              SizedBox(
-                                width: sizeOf.width * 0.037,
-                              ),
-                              MediumActivityWidget(
-                                width: sizeOf.width * 0.3865,
-                                assetIcon:
-                                    'material-symbols_sports-motorsports-sharp.svg',
-                                height: sizeOf.width * 0.3865,
-                                title: 'MotoGP',
-                                text:
-                                    localize.feel_professional,
-                              ),
-                            ],
+                          MediumActivityWidget(
+                            padding: EdgeInsets.all(sizeOf.width * 0.037),
+                            width: sizeOf.width * 0.81,
+                            assetIcon: 'mdi_basketball.svg',
+                            title: localize.basketball,
+                            text: localize.show_aim,
                           )
                         ],
                       ),
