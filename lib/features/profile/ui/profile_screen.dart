@@ -84,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             body: RefreshIndicator.adaptive(
               onRefresh: () async {
                 repository.setUser(user.id);
+                context.read<ProfileRepository>().loadUserNftList();
               },
               child: CustomScrollView(slivers: [
                 separator,

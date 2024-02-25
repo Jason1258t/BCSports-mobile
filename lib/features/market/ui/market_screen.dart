@@ -27,7 +27,6 @@ class _MarketScreenState extends State<MarketScreen> {
   @override
   void initState() {
     initProviders();
-
     super.initState();
   }
 
@@ -68,6 +67,7 @@ class _MarketScreenState extends State<MarketScreen> {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         await updateUser();
+        marketRepository.subscribeOnMarketStream();
       },
       child: CustomScrollView(
         slivers: [
@@ -114,7 +114,10 @@ class _MarketScreenState extends State<MarketScreen> {
                         Navigator.pushNamed(context, AppRouteNames.wallet);
                       },
                       borderRadius: BorderRadius.circular(31),
-                      child: SvgPicture.asset('assets/icons/wallet2.svg', width: 24,),
+                      child: SvgPicture.asset(
+                        'assets/icons/wallet2.svg',
+                        width: 24,
+                      ),
                     ),
                   ),
                 ],
