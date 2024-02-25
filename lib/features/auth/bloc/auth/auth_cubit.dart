@@ -25,16 +25,27 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void signInWithGoogle() async {
-    await _authRepository.signInWithGoogle();
-    emit(AuthSuccessState());
+    emit(AuthInProcess());
+    try {
+      await _authRepository.signInWithGoogle();
+      emit(AuthSuccessState());
+    }
+    catch (e) {
+      emit(AuthFailState(Exception('fail login with google')));
+    }
   }
 
   void signInWithApple() async {
-    if(Platform.isIOS) {
-      await _authRepository.signInWithApple();
-      emit(AuthSuccessState());
+    emit(AuthInProcess());
+    if (Platform.isIOS) {
+      try {
+        await _authRepository.signInWithApple();
+        emit(AuthSuccessState());
+      }catch (e){
+        emit(AuthFailState(Exception('fail login with apple')));
+      }
     }
-    else{
+    else {
       emit(AuthFailState(Exception('Android is not designed for this')));
     }
   }
