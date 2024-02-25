@@ -138,11 +138,15 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SvgPicture.asset(
-                      Assets.icons(
-                          post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
+                    SizedBox(
                       width: 20,
                       height: 20,
+                      child: SvgPicture.asset(
+                        Assets.icons(
+                            post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
+                        width: 20,
+                        height: 20,
+                      ),
                     ),
                     const SizedBox(
                       width: 8,
