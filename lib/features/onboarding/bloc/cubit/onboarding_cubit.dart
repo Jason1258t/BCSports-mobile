@@ -9,6 +9,11 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   OnboardingCubit() : super(OnboardingInitial());
 
+  void setPage(int page) {
+    currentPageIndex = page;
+    emit(OnboardingPageChanged());
+  }
+
   void nextPage() {
     if (currentPageIndex < maxPageIndex) {
       currentPageIndex += 1;

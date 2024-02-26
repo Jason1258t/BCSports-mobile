@@ -15,6 +15,7 @@ class ButtonSkip extends StatefulWidget {
 class _ButtonSkipState extends State<ButtonSkip> {
   void onTap() {
     context.read<OnboardingCubit>().skipAllPages();
+    Navigator.pop(context);
   }
 
   @override
