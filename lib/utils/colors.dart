@@ -16,6 +16,7 @@ abstract class AppColors {
   static Color black_252525 = const Color(0xff252525);
   static Color black_262627 = const Color(0xff262627);
   static const Color black = Colors.black;
+  static const Color black26 = Colors.black26;
   static Color black_s2new_1A1A1A = const Color(0xff1A1A1A);
   static Color black_3A3A3A = const Color(0xff3A3A3A);
 
