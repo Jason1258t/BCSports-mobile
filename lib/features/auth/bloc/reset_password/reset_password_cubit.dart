@@ -24,6 +24,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       } else {
         timer.cancel();
         remainingTime = 60;
+        emit(ResetPasswordInitial());
       }
     });
   }

@@ -42,6 +42,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
     croppedImage = await ImageCropper().cropImage(
       sourcePath: image!.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
       ],
@@ -59,6 +60,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           title: localize.crop, 
           aspectRatioLockEnabled: true,
           minimumAspectRatio: 1,
+
         ),
       ],
     );
