@@ -143,11 +143,11 @@ class _GeneralStatisticsState extends State<GeneralStatistics> {
                 PlayerMatchStatsWidget(
                   attr: localize.fouls,
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 80,
+            ),
           ],
         ),
       ),

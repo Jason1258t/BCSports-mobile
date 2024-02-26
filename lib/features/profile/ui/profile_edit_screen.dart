@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
+import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -40,6 +41,74 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     nameController = TextEditingController(text: repository.user.displayName);
     userNameController = TextEditingController(text: repository.user.username);
+  }
+
+  Widget buildAvatar(UserModel user) {
+    final size = MediaQuery.sizeOf(context);
+    final bool showKeyboard = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    double avatarRadius = showKeyboard ? 40 : size.width * 0.20;
+
+    return Stack(
+      children: [
+        image == null
+            ? CircleAvatar(
+                backgroundColor: user.avatarColor,
+                radius: avatarRadius,
+                backgroundImage: user.avatarUrl != null
+                    ? NetworkImage(user.avatarUrl!)
+                    : null,
+                child: user.avatarUrl == null
+                    ? Center(
+                        child: Text(
+                          (user.displayName ?? user.username)[0].toUpperCase(),
+                          style: AppFonts.font64w400,
+                        ),
+                      )
+                    : Container(),
+              )
+            : Container(
+                width: avatarRadius * 2,
+                height: avatarRadius * 2,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    image: DecorationImage(
+                        image: FileImage(File(image!.path)),
+                        fit: BoxFit.cover)),
+                // child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(1000),
+                //     child: Image.file(File(image!.path))),
+              ),
+        Container(
+          width: avatarRadius * 2,
+          height: avatarRadius * 2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1000),
+            color: Colors.black45,
+          ),
+        ),
+        InkWell(
+          onTap: () async {
+            await pickImage();
+            setState(() {});
+          },
+          borderRadius: BorderRadius.circular(100),
+          child: Ink(
+            width: avatarRadius * 2,
+            height: avatarRadius * 2,
+            decoration: BoxDecoration(
+              color: AppColors.blue,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Icon(
+              Icons.camera_alt_outlined,
+              color: AppColors.white,
+              size: showKeyboard ? 30 : 50,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -90,69 +159,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Stack(
-                  children: [
-                    image == null
-                        ? CircleAvatar(
-                            backgroundColor: user.avatarColor,
-                            radius: sizeOf.width * 0.20,
-                            backgroundImage: user.avatarUrl != null
-                                ? NetworkImage(user.avatarUrl!)
-                                : null,
-                            child: user.avatarUrl == null
-                                ? Center(
-                                    child: Text(
-                                      (user.displayName ?? user.username)[0]
-                                          .toUpperCase(),
-                                      style: AppFonts.font64w400,
-                                    ),
-                                  )
-                                : Container(),
-                          )
-                        : Container(
-                            width: sizeOf.width * 0.4,
-                            height: sizeOf.width * 0.4,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                                image: DecorationImage(
-                                    image: FileImage(File(image!.path)),
-                                  fit: BoxFit.cover
-                                )
-                            ),
-                            // child: ClipRRect(
-                            //     borderRadius: BorderRadius.circular(1000),
-                            //     child: Image.file(File(image!.path))),
-                          ),
-                    Container(
-                      width: sizeOf.width * 0.40,
-                      height: sizeOf.width * 0.40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(1000),
-                        color: Colors.black45,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await pickImage();
-                        setState(() {});
-                      },
-                      borderRadius: BorderRadius.circular(100),
-                      child: Ink(
-                        width: sizeOf.width * 0.40,
-                        height: sizeOf.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: AppColors.blue,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Icon(
-                          Icons.camera_alt_outlined,
-                          color: AppColors.white,
-                          size: 50,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                buildAvatar(user),
                 Column(
                   children: [
                     CustomTextFormField(
@@ -170,6 +177,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 CustomTextButton(
                     text: localize.save,
+                    height: 52,
                     onTap: () {
                       BlocProvider.of<EditUserCubit>(context).editProfile(
                           nameController.text, userNameController.text, image);
