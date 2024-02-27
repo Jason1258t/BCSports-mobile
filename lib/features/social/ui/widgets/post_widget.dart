@@ -141,8 +141,9 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                       width: 20,
                       height: 20,
                       child: SvgPicture.asset(
-                        Assets.icons(
-                            post.postModel.like ? 'red_heart.svg' : 'heart.svg'),
+                        Assets.icons(post.postModel.like
+                            ? 'red_heart.svg'
+                            : 'heart.svg'),
                         width: 20,
                         height: 20,
                       ),
@@ -212,51 +213,55 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
   Widget buildPostHeader(PostViewModel post) {
     return SizedBox(
       height: 32,
-      child: InkWell(
-        onTap: () => viewCreator(post.user.id),
-        child: Row(
-          children: [
-            SmallAvatarWidget(user: post.user),
-            const SizedBox(
-              width: 8,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () => viewCreator(post.user.id),
+            child: Row(
               children: [
-                Expanded(
-                    child: Text(
-                  post.authorName,
-                  style: AppFonts.font14w400
-                      .copyWith(color: AppColors.white_F4F4F4),
-                )),
-                Text(
-                  DateTimeDifferenceConverter.diffToString(
-                      post.postModel.createdAt),
-                  style: AppFonts.font12w400
-                      .copyWith(color: const Color(0xFF717477)),
-                )
+                SmallAvatarWidget(user: post.user),
+                const SizedBox(
+                  width: 8,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      post.authorName,
+                      style: AppFonts.font14w400
+                          .copyWith(color: AppColors.white_F4F4F4),
+                    )),
+                    Text(
+                      DateTimeDifferenceConverter.diffToString(
+                          post.postModel.createdAt),
+                      style: AppFonts.font12w400
+                          .copyWith(color: const Color(0xFF717477)),
+                    )
+                  ],
+                ),
               ],
             ),
-            const Spacer(),
-            if (widget.actionsAllowed) ...[
-              BlocListener<DeletePostCubit, DeletePostState>(
-                listener: (context, state) =>
-                    deleteListener(context, state, post),
-                child: InkWell(
-                    onTap: () => showPostActions(post),
-                    child: SizedBox(
-                      width: 25,
-                      height: double.infinity,
-                      child: SvgPicture.asset(
-                        Assets.icons('three-dots-horizontal.svg'),
-                        width: 20,
-                        height: 20,
-                      ),
-                    )),
-              )
-            ]
-          ],
-        ),
+          ),
+          const Spacer(),
+          if (widget.actionsAllowed) ...[
+            BlocListener<DeletePostCubit, DeletePostState>(
+              listener: (context, state) =>
+                  deleteListener(context, state, post),
+              child: InkWell(
+                  onTap: () => showPostActions(post),
+                  child: SizedBox(
+                    width: 25,
+                    height: double.infinity,
+                    child: SvgPicture.asset(
+                      Assets.icons('three-dots-horizontal.svg'),
+                      width: 20,
+                      height: 20,
+                    ),
+                  )),
+            )
+          ]
+        ],
       ),
     );
   }
@@ -286,7 +291,11 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
 
 //  TODO rename
   void showPostActions(PostViewModel post) {
-    AppModalBottomSheet.show(context, ReportModalBottomSheet(postId: widget.postId,));
+    AppModalBottomSheet.show(
+        context,
+        ReportModalBottomSheet(
+          postId: widget.postId,
+        ));
   }
 
 // TODO rename
@@ -301,7 +310,10 @@ class PostReportLineWidget extends StatelessWidget {
   final Function onTap;
 
   const PostReportLineWidget(
-      {super.key, required this.iconPath, required this.text, required this.onTap});
+      {super.key,
+      required this.iconPath,
+      required this.text,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
