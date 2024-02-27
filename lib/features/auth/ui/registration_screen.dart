@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
@@ -68,155 +70,163 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       },
       child: CustomScaffold(
           body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            const Padding(
-                padding: EdgeInsets.symmetric(vertical: 80),
-                child: LogoWidget()),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomTextFormField(
-                    onChange: (b) {
-                      validate();
-                    },
-                    validator: Validator.emailValidator,
-                    controller: emailController,
-                    labelText: localize.email_address,
-                    hintText: localize.email,
-                    keyboardType: TextInputType.emailAddress,
-                    prefixIcon: SvgPicture.asset(
-                      Assets.icons('email.svg'),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  CustomTextFormField(
-                    onChange: (b) {
-                      validate();
-                    },
-                    controller: passwordController,
-                    validator: Validator.passwordValidator,
-                    labelText: localize.password,
-                    hintText: localize.password,
-                    keyboardType: TextInputType.visiblePassword,
-                    prefixIcon: SvgPicture.asset(
-                      Assets.icons('lock.svg'),
-                    ),
-                    suffixIcon: InkWell(
-                      child: SvgPicture.asset(
-                        passwordObscured
-                            ? Assets.icons('uil_eye-slash.svg')
-                            : Assets.icons('uil_eye.svg'),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          passwordObscured = !passwordObscured;
-                        });
-                      },
-                    ),
-                    obscured: passwordObscured,
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  Row(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 80),
+                    child: LogoWidget()),
+                Form(
+                  key: _formKey,
+                  child: Column(
                     children: [
-                      FlutterSwitch(
-                          width: 40,
-                          height: 20,
-                          value: agree,
-                          padding: 3,
-                          toggleSize: 14,
-                          activeColor: AppColors.primary,
-                          inactiveColor: AppColors.black_s2new_1A1A1A,
-                          onToggle: (value) {
+                      CustomTextFormField(
+                        onChange: (b) {
+                          validate();
+                        },
+                        validator: Validator.emailValidator,
+                        controller: emailController,
+                        labelText: localize.email_address,
+                        hintText: localize.email,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons('email.svg'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      CustomTextFormField(
+                        onChange: (b) {
+                          validate();
+                        },
+                        controller: passwordController,
+                        validator: Validator.passwordValidator,
+                        labelText: localize.password,
+                        hintText: localize.password,
+                        keyboardType: TextInputType.visiblePassword,
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons('lock.svg'),
+                        ),
+                        suffixIcon: InkWell(
+                          child: SvgPicture.asset(
+                            passwordObscured
+                                ? Assets.icons('uil_eye-slash.svg')
+                                : Assets.icons('uil_eye.svg'),
+                          ),
+                          onTap: () {
                             setState(() {
-                              agree = value;
-                              validate();
+                              passwordObscured = !passwordObscured;
                             });
-                          }),
-                      const SizedBox(width: 8),
+                          },
+                        ),
+                        obscured: passwordObscured,
+                      ),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      Row(
+                        children: [
+                          FlutterSwitch(
+                              width: 40,
+                              height: 20,
+                              value: agree,
+                              padding: 3,
+                              toggleSize: 14,
+                              activeColor: AppColors.primary,
+                              inactiveColor: AppColors.black_s2new_1A1A1A,
+                              onToggle: (value) {
+                                setState(() {
+                                  agree = value;
+                                  validate();
+                                });
+                              }),
+                          const SizedBox(width: 8),
+                          Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text: 'I agree to the ', // TODO
+                                style: AppFonts.font12w400),
+                            TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                                text: 'terms and conditions', // TODO
+                                style: AppFonts.font12w400.copyWith(
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 3,
+                                    decorationColor: Colors.white)),
+                          ]))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      CustomTextButton(
+                        text: localize.sign_up,
+                        onTap: () {
+                          context.read<AuthCubit>().signUpWithEmailAndPassword(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim());
+                        },
+                        isActive: buttonActive,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: ButtonWithIcon(
+                                height: 40,
+                                text: 'Google',
+                                icon: SvgPicture.asset(
+                                    Assets.icons('google.svg')),
+                                onTap: () {
+                                  context.read<AuthCubit>().signInWithGoogle();
+                                },
+                                isActive: true,
+                              )),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          if (Platform.isIOS) ...[
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Expanded(
+                                child: ButtonWithIcon(
+                                  height: 40,
+                                  text: 'Apple',
+                                  icon: SvgPicture.asset(
+                                      Assets.icons('apple.svg')),
+                                  onTap: () {
+                                    context.read<AuthCubit>().signInWithApple();
+                                  },
+                                  isActive: true,
+                                )),
+                          ]
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'I agree to the ', // TODO
+                            text: localize.already_have_acc,
                             style: AppFonts.font12w400),
                         TextSpan(
-                            recognizer: TapGestureRecognizer()..onTap = () {},
-                            text: 'terms and conditions', // TODO
-                            style: AppFonts.font12w400.copyWith(
-                                decoration: TextDecoration.underline,
-                                decorationThickness: 3,
-                                decorationColor: Colors.white)),
-                      ]))
+                            text: localize.sign_in,
+                            style: AppFonts.font16w600,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pop(context);
+                              }),
+                      ])),
                     ],
                   ),
-                  const SizedBox(
-                    height: 55,
-                  ),
-                  CustomTextButton(
-                    text: localize.sign_up,
-                    onTap: () {
-                      context.read<AuthCubit>().signUpWithEmailAndPassword(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim());
-                    },
-                    isActive: buttonActive,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: ButtonWithIcon(
-                        height: 40,
-                        text: 'Google',
-                        icon: SvgPicture.asset(Assets.icons('google.svg')),
-                        onTap: () {
-                          context.read<AuthCubit>().signInWithGoogle();
-                        },
-                        isActive: true,
-                      )),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                          child: ButtonWithIcon(
-                        height: 40,
-                        text: 'Apple',
-                        icon: SvgPicture.asset(Assets.icons('apple.svg')),
-                        onTap: () {
-                          context.read<AuthCubit>().signInWithApple();
-                        },
-                        isActive: true,
-                      )),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text.rich(TextSpan(children: [
-                    TextSpan(
-                        text: localize.already_have_acc,
-                        style: AppFonts.font12w400),
-                    TextSpan(
-                        text: localize.sign_in,
-                        style: AppFonts.font12w600,
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pop(context);
-                          }),
-                  ])),
-                ],
-              ),
-            )
-          ],
-        ),
-      )),
+                )
+              ],
+            ),
+          )),
     );
   }
 }

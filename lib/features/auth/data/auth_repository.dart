@@ -10,12 +10,11 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:bcsports_mobile/services/exceptions.dart';
-import 'package:bcsports_mobile/utils/strings.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
 import 'package:rxdart/rxdart.dart';
+import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthRepository {
@@ -167,8 +166,6 @@ class AuthRepository {
     }
   }
 
-  /// Generates a cryptographically secure random nonce, to be included in a
-  /// credential request.
   String _generateNonce([int length = 32]) {
     const charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
@@ -177,7 +174,6 @@ class AuthRepository {
         .join();
   }
 
-  /// Returns the sha256 hash of [input] in hex notation.
   String _sha256ofString(String input) {
     final bytes = utf8.encode(input);
     final digest = sha256.convert(bytes);

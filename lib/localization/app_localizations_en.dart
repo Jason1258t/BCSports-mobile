@@ -428,6 +428,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get other => 'Other';
 
   @override
+  String get cansel => 'Cansel';
+
+  @override
+  String get done => 'Done';
+
+  @override
   String get success_buy => 'Success buy!';
 
   @override

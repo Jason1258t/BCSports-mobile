@@ -75,9 +75,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     image: DecorationImage(
                         image: FileImage(File(image!.path)),
                         fit: BoxFit.cover)),
-                // child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(1000),
-                //     child: Image.file(File(image!.path))),
               ),
         Container(
           width: avatarRadius * 2,
