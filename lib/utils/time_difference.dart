@@ -13,12 +13,11 @@ class DateTimeDifferenceConverter {
 
   static String differenceMoreThenDay(DateTime otherDate) {
     final now = DateTime.now();
-    final difference = now.difference(otherDate);
-    if (dateEqual(now.subtract(const Duration(hours: 24)), now.subtract(difference))) {
-      return DateFormat('hh:mm').format(otherDate);
-    } else {
+    // if (dateEqual(now.subtract(const Duration(hours: 24)), otherDate)) {
+    //   return DateFormat('hh:mm').format(otherDate);
+    // } else {
       return DateFormat('dd.MM').format(otherDate);
-    }
+    // }
   }
 
   static String todayDifference(Duration difference) {

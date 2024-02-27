@@ -16,8 +16,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
+
+  @override
+  State<FeedScreen> createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen> {
+  late final ScrollController controller;
+
+  @override
+  void initState() {
+    final repository = RepositoryProvider.of<SocialRepository>(context);
+
+    controller = ScrollController(
+        initialScrollOffset: repository
+            .homePageScrollOffset);
+
+    controller.addListener(() {
+      repository.homePageScrollOffset = controller.offset;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +104,9 @@ class FeedScreen extends StatelessWidget {
                 return RefreshIndicator(
                   color: AppColors.primary,
                   backgroundColor: AppColors.black_s2new_1A1A1A,
-                  onRefresh: () async {
-                    repository.refreshPosts();
-                  },
+                  onRefresh: () async => repository.refreshPosts(),
                   child: CustomScrollView(
+                    controller: controller,
                     slivers: [
                       const SliverToBoxAdapter(
                         child: SizedBox(
@@ -95,12 +115,13 @@ class FeedScreen extends StatelessWidget {
                       ),
                       SliverList(
                           delegate: SliverChildBuilderDelegate(
-                        (context, index) => FeedPostWidget(
-                          postId: repository.posts[index].postModel.id,
-                          source: repository,
-                        ),
-                        childCount: repository.posts.length,
-                      ))
+                                (context, index) =>
+                                FeedPostWidget(
+                                  postId: repository.posts[index].postModel.id,
+                                  source: repository,
+                                ),
+                            childCount: repository.posts.length,
+                          ))
                     ],
                   ),
                 );
@@ -115,8 +136,8 @@ class FeedScreen extends StatelessWidget {
               } else {
                 return CustomScaffold(
                     body: Center(
-                  child: AppAnimations.circleIndicator,
-                ));
+                      child: AppAnimations.circleIndicator,
+                    ));
               }
             },
           )),

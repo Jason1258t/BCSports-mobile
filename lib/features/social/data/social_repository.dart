@@ -12,6 +12,7 @@ import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
@@ -23,6 +24,8 @@ class SocialRepository extends PostSource {
   static final _postsCollection = FirebaseCollections.postsCollection;
 
   static final _postsBucket = _storage.ref(FirebaseCollectionNames.postsBucket);
+
+  double homePageScrollOffset = 0;
 
   @override
   final BehaviorSubject<LikeChangesData> likeChanges = BehaviorSubject();
