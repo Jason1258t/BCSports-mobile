@@ -426,4 +426,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get other => 'Other';
+
+  @override
+  String get success_buy => 'Success buy!';
+
+  @override
+  String get succes_back => 'Success, you may continue';
+
+  @override
+  String get success_sell => 'Success sell!';
 }

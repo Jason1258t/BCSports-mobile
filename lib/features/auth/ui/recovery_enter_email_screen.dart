@@ -49,7 +49,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
         }
         if (state is ResetPasswordSuccess) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar('Успешно, можете вернуться'));
+              .showSnackBar(AppSnackBars.snackBar(localize.succes_back));
         }
       },
       child: CustomScaffold(

@@ -140,5 +140,8 @@
 "copy": "Copyright",
 "drugs": "Illegal drugs",
 "personal_details": "Personal details",
-"other": "Other"
+"other": "Other",
+"success_buy": "Success buy!",
+"succes_back": "Success, you may continue",
+"success_sell": "Success sell!"
 }

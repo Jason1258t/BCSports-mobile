@@ -84,6 +84,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
 
   Widget buildNftCardWidget() {
     final size = MediaQuery.sizeOf(context);
+    final localize = AppLocalizations.of(context)!;
 
     return BlocListener<SellCubit, SellState>(
       listener: (context, state) {
@@ -103,8 +104,7 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
         } else if (state is SellSuccess) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar("Success sell!"));
+          ScaffoldMessenger.of(context).showSnackBar(AppSnackBars.snackBar(localize.success_sell));
         }
       },
       child: CustomScrollView(
@@ -133,7 +133,6 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                       ],
                     ),
                   ),
-               
                   const SizedBox(
                     height: 16,
                   ),
