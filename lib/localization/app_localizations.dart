@@ -540,7 +540,7 @@ abstract class AppLocalizations {
   /// No description provided for @my_active_lots.
   ///
   /// In en, this message translates to:
-  /// **'My active lots'**
+  /// **'My sales'**
   String get my_active_lots;
 
   /// No description provided for @my_players.

@@ -227,7 +227,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get moto_pg => 'MotoPG';
 
   @override
-  String get my_active_lots => 'Мои активные лоты';
+  String get my_active_lots => 'Мои продажи';
 
   @override
   String get my_players => 'Мои игроки';

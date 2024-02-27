@@ -227,7 +227,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moto_pg => 'MotoGP';
 
   @override
-  String get my_active_lots => 'My active lots';
+  String get my_active_lots => 'My sales';
 
   @override
   String get my_players => 'My players';

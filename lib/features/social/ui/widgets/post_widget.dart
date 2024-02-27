@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:js_interop';
 import 'dart:ui';
 
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
@@ -8,7 +7,6 @@ import 'package:bcsports_mobile/features/profile/data/profile_view_repository.da
 import 'package:bcsports_mobile/features/social/bloc/delete_post/delete_post_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/like/like_cubit.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
-import 'package:bcsports_mobile/features/social/bloc/report/report_cubit.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
@@ -247,7 +245,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 child: InkWell(
                     onTap: () => showPostActions(post),
                     child: SizedBox(
-                      width: 35,
+                      width: 25,
                       height: double.infinity,
                       child: SvgPicture.asset(
                         Assets.icons('three-dots-horizontal.svg'),
