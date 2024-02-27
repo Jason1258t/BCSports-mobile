@@ -1,3 +1,4 @@
+
 {
   "about": "About player",
   "academy": "Academy",
@@ -73,7 +74,7 @@
   "minuts_played": "Minutes played",
   "more": "more",
   "moto_pg": "MotoGP",
-  "my_active_lots": "My active lots",
+  "my_active_lots": "My sales",
   "my_players": "My players",
   "name": "Name",
   "next": "Next",
@@ -141,5 +142,8 @@
   "personal_details": "Personal details",
   "other": "Other",
   "cansel": "Cansel",
-  "done": "Done"
+  "done": "Done",
+  "success_buy": "Success buy!",
+  "succes_back": "Success, you may continue",
+  "success_sell": "Success sell!"
 }

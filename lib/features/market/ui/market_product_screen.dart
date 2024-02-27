@@ -87,8 +87,8 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
         } else if (state is BuyNftSuccess) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(AppSnackBars.snackBar("Success buy!"));
+          ScaffoldMessenger.of(context) 
+              .showSnackBar(AppSnackBars.snackBar(localize.success_buy));
         }
       },
       builder: (context, state) => Container(

@@ -540,7 +540,7 @@ abstract class AppLocalizations {
   /// No description provided for @my_active_lots.
   ///
   /// In en, this message translates to:
-  /// **'My active lots'**
+  /// **'My sales'**
   String get my_active_lots;
 
   /// No description provided for @my_players.
@@ -938,6 +938,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get other;
+
+  /// No description provided for @success_buy.
+  ///
+  /// In en, this message translates to:
+  /// **'Success buy!'**
+  String get success_buy;
+
+  /// No description provided for @succes_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Success, you may continue'**
+  String get succes_back;
+
+  /// No description provided for @success_sell.
+  ///
+  /// In en, this message translates to:
+  /// **'Success sell!'**
+  String get success_sell;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -227,7 +227,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get moto_pg => 'MotoPG';
 
   @override
-  String get my_active_lots => 'Мои активные лоты';
+  String get my_active_lots => 'Мои продажи';
 
   @override
   String get my_players => 'Мои игроки';
@@ -311,7 +311,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get send => 'Отправить';
 
   @override
-  String get send_recovery => 'Отправить почту для восстановления';
+  String get send_recovery => 'Отправить';
 
   @override
   String get set_price => 'Установить цену';
@@ -426,4 +426,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get other => 'Другое';
+
+  @override
+  String get success_buy => 'Успешная покупка!';
+
+  @override
+  String get succes_back => 'Успешно, можете вернуться';
+
+  @override
+  String get success_sell => 'Успешная продажа!';
 }
