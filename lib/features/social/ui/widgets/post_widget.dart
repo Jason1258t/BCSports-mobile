@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:js_interop';
 import 'dart:ui';
 
 import 'package:bcsports_mobile/features/main/bloc/cubit/main_cubit.dart';
@@ -246,8 +247,8 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                 child: InkWell(
                     onTap: () => showPostActions(post),
                     child: SizedBox(
-                      width: 20,
-                      height: 20,
+                      width: 35,
+                      height: double.infinity,
                       child: SvgPicture.asset(
                         Assets.icons('three-dots-horizontal.svg'),
                         width: 20,
