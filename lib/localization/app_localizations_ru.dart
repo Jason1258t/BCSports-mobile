@@ -428,6 +428,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get other => 'Другое';
 
   @override
+  String get cansel => 'Отмена';
+
+  @override
+  String get done => 'Ок';
+
+  @override
   String get success_buy => 'Успешная покупка!';
 
   @override

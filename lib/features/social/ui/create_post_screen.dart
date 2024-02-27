@@ -60,7 +60,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           title: localize.crop, 
           aspectRatioLockEnabled: true,
           minimumAspectRatio: 1,
-
+          doneButtonTitle: localize.done,
+          cancelButtonTitle: localize.cansel,
         ),
       ],
     );

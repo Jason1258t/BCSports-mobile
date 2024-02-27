@@ -939,6 +939,18 @@ abstract class AppLocalizations {
   /// **'Other'**
   String get other;
 
+  /// No description provided for @cansel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cansel'**
+  String get cansel;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
   /// No description provided for @success_buy.
   ///
   /// In en, this message translates to:

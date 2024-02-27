@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bcsports_mobile/features/auth/bloc/auth/auth_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/widgets/logo.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
@@ -158,19 +160,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             isActive: true,
                           )),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Expanded(
-                              child: ButtonWithIcon(
-                            height: 40,
-                            text: 'Apple',
-                            icon: SvgPicture.asset(Assets.icons('apple.svg')),
-                            onTap: () {
-                              context.read<AuthCubit>().signInWithApple();
-                            },
-                            isActive: true,
-                          )),
+                          if (Platform.isIOS) ...[
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Expanded(
+                                child: ButtonWithIcon(
+                              height: 40,
+                              text: 'Apple',
+                              icon: SvgPicture.asset(Assets.icons('apple.svg')),
+                              onTap: () {
+                                context.read<AuthCubit>().signInWithApple();
+                              },
+                              isActive: true,
+                            )),
+                          ]
                         ],
                       ),
                       const SizedBox(
@@ -182,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: AppFonts.font12w400),
                         TextSpan(
                             text: localize.sign_up,
-                            style: AppFonts.font12w600,
+                            style: AppFonts.font16w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(
