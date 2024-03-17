@@ -1,14 +1,11 @@
-import 'dart:ui';
-
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
+import 'package:bcsports_mobile/features/social/ui/widgets/custom_cache_image.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/photo_view.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ImagePostBody extends StatefulWidget {
@@ -51,6 +48,12 @@ class _ImagePostBodyState extends State<ImagePostBody> {
   }
 
   @override
+  void initState() {
+    widget.post.postModel.loadImages();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
 
@@ -71,11 +74,16 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                 widget.onDoubleTap();
                 showHeart();
               },
-              child: CustomNetworkImage(
+              child: CustomCachedImage(
                 color: AppColors.black_s2new_1A1A1A,
-                url: widget.post.compressedImageUrl!,
-                child: CustomNetworkImage(url: widget.post.imageUrl!),
+                image: widget.post.postModel.compressedImage,
+                child: CustomCachedImage(image: widget.post.postModel.image),
               ),
+              // CustomNetworkImage(
+              //   color: AppColors.black_s2new_1A1A1A,
+              //   url: widget.post.compressedImageUrl!,
+              //   child: CustomNetworkImage(url: widget.post.imageUrl!),
+              // ),
             ),
             AnimatedOpacity(
               opacity: heartOpacity,
@@ -113,7 +121,9 @@ class _ImagePostBodyState extends State<ImagePostBody> {
                           TextSpan(
                               text: '  ${widget.post.postModel.text}',
                               style: AppFonts.font14w300.copyWith(
-                                  color: const Color(0xFFEAEAEA), height: 1.2, fontWeight: FontWeight.w100)),
+                                  color: const Color(0xFFEAEAEA),
+                                  height: 1.2,
+                                  fontWeight: FontWeight.w100)),
                         ]),
                         maxLines: showMore ? 10 : 2,
                         overflow: TextOverflow.ellipsis,

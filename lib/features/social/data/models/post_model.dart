@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:bcsports_mobile/features/social/bloc/create_post/create_post_cubit.dart';
+import 'package:dio/dio.dart';
 
 class PostModel {
   late final String id;
@@ -8,11 +11,14 @@ class PostModel {
   final String? text;
   int likesCount;
   int commentsCount;
-
   late final int _createdAtMs;
   bool _liked = false;
 
+  late final Future<Uint8List> image;
+  late final Future<Uint8List> compressedImage;
+
   bool get like => _liked;
+  bool _loadingStarted = false;
 
   void setLike(bool value) => _liked = value;
 
@@ -27,6 +33,19 @@ class PostModel {
         likesCount = json['likesCount'],
         commentsCount = json['commentsCount'],
         _createdAtMs = json['createdAtMs'];
+
+  void loadImages() {
+    if (_loadingStarted) return;
+    _loadingStarted = true;
+    image = _getImage(imageUrl ?? '');
+    compressedImage = _getImage(compressedImageUrl ?? '');
+  }
+
+  Future<Uint8List> _getImage(String url) async {
+    final res = await Dio()
+        .get(url, options: Options(responseType: ResponseType.bytes));
+    return res.data;
+  }
 
   PostModel.create({
     required this.creatorId,
