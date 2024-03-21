@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
 class ArMiniGagesScreen extends StatefulWidget {
   const ArMiniGagesScreen({super.key});
@@ -77,12 +78,32 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                           SizedBox(
                             height: sizeOf.width * 0.037,
                           ),
-                          MediumActivityWidget(
-                            padding: EdgeInsets.all(sizeOf.width * 0.037),
-                            width: sizeOf.width * 0.81,
-                            assetIcon: 'mdi_basketball.svg',
-                            title: localize.basketball,
-                            text: localize.show_aim,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Scaffold(
+                                            appBar: AppBar(),
+                                            body: SafeArea(
+                                              child: Container(
+                                                color: Colors.yellow,
+                                                child: UnityWidget(
+                                                  onUnityCreated:
+                                                      (UnityWidgetController
+                                                          controller) {},
+                                                ),
+                                              ),
+                                            ),
+                                          )));
+                            },
+                            child: MediumActivityWidget(
+                              padding: EdgeInsets.all(sizeOf.width * 0.037),
+                              width: sizeOf.width * 0.81,
+                              assetIcon: 'mdi_basketball.svg',
+                              title: localize.basketball,
+                              text: localize.show_aim,
+                            ),
                           )
                         ],
                       ),

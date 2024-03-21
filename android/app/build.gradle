@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.blockchain.sports"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    ndkVersion "21.3.6528147"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "com.blockchain.sports"
         multiDexEnabled true
-        minSdkVersion 21
+        minSdkVersion 29
         targetSdkVersion flutter.targetSdkVersion
         versionCode 2
         versionName flutterVersionName
@@ -64,7 +64,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
         release {
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.release
         }
     }
@@ -74,4 +81,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation project(':unityLibrary')
+    implementation project(':flutter_unity_widget')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
