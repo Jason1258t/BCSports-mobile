@@ -1,10 +1,17 @@
 package com.blockchain.sports
 
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
+
+/*
 import com.xraph.plugin.flutter_unity_widget.FlutterUnityActivity
 
 class MainActivity: FlutterUnityActivity() {
 
 }
+*/
 
 
 // If you can't inherit FlutterUnityActivity directly, use the interface like this:
