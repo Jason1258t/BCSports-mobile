@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		22F4D92C1C150ADEC74EF0B3 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DC8C2F64AC8F0BE15652BE1 /* Pods_RunnerTests.framework */; };
+		23841EDA2BAC7D1D00EB6BB3 /* UnityFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23841ED92BAC7D1D00EB6BB3 /* UnityFramework.framework */; };
+		23841EDB2BAC7D1D00EB6BB3 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 23841ED92BAC7D1D00EB6BB3 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -27,6 +29,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		23841EDC2BAC7D1D00EB6BB3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				23841EDB2BAC7D1D00EB6BB3 /* UnityFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0CB7C4DCF30F3765F123C784 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		0E06994DF2F8F7D12FCA752E /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
@@ -35,6 +51,7 @@
 		2312E6732B7A697C00C63A75 /* firebase_auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = firebase_auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2312E6762B7A699600C63A75 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		231C38EE2B7A89150034BF12 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		23841ED92BAC7D1D00EB6BB3 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD719001500EE99D93B39D6 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC5380B1F200C6B94F34C475 /* Pods_Runner.framework in Frameworks */,
+				23841EDA2BAC7D1D00EB6BB3 /* UnityFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +97,7 @@
 		140C8A03ADFAE60218E4AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23841ED92BAC7D1D00EB6BB3 /* UnityFramework.framework */,
 				2312E6762B7A699600C63A75 /* FirebaseAuth.framework */,
 				2312E6732B7A697C00C63A75 /* firebase_auth.framework */,
 				2FD719001500EE99D93B39D6 /* Pods_Runner.framework */,
@@ -190,6 +209,7 @@
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				8A55F23663F88556F127DF2E /* [CP] Embed Pods Frameworks */,
 				8159772C3D1E5BEA62EFE033 /* [CP] Copy Pods Resources */,
+				23841EDC2BAC7D1D00EB6BB3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
