@@ -1,8 +1,10 @@
+import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_user_ar.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
@@ -104,7 +106,9 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
                           delegate: SliverChildBuilderDelegate(
                               (context, index) => NftUserAr(
                                     nft: nftList[index],
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.ar});
+                                    },
                                   ),
                               childCount: nftList.length),
                         );

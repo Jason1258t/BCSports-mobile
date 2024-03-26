@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -14,19 +15,29 @@ class UnityViewScreen extends StatefulWidget {
 }
 
 class _UnityViewScreenState extends State<UnityViewScreen> {
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      GlobalKey<ScaffoldState>();
-
   UnityWidgetController? _unityWidgetController;
+
+
+  bool loaded = false;
 
   @override
   void initState() {
     super.initState();
+
+  }
+
+  void start() async {
+    await Future.delayed(const Duration(seconds: 1));
+    setState(() {
+      loaded = true;
+    });
   }
 
   @override
   void dispose() {
     _unityWidgetController?.dispose();
+    _unityWidgetController?.unload();// TODO
+    _unityWidgetController?.quit();
     super.dispose();
   }
 
@@ -45,14 +56,16 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
             ],
           ),
         ),
-        body: UnityWidget(
+        body: loaded ? UnityWidget(
+          unloadOnDispose: true, // TODO
           onUnityCreated: _onUnityCreated,
           onUnityMessage: onUnityMessage,
           onUnitySceneLoaded: onUnitySceneLoaded,
           useAndroidViewSurface: true,
           fullscreen: false,
+          placeholder: Container(color: AppColors.black,),
           borderRadius: const BorderRadius.all(Radius.circular(70)),
-        ),
+        ) : Container()
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
@@ -64,6 +65,9 @@ class _ArScreenState extends State<ArScreen> {
                 title: localize.academy,
                 text: localize.ar_visual,
                 backGroundImage: 'ar/dybai.png',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.stadium});
+                },
               ),
               const SizedBox(
                 height: 15,
@@ -76,7 +80,7 @@ class _ArScreenState extends State<ArScreen> {
                 text: localize.choose_play,
                 backGroundImage: 'ar/footboll_field.png',
                 onTap: () {
-                  Navigator.pushNamed(context, AppRouteNames.arMiniGames);
+                  Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.menu});
                 },
               ),
               const SizedBox(

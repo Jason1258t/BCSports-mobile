@@ -1,8 +1,9 @@
 import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
-import 'package:bcsports_mobile/features/ar/ui/simple_screen.dart';
+import 'package:bcsports_mobile/features/ar/ui/unity_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/medium_activity_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -82,10 +83,8 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const UnityViewScreen(scene: UnityScenes.basketball,)));
+                              Navigator.pushNamed(
+                                  context, AppRouteNames.unity, arguments: {'scene': UnityScenes.basketball});
                             },
                             child: MediumActivityWidget(
                               padding: EdgeInsets.all(sizeOf.width * 0.037),
