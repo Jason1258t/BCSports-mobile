@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
@@ -17,13 +18,12 @@ class UnityViewScreen extends StatefulWidget {
 class _UnityViewScreenState extends State<UnityViewScreen> {
   UnityWidgetController? _unityWidgetController;
 
-
   bool loaded = false;
 
   @override
   void initState() {
     super.initState();
-
+    start();
   }
 
   void start() async {
@@ -36,8 +36,8 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
   @override
   void dispose() {
     _unityWidgetController?.dispose();
-    _unityWidgetController?.unload();// TODO
-    _unityWidgetController?.quit();
+    // _unityWidgetController?.unload();// TODO
+    // _unityWidgetController?.quit();
     super.dispose();
   }
 
@@ -45,28 +45,39 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CustomScaffold(
-        padding: EdgeInsets.zero,
-        appBar: EmptyAppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ButtonBack(onTap: () {
-                Navigator.pop(context);
-              })
-            ],
+          padding: EdgeInsets.zero,
+          appBar: EmptyAppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ButtonBack(onTap: () {
+                  _unityWidgetController?.postMessage(
+                    'MenuScenes',
+                    'HandleScene',
+                    'Back',
+                  );
+                  Navigator.pop(context);
+                })
+              ],
+            ),
           ),
-        ),
-        body: loaded ? UnityWidget(
-          unloadOnDispose: true, // TODO
-          onUnityCreated: _onUnityCreated,
-          onUnityMessage: onUnityMessage,
-          onUnitySceneLoaded: onUnitySceneLoaded,
-          useAndroidViewSurface: true,
-          fullscreen: false,
-          placeholder: Container(color: AppColors.black,),
-          borderRadius: const BorderRadius.all(Radius.circular(70)),
-        ) : Container()
-      ),
+          body: loaded
+              ? UnityWidget(
+                  unloadOnDispose: false,
+                  // TODO
+                  onUnityCreated: _onUnityCreated,
+                  onUnityMessage: onUnityMessage,
+                  onUnitySceneLoaded: onUnitySceneLoaded,
+                  useAndroidViewSurface: true,
+                  fullscreen: false,
+                  placeholder: Center(
+                    child: AppAnimations.circleIndicator,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(70)),
+                )
+              : Center(
+                  child: AppAnimations.circleIndicator,
+                )),
     );
   }
 
