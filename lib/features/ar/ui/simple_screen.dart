@@ -1,19 +1,23 @@
+import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
+import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
-class SimpleScreen extends StatefulWidget {
-  const SimpleScreen({Key? key}) : super(key: key);
+class UnityViewScreen extends StatefulWidget {
+  const UnityViewScreen({Key? key, this.scene}) : super(key: key);
+
+  final String? scene;
 
   @override
-  State<SimpleScreen> createState() => _SimpleScreenState();
+  State<UnityViewScreen> createState() => _UnityViewScreenState();
 }
 
-class _SimpleScreenState extends State<SimpleScreen> {
+class _UnityViewScreenState extends State<UnityViewScreen> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>();
 
   UnityWidgetController? _unityWidgetController;
-  double _sliderValue = 0.0;
 
   @override
   void initState() {
@@ -28,37 +32,36 @@ class _SimpleScreenState extends State<SimpleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Simple Screen'),
-      ),
-      body: Card(
-          margin: const EdgeInsets.all(0),
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Stack(
+    return SafeArea(
+      child: CustomScaffold(
+        padding: EdgeInsets.zero,
+        appBar: EmptyAppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              UnityWidget(
-                onUnityCreated: _onUnityCreated,
-                onUnityMessage: onUnityMessage,
-                onUnitySceneLoaded: onUnitySceneLoaded,
-                useAndroidViewSurface: true,
-                fullscreen: false,
-                borderRadius: const BorderRadius.all(Radius.circular(70)),
-              ),
+              ButtonBack(onTap: () {
+                Navigator.pop(context);
+              })
             ],
-          )),
+          ),
+        ),
+        body: UnityWidget(
+          onUnityCreated: _onUnityCreated,
+          onUnityMessage: onUnityMessage,
+          onUnitySceneLoaded: onUnitySceneLoaded,
+          useAndroidViewSurface: true,
+          fullscreen: false,
+          borderRadius: const BorderRadius.all(Radius.circular(70)),
+        ),
+      ),
     );
   }
 
-  void setRotationSpeed(String speed) {
+  void setScene(String sceneName) {
     _unityWidgetController?.postMessage(
-      'Cube',
-      'SetRotationSpeed',
-      speed,
+      'MenuScenes',
+      'HandleScene',
+      sceneName,
     );
   }
 
@@ -79,5 +82,8 @@ class _SimpleScreenState extends State<SimpleScreen> {
   void _onUnityCreated(controller) {
     controller.resume();
     _unityWidgetController = controller;
+    if (widget.scene != null) {
+      setScene(widget.scene!);
+    }
   }
 }
