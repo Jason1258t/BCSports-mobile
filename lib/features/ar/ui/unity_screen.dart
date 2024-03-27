@@ -60,20 +60,25 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
                   );
                   Navigator.pop(context);
                 }),
-                Text(widget.title ?? '', style: AppFonts.font18w600,),
-                const SizedBox(width: 40,)
+                Text(
+                  widget.title ?? '',
+                  style: AppFonts.font18w600,
+                ),
+                const SizedBox(
+                  width: 40,
+                )
               ],
             ),
           ),
           body: loaded
               ? UnityWidget(
-                  unloadOnDispose: false,
-                  // TODO
+                  unloadOnDispose: false, // TODO что-то
                   onUnityCreated: _onUnityCreated,
                   onUnityMessage: onUnityMessage,
                   onUnitySceneLoaded: onUnitySceneLoaded,
                   useAndroidViewSurface: true,
                   fullscreen: false,
+                  hideStatus: false,
                   placeholder: Center(
                     child: AppAnimations.circleIndicator,
                   ),
