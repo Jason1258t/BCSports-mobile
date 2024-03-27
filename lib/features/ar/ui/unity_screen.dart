@@ -6,6 +6,9 @@ import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
+import '../../../localization/app_localizations.dart';
+import '../../../utils/fonts.dart';
+
 class UnityViewScreen extends StatefulWidget {
   const UnityViewScreen({Key? key, this.scene}) : super(key: key);
 
@@ -43,10 +46,16 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final localize = AppLocalizations.of(context)!;
+
     return SafeArea(
       child: CustomScaffold(
           padding: EdgeInsets.zero,
-          appBar: EmptyAppBar(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: AppColors.black,
+            surfaceTintColor: Colors.transparent,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -57,7 +66,12 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
                     'Back',
                   );
                   Navigator.pop(context);
-                })
+                }),
+                Text(
+                  //localize.ar,
+                  "Augmented Reality",
+                  style: AppFonts.font18w600,
+                ),
               ],
             ),
           ),
@@ -70,6 +84,7 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
                   onUnitySceneLoaded: onUnitySceneLoaded,
                   useAndroidViewSurface: true,
                   fullscreen: false,
+                  hideStatus: false,
                   placeholder: Center(
                     child: AppAnimations.circleIndicator,
                   ),
