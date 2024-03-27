@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
 import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_user_ar.dart';
 import 'package:bcsports_mobile/features/profile/bloc/user_nft/user_nft_cubit.dart';
@@ -107,7 +108,11 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
                               (context, index) => NftUserAr(
                                     nft: nftList[index],
                                     onTap: () {
-                                      Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.ar});
+                                      Navigator.pushNamed(
+                                          context, AppRouteNames.unity,
+                                          arguments: SceneData(
+                                              sceneId: UnityScenes.ar,
+                                              title: 'Player'));
                                     },
                                   ),
                               childCount: nftList.length),

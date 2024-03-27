@@ -1,18 +1,17 @@
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
-import '../../../localization/app_localizations.dart';
-import '../../../utils/fonts.dart';
-
 class UnityViewScreen extends StatefulWidget {
-  const UnityViewScreen({Key? key, this.scene}) : super(key: key);
+  const UnityViewScreen({Key? key, this.scene, this.title}) : super(key: key);
 
   final String? scene;
+  final String? title;
 
   @override
   State<UnityViewScreen> createState() => _UnityViewScreenState();
@@ -46,18 +45,12 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final localize = AppLocalizations.of(context)!;
-
     return SafeArea(
       child: CustomScaffold(
           padding: EdgeInsets.zero,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: AppColors.black,
-            surfaceTintColor: Colors.transparent,
+          appBar: EmptyAppBar(
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ButtonBack(onTap: () {
                   _unityWidgetController?.postMessage(
@@ -67,11 +60,8 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
                   );
                   Navigator.pop(context);
                 }),
-                Text(
-                  //localize.ar,
-                  "Augmented Reality",
-                  style: AppFonts.font18w600,
-                ),
+                Text(widget.title ?? '', style: AppFonts.font18w600,),
+                const SizedBox(width: 40,)
               ],
             ),
           ),
@@ -84,7 +74,6 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
                   onUnitySceneLoaded: onUnitySceneLoaded,
                   useAndroidViewSurface: true,
                   fullscreen: false,
-                  hideStatus: false,
                   placeholder: Center(
                     child: AppAnimations.circleIndicator,
                   ),

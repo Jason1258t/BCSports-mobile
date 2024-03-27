@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
 import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
@@ -48,8 +49,7 @@ class _ArScreenState extends State<ArScreen> {
                 height: sizeOf.width * 0.456,
                 assetIcon: 'people_with_rows.svg',
                 title: localize.player,
-                text:
-                    localize.make_selfie,
+                text: localize.make_selfie,
                 backGroundImage: 'ar/ar_pepole.png',
                 onTap: () {
                   Navigator.pushNamed(context, AppRouteNames.arUserNft);
@@ -66,7 +66,9 @@ class _ArScreenState extends State<ArScreen> {
                 text: localize.ar_visual,
                 backGroundImage: 'ar/dybai.png',
                 onTap: () {
-                  Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.stadium});
+                  Navigator.pushNamed(context, AppRouteNames.unity,
+                      arguments: SceneData(
+                          sceneId: UnityScenes.stadium, title: localize.academy));
                 },
               ),
               const SizedBox(
@@ -80,7 +82,10 @@ class _ArScreenState extends State<ArScreen> {
                 text: localize.choose_play,
                 backGroundImage: 'ar/footboll_field.png',
                 onTap: () {
-                  Navigator.pushNamed(context, AppRouteNames.unity, arguments: {'scene': UnityScenes.menu});
+                  Navigator.pushNamed(context, AppRouteNames.unity,
+                      arguments: SceneData(
+                          sceneId: UnityScenes.menu,
+                          title: localize.mini_games));
                 },
               ),
               const SizedBox(

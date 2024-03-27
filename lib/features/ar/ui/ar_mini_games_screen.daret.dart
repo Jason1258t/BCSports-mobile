@@ -1,3 +1,4 @@
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
 import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
 import 'package:bcsports_mobile/features/ar/ui/unity_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
@@ -83,8 +84,10 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, AppRouteNames.unity, arguments: {'scene': UnityScenes.basketball});
+                              Navigator.pushNamed(context, AppRouteNames.unity,
+                                  arguments: SceneData(
+                                      sceneId: UnityScenes.basketball,
+                                      title: 'Basketball'));
                             },
                             child: MediumActivityWidget(
                               padding: EdgeInsets.all(sizeOf.width * 0.037),
