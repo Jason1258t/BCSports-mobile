@@ -1,4 +1,5 @@
 import 'package:bcsports_mobile/app.dart';
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_mini_games_screen.daret.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_players_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_screen.dart';
@@ -114,10 +115,11 @@ class AppRoutes {
       case AppRouteNames.arUserNft:
         return AnimatedRoute(builder: (ctx) => const ArPlayersScreen());
       case AppRouteNames.unity:
-        final Map<dynamic, dynamic> pageArgs = settings.arguments as Map;
-        final String scene = pageArgs['scene'];
+        // final pageArgs = settings.arguments as Map;
+        // final String scene = pageArgs['scene'];
+        final SceneData data = settings.arguments as SceneData;
 
-        return AnimatedRoute(builder: (ctx) =>  UnityViewScreen(scene: scene));
+        return AnimatedRoute(builder: (ctx) =>  UnityViewScreen(scene: data.sceneId, title: data.title));
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
