@@ -1,7 +1,9 @@
 import 'package:bcsports_mobile/app.dart';
-import 'package:bcsports_mobile/features/ar/ui/ar_mini-games_screen.daret.dart';
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
+import 'package:bcsports_mobile/features/ar/ui/ar_mini_games_screen.daret.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_players_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/ar_screen.dart';
+import 'package:bcsports_mobile/features/ar/ui/unity_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/create_display_name.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/auth/ui/registration_screen.dart';
@@ -106,11 +108,18 @@ class AppRoutes {
             builder: (ctx) => const ChatContactsScreen());
       case AppRouteNames.arMiniGames:
         return AnimatedRoute(builder: (ctx) => const ArMiniGagesScreen());
+        // return AnimatedRoute(builder: (ctx) => const SimpleScreen());
       case AppRouteNames.createName:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const CreateDisplayNameScreen());
       case AppRouteNames.arUserNft:
         return AnimatedRoute(builder: (ctx) => const ArPlayersScreen());
+      case AppRouteNames.unity:
+        // final pageArgs = settings.arguments as Map;
+        // final String scene = pageArgs['scene'];
+        final SceneData data = settings.arguments as SceneData;
+
+        return AnimatedRoute(builder: (ctx) =>  UnityViewScreen(scene: data.sceneId, title: data.title));
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 

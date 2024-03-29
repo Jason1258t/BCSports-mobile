@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.blockchain.sports"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    ndkVersion "21.3.6528147"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,10 +48,13 @@ android {
     defaultConfig {
         applicationId "com.blockchain.sports"
         multiDexEnabled true
-        minSdkVersion 21
+        minSdkVersion 29
         targetSdkVersion flutter.targetSdkVersion
         versionCode 2
         versionName flutterVersionName
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
     }
 
     signingConfigs {
@@ -63,8 +66,27 @@ android {
         }
     }
 
+    // Don't delete!
+    // If delete it then Unity and Scenes take a very long time to open because of compression and unpacking.
+    aaptOptions {
+        noCompress = ['.unity3d', '.ress', '.resource', '.obb', '.bundle', '.unityexp'] + unityStreamingAssets.tokenize(', ')
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
+    lintOptions {
+        // If set to true (default), stops the build if errors are found.
+        abortOnError false
+    }
+
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
         release {
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.release
         }
     }
@@ -74,4 +96,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation project(':unityLibrary')
+    implementation project(':flutter_unity_widget')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}

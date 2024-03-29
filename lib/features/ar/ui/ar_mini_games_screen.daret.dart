@@ -1,10 +1,15 @@
+import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
+import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
+import 'package:bcsports_mobile/features/ar/ui/unity_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/medium_activity_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
 class ArMiniGagesScreen extends StatefulWidget {
   const ArMiniGagesScreen({super.key});
@@ -77,12 +82,20 @@ class _ArMiniGagesScreenState extends State<ArMiniGagesScreen> {
                           SizedBox(
                             height: sizeOf.width * 0.037,
                           ),
-                          MediumActivityWidget(
-                            padding: EdgeInsets.all(sizeOf.width * 0.037),
-                            width: sizeOf.width * 0.81,
-                            assetIcon: 'mdi_basketball.svg',
-                            title: localize.basketball,
-                            text: localize.show_aim,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRouteNames.unity,
+                                  arguments: SceneData(
+                                      sceneId: UnityScenes.basketball,
+                                      title: 'Basketball'));
+                            },
+                            child: MediumActivityWidget(
+                              padding: EdgeInsets.all(sizeOf.width * 0.037),
+                              width: sizeOf.width * 0.81,
+                              assetIcon: 'mdi_basketball.svg',
+                              title: localize.basketball,
+                              text: localize.show_aim,
+                            ),
                           )
                         ],
                       ),
