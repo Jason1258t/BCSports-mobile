@@ -1,6 +1,7 @@
 import 'package:bcsports_mobile/features/auth/bloc/app/app_cubit.dart';
 import 'package:bcsports_mobile/features/auth/ui/login_screen.dart';
 import 'package:bcsports_mobile/features/main/ui/main_screen.dart';
+import 'package:bcsports_mobile/features/onboarding/ui/onboarding_screen.dart';
 import 'package:bcsports_mobile/features/splash/splash_screen.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/routes/routes.dart';
@@ -48,7 +49,8 @@ class AppStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (context, state) {
       if (state is AppUnAuthState) return const LoginScreen();
-      if (state is AppAuthState) return const MainScreen();
+      // if (state is AppAuthState) return const MainScreen();
+      if (state is AppAuthState) return const OnboardingScreen();
       if (state is AppInitial) return const SplashScreen();
       return Container();
     });

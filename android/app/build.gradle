@@ -97,7 +97,7 @@ flutter {
 }
 
 dependencies {
-    implementation project(':unityLibrary')
-    implementation project(':flutter_unity_widget')
+//    implementation project(':unityLibrary')
+//    implementation project(':flutter_unity_widget') TODO enable for unity
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

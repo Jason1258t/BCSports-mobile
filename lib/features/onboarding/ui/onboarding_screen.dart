@@ -19,8 +19,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
-
-  late OnboardingCubit bloc;
+  int currentPage = 0;
 
   List<Widget> pages = const [
     OnboardingFirstWidget(),
@@ -29,30 +28,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingFourthWidget()
   ];
 
-  @override
-  void initState() {
-    bloc = BlocProvider.of<OnboardingCubit>(context);
-    super.initState();
-  }
-
   void animateToPage() {
-    _pageController.animateToPage(bloc.currentPageIndex,
+    _pageController.animateToPage(currentPage,
         duration: const Duration(milliseconds: 200),
         curve: Curves.fastEaseInToSlowEaseOut);
   }
 
   void nextPage() {
-    if (bloc.currentPageIndex == bloc.maxPageIndex) {
+    if (currentPage == 3) {
       Navigator.pop(context);
     } else {
-      bloc.nextPage();
+      setState(() {
+        currentPage++;
+      });
+      animateToPage();
     }
-  }
-
-  @override
-  void dispose() {
-    bloc.resetStartPageIndex();
-    super.dispose();
   }
 
   @override
@@ -66,138 +56,155 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       3: localize.start
     };
 
-    return BlocConsumer<OnboardingCubit, OnboardingState>(
-      listener: (context, state) {
-        animateToPage();
-      },
-      builder: (context, state) => Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    "assets/images/onboarding/onboarding_bg.png",
-                  ))),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                child: PageView(
-                  controller: _pageController,
-                  physics: CustomScrollPhysics(),
-                  onPageChanged: (page) {
-                    bloc.setPage(page);
-                  },
-                  children: pages,
-                ),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(
+                  "assets/images/onboarding/onboarding_bg.png",
+                ))),
+        child: Stack(
+          children: [
+            Positioned(
+              child: PageView(
+                controller: _pageController,
+                // physics: CustomScrollPhysics(),
+                onPageChanged: (page) {
+                  if (page < currentPage) {
+                    _pageController.animateToPage(currentPage,
+                        duration: const Duration(milliseconds: 100),
+                        curve: Curves.ease);
+                  } else {
+                    setState(() {
+                      currentPage = page;
+                    });
+                  }
+                },
+                children: pages,
               ),
-              Positioned(
-                top: 70,
-                left: 27,
-                right: 27,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 47,
-                      height: 10,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: exploreMoreData.keys
-                            .map((e) => OnboardingDot(
-                                  isBig: e == bloc.currentPageIndex,
-                                ))
-                            .toList(),
-                      ),
+            ),
+            Positioned(
+              top: 70,
+              left: 27,
+              right: 27,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 47,
+                    height: 10,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: exploreMoreData.keys
+                          .map((e) => OnboardingDot(
+                                isBig: e == currentPage,
+                              ))
+                          .toList(),
                     ),
-                    const ButtonSkip()
-                  ],
-                ),
+                  ),
+                  const ButtonSkip()
+                ],
               ),
-              Positioned(
-                bottom: 32,
-                right: 23,
-                left: 23,
-                child: CustomTextButton(
-                    text:
-                        exploreMoreData[bloc.currentPageIndex] ?? localize.next,
-                    onTap: nextPage,
-                    isActive: true),
-              )
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: 32,
+              right: 23,
+              left: 23,
+              child: CustomTextButton(
+                  text: exploreMoreData[currentPage] ?? localize.next,
+                  onTap: nextPage,
+                  isActive: true),
+            )
+          ],
         ),
       ),
     );
   }
 }
 
-class CustomScrollPhysics extends ScrollPhysics {
-  CustomScrollPhysics({super.parent});
-
-  bool isGoingLeft = false;
-
-  @override
-  ScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return CustomScrollPhysics(parent: buildParent(ancestor));
-  }
-
-  @override
-  double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
-    isGoingLeft = offset.sign < 0;
-    return offset;
-  }
-
-  @override
-  double applyBoundaryConditions(ScrollMetrics position, double value) {
-//print("applyBoundaryConditions");
-    assert(() {
-      if (value == position.pixels) {
-        throw FlutterError(
-            '$runtimeType.applyBoundaryConditions() was called redundantly.\n'
-            'The proposed new position, $value, is exactly equal to the current position of the '
-            'given ${position.runtimeType}, ${position.pixels}.\n'
-            'The applyBoundaryConditions method should only be called when the value is '
-            'going to actually change the pixels, otherwise it is redundant.\n'
-            'The physics object in question was:\n'
-            '  $this\n'
-            'The position object in question was:\n'
-            '  $position\n');
-      }
-      return true;
-    }());
-    if (value < position.pixels &&
-        position.pixels <= position.minScrollExtent) {
-      return value - position.pixels;
-    }
-    if (position.maxScrollExtent <= position.pixels &&
-        position.pixels < value) {
-      // overscroll
-      return value - position.pixels;
-    }
-    if (value < position.minScrollExtent &&
-        position.minScrollExtent < position.pixels) {
-      // hit top edge
-
-      return value - position.minScrollExtent;
-    }
-
-    if (position.pixels < position.maxScrollExtent &&
-        position.maxScrollExtent < value) {
-      // hit bottom edge
-      return value - position.maxScrollExtent;
-    }
-
-    if (!isGoingLeft) {
-      return value - position.pixels;
-    }
-    return 0.0;
-  }
-}
+// class CustomScrollPhysics extends PageScrollPhysics {
+//   CustomScrollPhysics({super.parent});
+//
+// //   bool isGoingLeft = false;
+// //
+// //   @override
+// //   ScrollPhysics applyTo(ScrollPhysics? ancestor) {
+// //     return CustomScrollPhysics(parent: buildParent(ancestor));
+// //   }
+// //
+// //   @override
+// //   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
+// //     isGoingLeft = offset.sign < 0;
+// //     return offset;
+// //   }
+// //
+// //   @override
+// //   double applyBoundaryConditions(ScrollMetrics position, double value) {
+// // //print("applyBoundaryConditions");
+// //     assert(() {
+// //       if (value == position.pixels) {
+// //         throw FlutterError(
+// //             '$runtimeType.applyBoundaryConditions() was called redundantly.\n'
+// //             'The proposed new position, $value, is exactly equal to the current position of the '
+// //             'given ${position.runtimeType}, ${position.pixels}.\n'
+// //             'The applyBoundaryConditions method should only be called when the value is '
+// //             'going to actually change the pixels, otherwise it is redundant.\n'
+// //             'The physics object in question was:\n'
+// //             '  $this\n'
+// //             'The position object in question was:\n'
+// //             '  $position\n');
+// //       }
+// //       return true;
+// //     }());
+// //     if (value < position.pixels &&
+// //         position.pixels <= position.minScrollExtent) {
+// //       return value - position.pixels;
+// //     }
+// //     if (position.maxScrollExtent <= position.pixels &&
+// //         position.pixels < value) {
+// //       // overscroll
+// //       return value - position.pixels;
+// //     }
+// //     if (value < position.minScrollExtent &&
+// //         position.minScrollExtent < position.pixels) {
+// //       // hit top edge
+// //
+// //       return value - position.minScrollExtent;
+// //     }
+// //
+// //     if (position.pixels < position.maxScrollExtent &&
+// //         position.maxScrollExtent < value) {
+// //       // hit bottom edge
+// //       return value - position.maxScrollExtent;
+// //     }
+// //
+// //     if (!isGoingLeft) {
+// //       return value - position.pixels;
+// //     }
+// //     return 0.0;
+// //   }
+//
+//   @override
+//   PageScrollPhysics applyTo(ScrollPhysics? ancestor) {
+//     return CustomScrollPhysics(parent: buildParent(ancestor));
+//   }
+//
+//   @override
+//   double applyPhysicsToUserOffset(ScrollMetrics position, double offset) {
+//     print(position.axis);
+//     print(position.extentAfter);
+//     print(position.extentBefore);
+//     if (position.axisDirection == AxisDirection.right) {
+//       // Если пользователь прокручивает вправо, применяем стандартную физику
+//       return super.applyPhysicsToUserOffset(position, offset);
+//     } else {
+//       // Иначе, игнорируем прокрутку влево
+//       return 0.0;
+//     }
+//   }
+// }
 
 class OnboardingDot extends StatelessWidget {
   final bool isBig;

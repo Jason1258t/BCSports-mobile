@@ -211,11 +211,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: localize.already_have_acc,
-                            style: AppFonts.font12w400),
+                            text: '${localize.already_have_acc} ',
+                            style: AppFonts.font14w400),
                         TextSpan(
                             text: localize.sign_in,
-                            style: AppFonts.font16w600,
+                            style: AppFonts.font14w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pop(context);

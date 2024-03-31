@@ -183,10 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text.rich(TextSpan(children: [
                         TextSpan(
                             text: "${localize.no_acc} ",
-                            style: AppFonts.font12w400),
+                            style: AppFonts.font14w400),
                         TextSpan(
                             text: localize.sign_up,
-                            style: AppFonts.font16w600,
+                            style: AppFonts.font14w600,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(
