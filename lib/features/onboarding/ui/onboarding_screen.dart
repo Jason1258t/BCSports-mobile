@@ -72,15 +72,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 controller: _pageController,
                 // physics: CustomScrollPhysics(),
                 onPageChanged: (page) {
-                  if (page < currentPage) {
-                    _pageController.animateToPage(currentPage,
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.ease);
-                  } else {
-                    setState(() {
-                      currentPage = page;
-                    });
-                  }
+                  setState(() {
+                    currentPage = page;
+                  });
                 },
                 children: pages,
               ),
