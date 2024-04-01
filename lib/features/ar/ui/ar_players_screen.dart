@@ -8,8 +8,10 @@ import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/dialogs.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
+import 'package:bcsports_mobile/widgets/dialogs_and_snackbars/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -108,11 +110,8 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
                               (context, index) => NftUserAr(
                                     nft: nftList[index],
                                     onTap: () {
-                                      Navigator.pushNamed(
-                                          context, AppRouteNames.unity,
-                                          arguments: SceneData(
-                                              sceneId: UnityScenes.ar,
-                                              title: 'Player'));
+                                      final id = nftList[index].documentId;
+                                      openPlayer(id);
                                     },
                                   ),
                               childCount: nftList.length),
@@ -129,6 +128,20 @@ class _MarketLotsScreenState extends State<ArPlayersScreen> {
         return Container();
       },
     );
+  }
+
+  void openPlayer(String id) {
+    if (['k1OMkMhk5WdlcNYKXT6z', 'y6vbrSUxlPe1iBGVJlac'].contains(id)) {
+      Navigator.pushNamed(context, AppRouteNames.unity,
+          arguments: SceneData(
+              sceneId: id == 'k1OMkMhk5WdlcNYKXT6z'
+                  ? UnityScenes.k1OMkMhk5WdlcNYKXT6z
+                  : UnityScenes.y6vbrSUxlPe1iBGVJlac,
+              title: 'Player'));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          AppSnackBars.snackBar('Sorry this player haven\'t ar yet'));
+    }
   }
 
   Widget buildEmptyDataMessage() {

@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 
 class NftArButton extends StatelessWidget {
   final bool isActive;
+  final VoidCallback onTap;
 
-  const NftArButton({super.key, required this.isActive});
+
+  const NftArButton({super.key, required this.isActive, required this.onTap});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +20,7 @@ class NftArButton extends StatelessWidget {
 
     return CustomTextButton(
       text: arButton,
-      onTap: () {
-        Navigator.pushNamed(context, AppRouteNames.unity,
-            arguments: {'scene': UnityScenes.ar});
-      },
+      onTap: onTap,
       isActive: isActive,
       height: 52,
     );

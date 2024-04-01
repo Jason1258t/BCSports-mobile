@@ -14,6 +14,10 @@ import 'package:bcsports_mobile/widgets/popups/sell_nft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../routes/route_names.dart';
+import '../../ar/data/scene_data.dart';
+import '../../ar/data/unity_scenes.dart';
+
 class MarketProductSellScreen extends StatefulWidget {
   final NftModel nft;
 
@@ -104,7 +108,8 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
         } else if (state is SellSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(AppSnackBars.snackBar(localize.success_sell));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(AppSnackBars.snackBar(localize.success_sell));
         }
       },
       child: CustomScrollView(
@@ -138,6 +143,24 @@ class _MarketProductSellScreenState extends State<MarketProductSellScreen> {
                   ),
                   NftArButton(
                     isActive: true,
+                    onTap: () {
+                      final id =
+                          marketRepository.nftService.lastLoadedNft.documentId;
+
+                      if (['k1OMkMhk5WdlcNYKXT6z', 'y6vbrSUxlPe1iBGVJlac']
+                          .contains(id)) {
+                        Navigator.pushNamed(context, AppRouteNames.unity,
+                            arguments: SceneData(
+                                sceneId: id == 'k1OMkMhk5WdlcNYKXT6z'
+                                    ? UnityScenes.k1OMkMhk5WdlcNYKXT6z
+                                    : UnityScenes.y6vbrSUxlPe1iBGVJlac,
+                                title: 'Player'));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            AppSnackBars.snackBar(
+                                'Sorry this player haven\'t ar yet'));
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 24,

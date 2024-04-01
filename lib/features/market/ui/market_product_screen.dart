@@ -10,6 +10,7 @@ import 'package:bcsports_mobile/features/market/ui/widgets/player_app_stats.dart
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
+import 'package:bcsports_mobile/routes/route_names.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
@@ -18,6 +19,9 @@ import 'package:bcsports_mobile/widgets/popups/buy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../ar/data/scene_data.dart';
+import '../../ar/data/unity_scenes.dart';
 
 class MarketProductBuyScreen extends StatefulWidget {
   final MarketItemModel product;
@@ -35,7 +39,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
   @override
   void initState() {
     initProviders();
-    
+
     nftCubit.getNftDetails(widget.product.nft);
     marketRepository.getLotFavouritesValue(widget.product.id);
 
@@ -87,7 +91,7 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
           ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar("Smth went wrong!"));
         } else if (state is BuyNftSuccess) {
-          ScaffoldMessenger.of(context) 
+          ScaffoldMessenger.of(context)
               .showSnackBar(AppSnackBars.snackBar(localize.success_buy));
         }
       },
@@ -214,6 +218,23 @@ class _MarketProductBuyScreenState extends State<MarketProductBuyScreen> {
                 ),
                 NftArButton(
                   isActive: false,
+                  onTap: () {
+                    final id = nft.documentId;
+
+                    if (['k1OMkMhk5WdlcNYKXT6z', 'y6vbrSUxlPe1iBGVJlac']
+                        .contains(id)) {
+                      Navigator.pushNamed(context, AppRouteNames.unity,
+                          arguments: SceneData(
+                              sceneId: id == 'k1OMkMhk5WdlcNYKXT6z'
+                                  ? UnityScenes.k1OMkMhk5WdlcNYKXT6z
+                                  : UnityScenes.y6vbrSUxlPe1iBGVJlac,
+                              title: 'Player'));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          AppSnackBars.snackBar(
+                              'Sorry this player haven\'t ar yet'));
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 24,
