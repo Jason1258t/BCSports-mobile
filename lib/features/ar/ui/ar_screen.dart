@@ -102,7 +102,7 @@ class _ArScreenState extends State<ArScreen> {
                   Navigator.pushNamed(context, AppRouteNames.unity,
                       arguments: SceneData(
                           sceneId: UnityScenes.tShort,
-                          title: localize.mini_games));
+                          title: localize.ar_tshort));
                 },
               ),
               const SizedBox(
