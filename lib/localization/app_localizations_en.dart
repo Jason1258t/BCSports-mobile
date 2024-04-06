@@ -441,4 +441,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get success_sell => 'Success sell!';
+
+  @override
+  String get ar_tshort => 'AR T-shirt';
+
+  @override
+  String get experiens_new_future_fashion => 'Experience the future of fashion with our AR-enhanced t-shirt!';
 }

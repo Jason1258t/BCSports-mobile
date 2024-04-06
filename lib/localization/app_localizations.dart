@@ -968,6 +968,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Success sell!'**
   String get success_sell;
+
+  /// No description provided for @ar_tshort.
+  ///
+  /// In en, this message translates to:
+  /// **'AR T-shirt'**
+  String get ar_tshort;
+
+  /// No description provided for @experiens_new_future_fashion.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience the future of fashion with our AR-enhanced t-shirt!'**
+  String get experiens_new_future_fashion;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

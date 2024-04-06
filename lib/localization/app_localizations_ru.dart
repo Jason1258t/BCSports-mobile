@@ -441,4 +441,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get success_sell => 'Успешная продажа!';
+
+  @override
+  String get ar_tshort => 'AR-футболка';
+
+  @override
+  String get experiens_new_future_fashion => 'Откройте для себя будущий мерч вместе с нашими Футболка с дополненной реальностью!';
 }

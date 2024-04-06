@@ -15,4 +15,5 @@ abstract class UnityScenes {
 
   static const String menu = 'Menu';
   static const String stadium = 'Stadium';
+  static const String tShort = 'TShirt';
 }

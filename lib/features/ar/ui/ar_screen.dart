@@ -91,6 +91,23 @@ class _ArScreenState extends State<ArScreen> {
               const SizedBox(
                 height: 15,
               ),
+              ArBannerWidget(
+                width: sizeOf.width,
+                height: sizeOf.width * 0.456,
+                assetIcon: 'mingcute_t-shirt-fill.svg',
+                title: localize.ar_tshort,
+                text: localize.experiens_new_future_fashion,
+                backGroundImage: 'ar/t-short_mina-game_background.png',
+                onTap: () {
+                  Navigator.pushNamed(context, AppRouteNames.unity,
+                      arguments: SceneData(
+                          sceneId: UnityScenes.tShort,
+                          title: localize.mini_games));
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
             ],
           ),
         ));
