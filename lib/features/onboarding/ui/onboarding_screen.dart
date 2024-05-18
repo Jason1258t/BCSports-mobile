@@ -1,4 +1,3 @@
-import 'package:bcsports_mobile/features/onboarding/bloc/cubit/onboarding_cubit.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/button_skip.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_first.dart';
 import 'package:bcsports_mobile/features/onboarding/ui/widgets/onboarding_fourth.dart';
@@ -8,7 +7,6 @@ import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

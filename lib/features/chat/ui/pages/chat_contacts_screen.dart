@@ -5,6 +5,7 @@ import 'package:bcsports_mobile/features/chat/ui/widgets/chat_preview.dart';
 import 'package:bcsports_mobile/features/chat/ui/widgets/small_user_card.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/dialogs.dart';
@@ -193,22 +194,30 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                     Dialogs.show(
                         context, Center(child: AppAnimations.circleIndicator));
 
-                    Room? room = await chatRepository.roomWithUserExists(e.id);
-                    room ??= await chatRepository.createRoomWithUser(e);
-
-                    chatRepository.setActiveUser(e);
-
-                    Navigator.pop(context);
-
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (_) => ChatMessagesScreen(room: room!)));
+                    final room = await getChatData(e);
+                    openChat(room);
                   }
                 },
                 userModel: e,
               ),
             ))
         .toList();
+  }
+
+  void openChat(Room room) {
+    Navigator.pop(context);
+
+    Navigator.push(context,
+        CupertinoPageRoute(builder: (_) => ChatMessagesScreen(room: room)));
+  }
+
+  Future getChatData(UserModel e) async {
+    final chatRepository = context.read<ChatRepository>();
+
+    Room? room = await chatRepository.roomWithUserExists(e.id);
+    room ??= await chatRepository.createRoomWithUser(e);
+
+    chatRepository.setActiveUser(e);
+    return room;
   }
 }

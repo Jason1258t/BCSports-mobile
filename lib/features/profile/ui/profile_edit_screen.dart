@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bcsports_mobile/features/profile/bloc/edit_user/edit_user_cubit.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -61,7 +61,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: user.avatarUrl == null
                     ? Center(
                         child: Text(
-                          (user.displayName ?? user.username)[0].toUpperCase(),
+                          user.displayName[0].toUpperCase(),
                           style: AppFonts.font64w400,
                         ),
                       )

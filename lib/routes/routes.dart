@@ -26,10 +26,11 @@ import 'package:bcsports_mobile/features/wallet/ui/wallet_screen.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/auth/ui/recovery_enter_email_screen.dart';
+import 'page_routes/animated_page_route.dart';
+import 'page_routes/no_animation_page_route.dart';
 
 class AppRoutes {
   static List<Widget> mainPages = [
@@ -108,7 +109,7 @@ class AppRoutes {
             builder: (ctx) => const ChatContactsScreen());
       case AppRouteNames.arMiniGames:
         return AnimatedRoute(builder: (ctx) => const ArMiniGagesScreen());
-        // return AnimatedRoute(builder: (ctx) => const SimpleScreen());
+      // return AnimatedRoute(builder: (ctx) => const SimpleScreen());
       case AppRouteNames.createName:
         return NoAnimationMaterialPageRoute(
             builder: (ctx) => const CreateDisplayNameScreen());
@@ -119,7 +120,9 @@ class AppRoutes {
         // final String scene = pageArgs['scene'];
         final SceneData data = settings.arguments as SceneData;
 
-        return AnimatedRoute(builder: (ctx) =>  UnityViewScreen(scene: data.sceneId, title: data.title));
+        return AnimatedRoute(
+            builder: (ctx) =>
+                UnityViewScreen(scene: data.sceneId, title: data.title));
       // case AppRouteNames.chatMessages:
       //   return NoAnimationMaterialPageRoute(builder: (ctx) => const ChatMessagesScreen());
 
@@ -129,63 +132,5 @@ class AppRoutes {
                   color: Colors.red,
                 ));
     }
-  }
-}
-
-class NoAnimationMaterialPageRoute<T> extends CupertinoPageRoute<T> {
-  NoAnimationMaterialPageRoute({
-    required WidgetBuilder builder,
-    RouteSettings? settings,
-    bool maintainState = true,
-    bool fullscreenDialog = false,
-  }) : super(
-            builder: builder,
-            maintainState: maintainState,
-            settings: settings,
-            fullscreenDialog: fullscreenDialog);
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 0);
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    return child;
-  }
-}
-
-class AnimatedRoute<T> extends CupertinoPageRoute<T> {
-  AnimatedRoute({
-    required WidgetBuilder builder,
-    RouteSettings? settings,
-    bool maintainState = true,
-    bool fullscreenDialog = false,
-  }) : super(
-            builder: builder,
-            maintainState: maintainState,
-            settings: settings,
-            fullscreenDialog: fullscreenDialog);
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    const begin = Offset(1, 0);
-    const end = Offset.zero;
-    final tween = Tween(begin: begin, end: end);
-
-    final curvedAnimation = CurvedAnimation(
-      parent: animation,
-      curve: Curves.easeIn, // You can change the curve as needed
-      reverseCurve:
-          Curves.easeInOut, // You can change the reverse curve as needed
-    );
-
-    return SlideTransition(
-      position: tween.animate(curvedAnimation),
-      child: child,
-    );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
@@ -57,8 +56,9 @@ class CustomTextFormField extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               color: backgroundColor ?? AppColors.black_s2new_1A1A1A,
-              borderRadius:borderRadius ??  BorderRadius.circular(9)),
-          padding: padding ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              borderRadius: borderRadius ?? BorderRadius.circular(9)),
+          padding: padding ??
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           alignment: Alignment.center,
           child: TextFormField(
             textAlign: TextAlign.left,

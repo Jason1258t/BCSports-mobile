@@ -6,15 +6,11 @@ import 'package:bcsports_mobile/features/profile/ui/widgets/toggle_bottom.dart';
 import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments_cubit.dart';
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
-import 'package:bcsports_mobile/features/social/ui/widgets/post_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/nft_model.dart';
 import 'package:bcsports_mobile/routes/route_names.dart';
-import 'package:bcsports_mobile/utils/animations.dart';
-import 'package:bcsports_mobile/utils/assets.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
+import 'package:bcsports_mobile/utils/utils.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,14 +62,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(width: 52,),
+                    const SizedBox(
+                      width: 52,
+                    ),
                     Text(
                       localize.profile,
                       style: AppFonts.font18w600,
                     ),
                     IconButton(
-                      icon:
-                          SvgPicture.asset("assets/icons/settings.svg"),
+                      icon: SvgPicture.asset("assets/icons/settings.svg"),
                       onPressed: () {
                         Navigator.pushNamed(
                             context, AppRouteNames.profileSettings);
@@ -120,8 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: user.avatarUrl == null
                                     ? Center(
                                         child: Text(
-                                          (user.displayName ?? user.username)[0]
-                                              .toUpperCase(),
+                                          user.displayName[0].toUpperCase(),
                                           style: AppFonts.font64w400,
                                         ),
                                       )
@@ -137,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       Text(
-                        user.displayName ?? user.username,
+                        user.displayName,
                         style: AppFonts.font20w600,
                       ),
                       const SizedBox(
@@ -260,8 +256,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     context.read<PostCommentsCubit>().setPost(
                         repository.posts[index],
                         RepositoryProvider.of<ProfileRepository>(context));
-                    Navigator.push(context,
-                        CupertinoPageRoute(builder: (_) => CommentsScreen(isYours: true)));
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (_) => CommentsScreen(isYours: true)));
                   },
                   child: SizedBox(
                     width: (sizeOf.width - 4) / 3,

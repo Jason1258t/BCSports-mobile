@@ -1,9 +1,9 @@
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/comment_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/comment_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/models/post_view_model.dart';
 import 'package:bcsports_mobile/features/social/data/post_source.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
+import 'package:bcsports_mobile/models/comment_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -65,8 +65,6 @@ class PostCommentsCubit extends Cubit<PostCommentsState> {
     try {
       comments.addAll(
           await _socialRepository.getPostComments(newPost.postModel.id));
-
-      print(_profileRepository.commentLikes);
 
       for (var i in comments) {
         i.setLike(_profileRepository.commentLikes.contains(i.commentId));

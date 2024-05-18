@@ -13,7 +13,6 @@ class LocalizationCubit extends Cubit<LocalizationState> {
 
   Future<void> changeLocale(String newLocale) async {
     await localizationService.changeLocale(newLocale);
-    print(localizationService.currentLocale);
     emit(LocalizationChanged());
   }
 

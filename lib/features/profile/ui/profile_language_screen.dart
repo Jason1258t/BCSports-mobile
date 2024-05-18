@@ -1,9 +1,7 @@
-import 'package:bcsports_mobile/l10n/l10n.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/services/locale/localization/locale_names.dart';
 import 'package:bcsports_mobile/services/locale/localization/localization_cubit.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/utils.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
 import 'package:flutter/material.dart';

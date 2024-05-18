@@ -1,6 +1,5 @@
 import 'package:bcsports_mobile/features/ar/data/scene_data.dart';
 import 'package:bcsports_mobile/features/ar/data/unity_scenes.dart';
-import 'package:bcsports_mobile/features/ar/ui/unity_screen.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/ar_banner_widget.dart';
 import 'package:bcsports_mobile/features/ar/ui/widgets/medium_activity_widget.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';

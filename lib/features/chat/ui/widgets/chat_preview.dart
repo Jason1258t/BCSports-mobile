@@ -1,7 +1,7 @@
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
 import 'package:bcsports_mobile/features/chat/ui/pages/chat_messages_screen.dart';
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/cupertino.dart';
@@ -93,7 +93,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Divider(height: 1, color: AppColors.black_101119,),
           ],
         ),
@@ -116,7 +116,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
 
   String? getOtherUserName() {
     final user = getOtherUser()!;
-    return user.displayName ?? user.username;
+    return user.displayName;
   }
 
   Widget buildUserAvatar() {
@@ -137,7 +137,7 @@ class _ChatCardPreviewWidgetState extends State<ChatCardPreviewWidget> {
       child: user.avatarUrl == null
           ? Center(
               child: Text(
-                (user.displayName ?? user.username)[0].toUpperCase(),
+                (user.displayName)[0].toUpperCase(),
                 style: AppFonts.font16w400,
               ),
             )

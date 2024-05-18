@@ -85,7 +85,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                   },
                 ),
                 Text(
-                  user.displayName ?? user.username,
+                  user.displayName,
                   style: AppFonts.font16w500,
                 ),
                 CircleAvatar(
@@ -97,7 +97,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                   child: user.avatarUrl == null
                       ? Center(
                           child: Text(
-                            (user.displayName ?? user.username)[0]
+                            (user.displayName)[0]
                                 .toUpperCase(),
                             style: AppFonts.font12w400,
                           ),

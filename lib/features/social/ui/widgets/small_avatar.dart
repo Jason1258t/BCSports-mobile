@@ -1,4 +1,4 @@
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class SmallAvatarWidget extends StatelessWidget {
       child: user.avatarUrl == null
           ? Center(
               child: Text(
-                (user.displayName ?? user.username)[0].toUpperCase(),
+                user.displayName[0].toUpperCase(),
                 style: AppFonts.font16w400,
               ),
             )

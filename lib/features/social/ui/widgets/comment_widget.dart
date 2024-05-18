@@ -55,8 +55,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    widget.comment.user.displayName ??
-                        widget.comment.user.username,
+                    widget.comment.user.displayName,
                     style: AppFonts.font12w400
                         .copyWith(color: const Color(0xffEBEAEC)),
                   ),
@@ -71,8 +70,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                     height: 4,
                   ),
                   Text(
-                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount} ' +
-                        localize.likes,
+                    '${DateTimeDifferenceConverter.diffToString(widget.comment.createdAt)} • ${widget.comment.likesCount} ${localize.likes}',
                     style: AppFonts.font14w400
                         .copyWith(color: const Color(0xFF717477)),
                   )

@@ -15,7 +15,6 @@ class LocalizationService {
 
   setInitialLocale() async {
     currentLocale = await getLocale();
-    print(currentLocale);
   }
 
   Future<void> changeLocale(String newLocale) async {

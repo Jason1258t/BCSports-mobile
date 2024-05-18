@@ -1,6 +1,6 @@
-import 'package:bcsports_mobile/utils/animations.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
+import 'dart:developer';
+
+import 'package:bcsports_mobile/utils/utils.dart';
 import 'package:bcsports_mobile/widgets/appBar/empty_app_bar.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:bcsports_mobile/widgets/scaffold.dart';
@@ -69,9 +69,8 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
             ),
           ),
           body: loaded
-              ?
-          UnityWidget(
-                  unloadOnDispose: false, // TODO что-то
+              ? UnityWidget(
+                  unloadOnDispose: false,
                   onUnityCreated: _onUnityCreated,
                   onUnityMessage: onUnityMessage,
                   onUnitySceneLoaded: onUnitySceneLoaded,
@@ -98,15 +97,15 @@ class _UnityViewScreenState extends State<UnityViewScreen> {
   }
 
   void onUnityMessage(message) {
-    print('Received message from unity: ${message.toString()}');
+    log('Received message from unity: ${message.toString()}');
   }
 
   void onUnitySceneLoaded(SceneLoaded? scene) {
     if (scene != null) {
-      print('Received scene loaded from unity: ${scene.name}');
-      print('Received scene loaded from unity buildIndex: ${scene.buildIndex}');
+      log('Received scene loaded from unity: ${scene.name}');
+      log('Received scene loaded from unity buildIndex: ${scene.buildIndex}');
     } else {
-      print('Received scene loaded from unity: null');
+      log('Received scene loaded from unity: null');
     }
   }
 

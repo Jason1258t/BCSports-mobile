@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/post_model.dart';
+import 'package:bcsports_mobile/models/post_model.dart';
 import 'package:bcsports_mobile/features/social/data/social_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';

@@ -1,10 +1,11 @@
-import 'package:bcsports_mobile/features/social/data/models/banner_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 
+import 'banner_model.dart';
+
 class UserModel {
   final String id;
-  final String? displayName;
+  final String? _displayName;
   final String username;
   final BannerModel banner;
   final String? avatarUrl;
@@ -12,14 +13,16 @@ class UserModel {
   List<dynamic> favouritesNftList;
   Map<dynamic, dynamic> userNftList;
 
+  String get displayName => _displayName ?? username;
+
   Color get avatarColor => Color(banner.color);
 
-  UserModel(this.id, this.displayName, this.username, this.banner,
+  UserModel(this.id, this._displayName, this.username, this.banner,
       this.avatarUrl, this.evmBill, this.favouritesNftList, this.userNftList);
 
   UserModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        displayName = json['displayName'],
+        _displayName = json['displayName'],
         username = json['username'],
         avatarUrl = json['avatarUrl'],
         evmBill = double.parse('${json['evmBill']}'),
@@ -28,7 +31,7 @@ class UserModel {
         banner = BannerModel.fromJson(json['banner']);
 
   UserModel.create(this.id, this.username, BannerModel bannerModel)
-      : displayName = null,
+      : _displayName = null,
         evmBill = 1000,
         banner = bannerModel,
         favouritesNftList = [],
@@ -51,5 +54,5 @@ class UserModel {
         'banner': banner.toJson(),
       };
 
-  User toChatUser() => User(id: id, firstName: displayName ?? username, imageUrl: avatarUrl);
+  User toChatUser() => User(id: id, firstName: displayName, imageUrl: avatarUrl);
 }

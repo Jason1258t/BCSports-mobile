@@ -1,12 +1,8 @@
 import 'package:bcsports_mobile/features/market/bloc/favourite/favourite_cubit.dart';
-import 'package:bcsports_mobile/features/market/data/market_repository.dart';
 import 'package:bcsports_mobile/features/market/ui/widgets/nft_card.dart';
-import 'package:bcsports_mobile/features/profile/data/profile_repository.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
 import 'package:bcsports_mobile/models/market/market_item_model.dart';
-import 'package:bcsports_mobile/models/market/nft_model.dart';
-import 'package:bcsports_mobile/utils/colors.dart';
-import 'package:bcsports_mobile/utils/fonts.dart';
+import 'package:bcsports_mobile/utils/utils.dart';
 import 'package:bcsports_mobile/widgets/buttons/button.dart';
 import 'package:bcsports_mobile/widgets/buttons/button_back.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +27,6 @@ class _MarketFavouritesScreenState extends State<MarketFavouritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     final localize = AppLocalizations.of(context)!;
 
     return Container(

@@ -4,8 +4,8 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:bcsports_mobile/features/chat/data/chat_repository.dart';
-import 'package:bcsports_mobile/features/social/data/models/banner_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/banner_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
@@ -14,7 +14,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
+// import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthRepository {
@@ -58,12 +58,7 @@ class AuthRepository {
   }
 
   void _authChangesListener(User? user) {
-    if (user == null) {
-      print('User is currently signed out!');
-      appState.add(AppAuthStateEnum.unAuth);
-    } else {
-      print('User is signed in!');
-    }
+    if (user == null) appState.add(AppAuthStateEnum.unAuth);
   }
 
   Future checkAuth() async {
@@ -94,8 +89,6 @@ class AuthRepository {
       case 'channel-error':
         throw ChannelConnectionError();
     }
-    print('Error code: ${e.code}');
-    print('Error: $e');
   }
 
   Future<UserCredential?> registerWithEmailAndPassword(
@@ -109,7 +102,6 @@ class AuthRepository {
     } on FirebaseAuthException catch (e) {
       _handleAuthErrors(e);
     } catch (e) {
-      print('Error: $e');
       rethrow;
     }
     return null;
@@ -130,24 +122,26 @@ class AuthRepository {
   }
 
   Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await (Platform.isAndroid ? _getGoogleAccountAndroid() : _getGoogleAccountIos());
+    final GoogleSignInAccount? googleUser = await (Platform.isAndroid
+        ? _getGoogleAccountAndroid()
+        : _getGoogleAccountIos());
 
     // if (Platform.isAndroid) {
     //   final GoogleSignInAccount? googleUser = await _getGoogleAccountAndroid();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-      final userCredential = await _auth.signInWithCredential(credential);
+    final userCredential = await _auth.signInWithCredential(credential);
 
-      await _writeUserDataInDatabase(userCredential.user!.uid);
-      appState.add(AppAuthStateEnum.auth);
+    await _writeUserDataInDatabase(userCredential.user!.uid);
+    appState.add(AppAuthStateEnum.auth);
 
-      return userCredential;
+    return userCredential;
     // } else {
     //   final GoogleSignInAccount? googleUser = await GoogleSignIn(
     //           clientId:
@@ -178,18 +172,18 @@ class AuthRepository {
               '626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com')
       .signIn();
 
-  Future<UserCredential> _googleSignInAndroid() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    return _auth.signInWithCredential(credential);
-  }
+  // Future<UserCredential> _googleSignInAndroid() async {
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //   final GoogleSignInAuthentication? googleAuth =
+  //       await googleUser?.authentication;
+  //
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth?.accessToken,
+  //     idToken: googleAuth?.idToken,
+  //   );
+  //
+  //   return _auth.signInWithCredential(credential);
+  // }
 
   String _generateNonce([int length = 32]) {
     const charset =

@@ -8,10 +8,10 @@ class NftService {
 
   Future<void> loadNftCollection() async {
     final nftColl = await FirebaseCollections.playersNftCollection.get();
-    nftColl.docs.forEach((doc) {
+    for (var doc in nftColl.docs) {
       NftModel nft = NftModel.fromJson(doc.data(), doc.id);
       nftCollectionList.add(nft);
-    });
+    }
   }
 
   Future<void> updateNftViewsCounter(String id) async {

@@ -8,6 +8,7 @@ import 'package:bcsports_mobile/features/social/bloc/post_comments/post_comments
 import 'package:bcsports_mobile/features/social/ui/comments_screen.dart';
 import 'package:bcsports_mobile/features/social/ui/widgets/custon_network_image.dart';
 import 'package:bcsports_mobile/localization/app_localizations.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/utils/animations.dart';
 import 'package:bcsports_mobile/utils/assets.dart';
 import 'package:bcsports_mobile/utils/colors.dart';
@@ -30,11 +31,29 @@ class ProfileViewScreen extends StatefulWidget {
 }
 
 class _ProfileViewScreenState extends State<ProfileViewScreen> {
+  void messageToUser(UserModel user) async {
+    final chatRepository = RepositoryProvider.of<ChatRepository>(context);
+
+    Dialogs.show(context, Center(child: AppAnimations.circleIndicator));
+
+    Room? room = await chatRepository.roomWithUserExists(user.id);
+    room ??= await chatRepository.createRoomWithUser(user);
+
+    chatRepository.setActiveUser(user);
+    openChatScreen(room);
+  }
+
+  void openChatScreen(Room room) {
+    Navigator.pop(context);
+
+    Navigator.push(context,
+        CupertinoPageRoute(builder: (_) => ChatMessagesScreen(room: room)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final sizeof = MediaQuery.sizeOf(context);
     final repository = RepositoryProvider.of<ProfileViewRepository>(context);
-    final chatRepository = RepositoryProvider.of<ChatRepository>(context);
 
     const separator = SliverToBoxAdapter(
       child: SizedBox(
@@ -108,7 +127,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    user.displayName ?? user.username,
+                                    user.displayName,
                                     style: AppFonts.font20w600,
                                   ),
                                   const SizedBox(
@@ -118,27 +137,14 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                                     '@${user.username}',
                                     style: AppFonts.font13w100,
                                   ),
-                                  const SizedBox(height: 16,),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
                                   CustomTextButton(
                                     text: localize.message,
                                     color: AppColors.white,
                                     height: 26,
-                                    onTap: () async{
-                                      Dialogs.show(
-                                          context, Center(child: AppAnimations.circleIndicator));
-
-                                      Room? room = await chatRepository.roomWithUserExists(user.id);
-                                      room ??= await chatRepository.createRoomWithUser(user);
-
-                                      chatRepository.setActiveUser(user);
-
-                                      Navigator.pop(context);
-
-                                      Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                              builder: (_) => ChatMessagesScreen(room: room!)));
-                                    },
+                                    onTap: () => messageToUser(user),
                                     isActive: true,
                                   ),
                                 ],
@@ -147,8 +153,8 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                             Container(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: sizeof.width * 0.20 + 51),
+                                padding: EdgeInsets.only(
+                                    bottom: sizeof.width * 0.20 + 51),
                                 child: CircleAvatar(
                                   radius: sizeof.width * 0.20,
                                   backgroundColor: AppColors.black_s2new_1A1A1A,
@@ -161,8 +167,7 @@ class _ProfileViewScreenState extends State<ProfileViewScreen> {
                                       child: user.avatarUrl == null
                                           ? Center(
                                               child: Text(
-                                                (user.displayName ??
-                                                        user.username)[0]
+                                                user.displayName[0]
                                                     .toUpperCase(),
                                                 style: AppFonts.font64w400,
                                               ),

@@ -69,8 +69,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                   child: user.avatarUrl == null
                       ? Center(
                           child: Text(
-                            (user.displayName ?? user.username)[0]
-                                .toUpperCase(),
+                            user.displayName[0].toUpperCase(),
                             style: AppFonts.font64w400,
                           ),
                         )
@@ -80,7 +79,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                   height: 25,
                 ),
                 Text(
-                  user.displayName ?? user.username,
+                  user.displayName,
                   style: AppFonts.font20w600,
                 ),
                 const SizedBox(

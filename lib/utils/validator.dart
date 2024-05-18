@@ -1,10 +1,10 @@
 
 
-import 'strings.dart';
+import 'constants.dart';
 
 abstract class Validator {
   static String? emailValidator(String? value) {
-    if (!RegExp(AppStrings.emailRegExp).hasMatch((value ?? "").trim()) ||
+    if (!RegExp(AppConstants.emailRegExp).hasMatch((value ?? "").trim()) ||
         (value ?? "").isEmpty) {
       return 'Неверный email';
     } else {

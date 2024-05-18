@@ -1,4 +1,4 @@
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/services/firebase_collections.dart';
 import 'package:bcsports_mobile/utils/enums.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
@@ -42,7 +42,6 @@ class ChatRepository {
   void subscribeRoomsUpdates() {
     chatCore.rooms().listen((event) {
       rooms = event;
-      print('Rooms update. New length: ${rooms.length}');
     });
   }
 
@@ -61,7 +60,7 @@ class ChatRepository {
   Future<Room> createRoomWithUser(UserModel user) async {
     final room = await FirebaseChatCore.instance.createRoom(User(
         id: user.id,
-        firstName: user.displayName ?? user.username,
+        firstName: user.displayName,
         imageUrl: user.avatarUrl));
     return room;
   }

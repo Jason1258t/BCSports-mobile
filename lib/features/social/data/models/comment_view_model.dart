@@ -1,5 +1,5 @@
-import 'package:bcsports_mobile/features/social/data/models/comment_model.dart';
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/comment_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 
 class CommentViewModel {
   final CommentModel _comment;

@@ -20,7 +20,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CommentsScreen extends StatelessWidget {
   CommentsScreen({super.key, this.isYours = false});
 
-  bool isYours;
+  final bool isYours;
 
   final messageController = TextEditingController();
 
@@ -69,7 +69,6 @@ class CommentsScreen extends StatelessWidget {
                           repository.getUserPosts();
 
                           Navigator.pop(context);
-                          print(1);
                         });
                       },
                       child: SizedBox(
@@ -119,8 +118,7 @@ class CommentsScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: Center(
                           child: Text(
-                            '${localize.comments} ' +
-                                '(${bloc.comments.length})',
+                            '${localize.comments} (${bloc.comments.length})',
                             style: AppFonts.font12w400,
                           ),
                         ),

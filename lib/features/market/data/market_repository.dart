@@ -30,14 +30,14 @@ class MarketRepository {
   subscribeOnMarketStream() {
     marketStream.listen((snapshot) {
       productList.clear();
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         try {
           MarketItemModel marketItemModel = parseMarketDocument(doc);
           productList.add(marketItemModel);
         } catch (e) {
-          log("Fail to parse market item by id ${doc.id} ! ${e}");
+          log("Fail to parse market item by id ${doc.id} ! $e");
         }
-      });
+      }
     });
   }
 
@@ -69,7 +69,6 @@ class MarketRepository {
 
   MarketItemModel parseMarketDocument(doc) {
     Map productMap = doc.data() as Map;
-    print(productMap);
     final nftId = productMap['nft_id'];
     final NftModel productNft = nftService.nftCollectionList
         .where((nftItem) => nftItem.documentId == nftId)
@@ -87,13 +86,13 @@ class MarketRepository {
       final userColl = await FirebaseCollections.usersCollection.get();
       int total = 0;
 
-      userColl.docs.forEach((doc) {
-        final userFavs = doc.data()["favourites_list"] ?? [];
+      for (var doc in userColl.docs) {
+        final userFavourites = doc.data()["favourites_list"] ?? [];
 
-        if (userFavs.contains(lotId)) {
+        if (userFavourites.contains(lotId)) {
           total += 1;
         }
-      });
+      }
 
       lastProductFavouritesValue = total;
       favouritesValueStream.add(LoadingStateEnum.success);

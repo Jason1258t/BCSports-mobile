@@ -1,4 +1,4 @@
-import 'package:bcsports_mobile/features/social/data/models/user_model.dart';
+import 'package:bcsports_mobile/models/user_model.dart';
 import 'package:bcsports_mobile/utils/fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,7 @@ class SmallUserCard extends StatelessWidget {
               child: userModel.avatarUrl == null
                   ? Center(
                       child: Text(
-                        (userModel.displayName ?? userModel.username)[0]
+                        (userModel.displayName)[0]
                             .toUpperCase(),
                         style: AppFonts.font12w400,
                       ),

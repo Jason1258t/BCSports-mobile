@@ -17,7 +17,7 @@ class ReportCubit extends Cubit<ReportState> {
     try {
       final userEmail = FirebaseAuth.instance.currentUser!.email!;
       await reportRepository.sendReport(
-          RepoortModel(postId: postId, userEmail: userEmail, type: type));
+          ReportModel(postId: postId, userEmail: userEmail, type: type));
       emit(ReportSuccess());
     } catch (e) {
       emit(ReportFailure());
