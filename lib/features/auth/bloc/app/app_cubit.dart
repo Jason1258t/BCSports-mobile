@@ -38,24 +38,31 @@ class AppCubit extends Cubit<AppState> {
   void subscribe() {
     _authRepository.appState.stream.listen((event) async {
       if (event == AppAuthStateEnum.auth) {
-        await _profileRepository.setUser(_authRepository
-            .currentUser!.uid); // await cuz maret depends on user
-        _socialRepository.initial();
-        await _marketRepository.nftService.loadNftCollection();
-        _marketRepository.subscribeOnMarketStream();
-        _chatRepository.init();
-
-
+        await _authorizeApp();
         emit(AppAuthState());
       }
       if (event == AppAuthStateEnum.unAuth) {
-        _profileRepository.posts.clear();
-        _socialRepository.posts.clear();
-        _favouritesRepository.posts.clear();
+        _unAuth();
         emit(AppUnAuthState());
       }
       if (event == AppAuthStateEnum.wait) emit(AppInitial());
       if (event == AppAuthStateEnum.noInternet) emit(NoInternetState());
     });
+  }
+
+  Future<void> _authorizeApp() async {
+    await _profileRepository.setUser(
+        _authRepository.currentUser!.uid); // await cuz market depends on user
+
+    _socialRepository.initial();
+    await _marketRepository.nftService.loadNftCollection();
+    _marketRepository.subscribeOnMarketStream();
+    _chatRepository.init();
+  }
+
+  Future _unAuth() async {
+    _profileRepository.posts.clear();
+    _socialRepository.posts.clear();
+    _favouritesRepository.posts.clear();
   }
 }

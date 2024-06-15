@@ -14,6 +14,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rxdart/rxdart.dart';
+
 // import 'package:google_sign_in_ios/google_sign_in_ios.dart' as iosGoogle;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -142,26 +143,6 @@ class AuthRepository {
     appState.add(AppAuthStateEnum.auth);
 
     return userCredential;
-    // } else {
-    //   final GoogleSignInAccount? googleUser = await GoogleSignIn(
-    //           clientId:
-    //               '626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com')
-    //       .signIn();
-    //   final GoogleSignInAuthentication? googleAuth =
-    //       await googleUser?.authentication;
-    //
-    //   final credential = GoogleAuthProvider.credential(
-    //     accessToken: googleAuth?.accessToken,
-    //     idToken: googleAuth?.idToken,
-    //   );
-    //
-    //   final userCredential = await _auth.signInWithCredential(credential);
-    //
-    //   await _writeUserDataInDatabase(userCredential.user!.uid);
-    //   appState.add(AppAuthStateEnum.auth);
-    //
-    //   return userCredential;
-    // }
   }
 
   Future<GoogleSignInAccount?> _getGoogleAccountAndroid() =>
@@ -171,19 +152,6 @@ class AuthRepository {
           clientId:
               '626741015-la6fgg3icmrqeus524th3kv1uf59ri97.apps.googleusercontent.com')
       .signIn();
-
-  // Future<UserCredential> _googleSignInAndroid() async {
-  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //   final GoogleSignInAuthentication? googleAuth =
-  //       await googleUser?.authentication;
-  //
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth?.accessToken,
-  //     idToken: googleAuth?.idToken,
-  //   );
-  //
-  //   return _auth.signInWithCredential(credential);
-  // }
 
   String _generateNonce([int length = 32]) {
     const charset =
